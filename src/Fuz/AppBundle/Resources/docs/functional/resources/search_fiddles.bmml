@@ -1,0 +1,393 @@
+<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="1166" measuredH="748" mockupW="1141" mockupH="724">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::Canvas" x="25" y="24" w="1141" h="76" measuredW="100" measuredH="70" zOrder="0" locked="false" isInGroup="-1"/>
+    <control controlID="1" controlTypeID="com.balsamiq.mockups::Image" x="40" y="36" w="87" h="52" measuredW="77" measuredH="79" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>logo</text>
+      </controlProperties>
+    </control>
+    <control controlID="2" controlTypeID="com.balsamiq.mockups::Button" x="257" y="43" w="117" h="39" measuredW="110" measuredH="30" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>AddPageIcon%7Csmall</icon>
+        <text>New%20fiddle</text>
+      </controlProperties>
+    </control>
+    <control controlID="8" controlTypeID="com.balsamiq.mockups::Button" x="1051" y="43" w="100" h="39" measuredW="90" measuredH="30" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>LockOpenIcon%7Csmall</icon>
+        <text>Logout</text>
+      </controlProperties>
+    </control>
+    <control controlID="49" controlTypeID="com.balsamiq.mockups::Label" x="140" y="46" w="-1" h="-1" measuredW="105" measuredH="33" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>24</size>
+        <text>twigfiddle</text>
+      </controlProperties>
+    </control>
+    <control controlID="62" controlTypeID="com.balsamiq.mockups::Button" x="936" y="43" w="100" h="39" measuredW="85" measuredH="30" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>InfoIcon%7Csmall</icon>
+        <text>About</text>
+      </controlProperties>
+    </control>
+    <control controlID="69" controlTypeID="com.balsamiq.mockups::SearchBox" x="119" y="130" w="218" h="-1" measuredW="120" measuredH="25" zOrder="21" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Search%20for...</text>
+      </controlProperties>
+    </control>
+    <control controlID="70" controlTypeID="com.balsamiq.mockups::SearchBox" x="410" y="131" w="218" h="-1" measuredW="120" measuredH="25" zOrder="22" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Filter%20tags...</text>
+      </controlProperties>
+    </control>
+    <control controlID="71" controlTypeID="com.balsamiq.mockups::Canvas" x="25" y="672" w="1141" h="76" measuredW="100" measuredH="70" zOrder="6" locked="false" isInGroup="-1"/>
+    <control controlID="72" controlTypeID="com.balsamiq.mockups::Label" x="40" y="691" w="-1" h="-1" measuredW="102" measuredH="21" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Fiddles%20per%20page</text>
+      </controlProperties>
+    </control>
+    <control controlID="73" controlTypeID="com.balsamiq.mockups::Link" x="40" y="708" w="-1" h="-1" measuredW="20" measuredH="21" zOrder="8" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>10</text>
+      </controlProperties>
+    </control>
+    <control controlID="74" controlTypeID="com.balsamiq.mockups::Link" x="67" y="708" w="-1" h="-1" measuredW="22" measuredH="21" zOrder="9" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>20</text>
+      </controlProperties>
+    </control>
+    <control controlID="75" controlTypeID="com.balsamiq.mockups::Link" x="95" y="708" w="-1" h="-1" measuredW="22" measuredH="21" zOrder="10" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>30</text>
+      </controlProperties>
+    </control>
+    <control controlID="76" controlTypeID="com.balsamiq.mockups::Link" x="122" y="708" w="-1" h="-1" measuredW="22" measuredH="21" zOrder="11" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>50</text>
+      </controlProperties>
+    </control>
+    <control controlID="78" controlTypeID="com.balsamiq.mockups::Link" x="150" y="708" w="-1" h="-1" measuredW="22" measuredH="21" zOrder="12" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>75</text>
+      </controlProperties>
+    </control>
+    <control controlID="79" controlTypeID="com.balsamiq.mockups::Link" x="178" y="708" w="-1" h="-1" measuredW="28" measuredH="21" zOrder="13" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>100</text>
+      </controlProperties>
+    </control>
+    <control controlID="80" controlTypeID="com.balsamiq.mockups::Label" x="560" y="700" w="-1" h="-1" measuredW="71" measuredH="21" zOrder="14" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>153%20results</text>
+      </controlProperties>
+    </control>
+    <control controlID="81" controlTypeID="com.balsamiq.mockups::Label" x="1055" y="684" w="-1" h="-1" measuredW="71" measuredH="21" zOrder="15" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Go%20to%20page</text>
+      </controlProperties>
+    </control>
+    <control controlID="82" controlTypeID="com.balsamiq.mockups::TextInput" x="1055" y="710" w="44" h="-1" measuredW="79" measuredH="27" zOrder="16" locked="false" isInGroup="-1"/>
+    <control controlID="83" controlTypeID="com.balsamiq.mockups::Button" x="1109" y="709" w="-1" h="-1" measuredW="41" measuredH="27" zOrder="17" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Go</text>
+      </controlProperties>
+    </control>
+    <control controlID="85" controlTypeID="com.balsamiq.mockups::Canvas" x="25" y="196" w="553" h="76" measuredW="100" measuredH="70" zOrder="18" locked="false" isInGroup="-1"/>
+    <control controlID="86" controlTypeID="com.balsamiq.mockups::Link" x="40" y="202" w="-1" h="-1" measuredW="487" measuredH="24" zOrder="19" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>16</size>
+        <text>This%20fiddle%20generates%20an%20autocomplete%20plugin%20adaptable%20to%20Symfony2%20</text>
+      </controlProperties>
+    </control>
+    <control controlID="88" controlTypeID="com.balsamiq.mockups::FieldSet" x="25" y="111" w="1141" h="62" measuredW="200" measuredH="170" zOrder="20" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Search%20a%20fiddle</text>
+      </controlProperties>
+    </control>
+    <control controlID="90" controlTypeID="com.balsamiq.mockups::TextInput" x="40" y="230" w="392" h="-1" measuredW="231" measuredH="27" zOrder="23" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>php%2Csymfony2%2Cautocomplete%2Cgenerator</text>
+      </controlProperties>
+    </control>
+    <control controlID="92" controlTypeID="com.balsamiq.mockups::Icon" x="538" y="202" w="-1" h="-1" measuredW="24" measuredH="24" zOrder="24" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>PencilIcon%7Csmall</icon>
+      </controlProperties>
+    </control>
+    <control controlID="93" controlTypeID="com.balsamiq.mockups::Button" x="444" y="230" w="83" h="27" measuredW="73" measuredH="27" zOrder="25" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>FolderIcon%7Cxsmall</icon>
+        <text>Open</text>
+      </controlProperties>
+    </control>
+    <control controlID="95" controlTypeID="com.balsamiq.mockups::Icon" x="538" y="233" w="-1" h="-1" measuredW="24" measuredH="24" zOrder="26" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>StarIcon%7Csmall</icon>
+      </controlProperties>
+    </control>
+    <control controlID="96" controlTypeID="com.balsamiq.mockups::Canvas" x="613" y="194" w="553" h="76" measuredW="100" measuredH="70" zOrder="27" locked="false" isInGroup="-1"/>
+    <control controlID="97" controlTypeID="com.balsamiq.mockups::Link" x="628" y="200" w="-1" h="-1" measuredW="487" measuredH="24" zOrder="28" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>16</size>
+        <text>This%20fiddle%20generates%20an%20autocomplete%20plugin%20adaptable%20to%20Symfony2%20</text>
+      </controlProperties>
+    </control>
+    <control controlID="98" controlTypeID="com.balsamiq.mockups::TextInput" x="628" y="228" w="392" h="-1" measuredW="231" measuredH="27" zOrder="29" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>php%2Csymfony2%2Cautocomplete%2Cgenerator</text>
+      </controlProperties>
+    </control>
+    <control controlID="99" controlTypeID="com.balsamiq.mockups::Icon" x="1126" y="200" w="-1" h="-1" measuredW="24" measuredH="24" zOrder="30" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>PencilIcon%7Csmall</icon>
+      </controlProperties>
+    </control>
+    <control controlID="100" controlTypeID="com.balsamiq.mockups::Button" x="1032" y="228" w="83" h="27" measuredW="73" measuredH="27" zOrder="31" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>FolderIcon%7Cxsmall</icon>
+        <text>Open</text>
+      </controlProperties>
+    </control>
+    <control controlID="101" controlTypeID="com.balsamiq.mockups::Icon" x="1126" y="231" w="-1" h="-1" measuredW="24" measuredH="24" zOrder="32" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>StarIcon%7Csmall</icon>
+      </controlProperties>
+    </control>
+    <control controlID="102" controlTypeID="com.balsamiq.mockups::Canvas" x="25" y="288" w="553" h="76" measuredW="100" measuredH="70" zOrder="33" locked="false" isInGroup="-1"/>
+    <control controlID="103" controlTypeID="com.balsamiq.mockups::Link" x="40" y="294" w="-1" h="-1" measuredW="487" measuredH="24" zOrder="34" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>16</size>
+        <text>This%20fiddle%20generates%20an%20autocomplete%20plugin%20adaptable%20to%20Symfony2%20</text>
+      </controlProperties>
+    </control>
+    <control controlID="104" controlTypeID="com.balsamiq.mockups::TextInput" x="40" y="322" w="392" h="-1" measuredW="231" measuredH="27" zOrder="35" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>php%2Csymfony2%2Cautocomplete%2Cgenerator</text>
+      </controlProperties>
+    </control>
+    <control controlID="105" controlTypeID="com.balsamiq.mockups::Icon" x="538" y="294" w="-1" h="-1" measuredW="24" measuredH="24" zOrder="36" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>PencilIcon%7Csmall</icon>
+      </controlProperties>
+    </control>
+    <control controlID="106" controlTypeID="com.balsamiq.mockups::Button" x="444" y="322" w="83" h="27" measuredW="73" measuredH="27" zOrder="37" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>FolderIcon%7Cxsmall</icon>
+        <text>Open</text>
+      </controlProperties>
+    </control>
+    <control controlID="107" controlTypeID="com.balsamiq.mockups::Icon" x="538" y="325" w="-1" h="-1" measuredW="24" measuredH="24" zOrder="38" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>StarIcon%7Csmall</icon>
+      </controlProperties>
+    </control>
+    <control controlID="108" controlTypeID="com.balsamiq.mockups::Canvas" x="25" y="381" w="553" h="76" measuredW="100" measuredH="70" zOrder="39" locked="false" isInGroup="-1"/>
+    <control controlID="109" controlTypeID="com.balsamiq.mockups::Link" x="40" y="387" w="-1" h="-1" measuredW="35" measuredH="24" zOrder="40" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>16</size>
+        <text>test</text>
+      </controlProperties>
+    </control>
+    <control controlID="110" controlTypeID="com.balsamiq.mockups::TextInput" x="40" y="415" w="392" h="-1" measuredW="38" measuredH="27" zOrder="41" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>test</text>
+      </controlProperties>
+    </control>
+    <control controlID="112" controlTypeID="com.balsamiq.mockups::Button" x="444" y="415" w="83" h="27" measuredW="73" measuredH="27" zOrder="42" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>FolderIcon%7Cxsmall</icon>
+        <text>Open</text>
+      </controlProperties>
+    </control>
+    <control controlID="113" controlTypeID="com.balsamiq.mockups::Icon" x="538" y="418" w="-1" h="-1" measuredW="24" measuredH="24" zOrder="43" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>StarIcon%7Csmall</icon>
+      </controlProperties>
+    </control>
+    <control controlID="114" controlTypeID="com.balsamiq.mockups::Canvas" x="25" y="473" w="553" h="76" measuredW="100" measuredH="70" zOrder="44" locked="false" isInGroup="-1"/>
+    <control controlID="115" controlTypeID="com.balsamiq.mockups::Link" x="40" y="479" w="-1" h="-1" measuredW="487" measuredH="24" zOrder="45" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>16</size>
+        <text>This%20fiddle%20generates%20an%20autocomplete%20plugin%20adaptable%20to%20Symfony2%20</text>
+      </controlProperties>
+    </control>
+    <control controlID="116" controlTypeID="com.balsamiq.mockups::TextInput" x="40" y="507" w="392" h="-1" measuredW="231" measuredH="27" zOrder="46" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>php%2Csymfony2%2Cautocomplete%2Cgenerator</text>
+      </controlProperties>
+    </control>
+    <control controlID="117" controlTypeID="com.balsamiq.mockups::Icon" x="538" y="479" w="-1" h="-1" measuredW="24" measuredH="24" zOrder="47" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>PencilIcon%7Csmall</icon>
+      </controlProperties>
+    </control>
+    <control controlID="118" controlTypeID="com.balsamiq.mockups::Button" x="444" y="507" w="83" h="27" measuredW="73" measuredH="27" zOrder="48" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>FolderIcon%7Cxsmall</icon>
+        <text>Open</text>
+      </controlProperties>
+    </control>
+    <control controlID="119" controlTypeID="com.balsamiq.mockups::Icon" x="538" y="510" w="-1" h="-1" measuredW="24" measuredH="24" zOrder="49" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>StarIcon%7Csmall</icon>
+      </controlProperties>
+    </control>
+    <control controlID="120" controlTypeID="com.balsamiq.mockups::Canvas" x="25" y="571" w="553" h="76" measuredW="100" measuredH="70" zOrder="50" locked="false" isInGroup="-1"/>
+    <control controlID="121" controlTypeID="com.balsamiq.mockups::Link" x="40" y="577" w="-1" h="-1" measuredW="487" measuredH="24" zOrder="51" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>16</size>
+        <text>This%20fiddle%20generates%20an%20autocomplete%20plugin%20adaptable%20to%20Symfony2%20</text>
+      </controlProperties>
+    </control>
+    <control controlID="122" controlTypeID="com.balsamiq.mockups::TextInput" x="40" y="605" w="392" h="-1" measuredW="231" measuredH="27" zOrder="52" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>php%2Csymfony2%2Cautocomplete%2Cgenerator</text>
+      </controlProperties>
+    </control>
+    <control controlID="123" controlTypeID="com.balsamiq.mockups::Icon" x="538" y="577" w="-1" h="-1" measuredW="24" measuredH="24" zOrder="53" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>PencilIcon%7Csmall</icon>
+      </controlProperties>
+    </control>
+    <control controlID="124" controlTypeID="com.balsamiq.mockups::Button" x="444" y="605" w="83" h="27" measuredW="73" measuredH="27" zOrder="54" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>FolderIcon%7Cxsmall</icon>
+        <text>Open</text>
+      </controlProperties>
+    </control>
+    <control controlID="125" controlTypeID="com.balsamiq.mockups::Icon" x="538" y="608" w="-1" h="-1" measuredW="24" measuredH="24" zOrder="55" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>StarIcon%7Csmall</icon>
+      </controlProperties>
+    </control>
+    <control controlID="126" controlTypeID="com.balsamiq.mockups::Canvas" x="613" y="286" w="553" h="76" measuredW="100" measuredH="70" zOrder="56" locked="false" isInGroup="-1"/>
+    <control controlID="127" controlTypeID="com.balsamiq.mockups::Link" x="628" y="292" w="-1" h="-1" measuredW="487" measuredH="24" zOrder="57" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>16</size>
+        <text>This%20fiddle%20generates%20an%20autocomplete%20plugin%20adaptable%20to%20Symfony2%20</text>
+      </controlProperties>
+    </control>
+    <control controlID="128" controlTypeID="com.balsamiq.mockups::TextInput" x="628" y="320" w="392" h="-1" measuredW="231" measuredH="27" zOrder="58" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>php%2Csymfony2%2Cautocomplete%2Cgenerator</text>
+      </controlProperties>
+    </control>
+    <control controlID="129" controlTypeID="com.balsamiq.mockups::Icon" x="1126" y="292" w="-1" h="-1" measuredW="24" measuredH="24" zOrder="59" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>PencilIcon%7Csmall</icon>
+      </controlProperties>
+    </control>
+    <control controlID="130" controlTypeID="com.balsamiq.mockups::Button" x="1032" y="320" w="83" h="27" measuredW="73" measuredH="27" zOrder="60" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>FolderIcon%7Cxsmall</icon>
+        <text>Open</text>
+      </controlProperties>
+    </control>
+    <control controlID="131" controlTypeID="com.balsamiq.mockups::Icon" x="1126" y="323" w="-1" h="-1" measuredW="24" measuredH="24" zOrder="61" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>StarIcon%7Csmall</icon>
+      </controlProperties>
+    </control>
+    <control controlID="132" controlTypeID="com.balsamiq.mockups::Canvas" x="613" y="379" w="553" h="76" measuredW="100" measuredH="70" zOrder="62" locked="false" isInGroup="-1"/>
+    <control controlID="133" controlTypeID="com.balsamiq.mockups::Link" x="628" y="385" w="-1" h="-1" measuredW="487" measuredH="24" zOrder="63" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>16</size>
+        <text>This%20fiddle%20generates%20an%20autocomplete%20plugin%20adaptable%20to%20Symfony2%20</text>
+      </controlProperties>
+    </control>
+    <control controlID="134" controlTypeID="com.balsamiq.mockups::TextInput" x="628" y="413" w="392" h="-1" measuredW="231" measuredH="27" zOrder="64" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>php%2Csymfony2%2Cautocomplete%2Cgenerator</text>
+      </controlProperties>
+    </control>
+    <control controlID="135" controlTypeID="com.balsamiq.mockups::Icon" x="1126" y="385" w="-1" h="-1" measuredW="24" measuredH="24" zOrder="65" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>PencilIcon%7Csmall</icon>
+      </controlProperties>
+    </control>
+    <control controlID="136" controlTypeID="com.balsamiq.mockups::Button" x="1032" y="413" w="83" h="27" measuredW="73" measuredH="27" zOrder="66" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>FolderIcon%7Cxsmall</icon>
+        <text>Open</text>
+      </controlProperties>
+    </control>
+    <control controlID="137" controlTypeID="com.balsamiq.mockups::Icon" x="1126" y="416" w="-1" h="-1" measuredW="24" measuredH="24" zOrder="67" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>StarIcon%7Csmall</icon>
+      </controlProperties>
+    </control>
+    <control controlID="138" controlTypeID="com.balsamiq.mockups::Canvas" x="613" y="471" w="553" h="76" measuredW="100" measuredH="70" zOrder="68" locked="false" isInGroup="-1"/>
+    <control controlID="139" controlTypeID="com.balsamiq.mockups::Link" x="628" y="477" w="-1" h="-1" measuredW="487" measuredH="24" zOrder="69" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>16</size>
+        <text>This%20fiddle%20generates%20an%20autocomplete%20plugin%20adaptable%20to%20Symfony2%20</text>
+      </controlProperties>
+    </control>
+    <control controlID="140" controlTypeID="com.balsamiq.mockups::TextInput" x="628" y="505" w="392" h="-1" measuredW="231" measuredH="27" zOrder="70" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>php%2Csymfony2%2Cautocomplete%2Cgenerator</text>
+      </controlProperties>
+    </control>
+    <control controlID="141" controlTypeID="com.balsamiq.mockups::Icon" x="1126" y="477" w="-1" h="-1" measuredW="24" measuredH="24" zOrder="71" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>PencilIcon%7Csmall</icon>
+      </controlProperties>
+    </control>
+    <control controlID="142" controlTypeID="com.balsamiq.mockups::Button" x="1032" y="505" w="83" h="27" measuredW="73" measuredH="27" zOrder="72" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>FolderIcon%7Cxsmall</icon>
+        <text>Open</text>
+      </controlProperties>
+    </control>
+    <control controlID="143" controlTypeID="com.balsamiq.mockups::Icon" x="1126" y="508" w="-1" h="-1" measuredW="24" measuredH="24" zOrder="73" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>StarIcon%7Csmall</icon>
+      </controlProperties>
+    </control>
+    <control controlID="144" controlTypeID="com.balsamiq.mockups::Canvas" x="613" y="569" w="553" h="76" measuredW="100" measuredH="70" zOrder="74" locked="false" isInGroup="-1"/>
+    <control controlID="145" controlTypeID="com.balsamiq.mockups::Link" x="628" y="575" w="-1" h="-1" measuredW="57" measuredH="24" zOrder="75" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>16</size>
+        <text>foo%20bar</text>
+      </controlProperties>
+    </control>
+    <control controlID="146" controlTypeID="com.balsamiq.mockups::TextInput" x="628" y="603" w="392" h="-1" measuredW="78" measuredH="27" zOrder="76" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>hello%2C%20world</text>
+      </controlProperties>
+    </control>
+    <control controlID="148" controlTypeID="com.balsamiq.mockups::Button" x="1032" y="603" w="83" h="27" measuredW="73" measuredH="27" zOrder="77" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>FolderIcon%7Cxsmall</icon>
+        <text>Open</text>
+      </controlProperties>
+    </control>
+    <control controlID="149" controlTypeID="com.balsamiq.mockups::Icon" x="1126" y="606" w="-1" h="-1" measuredW="24" measuredH="24" zOrder="78" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>StarIcon%7Csmall</icon>
+      </controlProperties>
+    </control>
+    <control controlID="151" controlTypeID="com.balsamiq.mockups::Label" x="40" y="135" w="-1" h="-1" measuredW="62" measuredH="21" zOrder="79" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Keywords</text>
+      </controlProperties>
+    </control>
+    <control controlID="152" controlTypeID="com.balsamiq.mockups::Label" x="364" y="135" w="-1" h="-1" measuredW="35" measuredH="21" zOrder="80" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Tags</text>
+      </controlProperties>
+    </control>
+    <control controlID="153" controlTypeID="com.balsamiq.mockups::CheckBox" x="989" y="134" w="-1" h="-1" measuredW="168" measuredH="22" zOrder="81" locked="false" isInGroup="-1">
+      <controlProperties>
+        <state>selected</state>
+        <text>Filter%20favorite%20fiddles%20only</text>
+      </controlProperties>
+    </control>
+    <control controlID="154" controlTypeID="com.balsamiq.mockups::CheckBox" x="815" y="134" w="-1" h="-1" measuredW="165" measuredH="22" zOrder="82" locked="false" isInGroup="-1">
+      <controlProperties>
+        <state>up</state>
+        <text>Filter%20private%20fiddles%20only</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>
