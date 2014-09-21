@@ -1,0 +1,5 @@
+fuz_app:
+    resource: "@FuzAppBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
