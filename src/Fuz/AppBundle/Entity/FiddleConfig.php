@@ -16,11 +16,11 @@ class FiddleConfig
     /**
      * @var integer
      *
-     * @ORM\Id
      * @ORM\OneToOne(targetEntity="Fiddle")
      * @ORM\JoinColumn(name="fiddle_id", referencedColumnName="id", onDelete="cascade")
+     * @ORM\Id
      */
-    private $fiddleId;
+    private $fiddle;
 
     /**
      * @var string
@@ -51,26 +51,26 @@ class FiddleConfig
     private $isPrivate = false;
 
     /**
-     * Set fiddleId
+     * Set fiddle
      *
-     * @param integer $fiddleId
+     * @param Fiddle $fiddle
      * @return FiddleTemplate
      */
-    public function setFiddleId($fiddleId)
+    public function setFiddle(Fiddle $fiddle)
     {
-        $this->fiddleId = $fiddleId;
+        $this->fiddle = $fiddle;
 
         return $this;
     }
 
     /**
-     * Get fiddleId
+     * Get fiddle
      *
-     * @return integer
+     * @return Fiddle
      */
-    public function getFiddleId()
+    public function getFiddle()
     {
-        return $this->fiddleId;
+        return $this->fiddle;
     }
 
     /**

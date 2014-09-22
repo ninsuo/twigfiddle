@@ -22,10 +22,11 @@ class FiddleContext
     /**
      * @var integer
      *
-     * @ORM\Column(name="fiddle_id", type="integer")
+     * @ORM\OneToOne(targetEntity="Fiddle")
+     * @ORM\JoinColumn(name="fiddle_id", referencedColumnName="id", onDelete="cascade")
      * @ORM\Id
      */
-    private $fiddleId;
+    private $fiddle;
 
     /**
      * @var string
@@ -42,26 +43,26 @@ class FiddleContext
     private $content = '';
 
     /**
-     * Set fiddleId
+     * Set fiddle
      *
-     * @param integer $fiddleId
-     * @return FiddleContext
+     * @param Fiddle $fiddle
+     * @return FiddleTemplate
      */
-    public function setFiddleId($fiddleId)
+    public function setFiddle(Fiddle $fiddle)
     {
-        $this->fiddleId = $fiddleId;
+        $this->fiddle = $fiddle;
 
         return $this;
     }
 
     /**
-     * Get fiddleId
+     * Get fiddle
      *
-     * @return integer
+     * @return Fiddle
      */
-    public function getFiddleId()
+    public function getFiddle()
     {
-        return $this->fiddleId;
+        return $this->fiddle;
     }
 
     /**

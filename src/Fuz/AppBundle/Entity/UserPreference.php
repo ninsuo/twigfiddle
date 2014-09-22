@@ -16,7 +16,8 @@ class UserPreference
     /**
      * @var integer
      *
-     * @ORM\Column(name="user_id", type="integer")
+     * @ORM\OneToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="cascade")
      * @ORM\Id
      */
     private $userId;
@@ -37,26 +38,26 @@ class UserPreference
     private $value;
 
     /**
-     * Set userId
+     * Set user
      *
-     * @param integer $userId
-     * @return UserPreference
+     * @param User $user
+     * @return UserFavorite
      */
-    public function setUserId($userId)
+    public function setUser(User $user)
     {
-        $this->userId = $userId;
+        $this->user = $user;
 
         return $this;
     }
 
     /**
-     * Get userId
+     * Get user
      *
-     * @return integer
+     * @return User
      */
-    public function getUserId()
+    public function getUser()
     {
-        return $this->userId;
+        return $this->user;
     }
 
     /**
