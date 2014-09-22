@@ -23,12 +23,13 @@ class UserFavorite
     private $user;
 
     /**
-     * @var integer
+     * @var Fiddle
      *
-     * @ORM\Column(name="fiddle_id", type="integer")
+     * @ORM\ManyToOne(targetEntity="Fiddle")
+     * @ORM\JoinColumn(name="fiddle_id", referencedColumnName="id", nullable=true, onDelete="cascade")
      * @ORM\Id
      */
-    private $fiddleId;
+    private $fiddle;
 
     /**
      * @var string
@@ -68,26 +69,26 @@ class UserFavorite
     }
 
     /**
-     * Set fiddleId
+     * Set fiddle
      *
-     * @param integer $fiddleId
+     * @param Fiddle $fiddle
      * @return UserFavorite
      */
-    public function setFiddleId($fiddleId)
+    public function setFiddle(Fiddle $fiddle)
     {
-        $this->fiddleId = $fiddleId;
+        $this->fiddle = $fiddle;
 
         return $this;
     }
 
     /**
-     * Get fiddleId
+     * Get fiddle
      *
-     * @return integer
+     * @return Fiddle
      */
-    public function getFiddleId()
+    public function getFiddle()
     {
-        return $this->fiddleId;
+        return $this->fiddle;
     }
 
     /**

@@ -20,7 +20,7 @@ class FiddleContext
     const FORMAT_KEY_VALUE = 'key = value';
 
     /**
-     * @var integer
+     * @var Fiddle
      *
      * @ORM\OneToOne(targetEntity="Fiddle")
      * @ORM\JoinColumn(name="fiddle_id", referencedColumnName="id", onDelete="cascade")

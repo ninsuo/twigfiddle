@@ -14,7 +14,7 @@ class FiddleTemplate
 {
 
     /**
-     * @var integer
+     * @var Fiddle
      *
      * @ORM\OneToOne(targetEntity="Fiddle")
      * @ORM\JoinColumn(name="fiddle_id", referencedColumnName="id", onDelete="cascade")

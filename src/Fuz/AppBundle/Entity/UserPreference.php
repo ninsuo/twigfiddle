@@ -14,13 +14,13 @@ class UserPreference
 {
 
     /**
-     * @var integer
+     * @var User
      *
      * @ORM\OneToOne(targetEntity="User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="cascade")
      * @ORM\Id
      */
-    private $userId;
+    private $user;
 
     /**
      * @var string
