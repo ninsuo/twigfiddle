@@ -20,7 +20,7 @@ class UserFavorite
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="cascade")
      * @ORM\Id
      */
-    private $userId;
+    private $user;
 
     /**
      * @var integer
@@ -45,26 +45,26 @@ class UserFavorite
     private $tags;
 
     /**
-     * Set userId
+     * Set user
      *
-     * @param integer $userId
+     * @param User $user
      * @return UserFavorite
      */
-    public function setUserId($userId)
+    public function setUser(User $user)
     {
-        $this->userId = $userId;
+        $this->user = $user;
 
         return $this;
     }
 
     /**
-     * Get userId
+     * Get user
      *
-     * @return integer
+     * @return User
      */
-    public function getUserId()
+    public function getUser()
     {
-        return $this->userId;
+        return $this->user;
     }
 
     /**
