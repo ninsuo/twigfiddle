@@ -17,6 +17,7 @@ security:
             oauth:
                 resource_owners:
                     google: "/login/check-google"
+                    facebook: "/login/check-facebook"
                 login_path: /login
                 failure_path: /login
                 oauth_user_provider:
@@ -40,3 +41,8 @@ hwi_oauth:
             client_id: %google_client_id%
             client_secret: %google_secret%
             scope: "profile"
+        facebook:
+            type: facebook
+            client_id: %facebook_client_id%
+            client_secret: %facebook_secret%
+            scope: "public_profile"

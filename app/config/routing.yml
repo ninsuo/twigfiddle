@@ -13,6 +13,9 @@ hwi_oauth_login:
 google_login:
     pattern: /login/check-google
 
+facebook_login:
+    pattern: /login/check-facebook
+
 fuz_app:
     resource: "@FuzAppBundle/Controller/"
     type:     annotation

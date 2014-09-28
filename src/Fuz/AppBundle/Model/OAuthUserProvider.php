@@ -36,7 +36,15 @@ class OAuthUserProvider extends BaseUserProvider
     {
         $provider = $response->getResourceOwner()->getName();
         $providerId = $response->getUsername();
-        $nickname = $this->getNickname($provider, $response);
+        $name = $this->getName($provider, $response);
+
+//        echo '<pre>';
+//        echo "username = ", $response->getUsername(), PHP_EOL;
+//        echo "nickname = ", $response->getNickname(), PHP_EOL;
+//        echo "realname = ", $response->getRealName(), PHP_EOL;
+//        echo "email = ", $response->getUsername(), PHP_EOL;
+//        echo "picture = ", $response->getProfilePicture(), PHP_EOL;
+//        die();
 
         $user = $this->em->getRepository('FuzAppBundle:User')->getUserByProviderId($provider, $providerId);
         if (is_null($user))
@@ -44,7 +52,7 @@ class OAuthUserProvider extends BaseUserProvider
             $user = new User();
             $user->setProvider($provider);
             $user->setProviderId($providerId);
-            $user->setUsername($nickname);
+            $user->setUsername($name);
             $user->setSigninCount(1);
             $this->em->persist($user);
             $this->em->flush();
@@ -61,18 +69,21 @@ class OAuthUserProvider extends BaseUserProvider
         return $this->loadUserByUsername($json);
     }
 
-    public function getNickname($provider, $response)
+    public function getName($provider, $response)
     {
-        $nickname = null;
+        $name = null;
         switch ($provider)
         {
             case 'google':
-                $nickname = $response->getNickname();
+                $name = $response->getNickname();
+                break;
+            case 'facebook':
+                $name = $response->getRealName();
                 break;
             default:
                 break;
         }
-        return $nickname;
+        return $name;
     }
 
     public function supportsClass($class)
