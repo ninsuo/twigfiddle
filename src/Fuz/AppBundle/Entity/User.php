@@ -256,6 +256,14 @@ class User implements UserInterface, EquatableInterface
     }
 
     /**
+     * @ORM\PreUpdate
+     */
+    public function onPreUpdate()
+    {
+        $this->setLastSeen(new \DateTime());
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function getRoles()
