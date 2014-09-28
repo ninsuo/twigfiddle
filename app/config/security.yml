@@ -18,6 +18,7 @@ security:
                 resource_owners:
                     google: "/login/check-google"
                     facebook: "/login/check-facebook"
+                    twitter: "/login/check-twitter"
                 login_path: /login
                 failure_path: /login
                 oauth_user_provider:
@@ -46,3 +47,8 @@ hwi_oauth:
             client_id: %facebook_client_id%
             client_secret: %facebook_secret%
             scope: "public_profile"
+        twitter:
+            type: twitter
+            client_id: %twitter_client_id%
+            client_secret: %twitter_secret%
+            scope: ""

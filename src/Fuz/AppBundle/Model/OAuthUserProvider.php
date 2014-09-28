@@ -80,6 +80,9 @@ class OAuthUserProvider extends BaseUserProvider
             case 'facebook':
                 $name = $response->getRealName();
                 break;
+            case 'twitter':
+                $name = $response->getNickname();
+                break;
             default:
                 break;
         }

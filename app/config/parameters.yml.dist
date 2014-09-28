@@ -21,6 +21,7 @@ parameters:
 
     google_client_id: <your client id>
     google_secret: <your secret>
-
     facebook_client_id: <your client id>
     facebook_secret: <your secret>
+    twitter_client_id: <your client id>
+    twitter_secret: <your secret>

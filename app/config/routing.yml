@@ -16,6 +16,9 @@ google_login:
 facebook_login:
     pattern: /login/check-facebook
 
+twitter_login:
+    pattern: /login/check-twitter
+
 fuz_app:
     resource: "@FuzAppBundle/Controller/"
     type:     annotation
