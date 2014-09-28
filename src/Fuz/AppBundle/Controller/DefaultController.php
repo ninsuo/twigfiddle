@@ -19,6 +19,22 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Route("/login")
+     */
+    public function loginAction()
+    {
+        $hasUser = $this->container->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED');
+        if ($hasUser)
+        {
+            return $this->redirect($this->generateUrl('home'));
+        }
+        else
+        {
+            return $this->forward('HWIOAuthBundle:Connect:connect');
+        }
+    }
+
+    /**
      * @Route("/logout", name="logout")
      */
     public function logoutAction()
