@@ -25,3 +25,5 @@ parameters:
     facebook_secret: <your secret>
     twitter_client_id: <your client id>
     twitter_secret: <your secret>
+    sensio_client_id: <your client id>
+    sensio_secret: <your secret>

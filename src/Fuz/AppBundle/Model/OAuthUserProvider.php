@@ -28,15 +28,20 @@ class OAuthUserProvider extends BaseUserProvider
         {
             return null;
         }
-        list($provider, $providerId) = json_decode($username);
-        return $this->em->getRepository('FuzAppBundle:User')->getUserByProviderId($provider, $providerId);
+        list($resourceOwner, $resourceOwnerId) = json_decode($username);
+        return $this->em->getRepository('FuzAppBundle:User')->getUserByResourceOwnerId($resourceOwner, $resourceOwnerId);
     }
 
     public function loadUserByOAuthUserResponse(UserResponseInterface $response)
     {
-        $provider = $response->getResourceOwner()->getName();
-        $providerId = $response->getUsername();
-        $name = $this->getName($provider, $response);
+        $resourceOwner = $response->getResourceOwner()->getName();
+        $resourceOwnerId = $response->getUsername();
+        $name = $this->getName($resourceOwner, $response);
+
+//Bug sensio_connect:
+//array (size=2)
+//  'error' => string 'invalid_client' (length=14)
+//  'message' => string 'Please provide your client id and secret' (length=40)
 
 //        echo '<pre>';
 //        echo "username = ", $response->getUsername(), PHP_EOL;
@@ -46,12 +51,12 @@ class OAuthUserProvider extends BaseUserProvider
 //        echo "picture = ", $response->getProfilePicture(), PHP_EOL;
 //        die();
 
-        $user = $this->em->getRepository('FuzAppBundle:User')->getUserByProviderId($provider, $providerId);
+        $user = $this->em->getRepository('FuzAppBundle:User')->getUserByResourceOwnerId($resourceOwner, $resourceOwnerId);
         if (is_null($user))
         {
             $user = new User();
-            $user->setProvider($provider);
-            $user->setProviderId($providerId);
+            $user->setResourceOwner($resourceOwner);
+            $user->setResourceOwnerId($resourceOwnerId);
             $user->setUsername($name);
             $user->setSigninCount(1);
             $this->em->persist($user);
@@ -64,7 +69,7 @@ class OAuthUserProvider extends BaseUserProvider
             $this->em->flush();
         }
 
-        $json = json_encode(array($provider, $providerId));
+        $json = json_encode(array($resourceOwner, $resourceOwnerId));
         $this->session->set('user', $json);
         return $this->loadUserByUsername($json);
     }
@@ -82,6 +87,9 @@ class OAuthUserProvider extends BaseUserProvider
                 break;
             case 'twitter':
                 $name = $response->getNickname();
+                break;
+            case 'sensio_connect':
+//                $name = $response->getNickname();
                 break;
             default:
                 break;

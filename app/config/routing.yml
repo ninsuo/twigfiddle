@@ -15,6 +15,9 @@ facebook_login:
 twitter_login:
     pattern: /login/check-twitter
 
+sensio_login:
+    pattern: /login/check-sensio-connect
+
 fuz_app:
     resource: "@FuzAppBundle/Controller/"
     type:     annotation

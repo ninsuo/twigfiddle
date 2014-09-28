@@ -19,6 +19,7 @@ security:
                     google: "/login/check-google"
                     facebook: "/login/check-facebook"
                     twitter: "/login/check-twitter"
+                    sensio_connect: "/login/check-sensio-connect"
                 login_path: /login
                 failure_path: /login
                 oauth_user_provider:
@@ -52,3 +53,8 @@ hwi_oauth:
             client_id: %twitter_client_id%
             client_secret: %twitter_secret%
             scope: ""
+        sensio_connect:
+            type: sensio_connect
+            client_id: %sensio_client_id%
+            client_secret: %sensio_secret%
+            scope: "SCOPE_PUBLIC"

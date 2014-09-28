@@ -10,15 +10,15 @@ use Doctrine\ORM\EntityRepository;
 class UserRepository extends EntityRepository
 {
 
-    public function getUserByProviderId($provider, $providerId)
+    public function getUserByResourceOwnerId($resourceOwner, $resourceOwnerId)
     {
         $qb = $this->_em->createQueryBuilder();
         $qb->select('u')
            ->from('FuzAppBundle:User', 'u')
-           ->where('u.provider = :provider')
-           ->andWhere('u.providerId = :providerId')
-           ->setParameter('provider', $provider)
-           ->setParameter('providerId', $providerId)
+           ->where('u.resourceOwner = :resourceOwner')
+           ->andWhere('u.resourceOwnerId = :resourceOwnerId')
+           ->setParameter('resourceOwner', $resourceOwner)
+           ->setParameter('resourceOwnerId', $resourceOwnerId)
            ->setMaxResults(1);
         $result = $qb->getQuery()->getResult();
         if (count($result))

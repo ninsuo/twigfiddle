@@ -10,7 +10,7 @@ use Symfony\Component\Security\Core\User\EquatableInterface;
  *
  * @ORM\Table(
  *      name="user",
- *      uniqueConstraints={@ORM\UniqueConstraint(name="provider_idx", columns={"provider", "provider_id"})}
+ *      uniqueConstraints={@ORM\UniqueConstraint(name="resource_owner_idx", columns={"resource_owner", "resource_owner_id"})}
  * )
  * @ORM\Entity(repositoryClass="Fuz\AppBundle\Entity\UserRepository")
  * @ORM\HasLifecycleCallbacks
@@ -30,16 +30,16 @@ class User implements UserInterface, EquatableInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="provider", type="string", length=16)
+     * @ORM\Column(name="resource_owner", type="string", length=16)
      */
-    protected $provider;
+    protected $resourceOwner;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="provider_id", type="string", length=255)
+     * @ORM\Column(name="resource_owner_id", type="string", length=255)
      */
-    protected $providerId;
+    protected $resourceOwnerId;
 
     /**
      * @var string
@@ -89,49 +89,49 @@ class User implements UserInterface, EquatableInterface
     }
 
     /**
-     * Set provider
+     * Set resourceOwner
      *
-     * @param string $provider
+     * @param string $resourceOwner
      * @return User
      */
-    public function setProvider($provider)
+    public function setResourceOwner($resourceOwner)
     {
-        $this->provider = $provider;
+        $this->resourceOwner = $resourceOwner;
 
         return $this;
     }
 
     /**
-     * Get provider
+     * Get resourceOwner
      *
      * @return string
      */
-    public function getProvider()
+    public function getResourceOwner()
     {
-        return $this->provider;
+        return $this->resourceOwner;
     }
 
     /**
-     * Set providerId
+     * Set resourceOwnerId
      *
-     * @param string $providerId
+     * @param string $resourceOwnerId
      * @return User
      */
-    public function setProviderId($providerId)
+    public function setResourceOwnerId($resourceOwnerId)
     {
-        $this->providerId = $providerId;
+        $this->resourceOwnerId = $resourceOwnerId;
 
         return $this;
     }
 
     /**
-     * Get providerId
+     * Get resourceOwnerId
      *
      * @return string
      */
-    public function getProviderId()
+    public function getResourceOwnerId()
     {
-        return $this->providerId;
+        return $this->resourceOwnerId;
     }
 
     /**
