@@ -5,6 +5,7 @@ parameters:
     database_name:     symfony
     database_user:     root
     database_password: ~
+    database_socket: /opt/local/var/run/mysql56/mysqld.sock
 
     mailer_transport:  smtp
     mailer_host:       127.0.0.1
@@ -17,3 +18,7 @@ parameters:
     debug_toolbar:          true
     debug_redirects:        false
     use_assetic_controller: true
+
+    google_client_id: <your client id>
+    google_secret: <your secret>
+

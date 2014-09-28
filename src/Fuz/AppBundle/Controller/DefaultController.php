@@ -8,12 +8,23 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 class DefaultController extends Controller
 {
+
     /**
-     * @Route("/")
+     * @Route("/", name="home")
      * @Template()
      */
     public function indexAction()
     {
-        return array();
+        return array ();
     }
+
+    /**
+     * @Route("/logout", name="logout")
+     */
+    public function logoutAction()
+    {
+        $this->container->get('security.context')->setToken(null);
+        return $this->redirect($this->generateUrl('home'));
+    }
+
 }

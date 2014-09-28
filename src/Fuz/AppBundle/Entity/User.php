@@ -3,15 +3,19 @@
 namespace Fuz\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\EquatableInterface;
 /**
  * User
  *
- * @ORM\Table(name="user")
+ * @ORM\Table(
+ *      name="user",
+ *      uniqueConstraints={@ORM\UniqueConstraint(name="provider_idx", columns={"provider", "provider_id"})}
+ * )
  * @ORM\Entity(repositoryClass="Fuz\AppBundle\Entity\UserRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class User
+class User implements UserInterface, EquatableInterface
 {
 
     /**
@@ -21,35 +25,42 @@ class User
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="username", type="string", length=255)
-     */
-    private $username;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="provider", type="string", length=16)
      */
-    private $provider;
+    protected $provider;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="provider_id", type="string", length=255)
+     */
+    protected $providerId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="username", type="string", length=255)
+     */
+    protected $username;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="last_seen", type="datetime")
      */
-    private $lastSeen;
+    protected $lastSeen;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="signin_count", type="integer")
      */
-    private $signinCount = 0;
+    protected $signinCount = 0;
 
     /**
      * @var array[UserPreference]
@@ -57,7 +68,7 @@ class User
      * @ORM\OneToMany(targetEntity="UserPreference", mappedBy="user_id")
      * @ORM\JoinColumn(name="id", referencedColumnName="user_id")
      */
-    private $preferences;
+    protected $preferences;
 
     /**
      * @var array[UserFavorite]
@@ -65,7 +76,7 @@ class User
      * @ORM\OneToMany(targetEntity="UserFavorite", mappedBy="user_id")
      * @ORM\JoinColumn(name="id", referencedColumnName="user_id")
      */
-    private $favorites;
+    protected $favorites;
 
     /**
      * Get id
@@ -75,29 +86,6 @@ class User
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set username
-     *
-     * @param string $username
-     * @return User
-     */
-    public function setUsername($username)
-    {
-        $this->username = $username;
-
-        return $this;
-    }
-
-    /**
-     * Get username
-     *
-     * @return string
-     */
-    public function getUsername()
-    {
-        return $this->username;
     }
 
     /**
@@ -121,6 +109,50 @@ class User
     public function getProvider()
     {
         return $this->provider;
+    }
+
+    /**
+     * Set providerId
+     *
+     * @param string $providerId
+     * @return User
+     */
+    public function setProviderId($providerId)
+    {
+        $this->providerId = $providerId;
+
+        return $this;
+    }
+
+    /**
+     * Get providerId
+     *
+     * @return string
+     */
+    public function getProviderId()
+    {
+        return $this->providerId;
+    }
+
+    /**
+     * Set username
+     *
+     * @param string $username
+     * @return User
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getUsername()
+    {
+        return $this->username;
     }
 
     /**
@@ -221,6 +253,48 @@ class User
     public function onPrePersist()
     {
         $this->setLastSeen(new \DateTime());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getRoles()
+    {
+        return array ('ROLE_USER');
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getPassword()
+    {
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getSalt()
+    {
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function eraseCredentials()
+    {
+        return true;
+    }
+
+    public function isEqualTo(UserInterface $user)
+    {
+        if ((int) $this->getId() === $user->getId())
+        {
+            return true;
+        }
+
+        return false;
     }
 
 }

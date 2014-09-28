@@ -1,12 +1,42 @@
 security:
     providers:
-        in_memory:
-            memory: ~
+        oauth_provider:
+             id: app.oauth_user_provider
 
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-
+        main:
+            pattern: ^/
+            anonymous: true
+            logout: true
+            logout:
+                path: /logout
+                target: /
+            oauth:
+                resource_owners:
+                    google: "/login/check-google"
+                login_path: /login
+                failure_path: /login
+                oauth_user_provider:
+                    service: app.oauth_user_provider
         default:
             anonymous: ~
+
+    access_control:
+        - { path: ^/login, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/connect, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/user, role: ROLE_USER }
+        - { path: ^/logout, role: ROLE_USER }
+
+hwi_oauth:
+    firewall_name: main
+    connect:
+        confirmation: false
+    resource_owners:
+        google:
+            type: google
+            client_id: %google_client_id%
+            client_secret: %google_secret%
+            scope: "profile"
