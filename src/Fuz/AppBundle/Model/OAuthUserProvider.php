@@ -36,7 +36,7 @@ class OAuthUserProvider extends BaseUserProvider
     {
         $resourceOwner = $response->getResourceOwner()->getName();
         $resourceOwnerId = $response->getUsername();
-        $name = $this->getName($resourceOwner, $response);
+        $name = $this->getNameToDisplay($resourceOwner, $response);
 
 //        echo '<pre>';
 //        echo "username = ", $response->getUsername(), PHP_EOL;
@@ -69,10 +69,10 @@ class OAuthUserProvider extends BaseUserProvider
         return $this->loadUserByUsername($json);
     }
 
-    public function getName($provider, $response)
+    public function getNameToDisplay($resourceOwner, $response)
     {
         $name = null;
-        switch ($provider)
+        switch ($resourceOwner)
         {
             case 'google':
                 $name = $response->getNickname();
@@ -84,7 +84,7 @@ class OAuthUserProvider extends BaseUserProvider
                 $name = $response->getNickname();
                 break;
             case 'sensio_connect':
-                $name = $response->getRalname();
+                $name = $response->getNickname();
                 break;
             default:
                 break;
