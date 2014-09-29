@@ -38,11 +38,6 @@ class OAuthUserProvider extends BaseUserProvider
         $resourceOwnerId = $response->getUsername();
         $name = $this->getName($resourceOwner, $response);
 
-//Bug sensio_connect:
-//array (size=2)
-//  'error' => string 'invalid_client' (length=14)
-//  'message' => string 'Please provide your client id and secret' (length=40)
-
 //        echo '<pre>';
 //        echo "username = ", $response->getUsername(), PHP_EOL;
 //        echo "nickname = ", $response->getNickname(), PHP_EOL;
@@ -89,7 +84,7 @@ class OAuthUserProvider extends BaseUserProvider
                 $name = $response->getNickname();
                 break;
             case 'sensio_connect':
-//                $name = $response->getNickname();
+                $name = $response->getRalname();
                 break;
             default:
                 break;
