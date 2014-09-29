@@ -165,7 +165,7 @@ class Fiddle implements \Serializable
     /**
      * Get user
      *
-     * @return User
+     * @return User|null
      */
     public function getUser()
     {
