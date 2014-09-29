@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="fiddle_template")
  * @ORM\Entity
  */
-class FiddleTemplate
+class FiddleTemplate implements \Serializable
 {
 
     /**
@@ -20,7 +20,7 @@ class FiddleTemplate
      * @ORM\JoinColumn(name="fiddle_id", referencedColumnName="id", onDelete="cascade")
      * @ORM\Id
      */
-    private $fiddle;
+    protected $fiddle;
 
     /**
      * @var string
@@ -28,21 +28,21 @@ class FiddleTemplate
      * @ORM\Column(name="filename", type="string", length=64)
      * @ORM\Id
      */
-    private $filename = 'main.twig';
+    protected $filename = 'main.twig';
 
     /**
      * @var string
      *
      * @ORM\Column(name="content", type="text")
      */
-    private $content = '';
+    protected $content = '';
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="is_main", type="boolean")
      */
-    private $isMain = true;
+    protected $isMain = true;
 
     /**
      * Set fiddle
@@ -60,7 +60,7 @@ class FiddleTemplate
     /**
      * Get fiddle
      *
-     * @return Fiddle
+     * @return Fiddle|null
      */
     public function getFiddle()
     {
@@ -134,6 +134,24 @@ class FiddleTemplate
     public function getIsMain()
     {
         return $this->isMain;
+    }
+
+    public function serialize()
+    {
+        return serialize(array (
+                $this->filename,
+                $this->content,
+                $this->isMain
+        ));
+    }
+
+    public function unserialize($serialized)
+    {
+        list(
+           $this->filename,
+           $this->content,
+           $this->isMain
+           ) = unserialize($serialized);
     }
 
 }

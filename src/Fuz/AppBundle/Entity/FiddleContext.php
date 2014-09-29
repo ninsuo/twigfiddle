@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="fiddle_context")
  * @ORM\Entity
  */
-class FiddleContext
+class FiddleContext implements \Serializable
 {
 
     const FORMAT_YAML = 'YAML';
@@ -26,21 +26,21 @@ class FiddleContext
      * @ORM\JoinColumn(name="fiddle_id", referencedColumnName="id", onDelete="cascade")
      * @ORM\Id
      */
-    private $fiddle;
+    protected $fiddle;
 
     /**
      * @var string
      *
      * @ORM\Column(name="format", type="string", length=8)
      */
-    private $format = self::FORMAT_YAML;
+    protected $format = self::FORMAT_YAML;
 
     /**
      * @var string
      *
      * @ORM\Column(name="content", type="text")
      */
-    private $content = '';
+    protected $content = '';
 
     /**
      * Set fiddle
@@ -58,7 +58,7 @@ class FiddleContext
     /**
      * Get fiddle
      *
-     * @return Fiddle
+     * @return Fiddle|null
      */
     public function getFiddle()
     {
@@ -109,6 +109,22 @@ class FiddleContext
     public function getContent()
     {
         return $this->content;
+    }
+
+    public function serialize()
+    {
+        return serialize(array (
+                $this->format,
+                $this->content
+        ));
+    }
+
+    public function unserialize($serialized)
+    {
+        list(
+           $this->format,
+           $this->content
+           ) = unserialize($serialized);
     }
 
 }

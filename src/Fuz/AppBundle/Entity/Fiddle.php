@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="Fuz\AppBundle\Entity\FiddleRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class Fiddle
+class Fiddle implements \Serializable
 {
 
     /**
@@ -24,21 +24,21 @@ class Fiddle
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="hash", type="string", length=8)
      */
-    private $hash;
+    protected $hash;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="revision", type="integer")
      */
-    private $revision = 1;
+    protected $revision = 1;
 
     /**
      * @var User
@@ -46,28 +46,28 @@ class Fiddle
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
-    private $user;
+    protected $user;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="creation_tm", type="datetime")
      */
-    private $creationTm;
+    protected $creationTm;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="update_tm", type="datetime")
      */
-    private $updateTm;
+    protected $updateTm;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="visits_count", type="integer")
      */
-    private $visitsCount;
+    protected $visitsCount;
 
     /**
      * @var FiddleConfig
@@ -75,7 +75,7 @@ class Fiddle
      * @ORM\OneToOne(targetEntity="FiddleConfig")
      * @ORM\JoinColumn(name="id", referencedColumnName="fiddle_id")
      */
-    private $config;
+    protected $config;
 
     /**
      * @var array[FiddleTemplate]
@@ -83,7 +83,7 @@ class Fiddle
      * @ORM\OneToMany(targetEntity="FiddleTemplate", mappedBy="fiddle_id")
      * @ORM\JoinColumn(name="id", referencedColumnName="fiddle_id")
      */
-    private $templates;
+    protected $templates;
 
     /**
      * @var FiddleContext
@@ -91,7 +91,7 @@ class Fiddle
      * @ORM\OneToOne(targetEntity="FiddleContext")
      * @ORM\JoinColumn(name="id", referencedColumnName="fiddle_id")
      */
-    private $context;
+    protected $context;
 
     /**
      * Get id
@@ -325,6 +325,33 @@ class Fiddle
     public function onPreUpdate()
     {
         $this->setUpdateTm(new \DateTime());
+    }
+
+    /**
+     * Can't use $em->detach as we require FiddleConfig, FiddleTemplate[] and FiddleContext entities inside the serialized object.
+     */
+    public function serialize()
+    {
+        return serialize(array (
+                $this->id,
+                $this->hash,
+                $this->revision,
+                $this->config,
+                $this->templates,
+                $this->context
+        ));
+    }
+
+    public function unserialize($serialized)
+    {
+        list(
+           $this->id,
+           $this->hash,
+           $this->revision,
+           $this->config,
+           $this->templates,
+           $this->context
+           ) = unserialize($serialized);
     }
 
 }

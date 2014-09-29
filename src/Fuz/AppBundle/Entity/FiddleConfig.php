@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="fiddle_config")
  * @ORM\Entity
  */
-class FiddleConfig
+class FiddleConfig implements \Serializable
 {
 
     /**
@@ -20,35 +20,35 @@ class FiddleConfig
      * @ORM\JoinColumn(name="fiddle_id", referencedColumnName="id", onDelete="cascade")
      * @ORM\Id
      */
-    private $fiddle;
+    protected $fiddle;
 
     /**
      * @var string
      *
      * @ORM\Column(name="twig_version", type="string", length=32)
      */
-    private $twigVersion;
+    protected $twigVersion;
 
     /**
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255, nullable=true)
      */
-    private $title;
+    protected $title;
 
     /**
      * @var string
      *
      * @ORM\Column(name="tags", type="string", length=64, nullable=true)
      */
-    private $tags;
+    protected $tags;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="is_private", type="boolean")
      */
-    private $isPrivate = false;
+    protected $isPrivate = false;
 
     /**
      * Set fiddle
@@ -66,7 +66,7 @@ class FiddleConfig
     /**
      * Get fiddle
      *
-     * @return Fiddle
+     * @return Fiddle|null
      */
     public function getFiddle()
     {
@@ -163,6 +163,26 @@ class FiddleConfig
     public function getIsPrivate()
     {
         return $this->isPrivate;
+    }
+
+    public function serialize()
+    {
+        return serialize(array (
+                $this->twigVersion,
+                $this->title,
+                $this->tags,
+                $this->isPrivate
+        ));
+    }
+
+    public function unserialize($serialized)
+    {
+        list(
+           $this->twigVersion,
+           $this->title,
+           $this->tags,
+           $this->isPrivate
+           ) = unserialize($serialized);
     }
 
 }
