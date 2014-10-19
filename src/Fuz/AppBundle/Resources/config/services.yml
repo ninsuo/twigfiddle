@@ -1,6 +1,7 @@
 parameters:
     app.oauth_user_provider.class: Fuz\AppBundle\Model\OAuthUserProvider
     hwi_oauth.account.connector: Fuz\AppBundle\Connect\AccountConnect
+    app.daemon.class: Fuz\AppBundle\Component\Daemon
 
 services:
 
@@ -11,3 +12,6 @@ services:
     hwi_oauth.account.connector:
         class: %hwi_oauth.account.connector%
 
+    app.daemon:
+        class: %app.daemon.class%
+        arguments: [@kernel]
