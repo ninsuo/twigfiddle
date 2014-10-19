@@ -38,14 +38,6 @@ class OAuthUserProvider extends BaseUserProvider
         $resourceOwnerId = $response->getUsername();
         $name = $this->getNameToDisplay($resourceOwner, $response);
 
-//        echo '<pre>';
-//        echo "username = ", $response->getUsername(), PHP_EOL;
-//        echo "nickname = ", $response->getNickname(), PHP_EOL;
-//        echo "realname = ", $response->getRealName(), PHP_EOL;
-//        echo "email = ", $response->getUsername(), PHP_EOL;
-//        echo "picture = ", $response->getProfilePicture(), PHP_EOL;
-//        die();
-
         $user = $this->em->getRepository('FuzAppBundle:User')->getUserByResourceOwnerId($resourceOwner, $resourceOwnerId);
         if (is_null($user))
         {
