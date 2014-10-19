@@ -3,21 +3,23 @@
 namespace Fuz\AppBundle\Component;
 
 use Symfony\Component\HttpKernel\KernelInterface;
+use JMS\DiExtraBundle\Annotation\Service;
+use JMS\DiExtraBundle\Annotation\Inject;
 
 /**
  * This class intends to run a Linux command as daemon.
+ *
+ * @Service("app.daemon")
  */
 class Daemon
 {
 
     const PHPCLI_DIR = '/usr/bin/php';
 
-    protected $kernel;
-
-    public function __construct(KernelInterface $kernel)
-    {
-        $this->kernel = $kernel;
-    }
+    /**
+     * @Inject("kernel")
+     */
+    public $kernel;
 
     public function exec($command, $arguments = array ())
     {

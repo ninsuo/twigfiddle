@@ -2,10 +2,14 @@
 
 namespace Fuz\AppBundle\Connect;
 
+use Symfony\Component\Security\Core\User\UserInterface;
 use HWI\Bundle\OAuthBundle\Connect\AccountConnectorInterface;
 use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
+use JMS\DiExtraBundle\Annotation\Service;
 
+/**
+ * @Service("hwi_oauth.account.connector")
+ */
 class AccountConnect implements AccountConnectorInterface
 {
 
