@@ -1,0 +1,14 @@
+{
+
+    "require" : {
+        "cilex/cilex"              : "dev-master",
+        "ninsuo/php-shared-memory" : "dev-master"
+    },
+
+    "autoload" : {
+        "psr-4" : {
+            "Fuz\\": "src/Fuz"
+        }
+    }
+
+}
