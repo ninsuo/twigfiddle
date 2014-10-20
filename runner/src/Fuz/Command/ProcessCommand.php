@@ -25,8 +25,14 @@ class ProcessCommand extends Command
     {
         $env_id = $input->getArgument('environment-id');
 
+        $app = $this->getApplication()->getContainer();
+        $app['logger']->info("Started execution for environment: {$env_id}");
+
+
+
         // something
 
+        $app['logger']->info("Ended execution for environment: {$env_id}");
         $output->writeln($env_id);
     }
 

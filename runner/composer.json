@@ -1,14 +1,12 @@
 {
-
     "require" : {
-        "cilex/cilex"              : "dev-master",
+        "monolog/monolog"                  : "~1.11.0",
+        "symfony/yaml"                         : "~2.5",
         "ninsuo/php-shared-memory" : "dev-master"
     },
-
     "autoload" : {
         "psr-4" : {
             "Fuz\\": "src/Fuz"
         }
     }
-
 }
