@@ -1,8 +1,11 @@
 {
     "require" : {
-        "monolog/monolog"                  : "~1.11.0",
-        "symfony/yaml"                         : "~2.5",
-        "ninsuo/php-shared-memory" : "dev-master"
+        "monolog/monolog": "~1.11.0",
+        "symfony/dependency-injection": "~2.5",
+        "symfony/console": "~2.5",
+        "symfony/config": "~2.5",
+        "symfony/yaml": "~2.5",
+        "ninsuo/php-shared-memory": "dev-master"
     },
     "autoload" : {
         "psr-4" : {

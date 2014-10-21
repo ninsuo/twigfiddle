@@ -1,0 +1,6 @@
+parameters:
+
+    monolog:
+        path: app/logs/test.log
+        level: DEBUG
+

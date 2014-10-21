@@ -5,17 +5,20 @@ namespace Fuz\Service;
 use \Psr\Log\LoggerInterface;
 use Monolog\Logger as Monolog;
 use Monolog\Handler\StreamHandler;
+use Fuz\Exception\InvalidLogLevelException;
 
 class LeveragedLogger implements LoggerInterface
 {
 
+    protected $enabled;
     protected $loggers;
     protected $stream;
 
-    public function __construct(StreamHandler $stream)
+    public function __construct(array &$parameters)
     {
+        $this->enabled = true;
         $this->loggers = array ();
-        $this->stream = $stream;
+        $this->stream = $this->getMonologStream($parameters);
     }
 
     public function alert($message, array $context = array ())
@@ -69,6 +72,55 @@ class LeveragedLogger implements LoggerInterface
     public function warning($message, array $context = array ())
     {
         $this->log(Monolog::WARNING, $message, $context);
+    }
+
+    protected function getMonologStream(array &$parameters)
+    {
+        if (!array_key_exists('level', $parameters))
+        {
+            $parameters['level'] = 'DEBUG';
+        }
+        if ((!array_key_exists('path', $parameters)) || (!is_writable($parameters['path'])))
+        {
+            $this->enabled = false;
+        }
+        $logLevel = $this->convertLogLevel($parameters['level']);
+        return new StreamHandler($parameters['path'], $logLevel);
+    }
+
+    protected function convertLogLevel($level)
+    {
+        switch ($level)
+        {
+            case 'DEBUG':
+                $level = Monolog::DEBUG;
+                break;
+            case 'INFO':
+                $level = Monolog::INFO;
+                break;
+            case 'NOTICE':
+                $level = Monolog::NOTICE;
+                break;
+            case 'WARNING':
+                $level = Monolog::WARNING;
+                break;
+            case 'ERROR':
+                $level = Monolog::ERROR;
+                break;
+            case 'CRITICAL':
+                $level = Monolog::CRITICAL;
+                break;
+            case 'ALERT':
+                $level = Monolog::ALERT;
+                break;
+            default:
+                break;
+        }
+        if (is_null($level))
+        {
+            throw new InvalidLogLevelException($level);
+        }
+        return $level;
     }
 
 }

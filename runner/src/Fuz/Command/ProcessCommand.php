@@ -5,9 +5,9 @@ namespace Fuz\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Cilex\Command\Command;
+use Fuz\Base\BaseCommand;
 
-class ProcessCommand extends Command
+class ProcessCommand extends BaseCommand
 {
 
     protected function configure()
@@ -25,14 +25,8 @@ class ProcessCommand extends Command
     {
         $env_id = $input->getArgument('environment-id');
 
-        $app = $this->getApplication()->getContainer();
-        $app['logger']->info("Started execution for environment: {$env_id}");
+        $this->container->get('logger')->info("test!");
 
-
-
-        // something
-
-        $app['logger']->info("Ended execution for environment: {$env_id}");
         $output->writeln($env_id);
     }
 
