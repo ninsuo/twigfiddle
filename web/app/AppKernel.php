@@ -18,8 +18,6 @@ class AppKernel extends Kernel
                 new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
                 new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
                 new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
-                new JMS\DiExtraBundle\JMSDiExtraBundle($this),
-                new JMS\AopBundle\JMSAopBundle(),
                 new Fuz\AppBundle\FuzAppBundle(),
         );
 

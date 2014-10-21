@@ -4,25 +4,19 @@ namespace Fuz\AppBundle\Model;
 
 use HWI\Bundle\OAuthBundle\Security\Core\User\OAuthUserProvider as BaseUserProvider;
 use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
-use JMS\DiExtraBundle\Annotation\Service;
-use JMS\DiExtraBundle\Annotation\Inject;
 use Fuz\AppBundle\Entity\User;
 
-/**
- * @Service("app.oauth_user_provider")
- */
 class OAuthUserProvider extends BaseUserProvider
 {
 
-    /**
-     * @Inject("session");
-     */
-    public $session;
+    protected $session;
+    protected $em;
 
-    /**
-     * @Inject("doctrine.orm.entity_manager")
-     */
-    public $em;
+    public function __construct($session, $em)
+    {
+        $this->session = $session;
+        $this->em = $em;
+    }
 
     public function loadUserByUsername($username)
     {
