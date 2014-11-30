@@ -9,4 +9,4 @@ commands:
 environment:
     directory: %rootDir%/../environment/
     expiry: 24
-    
+

@@ -1,8 +1,22 @@
 parameters:
 
+    logger_configuration_node.class: Fuz\Framework\ConfigurationNode\LoggerConfigurationNode
+    commands_configuration_node.class: Fuz\Framework\ConfigurationNode\CommandsConfigurationNode
     file.loader.class: Fuz\Framework\Service\FileLoader
 
 services:
+
+    logger_configuration_node:
+        class: %logger_configuration_node.class%
+        arguments: []
+        tags:
+         - { name: configuration.node }
+
+    commands_configuration_node:
+        class: %commands_configuration_node.class%
+        arguments: []
+        tags:
+         - { name: configuration.node }
 
     file.loader:
         class: %file.loader.class%

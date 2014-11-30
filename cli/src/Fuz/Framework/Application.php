@@ -11,8 +11,6 @@ use Monolog\Handler\RotatingFileHandler;
 use Fuz\Framework\Api\ConfigurationNodeInterface;
 use Fuz\Framework\Base\BaseCommand;
 use Fuz\Framework\Configuration\ApplicationConfiguration;
-use Fuz\Framework\ConfigurationNode\CommandsConfigurationNode;
-use Fuz\Framework\ConfigurationNode\LoggerConfigurationNode;
 use Fuz\Framework\Core\MonologContainer;
 
 class Application
@@ -21,7 +19,6 @@ class Application
     protected $container;
     protected $applicationDir;
     protected $rootDir;
-    protected $configurationNodes;
     protected $configuration;
     protected $console;
 
@@ -32,29 +29,21 @@ class Application
            ->initRootDir()
            ->initCoreServices()
            ->initUserServices()
-        ;
-        $this->configurationNodes = array ();
-    }
-
-    public function run()
-    {
-        $this
            ->initConfiguration()
            ->initCommands()
            ->initLogger()
            ->initCommands()
         ;
+    }
+
+    public function run()
+    {
         $this->console->run();
     }
 
     public function getContainer()
     {
         return $this->container;
-    }
-
-    public function pushConfigurationNode(ConfigurationNodeInterface $node)
-    {
-        $this->configurationNodes[] = $node;
     }
 
     protected function initRootDir()
@@ -90,10 +79,17 @@ class Application
         $config = $this->container->get('file.loader')->load($dir, 'config.yml');
         $configs = array ($this->container->getParameterBag()->resolveValue($config));
         $processor = new Processor();
-        $configuration = new ApplicationConfiguration(array_merge(array (
-                   new CommandsConfigurationNode(),
-                   new LoggerConfigurationNode(),
-              ), $this->configurationNodes));
+        $serviceIds = array_keys($this->container->findTaggedServiceIds('configuration.node'));
+        $nodes = array();
+        foreach ($serviceIds as $serviceId)
+        {
+            $service = $this->container->get($serviceId);
+            if ($service instanceof ConfigurationNodeInterface)
+            {
+                $nodes[] = $service;
+            }
+        }
+        $configuration = new ApplicationConfiguration($nodes);
         $this->configuration = $processor->processConfiguration($configuration, $configs);
         return $this;
     }

@@ -1,4 +1,15 @@
 parameters:
+    environment_configuration_node.class: Fuz\Process\ConfigurationNode\EnvironmentConfigurationNode
+    shared_environment.class: Fuz\Process\Service\SharedEnvironment
 
 services:
 
+    shared_environment:
+        class: %shared_environment.class%
+        arguments: []
+
+    environment_configuration_node:
+        class: %environment_configuration_node.class%
+        arguments: []
+        tags:
+         - { name: configuration.node }
