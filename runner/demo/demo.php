@@ -43,6 +43,6 @@ $context->setFormat(FiddleContext::FORMAT_YAML);
 $context->setContent(file_get_contents('context.yml'));
 $fiddle->setContext($context);
 
-$storage = new StorageFile(__DIR__ . '/../../shared/demo.fiddle');
+$storage = new StorageFile(__DIR__ . '/../../environment/demo.fiddle');
 $shared = new SharedMemory($storage);
 $shared->fiddle = $fiddle;
