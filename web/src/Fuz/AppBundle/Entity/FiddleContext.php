@@ -13,11 +13,11 @@ use Doctrine\ORM\Mapping as ORM;
 class FiddleContext
 {
 
-    const FORMAT_YAML = 'YAML';
+    const FORMAT_YAML = 'YML';
     const FORMAT_XML = 'XML';
     const FORMAT_JSON = 'JSON';
     const FORMAT_INI = 'INI';
-    const FORMAT_KEY_VALUE = 'key = value';
+    const FORMAT_KEY_VALUE = 'PAIR';
 
     /**
      * @var Fiddle

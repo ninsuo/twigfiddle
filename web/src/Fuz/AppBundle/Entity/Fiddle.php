@@ -2,6 +2,7 @@
 
 namespace Fuz\AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -78,7 +79,7 @@ class Fiddle
     protected $config;
 
     /**
-     * @var array[FiddleTemplate]
+     * @var ArrayCollection[FiddleTemplate]
      *
      * @ORM\OneToMany(targetEntity="FiddleTemplate", mappedBy="fiddle_id")
      * @ORM\JoinColumn(name="fiddle_id", referencedColumnName="fiddle_id")
@@ -275,10 +276,10 @@ class Fiddle
     /**
      * Set templates
      *
-     * @param  array[FiddleTemplate] $templates
+     * @param  ArrayCollection[FiddleTemplate] $templates
      * @return Fiddle
      */
-    public function setTemplates(array $templates)
+    public function setTemplates(ArrayCollection $templates)
     {
         $this->templates = $templates;
 
@@ -296,12 +297,35 @@ class Fiddle
     }
 
     /**
-     * Set tags
+     * Set context
      *
-     * @param FiddleTag $tags
+     * @param FiddleTag $context
      * @return Fiddle
      */
-    public function setTags(array $tags)
+    public function setContext(FiddleContext $context)
+    {
+        $this->context = $context;
+
+        return $this;
+    }
+
+    /**
+     * Get context
+     *
+     * @return FiddleContext
+     */
+    public function getContext()
+    {
+        return $this->context;
+    }
+
+    /**
+     * Set tags
+     *
+     * @param ArrayCollection[FiddleTag] $tags
+     * @return Fiddle
+     */
+    public function setTags(ArrayCollection $tags)
     {
         $this->tags = $tags;
 
@@ -311,7 +335,7 @@ class Fiddle
     /**
      * Get tags
      *
-     * @return FiddleTag
+     * @return ArrayCollection[FiddleTag]
      */
     public function getTags()
     {
@@ -334,5 +358,5 @@ class Fiddle
     {
         $this->setUpdateTm(new \DateTime());
     }
-    
+
 }

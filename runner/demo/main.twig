@@ -1,0 +1,8 @@
+{% import 'macros.twig' as macros %}
+<html>
+    <body>
+        <h1>{% block title %}Hello, world!{% endblock %}</h1>
+        {% block content %}{% endblock %}
+        {{ macros.hello(42) }}
+    </body>
+</html>

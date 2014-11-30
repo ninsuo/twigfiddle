@@ -1,15 +1,18 @@
 {
-    "require" : {
+    "require": {
         "monolog/monolog": "~1.11.0",
         "symfony/dependency-injection": "~2.5",
         "symfony/console": "~2.5",
         "symfony/config": "~2.5",
         "symfony/yaml": "~2.5",
-        "ninsuo/php-shared-memory": "dev-master"
+        "ninsuo/php-shared-memory": "dev-master",
+        "doctrine/orm": "~2.2,>=2.2.3"
     },
-    "autoload" : {
-        "psr-4" : {
-            "Fuz\\": "src/Fuz"
+    "autoload": {
+        "psr-4": {
+            "Fuz\\Framework\\": "src/Fuz/Framework",
+            "Fuz\\Runner\\": "src/Fuz/Runner",
+            "Fuz\\AppBundle\\": "../web/src/Fuz/AppBundle"
         }
     }
 }
