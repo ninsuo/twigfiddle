@@ -4,4 +4,4 @@ logger:
     name: app.log
 
 commands:
-    - src/Fuz/Runner/Command/*
+    - src/Fuz/Process/Command/*

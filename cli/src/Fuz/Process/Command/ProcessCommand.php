@@ -24,10 +24,11 @@ class ProcessCommand extends BaseCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $env_id = $input->getArgument('environment-id');
-
         $this->logger->info("Started execution for environment: {$env_id}");
 
-        $output->writeln($env_id);
+        
+
+        $this->logger->info("Ended execution for environment: {$env_id}");
     }
 
 }
