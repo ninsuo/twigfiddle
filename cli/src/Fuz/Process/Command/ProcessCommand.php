@@ -1,6 +1,6 @@
 <?php
 
-namespace Fuz\Runner\Command;
+namespace Fuz\Process\Command;
 
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -26,7 +26,7 @@ class ProcessCommand extends BaseCommand
         $env_id = $input->getArgument('environment-id');
         $this->logger->info("Started execution for environment: {$env_id}");
 
-        
+
 
         $this->logger->info("Ended execution for environment: {$env_id}");
     }

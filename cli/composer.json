@@ -11,7 +11,7 @@
     "autoload": {
         "psr-4": {
             "Fuz\\Framework\\": "src/Fuz/Framework",
-            "Fuz\\Runner\\": "src/Fuz/Runner",
+            "Fuz\\Process\\": "src/Fuz/Process",
             "Fuz\\AppBundle\\": "../web/src/Fuz/AppBundle"
         }
     }
