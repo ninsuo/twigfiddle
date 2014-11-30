@@ -115,7 +115,7 @@ class Application
         foreach ($this->configuration['commands'] as $path)
         {
             $this->console = new Console();
-            foreach (glob($this->rootDir . '/' . $path) as $class)
+            foreach (glob($path) as $class)
             {
                 $class = str_replace('/', '\\', substr($class, strlen($this->rootDir . '/src/'), -4));
                 $command = new $class();

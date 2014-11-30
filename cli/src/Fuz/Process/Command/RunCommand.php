@@ -7,7 +7,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Fuz\Framework\Base\BaseCommand;
 
-class ProcessCommand extends BaseCommand
+class RunCommand extends BaseCommand
 {
 
     protected function configure()
@@ -17,7 +17,8 @@ class ProcessCommand extends BaseCommand
            ->setName("twigfiddle:run")
            ->setDescription("Executes a twigfiddle (from already prepared environment)")
            ->addArgument('environment-id', InputArgument::REQUIRED,
-              "Environment where the twigfiddle is stored and will be executed")
+              "Environment where the twigfiddle is stored and will be executed"
+           )
         ;
     }
 
