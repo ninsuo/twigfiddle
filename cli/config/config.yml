@@ -4,4 +4,9 @@ logger:
     name: app.log
 
 commands:
-    - src/Fuz/Process/Command/*
+    - %rootDir%/src/Fuz/Process/Command/*
+
+environment:
+    directory: %rootDir%/../environment/
+    expiry: 24
+    

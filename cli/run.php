@@ -7,7 +7,10 @@ if (!include __DIR__ . '/vendor/autoload.php')
 }
 
 use Fuz\Framework\Application;
+use Fuz\Process\ConfigurationNode\EnvironmentConfigurationNode;
 
 $app = new Application();
-$app->run();
 
+$app->pushConfigurationNode(new EnvironmentConfigurationNode());
+
+$app->run();

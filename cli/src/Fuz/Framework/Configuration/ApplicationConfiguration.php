@@ -4,23 +4,23 @@ namespace Fuz\Framework\Configuration;
 
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
-use Fuz\Framework\ConfigurationNode\CommandsConfigurationNode;
-use Fuz\Framework\ConfigurationNode\LoggerConfigurationNode;
 
 class ApplicationConfiguration implements ConfigurationInterface
 {
+
+    protected $nodes;
+
+    public function __construct(array $nodes = array())
+    {
+        $this->nodes = $nodes;
+    }
 
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('app');
 
-        $objects = array(
-                new CommandsConfigurationNode(),
-                new LoggerConfigurationNode(),
-        );
-
-        foreach ($objects as $object)
+        foreach ($this->nodes as $object)
         {
             $rootNode->append($object->getConfigurationNode());
         }
