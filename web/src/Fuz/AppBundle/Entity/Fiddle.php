@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="Fuz\AppBundle\Entity\FiddleRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class Fiddle implements \Serializable
+class Fiddle
 {
 
     /**
@@ -81,7 +81,7 @@ class Fiddle implements \Serializable
      * @var array[FiddleTemplate]
      *
      * @ORM\OneToMany(targetEntity="FiddleTemplate", mappedBy="fiddle_id")
-     * @ORM\JoinColumn(name="id", referencedColumnName="fiddle_id")
+     * @ORM\JoinColumn(name="fiddle_id", referencedColumnName="fiddle_id")
      */
     protected $templates;
 
@@ -89,9 +89,17 @@ class Fiddle implements \Serializable
      * @var FiddleContext
      *
      * @ORM\OneToOne(targetEntity="FiddleContext")
-     * @ORM\JoinColumn(name="id", referencedColumnName="fiddle_id")
+     * @ORM\JoinColumn(name="fiddle_id", referencedColumnName="fiddle_id")
      */
     protected $context;
+
+    /**
+     * @var array[UserTag]
+     *
+     * @ORM\OneToMany(targetEntity="UserTag", mappedBy="fiddle_id")
+     * @ORM\JoinColumn(name="fiddle_id", referencedColumnName="fiddle_id")
+     */
+    protected $tags;
 
     /**
      * Get id
@@ -288,26 +296,26 @@ class Fiddle implements \Serializable
     }
 
     /**
-     * Set context
+     * Set tags
      *
-     * @param FiddleContext $context
+     * @param FiddleTag $tags
      * @return Fiddle
      */
-    public function setContext(FiddleContext $context)
+    public function setTags(array $tags)
     {
-        $this->context = $context;
+        $this->tags = $tags;
 
         return $this;
     }
 
     /**
-     * Get context
+     * Get tags
      *
-     * @return FiddleContext
+     * @return FiddleTag
      */
-    public function getContext()
+    public function getTags()
     {
-        return $this->context;
+        return $this->tags;
     }
 
     /**
@@ -326,32 +334,5 @@ class Fiddle implements \Serializable
     {
         $this->setUpdateTm(new \DateTime());
     }
-
-    /**
-     * Can't use $em->detach as we require FiddleConfig, FiddleTemplate[] and FiddleContext entities inside the serialized object.
-     */
-    public function serialize()
-    {
-        return serialize(array (
-                $this->id,
-                $this->hash,
-                $this->revision,
-                $this->config,
-                $this->templates,
-                $this->context
-        ));
-    }
-
-    public function unserialize($serialized)
-    {
-        list(
-           $this->id,
-           $this->hash,
-           $this->revision,
-           $this->config,
-           $this->templates,
-           $this->context
-           ) = unserialize($serialized);
-    }
-
+    
 }

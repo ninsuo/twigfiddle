@@ -1,0 +1,10 @@
+parameters:
+
+    file.loader.class: Fuz\Framework\Service\FileLoader
+
+services:
+
+    file.loader:
+        class: %file.loader.class%
+        arguments: []
+

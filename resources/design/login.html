@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<title>Twig Fiddle</title>
+
+<!-- Bootstrap core CSS -->
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/twig.css" rel="stylesheet">
+</head>
+
+<body>
+
+<!-- Start Container -->
+<div class="container-fluid"> 
+  
+  <!-- Start Header -->
+  <div class="row" id="header">
+    <div class="col-md-2 col-sm-6 col-xs-6 logo"><a href="guest.html"><img src="img/logo_twig-fiddle.png" alt="Twig Fiddle"></a></div>
+    <div class="col-md-2 col-sm-6 col-xs-6 version">
+      <select class="form-control">
+        <option>Twig Version 1.15.1</option>
+        <option>Twig Version 1.14</option>
+      </select>
+    </div>
+    <div class="clearfix hidden-md hidden-lg"></div>
+    <div class="col-md-3 col-sm-6 col-xs-12 top-menu text-right">
+      <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon glyphicon-play hidden-md hidden-sm hidden-xs"></span> Run</button>
+      <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon glyphicon-floppy-disk hidden-md hidden-sm hidden-xs"></span> Save</button>
+      <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#basicModal"><span class="glyphicon glyphicon glyphicon-share hidden-md hidden-sm hidden-xs"></span> Share</a>
+    </div>
+    <div class="col-md-5 col-sm-6 col-xs-12 user-menu text-right">
+      <a  class="btn btn-info" href="about.html"><span class="glyphicon glyphicon glyphicon-info-sign hidden-md hidden-sm hidden-xs"></span> About</a>
+      <button type="button" class="btn btn-success"><span class="glyphicon glyphicon glyphicon-cloud hidden-md hidden-sm hidden-xs"></span> Public</button>
+      <button type="button" class="btn btn-success"><span class="glyphicon glyphicon glyphicon-star hidden-md hidden-sm hidden-xs"></span> Bookmark</button>
+      <button type="button" class="btn btn-success"><span class="glyphicon glyphicon glyphicon-home hidden-md hidden-sm hidden-xs"></span> Home</button>
+      <button type="button" class="btn btn-warning"><span class="glyphicon glyphicon glyphicon-home hidden-md hidden-sm hidden-xs"></span> Logout</button>
+    </div>
+  </div>
+  <!-- End Header -->
+  
+  <div class="clear">&nbsp;</div>
+  
+  <!-- Start infos -->
+  <div class="row" id="infos">
+    <div class="col-md-3">
+      <select class="form-control input-sm">
+        <option>Revision 2014-03-01 20.53</option>
+        <option>Revision 2014-02-05 10.20</option>
+      </select>
+    </div>
+    <div class="col-md-4 title"><strong>TITLE</strong> : This is my title</div>
+    <div class="col-md-5 tags"><strong>TAGS</strong> : word, word, word, word </div>
+  </div>
+  <!-- End Infos -->
+    
+  <!-- Start Content -->
+  <div class="row" id="content">
+
+ <!-- Start Left Col -->  
+    <div class="col-md-6">
+
+  	<!-- Start Twig Bloc -->
+      <div class="row">
+        <div class="col-md-8 col-sm-8 col-xs-8">
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-addon">File</div>
+              <select class="form-control input-sm">
+                <option>Main TWIG</option>
+                <option>...</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-4  col-xs-4">
+          <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon glyphicon-plus"></span></button>
+          <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon glyphicon-trash"></span></button>
+        </div>
+      </div>
+      <textarea class="form-control" rows="35" placeholder="TWIG"></textarea>
+  	<!-- End Twig Bloc -->
+
+    </div>
+ <!-- End Left Col -->  
+
+    <div class="clearfix hidden-md hidden-lg">&nbsp;</div>
+
+ <!-- Start Right Col -->
+    <div class="col-md-6">
+
+  	<!-- Start Context Bloc -->    
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-addon">Format</div>
+              <select class="form-control input-sm">
+                <option>YAML</option>
+                <option>...</option>
+              </select>
+            </div>
+          </div>
+          <textarea class="form-control" rows="15" placeholder="CONTEXT"></textarea>
+        </div>
+      </div>
+  	<!-- End Context Bloc -->    
+
+      <div class="clearfix">&nbsp;</div>
+
+  	<!-- Start Result Bloc -->    
+      <div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-6">
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-addon">Format</div>
+              <select class="form-control input-sm">
+                <option>Plained Text</option>
+                <option>...</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-6">
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-addon">Generated File(s)</div>
+              <select class="form-control input-sm">
+                <option>file.php</option>
+                <option>...</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <textarea class="form-control" rows="16" placeholder="RESULT"></textarea>
+        </div>
+      </div>     
+  	<!-- End Result Bloc -->   
+
+    </div>
+ <!-- End Right Col -->
+
+  </div>
+  <!-- End Content -->
+  
+  <!-- Start Footer -->
+  <div class="row" id="footer">
+    <div class="col-md-12 text-center">
+      <p>All Right Reserved Twig Fiddle @ 2015<br>
+        <a href="#">Contact</a></p>
+    </div>
+  </div>
+  <!-- End Footer --> 
+  
+  <!-- End Container --> 
+</div>
+
+  <!-- Start Modal -->
+<div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Titre</h4>
+      </div>
+      <div class="modal-body">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam bibendum, justo ac sagittis tincidunt, tellus massa rhoncus orci, vel ullamcorper erat elit eget augue. Cras imperdiet elit sed ornare egestas. Nullam ornare iaculis imperdiet. Suspendisse non lorem est. Integer sit amet commodo diam. Etiam blandit eget justo id ullamcorper. Aliquam quis ligula at metus elementum cursus.</p>
+        <form class="form-inline" role="form">
+          <div class="form-group">
+            <label class="sr-only" for="exampleInputEmail2">Login</label>
+            <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Your email">
+          </div>
+          <div class="form-group">
+            <label class="sr-only" for="exampleInputPassword2">Password</label>
+            <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password">
+          </div>
+          <button type="button" class="btn btn-default">Sign in</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary">OK</button>
+      </div>
+    </div>
+  </div>
+  <!-- End Modal -->
+
+<!-- Bootstrap core JS --> 
+<script src="https://code.jquery.com/jquery.js"></script> 
+<script src="js/bootstrap.min.js"></script>
+</body>
+</html>

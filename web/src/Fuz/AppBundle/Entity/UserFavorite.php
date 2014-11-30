@@ -39,11 +39,15 @@ class UserFavorite
     private $title;
 
     /**
-     * @var string
+     * @var array[UserTag]
      *
-     * @ORM\Column(name="tags", type="string", length=64, nullable=true)
+     * @ORM\OneToMany(targetEntity="UserTag", mappedBy="fiddle_id")
+     * @ORM\JoinColumns({
+     *    @ORM\JoinColumn(name="user_id", referencedColumnName="user_id"),
+     *    @ORM\JoinColumn(name="fiddle_id", referencedColumnName="fiddle_id")
+     * })
      */
-    private $tags;
+    protected $tags;
 
     /**
      * Set user
@@ -117,10 +121,10 @@ class UserFavorite
     /**
      * Set tags
      *
-     * @param string $tags
-     * @return UserFavorite
+     * @param FiddleTag $tags
+     * @return Fiddle
      */
-    public function setTags($tags)
+    public function setTags(array $tags)
     {
         $this->tags = $tags;
 
@@ -130,7 +134,7 @@ class UserFavorite
     /**
      * Get tags
      *
-     * @return string
+     * @return FiddleTag
      */
     public function getTags()
     {

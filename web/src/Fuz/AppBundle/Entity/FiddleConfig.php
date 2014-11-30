@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="fiddle_config")
  * @ORM\Entity
  */
-class FiddleConfig implements \Serializable
+class FiddleConfig
 {
 
     /**
@@ -163,26 +163,6 @@ class FiddleConfig implements \Serializable
     public function getIsPrivate()
     {
         return $this->isPrivate;
-    }
-
-    public function serialize()
-    {
-        return serialize(array (
-                $this->twigVersion,
-                $this->title,
-                $this->tags,
-                $this->isPrivate
-        ));
-    }
-
-    public function unserialize($serialized)
-    {
-        list(
-           $this->twigVersion,
-           $this->title,
-           $this->tags,
-           $this->isPrivate
-           ) = unserialize($serialized);
     }
 
 }

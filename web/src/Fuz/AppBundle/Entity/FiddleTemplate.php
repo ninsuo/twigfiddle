@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="fiddle_template")
  * @ORM\Entity
  */
-class FiddleTemplate implements \Serializable
+class FiddleTemplate
 {
 
     /**
@@ -134,24 +134,6 @@ class FiddleTemplate implements \Serializable
     public function getIsMain()
     {
         return $this->isMain;
-    }
-
-    public function serialize()
-    {
-        return serialize(array (
-                $this->filename,
-                $this->content,
-                $this->isMain
-        ));
-    }
-
-    public function unserialize($serialized)
-    {
-        list(
-           $this->filename,
-           $this->content,
-           $this->isMain
-           ) = unserialize($serialized);
     }
 
 }

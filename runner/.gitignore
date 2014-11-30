@@ -1,7 +1,5 @@
 vendor/
 composer.phar
 composer.lock
-app/cache/*
-app/logs/*
-!app/cache/.gitkeep
-!app/logs/.gitkeep
+logs/*
+!logs/.gitkeep

@@ -1,0 +1,7 @@
+logger:
+    level: DEBUG
+    max_files: 30
+    name: app.log
+
+commands:
+    - src/Fuz/Runner/Command/*

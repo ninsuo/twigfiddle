@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="fiddle_context")
  * @ORM\Entity
  */
-class FiddleContext implements \Serializable
+class FiddleContext
 {
 
     const FORMAT_YAML = 'YAML';
@@ -109,22 +109,6 @@ class FiddleContext implements \Serializable
     public function getContent()
     {
         return $this->content;
-    }
-
-    public function serialize()
-    {
-        return serialize(array (
-                $this->format,
-                $this->content
-        ));
-    }
-
-    public function unserialize($serialized)
-    {
-        list(
-           $this->format,
-           $this->content
-           ) = unserialize($serialized);
     }
 
 }

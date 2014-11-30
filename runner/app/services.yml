@@ -1,9 +1,0 @@
-parameters:
-    logger.class: Fuz\Service\LeveragedLogger
-
-services:
-
-    logger:
-        class: %logger.class%
-        arguments: [%monolog%]
-
