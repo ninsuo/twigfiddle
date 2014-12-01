@@ -7,3 +7,6 @@ environment:
     directory: %rootDir%/../environment/
     expiry: 24
 
+debug:
+    directory: %rootDir%/../debug/
+    expiry: 720

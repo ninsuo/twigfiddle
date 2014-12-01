@@ -6,7 +6,6 @@ class Error
 {
 
     const GROUP_GENERAL = 0;
-
     const E_UNKNOWN = 0;
     const E_UNEXPECTED = 1;
 
@@ -14,6 +13,7 @@ class Error
     protected $group;
     protected $errstr;
     protected $public = true;
+    protected $debug = false;
     protected $caller;
 
     public function getErrno()
@@ -57,6 +57,17 @@ class Error
     public function setIsPublic($isPublic)
     {
         $this->isPublic = $isPublic;
+        return $this;
+    }
+
+    public function isDebug()
+    {
+        return $this->isDebug;
+    }
+
+    public function setIsDebug($isDebug)
+    {
+        $this->isDebug = $isDebug;
         return $this;
     }
 

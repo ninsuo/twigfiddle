@@ -4,9 +4,10 @@ namespace Fuz\Process\Service;
 
 use Fuz\Framework\Base\BaseService;
 
-class SharedEnvironment extends BaseService
+class Core extends BaseService
 {
 
-    
+    protected $runner;
+
 
 }

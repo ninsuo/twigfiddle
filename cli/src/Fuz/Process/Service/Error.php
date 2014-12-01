@@ -13,11 +13,13 @@ class Error extends BaseService
                     'group' => Error::GROUP_GENERAL,
                     'message' => "An unknwon error occured.",
                     'public' => false,
+                    'debug' => true,
             ),
             Error::E_UNEXPECTED => array (
                     'group' => Error::GROUP_GENERAL,
                     'message' => "An unexpected error occured.",
                     'public' => false,
+                    'debug' => true,
             ),
     );
 
@@ -41,6 +43,7 @@ class Error extends BaseService
         $error->setGroup($details['group']);
         $error->setErrstr($details['message']);
         $error->setIsPublic($details['public']);
+        $error->setDebug($details['debug']);
         $error->setCaller($caller);
 
         return $error;
