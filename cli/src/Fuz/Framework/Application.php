@@ -18,7 +18,6 @@ class Application
     protected $container;
     protected $applicationDir;
     protected $rootDir;
-    protected $configuration;
     protected $console;
 
     public function __construct()
@@ -43,6 +42,11 @@ class Application
     public function getContainer()
     {
         return $this->container;
+    }
+
+    public function getRootDir()
+    {
+        return $this->rootDir;
     }
 
     protected function initRootDir()
@@ -89,17 +93,21 @@ class Application
             }
         }
         $configuration = new ApplicationConfiguration($nodes);
-        $this->configuration = $processor->processConfiguration($configuration, $configs);
+        foreach ($processor->processConfiguration($configuration, $configs) as $name => $value)
+        {
+            $this->container->setParameter($name, $value);
+        }
         return $this;
     }
 
     protected function initLogger()
     {
+        $config = $this->container->getParameter('logger');
         $dir = $this->rootDir . "/logs/";
-        $log = "{$dir}/{$this->configuration['logger']['name']}";
-        $max_files = $this->configuration['logger']['max_files'];
+        $log = "{$dir}/{$config['name']}";
+        $max_files = $config['max_files'];
         $levels = Logger::getLevels();
-        $level = $levels[$this->configuration['logger']['level']];
+        $level = $levels[$config['level']];
         $handler = new RotatingFileHandler($log, $max_files, $level);
         $this->container->pushHandler($handler);
         return $this;

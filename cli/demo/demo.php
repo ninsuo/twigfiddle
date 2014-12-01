@@ -23,27 +23,33 @@ $fiddle->setTemplates($templates);
 $templateA = new FiddleTemplate();
 $templateA->setIsMain(true);
 $templateA->setFilename("main.twig");
-$templateA->setContent(file_get_contents('main.twig'));
+$templateA->setContent(file_get_contents(__DIR__."/main.twig"));
 $templates->add($templateA);
 
 $templateB = new FiddleTemplate();
 $templateB->setIsMain(false);
 $templateB->setFilename("macros.twig");
-$templateB->setContent(file_get_contents('macros.twig'));
+$templateB->setContent(file_get_contents(__DIR__."/macros.twig"));
 $templates->add($templateB);
 
 $templateC = new FiddleTemplate();
 $templateC->setIsMain(false);
 $templateC->setFilename("blocks.twig");
-$templateC->setContent(file_get_contents('blocks.twig'));
+$templateC->setContent(file_get_contents(__DIR__."/blocks.twig"));
 $templates->add($templateC);
 
 $context = new FiddleContext();
 $context->setFormat(FiddleContext::FORMAT_YAML);
-$context->setContent(file_get_contents('context.yml'));
+$context->setContent(file_get_contents(__DIR__."/   context.yml"));
 $fiddle->setContext($context);
 
-$storage = new StorageFile(__DIR__ . '/../../environment/demo.fiddle');
+$dir = __DIR__ . '/../../environment/demo/';
+if (!is_dir($dir))
+{
+    mkdir($dir, 0755);
+}
+
+$storage = new StorageFile("{$dir}fiddle.shr");
 $shared = new SharedMemory($storage);
 
 $shared->fiddle = $fiddle;
