@@ -1,8 +1,15 @@
 parameters:
+    run_command.class: Fuz\Process\Command\RunCommand
     environment_configuration_node.class: Fuz\Process\ConfigurationNode\EnvironmentConfigurationNode
     shared_environment.class: Fuz\Process\Service\SharedEnvironment
 
 services:
+
+    run_command:
+        class: %run_command.class%
+        arguments: []
+        tags:
+            - { name: command }
 
     shared_environment:
         class: %shared_environment.class%

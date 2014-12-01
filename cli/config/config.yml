@@ -3,9 +3,6 @@ logger:
     max_files: 30
     name: app.log
 
-commands:
-    - %rootDir%/src/Fuz/Process/Command/*
-
 environment:
     directory: %rootDir%/../environment/
     expiry: 24

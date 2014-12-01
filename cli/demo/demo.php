@@ -45,4 +45,8 @@ $fiddle->setContext($context);
 
 $storage = new StorageFile(__DIR__ . '/../../environment/demo.fiddle');
 $shared = new SharedMemory($storage);
+
 $shared->fiddle = $fiddle;
+$shared->begin_tm = null;
+$shared->finish_tm = null;
+$shared->errors = array();

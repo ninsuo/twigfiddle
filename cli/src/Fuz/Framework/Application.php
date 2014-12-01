@@ -9,7 +9,6 @@ use Symfony\Component\Console\Application as Console;
 use Monolog\Logger;
 use Monolog\Handler\RotatingFileHandler;
 use Fuz\Framework\Api\ConfigurationNodeInterface;
-use Fuz\Framework\Base\BaseCommand;
 use Fuz\Framework\Configuration\ApplicationConfiguration;
 use Fuz\Framework\Core\MonologContainer;
 
@@ -80,7 +79,7 @@ class Application
         $configs = array ($this->container->getParameterBag()->resolveValue($config));
         $processor = new Processor();
         $serviceIds = array_keys($this->container->findTaggedServiceIds('configuration.node'));
-        $nodes = array();
+        $nodes = array ();
         foreach ($serviceIds as $serviceId)
         {
             $service = $this->container->get($serviceId);
@@ -108,20 +107,12 @@ class Application
 
     protected function initCommands()
     {
-        foreach ($this->configuration['commands'] as $path)
+        $this->console = new Console();
+        $serviceIds = array_keys($this->container->findTaggedServiceIds('command'));
+        foreach ($serviceIds as $serviceId)
         {
-            $this->console = new Console();
-            foreach (glob($path) as $class)
-            {
-                $class = str_replace('/', '\\', substr($class, strlen($this->rootDir . '/src/'), -4));
-                $command = new $class();
-                if ($command instanceof BaseCommand)
-                {
-                    $command->setContainer($this->container);
-                    $this->container->setLogger($command->getName(), $command);
-                }
-                $this->console->add($command);
-            }
+            $service = $this->container->get($serviceId);
+            $this->console->add($service);
         }
         return $this;
     }
