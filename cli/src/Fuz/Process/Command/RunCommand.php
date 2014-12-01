@@ -24,12 +24,26 @@ class RunCommand extends BaseCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $env_id = $input->getArgument('environment-id');
-        $this->logger->info("Started execution for environment: {$env_id}");
+        try
+        {
+            $env_id = $input->getArgument('environment-id');
+            $this->logger->pushProcessor(function($record) use ($env_id)
+            {
+                $record['extra']['env_id'] = $env_id;
+                return $record;
+            });
+            $this->logger->info("Started execution.");
 
 
 
-        $this->logger->info("Ended execution for environment: {$env_id}");
+
+            $this->logger->info("Ended execution.");
+        }
+        catch (\Exception $ex)
+        {
+            $this->logger->error("An unexpected error occured.", array ('Exception' => $ex));
+        }
+        $output->write('');
     }
 
 }

@@ -12,8 +12,9 @@ use Psr\Log\LoggerAwareInterface;
 class MonologContainer extends ContainerBuilder
 {
 
-    protected $handlers = array ();
     protected $loggers = array ();
+    protected $handlers = array ();
+    protected $processors = array ();
 
     public function __construct(ParameterBagInterface $parameterBag = null)
     {
@@ -27,6 +28,42 @@ class MonologContainer extends ContainerBuilder
             $this->loggers[$key]->pushHandler($handler);
         }
         array_unshift($this->handlers, $handler);
+        return $this;
+    }
+
+    public function popHandler()
+    {
+        if (count($this->handlers) > 0)
+        {
+            foreach (array_keys($this->loggers) as $key)
+            {
+                $this->loggers[$key]->popHandler();
+            }
+            array_shift($this->handlers);
+        }
+        return $this;
+    }
+
+    public function pushProcessor($callback)
+    {
+        foreach (array_keys($this->loggers) as $key)
+        {
+            $this->loggers[$key]->pushProcessor($callback);
+        }
+        array_unshift($this->processors, $callback);
+        return $this;
+    }
+
+    public function popProcessor()
+    {
+        if (count($this->processors) > 0)
+        {
+            foreach (array_keys($this->loggers) as $key)
+            {
+                $this->loggers[$key]->popProcessor();
+            }
+            array_shift($this->processors);
+        }
         return $this;
     }
 
@@ -47,7 +84,7 @@ class MonologContainer extends ContainerBuilder
         {
             if (!array_key_exists($id, $this->loggers))
             {
-                $this->loggers[$id] = new Logger($id, $this->handlers);
+                $this->loggers[$id] = new Logger($id, $this->handlers, $this->processors);
             }
             $service->setLogger($this->loggers[$id]);
         }
