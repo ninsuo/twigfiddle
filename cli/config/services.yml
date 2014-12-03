@@ -32,7 +32,7 @@ services:
 
     debug:
         class: %debug.class%
-        arguments: []
+        arguments: [@file_system, %debug%]
 
     core:
         class: %core.class%

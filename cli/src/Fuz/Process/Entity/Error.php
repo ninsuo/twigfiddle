@@ -6,6 +6,7 @@ class Error
 {
 
     const GROUP_GENERAL = 0;
+
     const E_UNKNOWN = 0;
     const E_UNEXPECTED = 1;
 

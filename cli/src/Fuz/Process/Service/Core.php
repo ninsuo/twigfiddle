@@ -7,7 +7,5 @@ use Fuz\Framework\Base\BaseService;
 class Core extends BaseService
 {
 
-    protected $runner;
-
 
 }

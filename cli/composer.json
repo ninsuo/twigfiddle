@@ -5,6 +5,7 @@
         "symfony/console": "~2.5",
         "symfony/config": "~2.5",
         "symfony/yaml": "~2.5",
+        "symfony/finder": "~2.5",
         "ninsuo/php-shared-memory": "dev-master",
         "doctrine/orm": "~2.2,>=2.2.3"
     },

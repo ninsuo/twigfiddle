@@ -31,18 +31,20 @@ class RunCommand extends BaseCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->runner = new Runner();
         $this->envId = $input->getArgument('environment-id');
         $this->isDebug = $input->getOption('debug');
-
         try
         {
             $this->initProcessor();
             $this->logger->info("Started execution.");
+            $this->runner = new Runner();
 
 
 
-
+            if (!$this->isDebug)
+            {
+                $this->container->get('debug')->backupIfDebugRequired($this->runner);
+            }
             $this->logger->info("Ended execution.");
         }
         catch (\Exception $ex)
@@ -50,15 +52,13 @@ class RunCommand extends BaseCommand
             $this->logger->error("An unexpected error occured.", array ('Exception' => $ex));
         }
 
-        // if some errors that requires to put env to debug, do it for future runs!
-
         $output->write('');
     }
 
     protected function initProcessor()
     {
         $envId = $this->envId;
-        $this->logger->pushProcessor(function($record) use ($envId)
+        $this->container->pushProcessor(function($record) use ($envId)
         {
             $record['extra']['env_id'] = $envId;
             return $record;

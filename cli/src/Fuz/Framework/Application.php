@@ -4,6 +4,7 @@ namespace Fuz\Framework;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Config\Definition\Processor;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\Console\Application as Console;
 use Monolog\Logger;
@@ -79,7 +80,7 @@ class Application
     protected function initConfiguration()
     {
         $dir = $this->rootDir . "/config/";
-        $config = $this->container->get('file.loader')->load($dir, 'config.yml');
+        $config = $this->container->get('file_loader')->load($dir, 'config.yml');
         $configs = array ($this->container->getParameterBag()->resolveValue($config));
         $processor = new Processor();
         $serviceIds = array_keys($this->container->findTaggedServiceIds('configuration.node'));
@@ -119,8 +120,12 @@ class Application
         $serviceIds = array_keys($this->container->findTaggedServiceIds('command'));
         foreach ($serviceIds as $serviceId)
         {
-            $service = $this->container->get($serviceId);
-            $this->console->add($service);
+            $command = $this->container->get($serviceId);
+            if ($command instanceof ContainerAwareInterface)
+            {
+                $command->setContainer($this->container);
+            }
+            $this->console->add($command);
         }
         return $this;
     }
