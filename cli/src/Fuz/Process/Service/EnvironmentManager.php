@@ -26,12 +26,16 @@ class EnvironmentManager extends BaseService
         $this->environmentConfiguration = $environmentConfiguration;
     }
 
-    public function init()
+    public function recoverFiddle()
     {
         $this->cleanExpiredEnvironments();
         $context = $this->contextManager->getContext();
         $this->validateEnvironmentId($context);
         $this->deduceEnvironmentDirectory($context);
+
+        // todo
+
+
     }
 
     public function validateEnvironmentId(Context $context)

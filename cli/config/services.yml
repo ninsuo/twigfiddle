@@ -1,7 +1,9 @@
 parameters:
     run_command.class: Fuz\Process\Command\RunCommand
-    environment_configuration_node.class: Fuz\Process\ConfigurationNode\EnvironmentConfigurationNode
-    debug_configuration_node.class: Fuz\Process\ConfigurationNode\DebugConfigurationNode
+    environment.configuration_node.class: Fuz\Process\ConfigurationNode\EnvironmentConfigurationNode
+    debug.configuration_node.class: Fuz\Process\ConfigurationNode\DebugConfigurationNode
+    fiddle.configuration_node.class: Fuz\Process\ConfigurationNode\FiddleConfigurationNode
+    twig_engines.configuration_node.class: Fuz\Process\ConfigurationNode\TwigEnginesConfigurationNode
     error_manager.class: Fuz\Process\Service\ErrorManager
     context_manager.class: Fuz\Process\Service\ContextManager
     debug_manager.class: Fuz\Process\Service\DebugManager
@@ -15,14 +17,26 @@ services:
         tags:
             - { name: command }
 
-    environment_configuration_node:
-        class: %environment_configuration_node.class%
+    environment.configuration_node:
+        class: %environment.configuration_node.class%
         arguments: []
         tags:
          - { name: configuration.node }
 
-    debug_configuration_node:
-        class: %debug_configuration_node.class%
+    debug.configuration_node:
+        class: %debug.configuration_node.class%
+        arguments: []
+        tags:
+         - { name: configuration.node }
+
+    fiddle.configuration_node:
+        class: %fiddle.configuration_node.class%
+        arguments: []
+        tags:
+         - { name: configuration.node }
+
+    twig_engines.configuration_node:
+        class: %twig_engines.configuration_node.class%
         arguments: []
         tags:
          - { name: configuration.node }

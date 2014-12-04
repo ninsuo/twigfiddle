@@ -11,3 +11,11 @@ environment:
 debug:
     directory: %rootDir%/../debug/
     expiry: 720
+
+fiddle:
+    file: fiddle.shr
+    templates_dir: templates/
+    compiled_dir: compiled/
+
+twig_engines:
+    directory: %rootDir%/twig/uncompressed

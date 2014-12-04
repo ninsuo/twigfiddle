@@ -94,7 +94,7 @@ class RunCommand extends BaseCommand
     {
         $this->context = new Context($this->environmentId, $this->isDebug);
         $this->container->get('context_manager')->setContext($this->context);
-        $this->container->get('environment_manager')->init();
+        $this->container->get('environment_manager')->recoverFiddle();
 
 
         var_dump($this->context);
