@@ -9,17 +9,36 @@ class Context
 {
 
     protected $environmentId;
+    protected $isDebug;
+    protected $directory;
     protected $fiddle;
     protected $errors = array ();
 
-    public function __construct($environmentId)
+    public function __construct($environmentId, $isDebug = false)
     {
         $this->environmentId = $environmentId;
+        $this->isDebug = $isDebug;
     }
 
     public function getEnvironmentId()
     {
         return $this->environmentId;
+    }
+
+    public function isDebug()
+    {
+        return $this->isDebug;
+    }
+
+    public function setDirectory($directory)
+    {
+        $this->directory = $directory;
+        return $this;
+    }
+
+    public function getDirectory()
+    {
+        return $this->directory;
     }
 
     public function setFiddle(Fiddle $fiddle)

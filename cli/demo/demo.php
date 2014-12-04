@@ -40,7 +40,7 @@ $templates->add($templateC);
 
 $context = new FiddleContext();
 $context->setFormat(FiddleContext::FORMAT_YAML);
-$context->setContent(file_get_contents(__DIR__."/   context.yml"));
+$context->setContent(file_get_contents(__DIR__."/context.yml"));
 $fiddle->setContext($context);
 
 $dir = __DIR__ . '/../../environment/demo/';

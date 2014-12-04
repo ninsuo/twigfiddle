@@ -6,7 +6,7 @@ use Fuz\Framework\Base\BaseService;
 use Fuz\Framework\Service\FileSystem;
 use Fuz\Process\Entity\Context;
 
-class Debug extends BaseService
+class DebugManager extends BaseService
 {
 
     protected $fileSystem;

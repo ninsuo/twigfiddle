@@ -12,42 +12,54 @@ class ErrorManager extends BaseService
             Error::E_UNKNOWN => array (
                     'group' => Error::G_GENERAL,
                     'message' => "An unknwon error occured.",
+                    'logger' => 'error',
                     'public' => false,
                     'debug' => true,
             ),
             Error::E_UNEXPECTED => array (
                     'group' => Error::G_GENERAL,
                     'message' => "An unexpected error occured.",
+                    'logger' => 'error',
                     'public' => false,
                     'debug' => true,
             ),
             Error::E_INVALID_ENVIRONMENT_ID => array (
                     'group' => Error::G_ENVIRONMENT,
                     'message' => "The given environment ID is invalid (allowed: alphanumeric chars and hyphen).",
+                    'logger' => 'warning',
+                    'public' => false,
+                    'debug' => false,
+            ),
+            Error::E_UNEXISTING_ENVIRONMENT_ID => array(
+                    'group' => Error::G_ENVIRONMENT,
+                    'message' => "The given environment ID do not have an associated directory.",
+                    'logger' => 'warning',
                     'public' => false,
                     'debug' => false,
             ),
     );
 
-    public function getError($errno)
+    public function getError($no)
     {
         $trace = array_slice(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2), 1);
-        $caller = $trace[0]['file'].':'.$trace[0]['line'];
+        $caller = $trace[0]['file'] . ':' . $trace[0]['line'];
 
-        if (!array_key_exists($errno, $this->errors))
+        if (!array_key_exists($no, $this->errors))
         {
             $this->logger->error("{$caller} given an unknown error.");
-            $errno = Error::E_UNKNOWN;
+            $no = Error::E_UNKNOWN;
         }
 
-        $details = $this->errors[$errno];
+        $details = $this->errors[$no];
+        $context = array_slice(func_get_args(), 1);
 
-        $this->logger->info("Error requested by {$caller}: {$details['message']}");
+        $this->logger->{$details['logger']}("Error requested by {$caller}:");
+        $this->logger->{$details['logger']}($details['message'], $context);
 
         $error = new Error();
-        $error->setErrno($errno);
+        $error->setNo($no);
         $error->setGroup($details['group']);
-        $error->setErrstr($details['message']);
+        $error->setMessage($details['message']);
         $error->setIsPublic($details['public']);
         $error->setIsDebug($details['debug']);
         $error->setCaller($caller);

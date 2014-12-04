@@ -11,22 +11,24 @@ class Error
     const E_UNKNOWN = 0;
     const E_UNEXPECTED = 1;
     const E_INVALID_ENVIRONMENT_ID = 2;
+    const E_UNEXISTING_ENVIRONMENT_ID = 3;
 
-    protected $errno;
+    protected $no;
     protected $group;
-    protected $errstr;
+    protected $message;
+    protected $context;
     protected $public = true;
     protected $debug = false;
     protected $caller;
 
-    public function getErrno()
+    public function getNo()
     {
-        return $this->errno;
+        return $this->no;
     }
 
-    public function setErrno($errno)
+    public function setNo($no)
     {
-        $this->errno = $errno;
+        $this->no = $no;
         return $this;
     }
 
@@ -41,14 +43,25 @@ class Error
         return $this;
     }
 
-    public function getErrstr()
+    public function getMessage()
     {
-        return $this->errstr;
+        return $this->message;
     }
 
-    public function setErrstr($errstr)
+    public function setMessage($message)
     {
-        $this->errstr = $errstr;
+        $this->message = $message;
+        return $this;
+    }
+
+    public function getContext()
+    {
+        return $this->context;
+    }
+
+    public function setContext(array $context)
+    {
+        $this->context = $context;
         return $this;
     }
 

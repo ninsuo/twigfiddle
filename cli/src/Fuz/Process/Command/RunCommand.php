@@ -7,8 +7,8 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Fuz\Framework\Base\BaseCommand;
-use Fuz\Process\Entity\Error;
 use Fuz\Process\Entity\Context;
+use Fuz\Process\Entity\Error;
 use Fuz\Process\Exception\StopExecutionException;
 
 class RunCommand extends BaseCommand
@@ -33,54 +33,71 @@ class RunCommand extends BaseCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->context = new Context($this->environmentId);
-        $this->logger->info("Started execution.");
+        $this->logger->info("Started execution.", $input->getArguments());
         try
         {
+            $this->initErrorHandler();
             $this->initArguments($input);
             $this->initProcessor();
+            $this->process();
         }
         catch (StopExecutionException $ex)
         {
-            $this->logger->info("Execution interrupted (see previous errors).");
+            $this->logger->debug("Execution interrupted (see previous errors).");
         }
         catch (\Exception $ex)
         {
-            $this->logger->error("An unexpected error occured.", array ('Exception' => $ex));
+            $this->get('context_manager')->addError(Error::E_UNEXPECTED, array ('Exception' => $ex));
         }
         if (!$this->isDebug)
         {
-            $this->container->get('debug')->backupIfDebugRequired($this->context);
+            $this->container->get('debug_manager')->backupIfDebugRequired($this->context);
         }
         $this->logger->info("Ended execution.");
         $output->write('');
     }
 
+    protected function initErrorHandler()
+    {
+        register_shutdown_function(function()
+        {
+            if (!is_null($err = error_get_last()))
+            {
+                $this->container->get('context_manager')->addError(Error::E_UNEXPECTED, array ('Error' => $err));
+                $this->container->get('debug_manager')->backupIfDebugRequired($this->context);
+            }
+        });
+    }
+
     protected function initArguments(InputInterface $input)
     {
-        $configuration = $this->container->getParameter('environment');
-
         $this->environmentId = $input->getArgument('environment-id');
-        if (!preg_match("/{$configuration['validation']}/", $this->environmentId))
-        {
-            $this->logger->warning("Invalid environment id given: {$this->environmentId}.");
-            $this->context->addError($this->container->get('error_manager')->getError(Error::E_INVALID_ENVIRONMENT_ID));
-            throw new StopExecutionException();
-        }
-        $this->logger->info("Environment ID = {$this->environmentId}");
-
         $this->isDebug = $input->getOption('debug');
-        $this->logger->debug(sprintf("Debug mode = %s", $this->isDebug ? 'enabled' : 'disabled'));
     }
 
     protected function initProcessor()
     {
         $envId = $this->environmentId;
-        $this->container->pushProcessor(function($record) use ($envId)
+        $isDebug = $this->isDebug;
+        $this->container->pushProcessor(function($record) use ($envId, $isDebug)
         {
-            $record['extra']['environment_id'] = $envId;
+            $record['extra'] = array_merge($record['extra'],
+               array (
+                    'environment_id' => $envId,
+                    'debug' => $isDebug,
+            ));
             return $record;
         });
+    }
+
+    protected function process()
+    {
+        $this->context = new Context($this->environmentId, $this->isDebug);
+        $this->container->get('context_manager')->setContext($this->context);
+        $this->container->get('environment_manager')->init();
+
+
+        var_dump($this->context);
     }
 
 }

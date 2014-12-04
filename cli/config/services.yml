@@ -3,8 +3,9 @@ parameters:
     environment_configuration_node.class: Fuz\Process\ConfigurationNode\EnvironmentConfigurationNode
     debug_configuration_node.class: Fuz\Process\ConfigurationNode\DebugConfigurationNode
     error_manager.class: Fuz\Process\Service\ErrorManager
-    debug.class: Fuz\Process\Service\Debug
-    core.class: Fuz\Process\Service\Core
+    context_manager.class: Fuz\Process\Service\ContextManager
+    debug_manager.class: Fuz\Process\Service\DebugManager
+    environment_manager.class: Fuz\Process\Service\EnvironmentManager
 
 services:
 
@@ -30,11 +31,15 @@ services:
         class: %error_manager.class%
         arguments: []
 
-    debug:
-        class: %debug.class%
+    context_manager:
+        class: %context_manager.class%
+        arguments: [@error_manager]
+
+    debug_manager:
+        class: %debug_manager.class%
         arguments: [@file_system, %debug%, %environment%]
 
-    core:
-        class: %core.class%
-        arguments: []
+    environment_manager:
+        class: %environment_manager.class%
+        arguments: [@file_system, @context_manager, %debug%, %environment%]
 
