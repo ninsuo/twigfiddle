@@ -12,6 +12,10 @@ class Error
     const E_UNEXPECTED = 1;
     const E_INVALID_ENVIRONMENT_ID = 2;
     const E_UNEXISTING_ENVIRONMENT_ID = 3;
+    const E_UNEXISTING_SHARED_MEMORY = 4;
+    const E_UNREADABLE_SHARED_MEMORY = 5;
+    const E_FIDDLE_ALREADY_RUN = 6;
+    const E_FIDDLE_NOT_STORED = 7;
 
     protected $no;
     protected $group;

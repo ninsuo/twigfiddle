@@ -43,11 +43,11 @@ class DebugManager extends BaseService
 
     public function cleanExpiredDebugFiles()
     {
-        $this->logger->debug("Cleaning expired debug files");
         $directory = $this->debugConfiguration['directory'];
         $timestamp = strtotime("-{$this->debugConfiguration['expiry']} hours");
         $elements = $this->fileSystem->getFilesAndDirectoriesOlderThan($directory, $timestamp);
         $this->fileSystem->remove($elements);
+        $this->logger->debug(sprintf("Cleaned expired debug environments: %d environments removed.", count($elements)));
     }
 
     public function copyFiddleToDebugDirectory($environmentId)

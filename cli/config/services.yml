@@ -55,5 +55,5 @@ services:
 
     environment_manager:
         class: %environment_manager.class%
-        arguments: [@file_system, @context_manager, %debug%, %environment%]
+        arguments: [@file_system, @context_manager, %debug%, %environment%, %fiddle%]
 

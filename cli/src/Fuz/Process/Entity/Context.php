@@ -2,6 +2,7 @@
 
 namespace Fuz\Process\Entity;
 
+use Fuz\Component\SharedMemory\SharedMemory;
 use Fuz\AppBundle\Entity\Fiddle;
 use Fuz\Process\Entity\Error;
 
@@ -13,6 +14,7 @@ class Context
     protected $directory;
     protected $fiddle;
     protected $errors = array ();
+    protected $sharedMemory;
 
     public function __construct($environmentId, $isDebug = false)
     {
@@ -61,6 +63,17 @@ class Context
     public function getErrors()
     {
         return $this->errors;
+    }
+
+    public function setSharedMemory(SharedMemory $sharedMemory)
+    {
+        $this->sharedMemory = $sharedMemory;
+        return $this;
+    }
+
+    public function getSharedMemory()
+    {
+        return $this->sharedMemory;
     }
 
 }
