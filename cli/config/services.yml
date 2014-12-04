@@ -1,5 +1,5 @@
 parameters:
-    run_command.class: Fuz\Process\Command\RunCommand
+    run.command.class: Fuz\Process\Command\RunCommand
     environment.configuration_node.class: Fuz\Process\ConfigurationNode\EnvironmentConfigurationNode
     debug.configuration_node.class: Fuz\Process\ConfigurationNode\DebugConfigurationNode
     fiddle.configuration_node.class: Fuz\Process\ConfigurationNode\FiddleConfigurationNode
@@ -11,8 +11,8 @@ parameters:
 
 services:
 
-    run_command:
-        class: %run_command.class%
+    run.command:
+        class: %run.command.class%
         arguments: []
         tags:
             - { name: command }
