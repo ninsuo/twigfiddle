@@ -2,40 +2,80 @@
 
 namespace Fuz\Framework\Service;
 
-use Symfony\Component\Finder\Finder;
-use Fuz\Framework\Base\BaseService;
+use Symfony\Component\Filesystem\Filesystem as SymfonyFileSystem;
+use Symfony\Component\Filesystem\Exception\IOException;
 
-class FileSystem extends BaseService
+class FileSystem extends SymfonyFileSystem
 {
 
-    public function removeOldFilesAndDirectoriesRecursivly($directory, $expiry, $expiryUnit)
+    public function getFilesAndDirectoriesOlderThan($directory, $timestamp)
     {
-        $this->logger->debug("Cleaning files and directories from {$directory} when they are older than {$expiry} {$expiryUnit}.");
-
-        $finder = new Finder();
-        $finder
-           ->date("before -{$expiry} {$expiryUnit}")
-           ->in($directory)
-           ->sort(function(\SplFileInfo $a, \SplFileInfo $b)
-           {
-               return ($a->isDir() && $b->isDir()) || ($a->isFile() && $b->isFile()) ? 0 : (($a->isDir() && $b->isFile()) ? 1 : -1);
-           })
-        ;
-
-        $removed = array();
-        foreach ($finder as $element)
+        if (!is_dir($directory))
         {
-            $path = $element->getRealPath();
-            $status = ($element->isDir() ? @rmdir($path) : @unlink($path)) ? 'success' : 'failure';
-            if ($status === 'success')
-            {
-                $removed[] = $path;
-            }
-            $this->logger->debug("Removing {$path}: {$status}\n");
+            throw new IOException("Directory {$directory} not found.");
         }
 
-        $this->logger->debug(sprintf("Removed %d files and directories.", count($removed)));
-        return $removed;
+        if (!is_readable($directory))
+        {
+            throw new IOException("Directory {$directory} not readable.");
+        }
+
+        $list = scandir($directory);
+        $return = array ();
+        foreach ($list as $elem)
+        {
+            if (in_array($elem, array ('.', '..')))
+            {
+                continue;
+            }
+
+            $finfo = new \SplFileInfo($directory . DIRECTORY_SEPARATOR . $elem);
+            if ($finfo->isLink())
+            {
+                continue;
+            }
+
+            if ($finfo->getMTime() <= $timestamp)
+            {
+                $return[] = $finfo->getRealPath();
+            }
+        }
+
+        return $return;
+    }
+
+    public function copyDirectory($source, $target)
+    {
+        $realSource = realpath($source);
+        if ($realSource === false)
+        {
+            throw new IOException("Real path of the source directory '{$source}' can't be retreived.");
+        }
+
+        if (file_exists($target))
+        {
+            $this->remove($target);
+        }
+
+        $this->mkdir($target);
+        if (!is_dir($target))
+        {
+            throw new \InvalidArgumentException("Unable to create '{$target}' directory.");
+        }
+
+        $directoryIterator = new \RecursiveDirectoryIterator($source, \RecursiveDirectoryIterator::SKIP_DOTS);
+        $iterator = new \RecursiveIteratorIterator($directoryIterator, \RecursiveIteratorIterator::SELF_FIRST);
+        foreach ($iterator as $item)
+        {
+            if ($item->isDir())
+            {
+                $this->mkdir($target . DIRECTORY_SEPARATOR . $iterator->getSubPathName());
+            }
+            else
+            {
+                $this->copy($item, $target . DIRECTORY_SEPARATOR . $iterator->getSubPathName());
+            }
+        }
     }
 
 }

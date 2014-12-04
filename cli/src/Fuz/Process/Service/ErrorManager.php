@@ -5,21 +5,27 @@ namespace Fuz\Process\Service;
 use Fuz\Framework\Base\BaseService;
 use Fuz\Process\Entity\Error;
 
-class Error extends BaseService
+class ErrorManager extends BaseService
 {
 
     protected $errors = array (
             Error::E_UNKNOWN => array (
-                    'group' => Error::GROUP_GENERAL,
+                    'group' => Error::G_GENERAL,
                     'message' => "An unknwon error occured.",
                     'public' => false,
                     'debug' => true,
             ),
             Error::E_UNEXPECTED => array (
-                    'group' => Error::GROUP_GENERAL,
+                    'group' => Error::G_GENERAL,
                     'message' => "An unexpected error occured.",
                     'public' => false,
                     'debug' => true,
+            ),
+            Error::E_INVALID_ENVIRONMENT_ID => array (
+                    'group' => Error::G_ENVIRONMENT,
+                    'message' => "The given environment ID is invalid (allowed: alphanumeric chars and hyphen).",
+                    'public' => false,
+                    'debug' => false,
             ),
     );
 
@@ -36,14 +42,14 @@ class Error extends BaseService
 
         $details = $this->errors[$errno];
 
-        $this->logger->debug("Error requested by {$caller}: {$details['message']}");
+        $this->logger->info("Error requested by {$caller}: {$details['message']}");
 
         $error = new Error();
         $error->setErrno($errno);
         $error->setGroup($details['group']);
         $error->setErrstr($details['message']);
         $error->setIsPublic($details['public']);
-        $error->setDebug($details['debug']);
+        $error->setIsDebug($details['debug']);
         $error->setCaller($caller);
 
         return $error;

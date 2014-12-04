@@ -3,13 +3,24 @@
 namespace Fuz\Process\Entity;
 
 use Fuz\AppBundle\Entity\Fiddle;
-use Fuz\Runner\Entity\Error;
+use Fuz\Process\Entity\Error;
 
-class Runner
+class Context
 {
 
+    protected $environmentId;
     protected $fiddle;
     protected $errors = array ();
+
+    public function __construct($environmentId)
+    {
+        $this->environmentId = $environmentId;
+    }
+
+    public function getEnvironmentId()
+    {
+        return $this->environmentId;
+    }
 
     public function setFiddle(Fiddle $fiddle)
     {

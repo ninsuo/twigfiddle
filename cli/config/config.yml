@@ -5,6 +5,7 @@ logger:
 
 environment:
     directory: %rootDir%/../environment/
+    validation: ^[a-zA-Z0-9-]{4,16}$
     expiry: 24
 
 debug:
