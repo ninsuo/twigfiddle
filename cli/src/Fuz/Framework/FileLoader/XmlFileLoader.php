@@ -9,7 +9,16 @@ class XmlFileLoader extends FileLoader
 
     public function load($resource, $type = null)
     {
-        $xml = simplexml_load_file($resource);
+        $xml = simplexml_load_file($resource, "SimpleXMLElement", LIBXML_NOCDATA | LIBXML_NOWARNING | LIBXML_NOERROR);
+        if ($xml === false)
+        {
+            $message = 'Unable to parse the given XML input:' . PHP_EOL;
+            foreach (libxml_get_errors() as $key => $error)
+            {
+                $message .= ($key + 1) . ': ' . trim($error->message, PHP_EOL) . PHP_EOL;
+            }
+            throw new SyntaxErrorException($message);
+        }
         return json_decode(json_encode($xml), 1);
     }
 

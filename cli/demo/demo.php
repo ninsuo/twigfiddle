@@ -38,9 +38,14 @@ $templateC->setFilename("blocks.twig");
 $templateC->setContent(file_get_contents(__DIR__."/blocks.twig"));
 $templates->add($templateC);
 
+//$context = new FiddleContext();
+//$context->setFormat(FiddleContext::FORMAT_YAML);
+//$context->setContent(file_get_contents(__DIR__."/context.yml"));
+//$fiddle->setContext($context);
+
 $context = new FiddleContext();
-$context->setFormat(FiddleContext::FORMAT_YAML);
-$context->setContent(file_get_contents(__DIR__."/context.yml"));
+$context->setFormat(FiddleContext::FORMAT_XML);
+$context->setContent(file_get_contents(__DIR__."/context.xml"));
 $fiddle->setContext($context);
 
 $dir = __DIR__ . '/../../environment/demo/';

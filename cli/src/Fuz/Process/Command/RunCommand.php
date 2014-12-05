@@ -101,6 +101,8 @@ class RunCommand extends BaseCommand
         //$this->container->get('twig.engine_manager')->loadEngine($engines);
 
         $this->container->get('context_manager')->extractContext();
+
+        //         $this->container->get('template_manager')->generateTemplates();
     }
 
 }
