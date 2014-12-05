@@ -1,16 +1,12 @@
-parameters:
+imports:
+    - { resource: configuration_nodes.yml }
+    - { resource: string_loaders.yml }
 
-    logger_configuration_node.class: Fuz\Framework\ConfigurationNode\LoggerConfigurationNode
+parameters:
     file_loader.class: Fuz\Framework\Service\FileLoader
     file_system.class: Fuz\Framework\Service\FileSystem
 
 services:
-
-    logger_configuration_node:
-        class: %logger_configuration_node.class%
-        arguments: []
-        tags:
-         - { name: configuration.node }
 
     file_loader:
         class: %file_loader.class%
