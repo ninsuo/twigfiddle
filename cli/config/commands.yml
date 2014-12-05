@@ -1,0 +1,10 @@
+parameters:
+    run.command.class: Fuz\Process\Command\RunCommand
+
+services:
+
+    run.command:
+        class: %run.command.class%
+        arguments: []
+        tags:
+            - { name: command }
