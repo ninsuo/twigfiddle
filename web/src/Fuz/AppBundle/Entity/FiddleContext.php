@@ -17,7 +17,6 @@ class FiddleContext
     const FORMAT_XML = 'XML';
     const FORMAT_JSON = 'JSON';
     const FORMAT_INI = 'INI';
-    const FORMAT_KEY_VALUE = 'PAIR';
 
     /**
      * @var Fiddle

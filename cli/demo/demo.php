@@ -48,11 +48,15 @@ $templates->add($templateC);
 //$context->setContent(file_get_contents(__DIR__."/context.xml"));
 //$fiddle->setContext($context);
 
-$context = new FiddleContext();
-$context->setFormat(FiddleContext::FORMAT_JSON);
-$context->setContent(file_get_contents(__DIR__."/context.json"));
-$fiddle->setContext($context);
+//$context = new FiddleContext();
+//$context->setFormat(FiddleContext::FORMAT_JSON);
+//$context->setContent(file_get_contents(__DIR__."/context.json"));
+//$fiddle->setContext($context);
 
+$context = new FiddleContext();
+$context->setFormat(FiddleContext::FORMAT_INI);
+$context->setContent(file_get_contents(__DIR__."/context.ini"));
+$fiddle->setContext($context);
 
 $dir = __DIR__ . '/../../environment/demo/';
 if (!is_dir($dir))

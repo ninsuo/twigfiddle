@@ -61,7 +61,7 @@ class RunCommand extends BaseCommand
     {
         register_shutdown_function(function()
         {
-            if (!is_null($err = error_get_last()))
+            if ((!is_null($err = error_get_last())) && (!in_array($err['type'], array(E_NOTICE, E_WARNING))))
             {
                 $this->container->get('context_helper')->addError(Error::E_UNEXPECTED, array ('Error' => $err));
                 $this->container->get('debug_manager')->backupIfDebugRequired($this->context);

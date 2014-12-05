@@ -2,6 +2,7 @@ parameters:
     yaml.string_loader.class: Fuz\Framework\StringLoader\YamlStringLoader
     xml.string_loader.class: Fuz\Framework\StringLoader\XmlStringLoader
     json.string_loader.class: Fuz\Framework\StringLoader\JsonStringLoader
+    ini.string_loader.class: Fuz\Framework\StringLoader\IniStringLoader
 
 services:
 
@@ -22,4 +23,10 @@ services:
         arguments: []
         tags:
          - { name: string.loader, supports: JSON }
+
+    ini.string_loader:
+        class: %ini.string_loader.class%
+        arguments: []
+        tags:
+         - { name: string.loader, supports: INI }
 

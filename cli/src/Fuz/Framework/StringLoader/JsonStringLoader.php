@@ -26,7 +26,6 @@ class JsonStringLoader implements StringLoaderInterface
         {
             return array();
         }
-        var_dump($stream);
         $array = json_decode($stream, true, 512, JSON_BIGINT_AS_STRING);
         if ($array === null)
         {
