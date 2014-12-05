@@ -74,7 +74,7 @@ class ErrorManager extends BaseService
             ),
             Error::E_INVALID_CONTEXT_SYNTAX => array(
                     'group' => Error::G_CONTEXT,
-                    'message' => "Unable to convert the context to an array.",
+                    'message' => "Unable to convert the given twig context to an array.",
                     'logger' => 'info',
                     'public' => true,
                     'debug' => false,

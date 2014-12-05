@@ -2,7 +2,7 @@
 
 namespace Fuz\Framework\Exception;
 
-class SyntaxErrorException extends \Exception
+class StringLoaderException extends \Exception
 {
 
 }

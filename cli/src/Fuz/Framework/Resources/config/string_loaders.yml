@@ -1,6 +1,7 @@
 parameters:
     yaml.string_loader.class: Fuz\Framework\StringLoader\YamlStringLoader
     xml.string_loader.class: Fuz\Framework\StringLoader\XmlStringLoader
+    json.string_loader.class: Fuz\Framework\StringLoader\JsonStringLoader
 
 services:
 
@@ -15,4 +16,10 @@ services:
         arguments: []
         tags:
          - { name: string.loader, supports: XML }
+
+    json.string_loader:
+        class: %json.string_loader.class%
+        arguments: []
+        tags:
+         - { name: string.loader, supports: JSON }
 

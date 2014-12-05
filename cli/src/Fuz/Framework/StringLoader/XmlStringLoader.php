@@ -3,7 +3,7 @@
 namespace Fuz\Framework\StringLoader;
 
 use Fuz\Framework\StringLoader\StringLoaderInterface;
-use Fuz\Framework\Exception\SyntaxErrorException;
+use Fuz\Framework\Exception\StringLoaderException;
 
 class XmlStringLoader implements StringLoaderInterface
 {
@@ -20,7 +20,7 @@ class XmlStringLoader implements StringLoaderInterface
             {
                 $message .= ($key + 1) . ': ' . trim($error->message, PHP_EOL) . PHP_EOL;
             }
-            throw new SyntaxErrorException($message);
+            throw new StringLoaderException($message);
         }
         return json_decode(json_encode($xml), 1);
     }
