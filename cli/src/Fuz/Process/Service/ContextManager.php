@@ -3,34 +3,19 @@
 namespace Fuz\Process\Service;
 
 use Fuz\Framework\Base\BaseService;
-use Fuz\Process\Service\ErrorManager;
-use Fuz\Process\Entity\Context;
+use Fuz\Process\Helper\ContextHelper;
 
 class ContextManager extends BaseService
 {
 
-    protected $errorManager;
-    protected $context;
-
-    public function __construct(ErrorManager $errorManager)
+    public function __construct(ContextHelper $contextHelper)
     {
-        $this->errorManager = $errorManager;
+        $this->helper = $contextHelper;
     }
 
-    public function setContext(Context $context)
+    public function convertFileToArray()
     {
-        $this->context = $context;
-        return $this;
-    }
 
-    public function getContext()
-    {
-        return $this->context;
-    }
-
-    public function addError($no, array $context = array ())
-    {
-        $this->context->addError($this->errorManager->getError($no, $context));
     }
 
 }

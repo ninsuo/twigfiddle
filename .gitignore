@@ -1,3 +1,5 @@
 /nbproject
 /environment/*
 !/environment/.gitkeep
+/debug/*
+!/debug/.gitkeep

@@ -9,22 +9,22 @@ use Fuz\Framework\Service\FileSystem;
 use Fuz\Process\Entity\Error;
 use Fuz\Process\Entity\Context;
 use Fuz\Process\Exception\StopExecutionException;
-use Fuz\Process\Service\ContextManager;
+use Fuz\Process\Helper\ContextHelper;
 
 class EnvironmentManager extends BaseService
 {
 
     protected $fileSystem;
-    protected $contextManager;
+    protected $contextHelper;
     protected $debugConfiguration;
     protected $environmentConfiguration;
     protected $fiddleConfiguration;
 
-    public function __construct(FileSystem $fileSystem, ContextManager $contextManager, array $debugConfiguration,
+    public function __construct(FileSystem $fileSystem, ContextHelper $contextHelper, array $debugConfiguration,
        array $environmentConfiguration, array $fiddleConfiguration)
     {
         $this->fileSystem = $fileSystem;
-        $this->contextManager = $contextManager;
+        $this->contextHelper = $contextHelper;
         $this->debugConfiguration = $debugConfiguration;
         $this->environmentConfiguration = $environmentConfiguration;
         $this->fiddleConfiguration = $fiddleConfiguration;
@@ -34,7 +34,7 @@ class EnvironmentManager extends BaseService
     {
         $this->cleanExpiredEnvironments();
 
-        $context = $this->contextManager->getContext();
+        $context = $this->contextHelper->getContext();
         $this->validateEnvironmentId($context);
         $this->deduceEnvironmentDirectory($context);
         $this->loadSharedMemory($context);
@@ -45,7 +45,7 @@ class EnvironmentManager extends BaseService
         $env_id = $context->getEnvironmentId();
         if (!preg_match("/{$this->environmentConfiguration['validation']}/", $env_id))
         {
-            $this->contextManager->addError(Error::E_INVALID_ENVIRONMENT_ID, array ('Environment ID' => $env_id));
+            $this->contextHelper->addError(Error::E_INVALID_ENVIRONMENT_ID, array ('Environment ID' => $env_id));
             throw new StopExecutionException();
         }
     }
@@ -66,7 +66,7 @@ class EnvironmentManager extends BaseService
 
         if (!is_dir($realPath))
         {
-            $this->contextManager->addError(Error::E_UNEXISTING_ENVIRONMENT_ID, array ('Environment ID' => $env_id));
+            $this->contextHelper->addError(Error::E_UNEXISTING_ENVIRONMENT_ID, array ('Environment ID' => $env_id));
             throw new StopExecutionException();
         }
 
@@ -91,13 +91,13 @@ class EnvironmentManager extends BaseService
 
         if (!is_file($sharedFile))
         {
-            $this->contextManager->addError(Error::E_UNEXISTING_SHARED_MEMORY, array ('Shared File' => $sharedFile));
+            $this->contextHelper->addError(Error::E_UNEXISTING_SHARED_MEMORY, array ('Shared File' => $sharedFile));
             throw new StopExecutionException();
         }
 
         if (!is_readable($sharedFile))
         {
-            $this->contextManager->addError(Error::E_UNREADABLE_SHARED_MEMORY, array ('Shared File' => $sharedFile));
+            $this->contextHelper->addError(Error::E_UNREADABLE_SHARED_MEMORY, array ('Shared File' => $sharedFile));
             throw new StopExecutionException();
         }
 
@@ -109,7 +109,7 @@ class EnvironmentManager extends BaseService
         if (!is_null($sharedMemory->begin_tm))
         {
             $sharedMemory->unlock();
-            $this->contextManager->addError(Error::E_FIDDLE_ALREADY_RUN, array ('Shared File' => $sharedFile));
+            $this->contextHelper->addError(Error::E_FIDDLE_ALREADY_RUN, array ('Shared File' => $sharedFile));
             throw new StopExecutionException();
         }
         $sharedMemory->begin_tm = time();
@@ -118,7 +118,7 @@ class EnvironmentManager extends BaseService
         if (is_null($fiddle))
         {
             $sharedMemory->unlock();
-            $this->contextManager->addError(Error::E_FIDDLE_NOT_STORED, array ('Shared File' => $sharedFile));
+            $this->contextHelper->addError(Error::E_FIDDLE_NOT_STORED, array ('Shared File' => $sharedFile));
             throw new StopExecutionException();
         }
 

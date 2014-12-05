@@ -63,7 +63,7 @@ class RunCommand extends BaseCommand
         {
             if (!is_null($err = error_get_last()))
             {
-                $this->container->get('context_manager')->addError(Error::E_UNEXPECTED, array ('Error' => $err));
+                $this->container->get('context_helper')->addError(Error::E_UNEXPECTED, array ('Error' => $err));
                 $this->container->get('debug_manager')->backupIfDebugRequired($this->context);
             }
         });
@@ -93,9 +93,14 @@ class RunCommand extends BaseCommand
     protected function process()
     {
         $this->context = new Context($this->environmentId, $this->isDebug);
-        $this->container->get('context_manager')->setContext($this->context);
+        $this->container->get('context_helper')->setContext($this->context);
         $this->container->get('environment_manager')->recoverFiddle();
 
+        // todo: charger twig engine
+        //$engines = $this->container->findTaggedServiceIds('twig.engine');
+        //$this->container->get('twig_engine')->loadEngine($engines);
+
+        $this->container->get('context_manager')->convertFileToArray();
 
         var_dump($this->context);
     }
