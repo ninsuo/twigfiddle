@@ -1,0 +1,11 @@
+parameters:
+    yaml.string_loader.class: Fuz\Framework\StringLoader\YamlStringLoader
+
+services:
+
+    yaml.string_loader:
+        class: %yaml.string_loader.class%
+        arguments: []
+        tags:
+         - { name: string.loader, supports: YML/YAML }
+

@@ -65,6 +65,20 @@ class ErrorManager extends BaseService
                     'public' => false,
                     'debug' => false,
             ),
+            Error::E_UNKNOWN_CONTEXT_FORMAT => array(
+                    'group' => Error::G_CONTEXT,
+                    'message' => "The given context format is not supported.",
+                    'logger' => 'error',
+                    'public' => true,
+                    'debug' => true,
+            ),
+            Error::E_INVALID_CONTEXT_SYNTAX => array(
+                    'group' => Error::G_CONTEXT,
+                    'message' => "Unable to convert the context to an array.",
+                    'logger' => 'info',
+                    'public' => true,
+                    'debug' => false,
+            ),
     );
 
     public function getError($no)

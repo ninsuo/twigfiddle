@@ -33,7 +33,7 @@ class DebugManager extends BaseService
         if ($requiresDebug)
         {
             $this->logger->warning("This fiddle requires developers attention, copying it to the debug directory.");
-            $this->copyFiddleToDebugDirectory($context->getEnvironmentId());
+            $this->copyFiddleToDebugDirectory($context);
         }
         else
         {
@@ -50,14 +50,16 @@ class DebugManager extends BaseService
         $this->logger->debug(sprintf("Cleaned expired debug environments: %d environments removed.", count($elements)));
     }
 
-    public function copyFiddleToDebugDirectory($environmentId)
+    public function copyFiddleToDebugDirectory(Context $context)
     {
+        $environmentId = $context->getEnvironmentId();
         if (preg_match("/{$this->environmentConfiguration['validation']}/", $environmentId))
         {
             $source = $this->environmentConfiguration['directory'] . DIRECTORY_SEPARATOR . $environmentId;
             $target = $this->debugConfiguration['directory'] . DIRECTORY_SEPARATOR . $environmentId;
             $this->logger->debug("Copying {$source} to {$target}");
             $this->fileSystem->copyDirectory($source, $target);
+            file_put_contents($target . DIRECTORY_SEPARATOR . "context.srz", serialize($context));
         }
     }
 

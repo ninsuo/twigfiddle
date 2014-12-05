@@ -47,7 +47,7 @@ class RunCommand extends BaseCommand
         }
         catch (\Exception $ex)
         {
-            $this->get('context_manager')->addError(Error::E_UNEXPECTED, array ('Exception' => $ex));
+            $this->container->get('context_helper')->addError(Error::E_UNEXPECTED, array ('Exception' => $ex));
         }
         if (!$this->isDebug)
         {
@@ -97,12 +97,10 @@ class RunCommand extends BaseCommand
         $this->container->get('environment_manager')->recoverFiddle();
 
         // todo: charger twig engine
-        //$engines = $this->container->findTaggedServiceIds('twig.engine');
-        //$this->container->get('twig_engine')->loadEngine($engines);
+        //$engines = array_keys($this->container->findTaggedServiceIds('twig.engine'));
+        //$this->container->get('twig.engine_manager')->loadEngine($engines);
 
-        $this->container->get('context_manager')->convertFileToArray();
-
-        var_dump($this->context);
+        $this->container->get('context_manager')->extractContext();
     }
 
 }

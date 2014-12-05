@@ -1,12 +1,9 @@
 imports:
+    - { resource: commands.yml }
+    - { resource: configuration_nodes.yml }
     - { resource: twig_engines.yml }
 
 parameters:
-    run.command.class: Fuz\Process\Command\RunCommand
-    environment.configuration_node.class: Fuz\Process\ConfigurationNode\EnvironmentConfigurationNode
-    debug.configuration_node.class: Fuz\Process\ConfigurationNode\DebugConfigurationNode
-    fiddle.configuration_node.class: Fuz\Process\ConfigurationNode\FiddleConfigurationNode
-    twig_engines.configuration_node.class: Fuz\Process\ConfigurationNode\TwigEnginesConfigurationNode
     context_helper.class: Fuz\Process\Helper\ContextHelper
     error_manager.class: Fuz\Process\Service\ErrorManager
     debug_manager.class: Fuz\Process\Service\DebugManager
@@ -14,36 +11,6 @@ parameters:
     context_manager.class: Fuz\Process\Service\ContextManager
 
 services:
-
-    run.command:
-        class: %run.command.class%
-        arguments: []
-        tags:
-            - { name: command }
-
-    environment.configuration_node:
-        class: %environment.configuration_node.class%
-        arguments: []
-        tags:
-         - { name: configuration.node }
-
-    debug.configuration_node:
-        class: %debug.configuration_node.class%
-        arguments: []
-        tags:
-         - { name: configuration.node }
-
-    fiddle.configuration_node:
-        class: %fiddle.configuration_node.class%
-        arguments: []
-        tags:
-         - { name: configuration.node }
-
-    twig_engines.configuration_node:
-        class: %twig_engines.configuration_node.class%
-        arguments: []
-        tags:
-         - { name: configuration.node }
 
     context_helper:
         class: %context_helper.class%
@@ -63,5 +30,5 @@ services:
 
     context_manager:
         class: %context_manager.class%
-        arguments: [@context_helper, %debug%, %environment%, %fiddle%]
+        arguments: [@context_helper, @string_loader]
 

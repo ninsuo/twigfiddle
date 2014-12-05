@@ -7,6 +7,7 @@ class Error
 
     const G_GENERAL = 0;
     const G_ENVIRONMENT = 1;
+    const G_CONTEXT = 2;
 
     const E_UNKNOWN = 0;
     const E_UNEXPECTED = 1;
@@ -16,6 +17,8 @@ class Error
     const E_UNREADABLE_SHARED_MEMORY = 5;
     const E_FIDDLE_ALREADY_RUN = 6;
     const E_FIDDLE_NOT_STORED = 7;
+    const E_UNKNOWN_CONTEXT_FORMAT = 8;
+    const E_INVALID_CONTEXT_SYNTAX = 9;
 
     protected $no;
     protected $group;
