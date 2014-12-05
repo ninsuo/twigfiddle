@@ -1,0 +1,31 @@
+parameters:
+    environment.configuration_node.class: Fuz\Process\ConfigurationNode\EnvironmentConfigurationNode
+    debug.configuration_node.class: Fuz\Process\ConfigurationNode\DebugConfigurationNode
+    fiddle.configuration_node.class: Fuz\Process\ConfigurationNode\FiddleConfigurationNode
+    twig_engines.configuration_node.class: Fuz\Process\ConfigurationNode\TwigEnginesConfigurationNode
+
+services:
+
+    environment.configuration_node:
+        class: %environment.configuration_node.class%
+        arguments: []
+        tags:
+         - { name: configuration.node }
+
+    debug.configuration_node:
+        class: %debug.configuration_node.class%
+        arguments: []
+        tags:
+         - { name: configuration.node }
+
+    fiddle.configuration_node:
+        class: %fiddle.configuration_node.class%
+        arguments: []
+        tags:
+         - { name: configuration.node }
+
+    twig_engines.configuration_node:
+        class: %twig_engines.configuration_node.class%
+        arguments: []
+        tags:
+         - { name: configuration.node }
