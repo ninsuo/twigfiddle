@@ -121,6 +121,13 @@ class ErrorManager extends BaseService
                     'public' => true,
                     'debug' => false,
             ),
+            Error::E_EXECUTION_FAILURE => array(
+                    'group' => Error::G_EXECUTION,
+                    'message' => "The fiddle execution failed.",
+                    'logger' => 'info',
+                    'public' => true,
+                    'debug' => false,
+            ),
     );
 
     public function getError($no)

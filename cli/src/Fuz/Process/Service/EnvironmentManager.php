@@ -27,14 +27,13 @@ class EnvironmentManager extends BaseService
         $this->fiddleConfiguration = $fiddleConfiguration;
     }
 
-    public function recoverFiddle(FiddleAgent $agent)
+    public function prepareEnvironment(FiddleAgent $agent)
     {
         $this->cleanExpiredEnvironments();
 
         $this
            ->validateEnvironmentId($agent)
            ->deduceEnvironmentDirectory($agent)
-           ->loadSharedMemory($agent)
         ;
     }
 
@@ -85,49 +84,14 @@ class EnvironmentManager extends BaseService
         return $this;
     }
 
-    protected function loadSharedMemory(FiddleAgent $agent)
+    public function checkFiddleEnvironmentAvailability(FiddleAgent $agent)
     {
-        $sharedFile = $agent->getDirectory() . DIRECTORY_SEPARATOR . $this->fiddleConfiguration['file'];
-        $this->logger->debug("Shared memory path: {$sharedFile}");
-
-        if (!is_file($sharedFile))
+        $dir = $agent->getDirectory();
+        if ((is_null($dir)) || (!is_dir($dir)) || (!is_writable($dir)))
         {
-            $agent->addError(Error::E_UNEXISTING_SHARED_MEMORY, array ('Shared File' => $sharedFile));
-            throw new StopExecutionException();
+            throw new \LogicException("The fiddle's environment does not seem to be ready.");
         }
-
-        if (!is_readable($sharedFile))
-        {
-            $agent->addError(Error::E_UNREADABLE_SHARED_MEMORY, array ('Shared File' => $sharedFile));
-            throw new StopExecutionException();
-        }
-
-        $storage = new StorageFile($sharedFile);
-        $sharedMemory = new SharedMemory($storage);
-
-        $sharedMemory->lock();
-
-        if (!is_null($sharedMemory->begin_tm))
-        {
-            $sharedMemory->unlock();
-            $agent->addError(Error::E_FIDDLE_ALREADY_RUN, array ('Shared File' => $sharedFile));
-            throw new StopExecutionException();
-        }
-        $sharedMemory->begin_tm = time();
-
-        $fiddle = $sharedMemory->fiddle;
-        if (is_null($fiddle))
-        {
-            $sharedMemory->unlock();
-            $agent->addError(Error::E_FIDDLE_NOT_STORED, array ('Shared File' => $sharedFile));
-            throw new StopExecutionException();
-        }
-
-        $sharedMemory->unlock();
-
-        $agent->setFiddle($fiddle);
-        $agent->setSharedMemory($sharedMemory);
-        return $this;
+        return $dir;;
     }
 
 }

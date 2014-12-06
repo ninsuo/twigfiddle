@@ -107,13 +107,15 @@ class RunCommand extends BaseCommand
 
     protected function process()
     {
-        $this->container->get('environment_manager')->recoverFiddle($this->agent);
+        $this->container->get('environment_manager')->prepareEnvironment($this->agent);
+        $this->container->get('shared_memory_manager')->recoverFiddle($this->agent);
         $this->container->get('engine_manager')->loadTwigEngine($this->agent);
         $this->container->get('context_manager')->extractContext($this->agent);
         $this->container->get('template_manager')->prepareTemplates($this->agent);
+        $this->container->get('execute_manager')->executeFiddle($this->agent);
 
-        // execution
-        // recuperation des compiles
+        // fetch compiled files
+        // save to shared memory
     }
 
 }

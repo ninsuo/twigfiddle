@@ -1,4 +1,7 @@
-{% import 'macros.twig' as macros %}
-{% block title %}Hello, world!{% endblock %}
-{% block content %}{% endblock %}
-{{ macros.sum(1, 1) }}
+{% extends "base.twig" %}
+{% block content %}
+    {% for key, value in array %}
+        key = {{ key }}, value = {{ value }}
+    {% endfor %}
+    {% include "included.twig" %}
+{% endblock %}

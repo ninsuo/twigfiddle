@@ -35,9 +35,9 @@ class FiddleAgent
     /**
      * Execution's environment directory
      *
-     * @var string
+     * @var string|null
      */
-    protected $directory;
+    protected $directory = null;
 
     /**
      * User's fiddle
@@ -68,25 +68,32 @@ class FiddleAgent
     protected $engine;
 
     /**
+     * Twig's source directory for the requested version
+     *
+     * @var string
+     */
+    protected $sourceDirectory;
+
+    /**
      * Fiddle's context converted to array
      *
-     * @var mixed[]
+     * @var mixed[]|null
      */
-    protected $context = array ();
+    protected $context = null;
 
     /**
      * List templates full paths
      *
-     * @var string[]
+     * @var string[]|null
      */
-    protected $templates = array ();
+    protected $templates = null;
 
     /**
      * Fiddle's result
      *
      * @var string|null
      */
-    protected $result;
+    protected $result = null;
 
     /**
      * Compiled templates
@@ -186,6 +193,17 @@ class FiddleAgent
     public function getEngine()
     {
         return $this->engine;
+    }
+
+    public function setSourceDirectory($sourceDirectory)
+    {
+        $this->sourceDirectory = $sourceDirectory;
+        return $this;
+    }
+
+    public function getSourceDirectory()
+    {
+        return $this->sourceDirectory;
     }
 
     public function setContext(array $context)

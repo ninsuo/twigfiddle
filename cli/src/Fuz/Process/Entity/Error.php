@@ -10,6 +10,7 @@ class Error
     const G_CONTEXT = 2;
     const G_TEMPLATE = 3;
     const G_ENGINE = 4;
+    const G_EXECUTION = 5;
 
     const E_UNKNOWN = 0;
     const E_UNEXPECTED = 1;
@@ -27,6 +28,7 @@ class Error
     const E_INVALID_TEMPLATE_NAME = 13;
     const E_CANNOT_WRITE_TEMPLATE = 14;
     const E_ENGINE_NOT_FOUND = 15;
+    const E_EXECUTION_FAILURE = 16;
 
     protected $no;
     protected $group;

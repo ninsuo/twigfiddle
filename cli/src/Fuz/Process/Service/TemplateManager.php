@@ -60,8 +60,7 @@ class TemplateManager extends BaseService
         }
 
         $templates = $collection->toArray();
-        usort($templates,
-           function($a, $b)
+        usort($templates, function($a, $b)
         {
             return $a->isMain() ? -1 : 1;
         });
@@ -72,8 +71,9 @@ class TemplateManager extends BaseService
     public function writeTemplates(FiddleAgent $agent, array $templates)
     {
         $dir = $agent->getDirectory() . DIRECTORY_SEPARATOR . $this->fiddleConfiguration['templates_dir'];
+        $this->logger->debug("Creating template directory: {$dir}");
         $this->fileSystem->mkdir($dir);
-        $files = array();
+        $files = array ();
         foreach ($templates as $template)
         {
             $filename = $template->getFilename();
@@ -94,6 +94,16 @@ class TemplateManager extends BaseService
         }
         $agent->setTemplates($files);
         return $this;
+    }
+
+    public function getMainTemplateFromAgent(FiddleAgent $agent)
+    {
+        $templates = $agent->getTemplates();
+        if (is_null($templates))
+        {
+            throw new \LogicException("Templates have not been generated in this fiddle.");
+        }
+        return reset($templates);
     }
 
 }

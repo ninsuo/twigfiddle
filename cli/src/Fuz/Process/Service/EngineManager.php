@@ -3,6 +3,7 @@
 namespace Fuz\Process\Service;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Filesystem\Exception\IOException;
 use Fuz\Framework\Base\BaseService;
 use Fuz\Process\Entity\Error;
 use Fuz\Process\Exception\StopExecutionException;
@@ -14,14 +15,14 @@ class EngineManager extends BaseService
 
     protected $container;
     protected $fiddleConfiguration;
-    protected $twigEnginesConfiguration;
+    protected $twigSourceConfiguration;
 
     public function __construct(ContainerInterface $container, array $fiddleConfiguration,
-       array $twigEnginesConfiguration)
+       array $twigSourceConfiguration)
     {
         $this->container = $container;
         $this->fiddleConfiguration = $fiddleConfiguration;
-        $this->twigEnginesConfiguration = $twigEnginesConfiguration;
+        $this->twigSourceConfiguration = $twigSourceConfiguration;
     }
 
     public function loadTwigEngine(FiddleAgent $agent)
@@ -33,7 +34,6 @@ class EngineManager extends BaseService
         }
 
         $version = $fiddle->getConfig()->getTwigVersion();
-
         $this->logger->debug("Loading Twig Engine version: {$version}\n");
         $engine = $this->findRightEngine($version);
         if (is_null($engine))
@@ -44,6 +44,11 @@ class EngineManager extends BaseService
 
         $this->logger->debug(sprintf("Twig Engine %s loaded successfully.", get_class($engine)));
         $agent->setEngine($engine);
+
+        $sourceDirectory = $this->getTwigSourceDirectory($version);
+        $this->logger->debug(sprintf("Twig source for version %s is loacated at: %s.", $version, get_class($engine)));
+        $agent->setSourceDirectory($sourceDirectory);
+
         return $this;
     }
 
@@ -59,7 +64,7 @@ class EngineManager extends BaseService
                 {
                     continue;
                 }
-                if (strcmp(strtolower($expectedVersion), strtolower($tag['version'])) == 0)
+                if (strcmp($expectedVersion, $tag['version']) == 0)
                 {
                     $service = $this->container->get($serviceId);
                     break;
@@ -77,9 +82,30 @@ class EngineManager extends BaseService
         return $service;
     }
 
-    public function render()
+    public function getTwigSourceDirectory($version)
     {
-        // todo
+        if (strpos($version, DIRECTORY_SEPARATOR))
+        {
+            throw new \LogicException("Looks like the version number contains a directory separator: {$version}.");
+        }
+
+        $dir = $this->twigSourceConfiguration['directory'] . DIRECTORY_SEPARATOR . $version;
+        if (!is_dir($dir))
+        {
+            throw new IOException("Twig source's directory do not exist.");
+        }
+
+        return $dir;
+    }
+
+    public function getEngineFromAgent(FiddleAgent $agent)
+    {
+        $engine = $agent->getEngine();
+        if (is_null($engine))
+        {
+            throw new \LogicException("Twig Engine has not been loaded in this fiddle.");
+        }
+        return $engine;
     }
 
 }

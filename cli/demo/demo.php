@@ -28,14 +28,14 @@ $templates->add($templateA);
 
 $templateB = new FiddleTemplate();
 $templateB->setIsMain(false);
-$templateB->setFilename("macros.twig");
-$templateB->setContent(file_get_contents(__DIR__."/macros.twig"));
+$templateB->setFilename("included.twig");
+$templateB->setContent(file_get_contents(__DIR__."/included.twig"));
 $templates->add($templateB);
 
 $templateC = new FiddleTemplate();
 $templateC->setIsMain(false);
-$templateC->setFilename("blocks.twig");
-$templateC->setContent(file_get_contents(__DIR__."/blocks.twig"));
+$templateC->setFilename("base.twig");
+$templateC->setContent(file_get_contents(__DIR__."/base.twig"));
 $templates->add($templateC);
 
 $context = new FiddleContext();
@@ -70,4 +70,5 @@ $shared = new SharedMemory($storage);
 $shared->fiddle = $fiddle;
 $shared->begin_tm = null;
 $shared->finish_tm = null;
+$shared->result = null;
 $shared->errors = array();

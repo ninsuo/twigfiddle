@@ -8,9 +8,11 @@ parameters:
     error_manager.class: Fuz\Process\Service\ErrorManager
     debug_manager.class: Fuz\Process\Service\DebugManager
     environment_manager.class: Fuz\Process\Service\EnvironmentManager
+    shared_memory_manager.class: Fuz\Process\Service\SharedMemoryManager
     engine_manager.class: Fuz\Process\Service\EngineManager
     context_manager.class: Fuz\Process\Service\ContextManager
     template_manager.class: Fuz\Process\Service\TemplateManager
+    execute_manager.class: Fuz\Process\Service\ExecuteManager
 
 services:
 
@@ -31,9 +33,13 @@ services:
         class: %environment_manager.class%
         arguments: [@file_system, %debug%, %environment%, %fiddle%]
 
+    shared_memory_manager:
+        class: %shared_memory_manager.class%
+        arguments: [@environment_manager, %fiddle%]
+
     engine_manager:
         class: %engine_manager.class%
-        arguments: [@service_container, %fiddle%, %twig_engines%]
+        arguments: [@service_container, %fiddle%, %twig_sources%]
 
     context_manager:
         class: %context_manager.class%
@@ -43,3 +49,6 @@ services:
         class: %template_manager.class%
         arguments: [@file_system, %fiddle%, %templates%]
 
+    execute_manager:
+        class: %execute_manager.class%
+        arguments: [@file_system, @environment_manager, @engine_manager, @context_manager, @template_manager, %fiddle%]

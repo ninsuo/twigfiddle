@@ -36,24 +36,34 @@ class ContextManager extends BaseService
         }
         catch (\InvalidArgumentException $ex)
         {
-            $agent->addError(Error::E_UNKNOWN_CONTEXT_FORMAT, array('Format' => $format));
+            $agent->addError(Error::E_UNKNOWN_CONTEXT_FORMAT, array ('Format' => $format));
             throw new StopExecutionException();
         }
         catch (\LogicException $ex)
         {
-            $agent->addError(Error::E_UNEXPECTED, array('Exception' => $ex));
+            $agent->addError(Error::E_UNEXPECTED, array ('Exception' => $ex));
             throw new StopExecutionException();
         }
         catch (\Exception $ex)
         {
-            $agent->addError(Error::E_INVALID_CONTEXT_SYNTAX, array('Exception' => $ex));
+            $agent->addError(Error::E_INVALID_CONTEXT_SYNTAX, array ('Exception' => $ex));
             throw new StopExecutionException();
         }
 
-        $this->logger->debug("Successfully extracted the context.", array('context' => $array));
+        $this->logger->debug("Successfully extracted the context.", array ('context' => $array));
         $agent->setContext($array);
 
         return $this;
+    }
+
+    public function getContextFromAgent(FiddleAgent $agent)
+    {
+        $context = $agent->getContext();
+        if (is_null($context))
+        {
+            throw new \LogicException("Context has not been converted in this fiddle.");
+        }
+        return $context;
     }
 
 }
