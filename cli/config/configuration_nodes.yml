@@ -2,6 +2,7 @@ parameters:
     environment.configuration_node.class: Fuz\Process\ConfigurationNode\EnvironmentConfigurationNode
     debug.configuration_node.class: Fuz\Process\ConfigurationNode\DebugConfigurationNode
     fiddle.configuration_node.class: Fuz\Process\ConfigurationNode\FiddleConfigurationNode
+    templates.configuration_node.class: Fuz\Process\ConfigurationNode\TemplatesConfigurationNode
     twig_engines.configuration_node.class: Fuz\Process\ConfigurationNode\TwigEnginesConfigurationNode
 
 services:
@@ -20,6 +21,12 @@ services:
 
     fiddle.configuration_node:
         class: %fiddle.configuration_node.class%
+        arguments: []
+        tags:
+         - { name: configuration.node }
+
+    templates.configuration_node:
+        class: %templates.configuration_node.class%
         arguments: []
         tags:
          - { name: configuration.node }

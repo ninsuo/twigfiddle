@@ -5,7 +5,7 @@ logger:
 
 environment:
     directory: %rootDir%/../environment/
-    validation: ^[a-zA-Z0-9-]{4,16}$
+    validation: "^[a-zA-Z0-9-]{4,16}$"
     expiry: 24
 
 debug:
@@ -14,8 +14,11 @@ debug:
 
 fiddle:
     file: fiddle.shr
-    templates_dir: templates/
-    compiled_dir: compiled/
+    templates_dir: twig/
+    compiled_dir: php/
+
+templates:
+    validation: "^[A-Za-z0-9-_]{1,16}\\.twig$"
 
 twig_engines:
     directory: %rootDir%/twig/uncompressed

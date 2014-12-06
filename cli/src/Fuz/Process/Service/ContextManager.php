@@ -4,7 +4,6 @@ namespace Fuz\Process\Service;
 
 use Fuz\Framework\Base\BaseService;
 use Fuz\Framework\Service\StringLoader;
-use Fuz\Framework\StringLoader\StringLoaderInterface;
 use Fuz\Process\Entity\Error;
 use Fuz\Process\Exception\StopExecutionException;
 use Fuz\Process\Helper\ContextHelper;

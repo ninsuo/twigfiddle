@@ -25,7 +25,7 @@ class ErrorManager extends BaseService
             ),
             Error::E_INVALID_ENVIRONMENT_ID => array (
                     'group' => Error::G_ENVIRONMENT,
-                    'message' => "The given environment ID is invalid (allowed: alphanumeric chars and hyphen).",
+                    'message' => "The given environment ID does not match with the expected format.",
                     'logger' => 'warning',
                     'public' => false,
                     'debug' => false,
@@ -78,6 +78,41 @@ class ErrorManager extends BaseService
                     'logger' => 'info',
                     'public' => true,
                     'debug' => false,
+            ),
+            Error::E_NO_TEMPLATE => array(
+                    'group' => Error::G_TEMPLATE,
+                    'message' => "This fiddle does not contain any template.",
+                    'logger' => 'warning',
+                    'public' => true,
+                    'debug' => false,
+            ),
+            Error::E_NO_MAIN_TEMPLATE => array(
+                    'group' => Error::G_TEMPLATE,
+                    'message' => "This fiddle does not have a main template.",
+                    'logger' => 'warning',
+                    'public' => true,
+                    'debug' => false,
+            ),
+            Error::E_SEVERAL_MAIN_TEMPLATES => array(
+                    'group' => Error::G_TEMPLATE,
+                    'message' => "This fiddle has several main templates.",
+                    'logger' => 'warning',
+                    'public' => true,
+                    'debug' => false,
+            ),
+            Error::E_INVALID_TEMPLATE_NAME => array(
+                    'group' => Error::G_TEMPLATE,
+                    'message' => "Invalid template name.",
+                    'logger' => 'warning',
+                    'public' => true,
+                    'debug' => false,
+            ),
+            Error::E_CANNOT_WRITE_TEMPLATE => array(
+                    'group' => Error::G_TEMPLATE,
+                    'message' => "Unable to write template.",
+                    'logger' => 'error',
+                    'public' => false,
+                    'debug' => true,
             ),
     );
 

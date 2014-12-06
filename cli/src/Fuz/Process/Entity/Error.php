@@ -8,6 +8,7 @@ class Error
     const G_GENERAL = 0;
     const G_ENVIRONMENT = 1;
     const G_CONTEXT = 2;
+    const G_TEMPLATE = 3;
 
     const E_UNKNOWN = 0;
     const E_UNEXPECTED = 1;
@@ -19,6 +20,11 @@ class Error
     const E_FIDDLE_NOT_STORED = 7;
     const E_UNKNOWN_CONTEXT_FORMAT = 8;
     const E_INVALID_CONTEXT_SYNTAX = 9;
+    const E_NO_TEMPLATE = 10;
+    const E_NO_MAIN_TEMPLATE = 11;
+    const E_SEVERAL_MAIN_TEMPLATES = 12;
+    const E_INVALID_TEMPLATE_NAME = 13;
+    const E_CANNOT_WRITE_TEMPLATE = 14;
 
     protected $no;
     protected $group;

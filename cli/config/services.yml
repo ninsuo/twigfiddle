@@ -9,6 +9,7 @@ parameters:
     debug_manager.class: Fuz\Process\Service\DebugManager
     environment_manager.class: Fuz\Process\Service\EnvironmentManager
     context_manager.class: Fuz\Process\Service\ContextManager
+    template_manager.class: Fuz\Process\Service\TemplateManager
 
 services:
 
@@ -31,4 +32,8 @@ services:
     context_manager:
         class: %context_manager.class%
         arguments: [@context_helper, @string_loader]
+
+    template_manager:
+        class: %template_manager.class%
+        arguments: [@context_helper, @file_system, %fiddle%, %templates%]
 

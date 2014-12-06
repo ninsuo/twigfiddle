@@ -131,7 +131,7 @@ class FiddleTemplate
      *
      * @return boolean
      */
-    public function getIsMain()
+    public function isMain()
     {
         return $this->isMain;
     }

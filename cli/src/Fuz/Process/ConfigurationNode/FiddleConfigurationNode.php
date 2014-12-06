@@ -19,10 +19,10 @@ class FiddleConfigurationNode implements ConfigurationNodeInterface
                     ->defaultValue('fiddle.shr')
                 ->end()
                 ->scalarNode('templates_dir')
-                    ->defaultValue('templates/')
+                    ->defaultValue('twig')
                 ->end()
                 ->scalarNode('compiled_dir')
-                    ->defaultValue('compiled/')
+                    ->defaultValue('php')
                 ->end()
            ->end()
         ;
