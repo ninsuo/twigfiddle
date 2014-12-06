@@ -59,7 +59,7 @@ class DebugManager extends BaseService
             $target = $this->debugConfiguration['directory'] . DIRECTORY_SEPARATOR . $environmentId;
             $this->logger->debug("Copying {$source} to {$target}");
             $this->fileSystem->copyDirectory($source, $target);
-            file_put_contents($target . DIRECTORY_SEPARATOR . "context.srz", serialize($context));
+            file_put_contents($target . DIRECTORY_SEPARATOR . $this->debugConfiguration['context_file'], serialize($context));
         }
     }
 

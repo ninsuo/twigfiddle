@@ -11,6 +11,7 @@ environment:
 debug:
     directory: %rootDir%/../debug/
     expiry: 720
+    context_file: context.srz
 
 fiddle:
     file: fiddle.shr
