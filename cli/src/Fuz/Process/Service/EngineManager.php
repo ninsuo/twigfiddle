@@ -60,11 +60,11 @@ class EngineManager extends BaseService
         {
             foreach ($tags as $tag)
             {
-                if (!array_key_exists('version', $tag))
+                if (!array_key_exists('versions', $tag))
                 {
                     continue;
                 }
-                if (strcmp($expectedVersion, $tag['version']) == 0)
+                if (in_array(strtolower($expectedVersion), array_map('trim', array_map('strtolower', explode("/", $tag['versions'])))))
                 {
                     $service = $this->container->get($serviceId);
                     break;
@@ -75,7 +75,7 @@ class EngineManager extends BaseService
                 break;
             }
         }
-        if (!($service instanceof TwigEngineInterface))
+        if (($service) && (!($service instanceof TwigEngineInterface)))
         {
             throw new \LogicException("The Twig Engine version {$expectedVersion} has been found, but does not implement the TwigEngineInterface interface.");
         }

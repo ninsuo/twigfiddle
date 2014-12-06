@@ -3,9 +3,8 @@
 namespace Fuz\Process\TwigEngine;
 
 use Fuz\Framework\Base\BaseService;
-use Fuz\Process\TwigEngine\TwigEngineInterface;
 
-abstract class AbstractTwigEngine extends BaseService implements TwigEngineInterface
+class DefaultTwigEngine extends BaseService implements TwigEngineInterface
 {
 
     public function render($sourceDirectory, $cacheDirectory, $template, array $context = array ())
@@ -17,7 +16,7 @@ abstract class AbstractTwigEngine extends BaseService implements TwigEngineInter
         $mainTemplate = basename($template);
 
         $twigLoader = new \Twig_Loader_Filesystem($executionDirectory, $cacheDirectory);
-        $twigEnvironment = new \Twig_Environment($twigLoader);
+        $twigEnvironment = new \Twig_Environment($twigLoader, array('cache' => $cacheDirectory));
 
         $templateObject = $twigEnvironment->loadTemplate($mainTemplate);
 
