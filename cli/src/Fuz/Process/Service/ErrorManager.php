@@ -114,6 +114,13 @@ class ErrorManager extends BaseService
                     'public' => false,
                     'debug' => true,
             ),
+            Error::E_ENGINE_NOT_FOUND => array(
+                    'group' => Error::G_ENGINE,
+                    'message' => "The Twig version you requested is not implemented.",
+                    'logger' => 'warning',
+                    'public' => true,
+                    'debug' => false,
+            ),
     );
 
     public function getError($no)

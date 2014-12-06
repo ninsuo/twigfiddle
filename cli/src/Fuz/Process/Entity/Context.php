@@ -5,6 +5,7 @@ namespace Fuz\Process\Entity;
 use Fuz\Component\SharedMemory\SharedMemory;
 use Fuz\AppBundle\Entity\Fiddle;
 use Fuz\Process\Entity\Error;
+use Fuz\Process\TwigEngine\TwigEngineInterface;
 
 class Context
 {
@@ -52,6 +53,13 @@ class Context
     protected $sharedMemory;
 
     /**
+     * Twig Engine for the right Twig's version
+     *
+     * @var TwigEngineInterface
+     */
+    protected $engine;
+
+    /**
      * Fiddle's context converted to array
      *
      * @var mixed[]
@@ -70,7 +78,7 @@ class Context
      *
      * @var string|null
      */
-    protected $result = null;
+    protected $result;
 
     /**
      * Compiled templates
@@ -117,9 +125,9 @@ class Context
         return $this->fiddle;
     }
 
-    public function addError(Error $error)
+    public function addError($error)
     {
-        $this->errors[] = $error;
+       $this->errors[] = $error;
         return $this;
     }
 
@@ -137,6 +145,17 @@ class Context
     public function getSharedMemory()
     {
         return $this->sharedMemory;
+    }
+
+    public function setEngine(TwigEngineInterface $engine)
+    {
+        $this->engine = $engine;
+        return $this;
+    }
+
+    public function getEngine()
+    {
+        return $this->engine;
     }
 
     public function setContext(array $context)

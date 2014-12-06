@@ -8,6 +8,7 @@ parameters:
     error_manager.class: Fuz\Process\Service\ErrorManager
     debug_manager.class: Fuz\Process\Service\DebugManager
     environment_manager.class: Fuz\Process\Service\EnvironmentManager
+    engine_manager.class: Fuz\Process\Service\EngineManager
     context_manager.class: Fuz\Process\Service\ContextManager
     template_manager.class: Fuz\Process\Service\TemplateManager
 
@@ -28,6 +29,10 @@ services:
     environment_manager:
         class: %environment_manager.class%
         arguments: [@file_system, @context_helper, %debug%, %environment%, %fiddle%]
+
+    engine_manager:
+        class: %engine_manager.class%
+        arguments: [@service_container, @context_helper, %fiddle%, %twig_engines%]
 
     context_manager:
         class: %context_manager.class%

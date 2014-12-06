@@ -94,11 +94,10 @@ class RunCommand extends BaseCommand
     {
         $this->context = new Context($this->environmentId, $this->isDebug);
         $this->container->get('context_helper')->setContext($this->context);
+
         $this->container->get('environment_manager')->recoverFiddle();
 
-        // todo: charger twig engine
-        //$engines = array_keys($this->container->findTaggedServiceIds('twig.engine'));
-        //$this->container->get('twig.engine_manager')->loadEngine($engines);
+        $this->container->get('engine_manager')->loadEngine();
 
         $this->container->get('context_manager')->extractContext();
         $this->container->get('template_manager')->prepareTemplates();
