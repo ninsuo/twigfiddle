@@ -27,7 +27,7 @@ class StringLoader
                 {
                     continue;
                 }
-                if (in_array(strtolower($format), array_map('strtolower', explode("/", $tag['supports']))))
+                if (in_array(strtolower($format), array_map('trim', array_map('strtolower', explode("/", $tag['supports'])))))
                 {
                     $service = $this->container->get($serviceId);
                     break;
