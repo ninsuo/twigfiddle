@@ -1,14 +1,22 @@
 <?php
 
-namespace Fuz\Process\Entity;
+namespace Fuz\Process\Agent;
 
 use Fuz\Component\SharedMemory\SharedMemory;
 use Fuz\AppBundle\Entity\Fiddle;
 use Fuz\Process\Entity\Error;
+use Fuz\Process\Service\ErrorManager;
 use Fuz\Process\TwigEngine\TwigEngineInterface;
 
-class Context
+class FiddleAgent
 {
+
+    /**
+     * Error Management service
+     *
+     * @var ErrorManager
+     */
+    protected $errorManager;
 
     /**
      * Execution's environment ID
@@ -87,15 +95,26 @@ class Context
      */
     protected $compiled = array ();
 
-    public function __construct($environmentId, $isDebug = false)
+    public function __construct(ErrorManager $errorManager)
+    {
+        $this->errorManager = $errorManager;
+    }
+
+    public function setEnvironmentId($environmentId)
     {
         $this->environmentId = $environmentId;
-        $this->isDebug = $isDebug;
+        return $this;
     }
 
     public function getEnvironmentId()
     {
         return $this->environmentId;
+    }
+
+    public function setIsDebug($isDebug)
+    {
+        $this->isDebug = $isDebug;
+        return $this;
     }
 
     public function isDebug()
@@ -127,7 +146,18 @@ class Context
 
     public function addError($error)
     {
-       $this->errors[] = $error;
+        if (!($error instanceof Error))
+        {
+            if ($this->errorManager)
+            {
+                return $this->addError($this->errorManager->getError($error, array_slice(func_get_args(), 1)));
+            }
+            else
+            {
+                throw new \LogicException("Unserialized agent cannot be reused at runtime.");
+            }
+        }
+        $this->errors[] = $error;
         return $this;
     }
 
@@ -200,6 +230,16 @@ class Context
     public function getCompiled()
     {
         return $this->compiled;
+    }
+
+    public function __sleep()
+    {
+        return array_diff(array_keys(get_object_vars($this)), array('errorManager', 'engine'));
+    }
+
+    public function __wakeup()
+    {
+        $this->errorManager = null;
     }
 
 }

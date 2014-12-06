@@ -7,14 +7,13 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Fuz\Framework\Base\BaseCommand;
-use Fuz\Process\Entity\Context;
 use Fuz\Process\Entity\Error;
 use Fuz\Process\Exception\StopExecutionException;
 
 class RunCommand extends BaseCommand
 {
 
-    protected $context;
+    protected $agent;
     protected $environmentId;
     protected $isDebug;
 
@@ -36,10 +35,13 @@ class RunCommand extends BaseCommand
         $this->logger->info("Started execution.", $input->getArguments());
         try
         {
-            $this->initErrorHandler();
-            $this->initArguments($input);
-            $this->initProcessor();
-            $this->process();
+            $this
+               ->initErrorHandler()
+               ->initArguments($input)
+               ->initAgent()
+               ->initProcessor()
+               ->process()
+            ;
         }
         catch (StopExecutionException $ex)
         {
@@ -47,11 +49,11 @@ class RunCommand extends BaseCommand
         }
         catch (\Exception $ex)
         {
-            $this->container->get('context_helper')->addError(Error::E_UNEXPECTED, array ('Exception' => $ex));
+            $this->agent->addError(Error::E_UNEXPECTED, array ('Exception' => $ex));
         }
         if (!$this->isDebug)
         {
-            $this->container->get('debug_manager')->backupIfDebugRequired($this->context);
+            $this->container->get('debug_manager')->backupIfDebugRequired($this->agent);
         }
         $this->logger->info("Ended execution.");
         $output->write('');
@@ -61,18 +63,30 @@ class RunCommand extends BaseCommand
     {
         register_shutdown_function(function()
         {
-            if ((!is_null($err = error_get_last())) && (!in_array($err['type'], array(E_NOTICE, E_WARNING))))
+            if ((!is_null($err = error_get_last())) && (!in_array($err['type'], array (E_NOTICE, E_WARNING))))
             {
-                $this->container->get('context_helper')->addError(Error::E_UNEXPECTED, array ('Error' => $err));
-                $this->container->get('debug_manager')->backupIfDebugRequired($this->context);
+                $this->agent->addError(Error::E_UNEXPECTED, array ('Error' => $err));
+                $this->container->get('debug_manager')->backupIfDebugRequired($this->agent);
             }
         });
+        return $this;
     }
 
     protected function initArguments(InputInterface $input)
     {
         $this->environmentId = $input->getArgument('environment-id');
         $this->isDebug = $input->getOption('debug');
+        return $this;
+    }
+
+    public function initAgent()
+    {
+        $this->agent = $this->container->get('fiddle_agent');
+        $this->agent
+           ->setEnvironmentId($this->environmentId)
+           ->setIsDebug($this->isDebug)
+        ;
+        return $this;
     }
 
     protected function initProcessor()
@@ -88,24 +102,18 @@ class RunCommand extends BaseCommand
             ));
             return $record;
         });
+        return $this;
     }
 
     protected function process()
     {
-        $this->context = new Context($this->environmentId, $this->isDebug);
-        $this->container->get('context_helper')->setContext($this->context);
-
-        $this->container->get('environment_manager')->recoverFiddle();
-
-        $this->container->get('engine_manager')->loadEngine();
-
-        $this->container->get('context_manager')->extractContext();
-        $this->container->get('template_manager')->prepareTemplates();
+        $this->container->get('environment_manager')->recoverFiddle($this->agent);
+        $this->container->get('engine_manager')->loadTwigEngine($this->agent);
+        $this->container->get('context_manager')->extractContext($this->agent);
+        $this->container->get('template_manager')->prepareTemplates($this->agent);
 
         // execution
-
         // recuperation des compiles
-
     }
 
 }

@@ -7,53 +7,62 @@ use Fuz\Component\SharedMemory\Storage\StorageFile;
 use Fuz\Framework\Base\BaseService;
 use Fuz\Framework\Service\FileSystem;
 use Fuz\Process\Entity\Error;
-use Fuz\Process\Entity\Context;
+use Fuz\Process\Agent\FiddleAgent;
 use Fuz\Process\Exception\StopExecutionException;
-use Fuz\Process\Helper\ContextHelper;
 
 class EnvironmentManager extends BaseService
 {
 
     protected $fileSystem;
-    protected $contextHelper;
     protected $debugConfiguration;
     protected $environmentConfiguration;
     protected $fiddleConfiguration;
 
-    public function __construct(FileSystem $fileSystem, ContextHelper $contextHelper, array $debugConfiguration,
-       array $environmentConfiguration, array $fiddleConfiguration)
+    public function __construct(FileSystem $fileSystem, array $debugConfiguration, array $environmentConfiguration,
+       array $fiddleConfiguration)
     {
         $this->fileSystem = $fileSystem;
-        $this->contextHelper = $contextHelper;
         $this->debugConfiguration = $debugConfiguration;
         $this->environmentConfiguration = $environmentConfiguration;
         $this->fiddleConfiguration = $fiddleConfiguration;
     }
 
-    public function recoverFiddle()
+    public function recoverFiddle(FiddleAgent $agent)
     {
         $this->cleanExpiredEnvironments();
 
-        $context = $this->contextHelper->getContext();
-        $this->validateEnvironmentId($context);
-        $this->deduceEnvironmentDirectory($context);
-        $this->loadSharedMemory($context);
+        $this
+           ->validateEnvironmentId($agent)
+           ->deduceEnvironmentDirectory($agent)
+           ->loadSharedMemory($agent)
+        ;
     }
 
-    public function validateEnvironmentId(Context $context)
+    public function cleanExpiredEnvironments()
     {
-        $env_id = $context->getEnvironmentId();
+        $directory = $this->environmentConfiguration['directory'];
+        $timestamp = strtotime("-{$this->environmentConfiguration['expiry']} hours");
+        $elements = $this->fileSystem->getFilesAndDirectoriesOlderThan($directory, $timestamp);
+        $this->fileSystem->remove($elements);
+        $this->logger->debug(sprintf("Cleaned expired environments: %d environments removed.", count($elements)));
+        return $this;
+    }
+
+    protected function validateEnvironmentId(FiddleAgent $agent)
+    {
+        $env_id = $agent->getEnvironmentId();
         if (!preg_match("/{$this->environmentConfiguration['validation']}/", $env_id))
         {
-            $this->contextHelper->addError(Error::E_INVALID_ENVIRONMENT_ID, array ('Environment ID' => $env_id));
+            $agent->addError(Error::E_INVALID_ENVIRONMENT_ID, array ('Environment ID' => $env_id));
             throw new StopExecutionException();
         }
+        return $this;
     }
 
-    public function deduceEnvironmentDirectory(Context $context)
+    protected function deduceEnvironmentDirectory(FiddleAgent $agent)
     {
-        $env_id = $context->getEnvironmentId();
-        if ($context->isDebug())
+        $env_id = $agent->getEnvironmentId();
+        if ($agent->isDebug())
         {
             $path = $this->debugConfiguration['directory'] . DIRECTORY_SEPARATOR . $env_id;
         }
@@ -66,38 +75,30 @@ class EnvironmentManager extends BaseService
 
         if (!is_dir($realPath))
         {
-            $this->contextHelper->addError(Error::E_UNEXISTING_ENVIRONMENT_ID, array ('Environment ID' => $env_id));
+            $agent->addError(Error::E_UNEXISTING_ENVIRONMENT_ID, array ('Environment ID' => $env_id));
             throw new StopExecutionException();
         }
 
         $this->logger->debug("Environment's path: {$realPath}");
 
-        $context->setDirectory($realPath);
+        $agent->setDirectory($realPath);
+        return $this;
     }
 
-    public function cleanExpiredEnvironments()
+    protected function loadSharedMemory(FiddleAgent $agent)
     {
-        $directory = $this->environmentConfiguration['directory'];
-        $timestamp = strtotime("-{$this->environmentConfiguration['expiry']} hours");
-        $elements = $this->fileSystem->getFilesAndDirectoriesOlderThan($directory, $timestamp);
-        $this->fileSystem->remove($elements);
-        $this->logger->debug(sprintf("Cleaned expired environments: %d environments removed.", count($elements)));
-    }
-
-    public function loadSharedMemory(Context $context)
-    {
-        $sharedFile = $context->getDirectory() . DIRECTORY_SEPARATOR . $this->fiddleConfiguration['file'];
+        $sharedFile = $agent->getDirectory() . DIRECTORY_SEPARATOR . $this->fiddleConfiguration['file'];
         $this->logger->debug("Shared memory path: {$sharedFile}");
 
         if (!is_file($sharedFile))
         {
-            $this->contextHelper->addError(Error::E_UNEXISTING_SHARED_MEMORY, array ('Shared File' => $sharedFile));
+            $agent->addError(Error::E_UNEXISTING_SHARED_MEMORY, array ('Shared File' => $sharedFile));
             throw new StopExecutionException();
         }
 
         if (!is_readable($sharedFile))
         {
-            $this->contextHelper->addError(Error::E_UNREADABLE_SHARED_MEMORY, array ('Shared File' => $sharedFile));
+            $agent->addError(Error::E_UNREADABLE_SHARED_MEMORY, array ('Shared File' => $sharedFile));
             throw new StopExecutionException();
         }
 
@@ -109,7 +110,7 @@ class EnvironmentManager extends BaseService
         if (!is_null($sharedMemory->begin_tm))
         {
             $sharedMemory->unlock();
-            $this->contextHelper->addError(Error::E_FIDDLE_ALREADY_RUN, array ('Shared File' => $sharedFile));
+            $agent->addError(Error::E_FIDDLE_ALREADY_RUN, array ('Shared File' => $sharedFile));
             throw new StopExecutionException();
         }
         $sharedMemory->begin_tm = time();
@@ -118,14 +119,15 @@ class EnvironmentManager extends BaseService
         if (is_null($fiddle))
         {
             $sharedMemory->unlock();
-            $this->contextHelper->addError(Error::E_FIDDLE_NOT_STORED, array ('Shared File' => $sharedFile));
+            $agent->addError(Error::E_FIDDLE_NOT_STORED, array ('Shared File' => $sharedFile));
             throw new StopExecutionException();
         }
 
         $sharedMemory->unlock();
 
-        $context->setFiddle($fiddle);
-        $context->setSharedMemory($sharedMemory);
+        $agent->setFiddle($fiddle);
+        $agent->setSharedMemory($sharedMemory);
+        return $this;
     }
 
 }

@@ -6,30 +6,27 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Fuz\Framework\Base\BaseService;
 use Fuz\Process\Entity\Error;
 use Fuz\Process\Exception\StopExecutionException;
-use Fuz\Process\Helper\ContextHelper;
 use Fuz\Process\TwigEngine\TwigEngineInterface;
+use Fuz\Process\Agent\FiddleAgent;
 
 class EngineManager extends BaseService
 {
 
     protected $container;
-    protected $contextHelper;
     protected $fiddleConfiguration;
     protected $twigEnginesConfiguration;
 
-    public function __construct(ContainerInterface $container, ContextHelper $contextHelper, array $fiddleConfiguration,
+    public function __construct(ContainerInterface $container, array $fiddleConfiguration,
        array $twigEnginesConfiguration)
     {
         $this->container = $container;
-        $this->contextHelper = $contextHelper;
         $this->fiddleConfiguration = $fiddleConfiguration;
         $this->twigEnginesConfiguration = $twigEnginesConfiguration;
     }
 
-    public function loadEngine()
+    public function loadTwigEngine(FiddleAgent $agent)
     {
-        $context = $this->contextHelper->getContext();
-        $fiddle = $context->getFiddle();
+        $fiddle = $agent->getFiddle();
         if (is_null($fiddle))
         {
             throw new \LogicException("You should load a fiddle before trying to prepare its twig engine.");
@@ -41,12 +38,13 @@ class EngineManager extends BaseService
         $engine = $this->findRightEngine($version);
         if (is_null($engine))
         {
-            $this->contextHelper->addError(Error::E_ENGINE_NOT_FOUND, array ('Version' => $version));
+            $agent->addError(Error::E_ENGINE_NOT_FOUND, array ('Version' => $version));
             throw new StopExecutionException();
         }
 
         $this->logger->debug(sprintf("Twig Engine %s loaded successfully.", get_class($engine)));
-        $context->setEngine($engine);
+        $agent->setEngine($engine);
+        return $this;
     }
 
     public function findRightEngine($expectedVersion)

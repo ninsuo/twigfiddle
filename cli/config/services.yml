@@ -4,7 +4,7 @@ imports:
     - { resource: twig_engines.yml }
 
 parameters:
-    context_helper.class: Fuz\Process\Helper\ContextHelper
+    fiddle_agent.class: Fuz\Process\Agent\FiddleAgent
     error_manager.class: Fuz\Process\Service\ErrorManager
     debug_manager.class: Fuz\Process\Service\DebugManager
     environment_manager.class: Fuz\Process\Service\EnvironmentManager
@@ -14,9 +14,10 @@ parameters:
 
 services:
 
-    context_helper:
-        class: %context_helper.class%
+    fiddle_agent:
+        class: %fiddle_agent.class%
         arguments: [@error_manager]
+        scope: prototype
 
     error_manager:
         class: %error_manager.class%
@@ -28,17 +29,17 @@ services:
 
     environment_manager:
         class: %environment_manager.class%
-        arguments: [@file_system, @context_helper, %debug%, %environment%, %fiddle%]
+        arguments: [@file_system, %debug%, %environment%, %fiddle%]
 
     engine_manager:
         class: %engine_manager.class%
-        arguments: [@service_container, @context_helper, %fiddle%, %twig_engines%]
+        arguments: [@service_container, %fiddle%, %twig_engines%]
 
     context_manager:
         class: %context_manager.class%
-        arguments: [@context_helper, @string_loader]
+        arguments: [@string_loader]
 
     template_manager:
         class: %template_manager.class%
-        arguments: [@context_helper, @file_system, %fiddle%, %templates%]
+        arguments: [@file_system, %fiddle%, %templates%]
 

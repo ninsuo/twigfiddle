@@ -3,46 +3,43 @@
 namespace Fuz\Process\Service;
 
 use Fuz\Framework\Base\BaseService;
-use Fuz\Process\Entity\Context;
+use Fuz\Process\Agent\FiddleAgent;
 use Fuz\Process\Entity\Error;
 use Fuz\Process\Exception\StopExecutionException;
-use Fuz\Process\Helper\ContextHelper;
 use Fuz\Framework\Service\FileSystem;
 
 class TemplateManager extends BaseService
 {
 
-    protected $contextHelper;
     protected $fileSystem;
     protected $fiddleConfiguration;
     protected $templatesConfiguration;
 
-    public function __construct(ContextHelper $contextHelper, FileSystem $fileSystem, array $fiddleConfiguration, array $templatesConfiguration)
+    public function __construct(FileSystem $fileSystem, array $fiddleConfiguration, array $templatesConfiguration)
     {
-        $this->contextHelper = $contextHelper;
         $this->fileSystem = $fileSystem;
         $this->fiddleConfiguration = $fiddleConfiguration;
         $this->templatesConfiguration = $templatesConfiguration;
     }
 
-    public function prepareTemplates()
+    public function prepareTemplates(FiddleAgent $agent)
     {
-        $context = $this->contextHelper->getContext();
-        $fiddle = $context->getFiddle();
+        $fiddle = $agent->getFiddle();
         if (is_null($fiddle))
         {
             throw new \LogicException("You should load a fiddle before trying to prepare its templates.");
         }
-        $templates = $this->validateAndSortTemplates($context);
-        $this->writeTemplates($context, $templates);
+        $templates = $this->validateAndSortTemplates($agent);
+        $this->writeTemplates($agent, $templates);
+        return $this;
     }
 
-    public function validateAndSortTemplates($context)
+    protected function validateAndSortTemplates(FiddleAgent $agent)
     {
-        $collection = $context->getFiddle()->getTemplates();
+        $collection = $agent->getFiddle()->getTemplates();
         if (count($collection) == 0)
         {
-            $this->contextHelper->addError(Error::E_NO_TEMPLATE);
+            $agent->addError(Error::E_NO_TEMPLATE);
             throw new StopExecutionException();
         }
 
@@ -53,12 +50,12 @@ class TemplateManager extends BaseService
         }
         if ($isMain == 0)
         {
-            $this->contextHelper->addError(Error::E_NO_MAIN_TEMPLATE);
+            $agent->addError(Error::E_NO_MAIN_TEMPLATE);
             throw new StopExecutionException();
         }
         else if ($isMain >= 2)
         {
-            $this->contextHelper->addError(Error::E_SEVERAL_MAIN_TEMPLATES);
+            $agent->addError(Error::E_SEVERAL_MAIN_TEMPLATES);
             throw new StopExecutionException();
         }
 
@@ -72,9 +69,9 @@ class TemplateManager extends BaseService
         return $templates;
     }
 
-    public function writeTemplates(Context $context, array $templates)
+    public function writeTemplates(FiddleAgent $agent, array $templates)
     {
-        $dir = $context->getDirectory() . DIRECTORY_SEPARATOR . $this->fiddleConfiguration['templates_dir'];
+        $dir = $agent->getDirectory() . DIRECTORY_SEPARATOR . $this->fiddleConfiguration['templates_dir'];
         $this->fileSystem->mkdir($dir);
         $files = array();
         foreach ($templates as $template)
@@ -82,7 +79,7 @@ class TemplateManager extends BaseService
             $filename = $template->getFilename();
             if (!preg_match("/{$this->templatesConfiguration['validation']}/", $filename))
             {
-                $this->contextHelper->addError(Error::E_INVALID_TEMPLATE_NAME, array ('Name' => $filename));
+                $agent->addError(Error::E_INVALID_TEMPLATE_NAME, array ('Name' => $filename));
                 throw new StopExecutionException();
             }
 
@@ -90,12 +87,13 @@ class TemplateManager extends BaseService
             $this->logger->debug("Writing template: {$file}.");
             if (@file_put_contents($file, $template->getContent()) === false)
             {
-                $this->contextHelper->addError(Error::E_CANNOT_WRITE_TEMPLATE, array ('File' => $file));
+                $agent->addError(Error::E_CANNOT_WRITE_TEMPLATE, array ('File' => $file));
                 throw new StopExecutionException();
             }
             $files[] = $file;
         }
-        $context->setTemplates($files);
+        $agent->setTemplates($files);
+        return $this;
     }
 
 }
