@@ -32,7 +32,7 @@ class ContextManager extends BaseService
         $content = $fiddle->getContext()->getContent();
         $format = $fiddle->getContext()->getFormat();
 
-        $this->logger->debug("Trying to extract Twig context from format: {$format}.");
+        $this->logger->debug("Extracting Twig context from format: {$format}.");
         try
         {
             $array = $this->stringLoader->load($content, $format);

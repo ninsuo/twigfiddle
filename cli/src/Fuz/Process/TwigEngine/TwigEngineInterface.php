@@ -11,6 +11,6 @@ interface TwigEngineInterface
 
     public function getCompiledTemplate($template);
 
-    public function getVersion();
+    public function getVersions();
 
 }

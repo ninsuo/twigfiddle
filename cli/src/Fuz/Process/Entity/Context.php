@@ -59,6 +59,13 @@ class Context
     protected $context = array ();
 
     /**
+     * List templates full paths
+     *
+     * @var string[]
+     */
+    protected $templates = array ();
+
+    /**
      * Fiddle's result
      *
      * @var string|null
@@ -70,7 +77,7 @@ class Context
      *
      * @var array[]
      */
-    protected $compiled = array();
+    protected $compiled = array ();
 
     public function __construct($environmentId, $isDebug = false)
     {
@@ -141,6 +148,17 @@ class Context
     public function getContext()
     {
         return $this->context;
+    }
+
+    public function setTemplates(array $templates)
+    {
+        $this->templates = $templates;
+        return $this;
+    }
+
+    public function getTemplates()
+    {
+        return $this->templates;
     }
 
     public function setResult($result)

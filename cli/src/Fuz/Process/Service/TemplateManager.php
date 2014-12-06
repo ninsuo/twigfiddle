@@ -66,7 +66,7 @@ class TemplateManager extends BaseService
         usort($templates,
            function($a, $b)
         {
-            return $a->isMain() && $b->isMain() ? 0 : ($a->isMain() ? 1 : -1);
+            return $a->isMain() ? -1 : 1;
         });
 
         return $templates;
@@ -76,7 +76,7 @@ class TemplateManager extends BaseService
     {
         $dir = $context->getDirectory() . DIRECTORY_SEPARATOR . $this->fiddleConfiguration['templates_dir'];
         $this->fileSystem->mkdir($dir);
-
+        $files = array();
         foreach ($templates as $template)
         {
             $filename = $template->getFilename();
@@ -88,12 +88,14 @@ class TemplateManager extends BaseService
 
             $file = $dir . DIRECTORY_SEPARATOR . $filename;
             $this->logger->debug("Writing template: {$file}.");
-            if (!file_put_contents($file, $template->getContent()))
+            if (@file_put_contents($file, $template->getContent()) === false)
             {
                 $this->contextHelper->addError(Error::E_CANNOT_WRITE_TEMPLATE, array ('File' => $file));
                 throw new StopExecutionException();
             }
+            $files[] = $file;
         }
+        $context->setTemplates($files);
     }
 
 }
