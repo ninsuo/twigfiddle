@@ -1,6 +1,6 @@
 imports:
-    - { resource: configuration_nodes.yml }
-    - { resource: string_loaders.yml }
+    - { resource: services/configuration_nodes.yml }
+    - { resource: services/string_loaders.yml }
 
 parameters:
     file_loader.class: Fuz\Framework\Service\FileLoader

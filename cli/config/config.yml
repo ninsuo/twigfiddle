@@ -1,7 +1,7 @@
 logger:
     level: DEBUG
     max_files: 30
-    name: app.log
+    name: %env%.log
 
 environment:
     directory: %rootDir%/../environment/

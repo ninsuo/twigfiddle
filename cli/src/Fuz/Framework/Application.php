@@ -22,10 +22,12 @@ class Application
     protected $rootDir;
     protected $console;
 
-    public function __construct($environment = '')
+    public function __construct($environment = 'prod')
     {
         $this->environment = $environment;
         $this->container = new MonologContainer();
+        $this->container->setParameter('env', $environment);
+
         $this
            ->initRootDir()
            ->initCoreServices()
@@ -40,6 +42,11 @@ class Application
     public function run()
     {
         $this->console->run();
+    }
+
+    public function getEnvironment()
+    {
+        return $this->environment;
     }
 
     public function getContainer()
@@ -66,7 +73,6 @@ class Application
         $locator = new FileLocator($this->applicationDir . '/Resources/config');
         $loader = new YamlFileLoader($this->container, $locator);
         $loader->load('services.yml');
-        $loader->load('parameters.yml');
         return $this;
     }
 
@@ -75,7 +81,7 @@ class Application
         $locator = new FileLocator($this->rootDir . "/config/");
         $loader = new YamlFileLoader($this->container, $locator);
         $loader->load('services.yml');
-        //$loader->load('parameters.yml');
+        $loader->load("parameters.{$this->environment}.yml");
         return $this;
     }
 
