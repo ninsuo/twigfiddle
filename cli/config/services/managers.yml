@@ -23,19 +23,19 @@ services:
 
     debug_manager:
         class: %debug_manager.class%
-        arguments: [@file_system, %debug%, %environment%]
+        arguments: [@file_system, %config.debug%, %config.environment%]
 
     environment_manager:
         class: %environment_manager.class%
-        arguments: [@file_system, %debug%, %environment%, %fiddle%]
+        arguments: [@file_system, %config.debug%, %config.environment%, %config.fiddle%]
 
     shared_memory_manager:
         class: %shared_memory_manager.class%
-        arguments: [@environment_manager, %fiddle%]
+        arguments: [@environment_manager, %config.fiddle%]
 
     engine_manager:
         class: %engine_manager.class%
-        arguments: [@service_container, %fiddle%, %twig_sources%]
+        arguments: [@service_container, %config.fiddle%, %config.twig_sources%]
 
     context_manager:
         class: %context_manager.class%
@@ -43,12 +43,12 @@ services:
 
     template_manager:
         class: %template_manager.class%
-        arguments: [@file_system, %fiddle%, %templates%]
+        arguments: [@file_system, %config.fiddle%, %config.templates%]
 
     execute_manager:
         class: %execute_manager.class%
-        arguments: [@file_system, @environment_manager, @engine_manager, @context_manager, @template_manager, %fiddle%]
+        arguments: [@file_system, @environment_manager, @engine_manager, @context_manager, @template_manager, %config.fiddle%]
 
     compiled_manager:
         class: %compiled_manager.class%
-        arguments: [@file_system, @environment_manager, %fiddle%]
+        arguments: [@file_system, @environment_manager, %config.fiddle%]

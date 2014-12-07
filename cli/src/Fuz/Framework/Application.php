@@ -16,13 +16,15 @@ use Fuz\Framework\Core\MonologContainer;
 class Application
 {
 
+    protected $environment;
     protected $container;
     protected $applicationDir;
     protected $rootDir;
     protected $console;
 
-    public function __construct()
+    public function __construct($environment = '')
     {
+        $this->environment = $environment;
         $this->container = new MonologContainer();
         $this
            ->initRootDir()
@@ -73,7 +75,7 @@ class Application
         $locator = new FileLocator($this->rootDir . "/config/");
         $loader = new YamlFileLoader($this->container, $locator);
         $loader->load('services.yml');
-        $loader->load('parameters.yml');
+        //$loader->load('parameters.yml');
         return $this;
     }
 
@@ -96,14 +98,14 @@ class Application
         $configuration = new ApplicationConfiguration($nodes);
         foreach ($processor->processConfiguration($configuration, $configs) as $name => $value)
         {
-            $this->container->setParameter($name, $value);
+            $this->container->setParameter("config.{$name}", $value);
         }
         return $this;
     }
 
     protected function initLogger()
     {
-        $config = $this->container->getParameter('logger');
+        $config = $this->container->getParameter('config.logger');
         $dir = $this->rootDir . "/logs/";
         $log = "{$dir}/{$config['name']}";
         $max_files = $config['max_files'];
