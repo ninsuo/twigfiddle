@@ -7,6 +7,7 @@ class Result
 
     protected $rendered;
     protected $compiled;
+    protected $errors;
 
     public function setRendered($rendered)
     {
@@ -28,6 +29,16 @@ class Result
     public function getCompiled()
     {
         return $this->compiled;
+    }
+
+    public function setErrors(array $errors)
+    {
+        $this->errors = $errors;
+    }
+
+    public function getErrors()
+    {
+        return $this->errors;
     }
 
 }

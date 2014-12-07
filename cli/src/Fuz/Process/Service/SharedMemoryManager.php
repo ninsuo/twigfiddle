@@ -71,17 +71,23 @@ class SharedMemoryManager extends BaseService
 
     public function saveResults(FiddleAgent $agent)
     {
-        if (is_null($agent->getRendered()))
+        $sharedMemory = $agent->getSharedMemory();
+
+        if (is_null($sharedMemory))
         {
-            throw new \LogicException("Fiddle has not been executed, so it can't be stored.");
+            return $this;
         }
 
-        $result = new Result();
-        $result->setRendered($agent->getRendered());
-        $result->setCompiled($agent->getCompiled());
+        if (!is_null($agent->getRendered()))
+        {
+            $result = new Result();
+            $result->setRendered($agent->getRendered());
+            $result->setCompiled($agent->getCompiled());
+            $result->setErrors($agent->getErrors());
+            $sharedMemory->result = $result;
+        }
 
-        $sharedMemory = $agent->getSharedMemory();
-        $sharedMemory->result = $result;
+        $sharedMemory->finish_tm = time();
 
         return $this;
     }

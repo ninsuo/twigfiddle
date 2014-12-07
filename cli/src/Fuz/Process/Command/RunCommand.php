@@ -51,10 +51,7 @@ class RunCommand extends BaseCommand
         {
             $this->agent->addError(Error::E_UNEXPECTED, array ('Exception' => $ex));
         }
-        if (!$this->isDebug)
-        {
-            $this->container->get('debug_manager')->backupIfDebugRequired($this->agent);
-        }
+        $this->finish();
         $this->logger->info("Ended execution.");
         $output->write('');
     }
@@ -114,7 +111,14 @@ class RunCommand extends BaseCommand
         $this->container->get('template_manager')->prepareTemplates($this->agent);
         $this->container->get('execute_manager')->executeFiddle($this->agent);
         $this->container->get('compiled_manager')->extractCompiledFiles($this->agent);
+        return $this;
+    }
+
+    protected function finish()
+    {
         $this->container->get('shared_memory_manager')->saveResults($this->agent);
+        $this->container->get('debug_manager')->backupIfDebugRequired($this->agent);
+        return $this;
     }
 
 }
