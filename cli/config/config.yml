@@ -4,12 +4,12 @@ logger:
     name: %env%.log
 
 environment:
-    directory: %rootDir%/../environment/
+    directory: %environment_directory%
     validation: ^[a-zA-Z0-9-]{4,16}$
     expiry: 24
 
 debug:
-    directory: %rootDir%/../debug/
+    directory: %debug_directory%
     expiry: 720
     context_file: context.srz
 
@@ -22,4 +22,4 @@ templates:
     validation: ^[A-Za-z0-9-_]{1,16}\.twig$
 
 twig_sources:
-    directory: %rootDir%/twig/uncompressed
+    directory: %root_dir%/twig/uncompressed

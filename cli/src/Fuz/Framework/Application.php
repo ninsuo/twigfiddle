@@ -64,7 +64,7 @@ class Application
         $r = new \ReflectionObject($this);
         $this->applicationDir = realpath(str_replace('\\', '/', dirname($r->getFileName())));
         $this->rootDir = realpath($this->applicationDir . '/../../../');
-        $this->container->setParameter('rootDir', $this->rootDir);
+        $this->container->setParameter('root_dir', $this->rootDir);
         return $this;
     }
 
