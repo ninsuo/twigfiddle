@@ -1,1 +1,0 @@
-rm -rf ../environment/demo && rm -f logs/* && php demo/demo.php && php run.php twigfiddle:run demo && cat logs/*
