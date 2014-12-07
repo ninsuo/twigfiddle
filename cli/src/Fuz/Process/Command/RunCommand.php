@@ -113,9 +113,8 @@ class RunCommand extends BaseCommand
         $this->container->get('context_manager')->extractContext($this->agent);
         $this->container->get('template_manager')->prepareTemplates($this->agent);
         $this->container->get('execute_manager')->executeFiddle($this->agent);
-
         $this->container->get('compiled_manager')->extractCompiledFiles($this->agent);
-        // save to shared memory
+        $this->container->get('shared_memory_manager')->saveResults($this->agent);
     }
 
 }

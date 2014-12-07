@@ -44,8 +44,8 @@ class ExecuteManager extends BaseService
         $this->logger->debug("Rendering fiddle's main template: {$mainTemplate}");
         try
         {
-            $result = $engine->render($sourceDirectory, $cacheDirectory, $mainTemplate, $context);
-            $this->logger->debug("Fiddle's rendered result: {$result}");
+            $rendered = $engine->render($sourceDirectory, $cacheDirectory, $mainTemplate, $context);
+            $this->logger->debug("Fiddle's rendered result: {$rendered}");
         }
         catch (\Exception $ex)
         {
@@ -53,7 +53,7 @@ class ExecuteManager extends BaseService
             throw new StopExecutionException();
         }
 
-        $agent->setResult($result);
+        $agent->setRendered($rendered);
         return $this;
     }
 

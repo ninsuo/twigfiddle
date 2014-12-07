@@ -6,6 +6,7 @@ use Fuz\Component\SharedMemory\SharedMemory;
 use Fuz\Component\SharedMemory\Storage\StorageFile;
 use Fuz\Framework\Base\BaseService;
 use Fuz\Process\Entity\Error;
+use Fuz\Process\Entity\Result;
 use Fuz\Process\Agent\FiddleAgent;
 use Fuz\Process\Exception\StopExecutionException;
 
@@ -70,9 +71,19 @@ class SharedMemoryManager extends BaseService
 
     public function saveResults(FiddleAgent $agent)
     {
+        if (is_null($agent->getRendered()))
+        {
+            throw new \LogicException("Fiddle has not been executed, so it can't be stored.");
+        }
 
-        // ...
+        $result = new Result();
+        $result->setRendered($agent->getRendered());
+        $result->setCompiled($agent->getCompiled());
 
+        $sharedMemory = $agent->getSharedMemory();
+        $sharedMemory->result = $result;
+
+        return $this;
     }
 
 }

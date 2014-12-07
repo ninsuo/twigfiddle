@@ -93,7 +93,7 @@ class FiddleAgent
      *
      * @var string|null
      */
-    protected $result = null;
+    protected $rendered = null;
 
     /**
      * Compiled templates
@@ -228,15 +228,15 @@ class FiddleAgent
         return $this->templates;
     }
 
-    public function setResult($result)
+    public function setRendered($rendered)
     {
-        $this->result = $result;
+        $this->rendered = $rendered;
         return $this;
     }
 
-    public function getResult()
+    public function getRendered()
     {
-        return $this->result;
+        return $this->rendered;
     }
 
     public function setCompiled(array $compiled)
