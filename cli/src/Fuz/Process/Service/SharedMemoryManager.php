@@ -78,15 +78,14 @@ class SharedMemoryManager extends BaseService
             return $this;
         }
 
-        if (!is_null($agent->getRendered()))
-        {
-            $result = new Result();
-            $result->setRendered($agent->getRendered());
-            $result->setCompiled($agent->getCompiled());
-            $result->setErrors($agent->getErrors());
-            $sharedMemory->result = $result;
-        }
+        $this->logger->debug("Storing Fiddle's results in shared memory.");
 
+        $result = new Result();
+        $result->setRendered($agent->getRendered());
+        $result->setCompiled($agent->getCompiled());
+        $result->setErrors($agent->getErrors());
+
+        $sharedMemory->result = $result;
         $sharedMemory->finish_tm = time();
 
         return $this;
