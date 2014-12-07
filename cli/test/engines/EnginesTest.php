@@ -118,6 +118,7 @@ class EnginesTest extends \PHPUnit_Framework_TestCase
                 array ('Twig-1.0.0-RC2'),
                 array ('Twig-1.0.0-RC1'),
                 array ('Twig-1.0.0'),
+                array ('Twig-0.9.10'),
                 array ('Twig-0.9.9'),
                 array ('Twig-0.9.8'),
                 array ('Twig-0.9.7'),
@@ -125,7 +126,6 @@ class EnginesTest extends \PHPUnit_Framework_TestCase
                 array ('Twig-0.9.5'),
                 array ('Twig-0.9.4'),
                 array ('Twig-0.9.2'),
-                array ('Twig-0.9.10'),
                 array ('Twig-0.9.1'),
                 array ('Twig-0.9.0'),
         );
@@ -196,6 +196,10 @@ class EnginesTest extends \PHPUnit_Framework_TestCase
         $compiled = $result->getCompiled();
         $this->assertEquals(1, count($compiled));
         $this->assertEquals('template.twig', key($compiled));
+
+        // Interesting to see how evolved generated templates
+//        echo $this->shared->fiddle->getConfig()->getTwigVersion(), PHP_EOL;
+//        echo reset($compiled), PHP_EOL;
 
         return $this;
     }
