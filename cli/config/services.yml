@@ -13,6 +13,7 @@ parameters:
     context_manager.class: Fuz\Process\Service\ContextManager
     template_manager.class: Fuz\Process\Service\TemplateManager
     execute_manager.class: Fuz\Process\Service\ExecuteManager
+    compiled_manager.class: Fuz\Process\Service\CompiledManager
 
 services:
 
@@ -52,3 +53,7 @@ services:
     execute_manager:
         class: %execute_manager.class%
         arguments: [@file_system, @environment_manager, @engine_manager, @context_manager, @template_manager, %fiddle%]
+
+    compiled_manager:
+        class: %compiled_manager.class%
+        arguments: [@file_system, @environment_manager, %fiddle%]

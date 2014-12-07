@@ -29,6 +29,8 @@ class Error
     const E_CANNOT_WRITE_TEMPLATE = 14;
     const E_ENGINE_NOT_FOUND = 15;
     const E_EXECUTION_FAILURE = 16;
+    const E_UNKNOWN_COMPILED_FILE = 17;
+    const E_UNEXPECTED_COMPILED_FILE = 18;
 
     protected $no;
     protected $group;

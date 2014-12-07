@@ -14,7 +14,7 @@ use Fuz\Component\SharedMemory\SharedMemory;
 $fiddle = new Fiddle();
 
 $config = new FiddleConfig();
-$config->setTwigVersion("Twig-1.0.0");
+$config->setTwigVersion("Twig-1.16.2");
 $fiddle->setConfig($config);
 
 $templates = new ArrayCollection();

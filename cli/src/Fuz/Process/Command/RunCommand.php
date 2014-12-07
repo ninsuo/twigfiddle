@@ -114,7 +114,7 @@ class RunCommand extends BaseCommand
         $this->container->get('template_manager')->prepareTemplates($this->agent);
         $this->container->get('execute_manager')->executeFiddle($this->agent);
 
-        // fetch compiled files
+        $this->container->get('compiled_manager')->extractCompiledFiles($this->agent);
         // save to shared memory
     }
 

@@ -7,6 +7,6 @@ interface TwigEngineInterface
 
     public function render($sourceDirectory, $cacheDirectory, $template, array $context = array ());
 
-    public function extract($cacheDirectory);
+    public function extractTemplateName($cacheDirectory);
 
 }

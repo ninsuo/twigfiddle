@@ -46,7 +46,7 @@ class EngineManager extends BaseService
         $agent->setEngine($engine);
 
         $sourceDirectory = $this->getTwigSourceDirectory($version);
-        $this->logger->debug(sprintf("Twig source for version %s is loacated at: %s.", $version, get_class($engine)));
+        $this->logger->debug(sprintf("Twig source for version %s is loacated at: %s.", $version, $sourceDirectory));
         $agent->setSourceDirectory($sourceDirectory);
 
         return $this;

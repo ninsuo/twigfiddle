@@ -128,6 +128,20 @@ class ErrorManager extends BaseService
                     'public' => true,
                     'debug' => false,
             ),
+            Error::E_UNKNOWN_COMPILED_FILE => array(
+                    'group' => Error::G_EXECUTION,
+                    'message' => "Can't get template name from a compiled file.",
+                    'logger' => 'error',
+                    'public' => true,
+                    'debug' => true,
+            ),
+            Error::E_UNEXPECTED_COMPILED_FILE => array(
+                    'group' => Error::G_EXECUTION,
+                    'message' => "Got an unexpected template name.",
+                    'logger' => 'error',
+                    'public' => true,
+                    'debug' => true,
+            ),
     );
 
     public function getError($no)
