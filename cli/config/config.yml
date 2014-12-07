@@ -9,7 +9,8 @@ environment:
     expiry: 24
 
 debug:
-    directory: %debug_directory%
+    allowed: %debug_allowed%
+    directory: %root_dir%/../debug/
     expiry: 720
     context_file: context.srz
 

@@ -1,3 +1,3 @@
 parameters:
-    environment_directory: %root_dir%/../environment/
-    debug_directory: %root_dir%/../debug/
+    environment_directory: %root_dir%/test/environment/
+    debug_allowed: false

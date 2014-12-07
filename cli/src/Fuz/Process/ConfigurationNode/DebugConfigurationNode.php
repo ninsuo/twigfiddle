@@ -15,6 +15,9 @@ class DebugConfigurationNode implements ConfigurationNodeInterface
 
         $rootNode
            ->children()
+                ->booleanNode("allowed")
+                    ->defaultValue(true)
+                ->end()
                 ->scalarNode("directory")
                     ->isRequired()
                 ->end()
