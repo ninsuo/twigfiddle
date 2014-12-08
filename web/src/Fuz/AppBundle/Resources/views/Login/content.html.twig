@@ -1,0 +1,64 @@
+{# FuzAppBundle:Login:content.html.twig #}
+
+<div class="row" id="login">
+
+    <div class="col-md-12 text-center">
+        <h1>Login using any of the following services</h1>
+    </div>
+
+    <div class="clear">&nbsp;</div>
+
+    <div class="col-md-4">
+        &nbsp;
+    </div>
+
+    <a href="{{ hwi_oauth_login_url('sensio_connect') }}" class="black">
+        <div class="oauth sensio col-md-4">
+            <img src="{{ asset('bundles/fuzapp/img/oauth/sensio-orig.png') }}" alt="SensioLabs Connect"/>
+            <p>Click here to login using SensioLabs Connect</p>
+        </div>
+    </a>
+
+    <div class="col-md-4">
+        &nbsp;
+    </div>
+
+    <div class="clear">&nbsp;</div>
+
+    <div class="col-md-4">
+        &nbsp;
+    </div>
+
+    <div class="col-md-4">
+        <div class="row" id="login">
+
+            <a href="{{ hwi_oauth_login_url('google') }}" class="black">
+                <div class="oauth col-md-4">
+                    <img src="{{ asset('bundles/fuzapp/img/oauth/google.png') }}" alt="Google"/>
+                    <p>Login using Google</p>
+                </div>
+            </a>
+
+            <a href="{{ hwi_oauth_login_url('facebook') }}" class="black">
+                <div class="oauth col-md-4">
+                    <img src="{{ asset('bundles/fuzapp/img/oauth/facebook.png') }}" alt="Facebook"/>
+                    <p>Login using Facebook</p>
+                </div>
+            </a>
+
+            <a href="{{ hwi_oauth_login_url('twitter') }}" class="black">
+                <div class="oauth col-md-4">
+                    <img src="{{ asset('bundles/fuzapp/img/oauth/twitter.png') }}" alt="Twitter"/>
+                    <p>Login using Twitter</p>
+                </div>
+            </a>
+
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        &nbsp;
+    </div>
+
+    <div class="clear">&nbsp;</div>
+</div>

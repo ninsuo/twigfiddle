@@ -1,3 +1,4 @@
+{# FuzAppBundle::base.html.twig #}
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -12,6 +13,7 @@
         <link href="{{ asset('bundles/fuzapp/css/bootstrap.css') }}" rel="stylesheet">
         <link href="{{ asset('bundles/fuzapp/css/twig.css') }}" rel="stylesheet">
         {% block extra_css %}{% endblock %}
+
     </head>
 
     <body>
@@ -38,7 +40,7 @@
             <!-- End Header -->
 
             <!-- Start Body -->
-            {% block contents %}{% endblock %}
+            {% block content %}{% endblock %}
             <!-- End Body -->
 
             <!-- Start Footer -->
@@ -70,6 +72,8 @@
         <script src="{{ asset('bundles/fuzapp/js/jquery-2.1.1.min.js') }}"></script>
         <script src="{{ asset('bundles/fuzapp/js/bootstrap.min.js') }}"></script>
         {% block extra_js %}{% endblock %}
+
+        {% block script %}{% endblock %}
 
     </body>
 </html>
