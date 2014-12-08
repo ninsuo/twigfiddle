@@ -3,35 +3,37 @@
 <div class="row" id="login">
 
     <div class="col-md-12 text-center">
-        <h1>Login using any of the following services</h1>
+        <h4>Login using any of the following services</h4>
     </div>
 
     <div class="clear">&nbsp;</div>
 
-    <div class="col-md-4">
+    <div class="col-md-1">
         &nbsp;
     </div>
 
+    {# SensioLabs Connect #}
     <a href="{{ hwi_oauth_login_url('sensio_connect') }}" class="black">
-        <div class="oauth sensio col-md-4">
+        <div class="oauth sensio col-md-10">
             <img src="{{ asset('bundles/fuzapp/img/oauth/sensio.png') }}" alt="SensioLabs Connect"/>
             <p>Click here to login using SensioLabs Connect</p>
         </div>
     </a>
 
-    <div class="col-md-4">
+    <div class="col-md-1">
         &nbsp;
     </div>
 
     <div class="clear">&nbsp;</div>
 
-    <div class="col-md-4">
+    <div class="col-md-1">
         &nbsp;
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-10">
         <div class="row" id="login">
 
+            {# Google #}
             <a href="{{ hwi_oauth_login_url('google') }}" class="black">
                 <div class="oauth col-md-4">
                     <img src="{{ asset('bundles/fuzapp/img/oauth/google.png') }}" alt="Google"/>
@@ -39,6 +41,7 @@
                 </div>
             </a>
 
+            {# Facebook #}
             <a href="{{ hwi_oauth_login_url('facebook') }}" class="black">
                 <div class="oauth col-md-4">
                     <img src="{{ asset('bundles/fuzapp/img/oauth/facebook.png') }}" alt="Facebook"/>
@@ -46,6 +49,7 @@
                 </div>
             </a>
 
+             {# Twitter #}
             <a href="{{ hwi_oauth_login_url('twitter') }}" class="black">
                 <div class="oauth col-md-4">
                     <img src="{{ asset('bundles/fuzapp/img/oauth/twitter.png') }}" alt="Twitter"/>
@@ -56,7 +60,7 @@
         </div>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-1">
         &nbsp;
     </div>
 

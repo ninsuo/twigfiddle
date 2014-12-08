@@ -1,0 +1,7 @@
+{# FuzAppBundle:Login:modal.html.twig #}
+
+{% set body %}
+    {{ include('FuzAppBundle:Login:content.html.twig') }}
+{% endset %}
+
+{{ macros.modal('login-modal', 'Login', body) }}
