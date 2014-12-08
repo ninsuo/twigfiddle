@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="twigfiddle.com provides a small development environment to develop, run, store and access Twig code online.">
+        <meta name="author" content="Alain Tiemblo">
+        <title>{% block title %}Twig Fiddle{% endblock %}</title>
+
+        <!-- Bootstrap core CSS -->
+        <link href="{{ asset('bundles/fuzapp/css/bootstrap.css') }}" rel="stylesheet">
+        <link href="{{ asset('bundles/fuzapp/css/twig.css') }}" rel="stylesheet">
+        {% block extra_css %}{% endblock %}
+    </head>
+
+    <body>
+
+        <!-- Start Container -->
+        <div class="container-fluid">
+
+            <!-- Start Header -->
+            <div class="row" id="header">
+                <div class="col-md-2 col-sm-6 col-xs-6 logo"><a href="{{ path('home') }}"><img src="{{ asset('bundles/fuzapp/img/logo_twig-fiddle.png') }}" alt="Twig Fiddle"></a></div>
+                <div class="col-md-2 col-sm-6 col-xs-6 version">
+                    {% block twig_version %}&nbsp;{% endblock %}
+                </div>
+                <div class="clearfix hidden-md hidden-lg"></div>
+                <div class="col-md-3 col-sm-6 col-xs-12 top-menu text-right">
+                    {% block fiddle_actions  %}&nbsp;{% endblock %}
+                </div>
+                <div class="col-md-5 col-sm-6 col-xs-12 user-menu text-right">
+                    <button type="button" class="btn btn-success"><span class="glyphicon glyphicon glyphicon-cloud hidden-md hidden-sm hidden-xs"></span> Samples</button>
+                    <a  class="btn btn-info" href="about.html"><span class="glyphicon glyphicon glyphicon-info-sign hidden-md hidden-sm hidden-xs"></span> About</a>
+                    <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#basicModal"><span class="glyphicon glyphicon glyphicon-share hidden-md hidden-sm hidden-xs"></span> Login</a>
+                </div>
+            </div>
+            <!-- End Header -->
+
+            <!-- Start Body -->
+            {% block contents %}{% endblock %}
+            <!-- End Body -->
+
+            <!-- Start Footer -->
+            <div class="row" id="footer">
+                <div class="col-md-12 text-center">
+                    <p>
+                        <span>twigfiddle.com @ 2015</span>
+                        <br/>
+                        <a href="#">Contact</a>
+                        <span class="space"></span>
+                        <a href="#">GitHub</a>
+                        <span class="space"></span>
+                        <a href="#">Google Groups</a>
+                        <span class="space"></span>
+                        <a href="#">Paypal</a>
+                        <span class="space"></span>
+                        <a href="#">Facebook</a>
+                        <span class="space"></span>
+                        <a href="#">Twitter</a>
+                    </p>
+                </div>
+            </div>
+            <!-- End Footer -->
+
+        <!-- End Container -->
+        </div>
+
+        <!-- Bootstrap core JS -->
+        <script src="{{ asset('bundles/fuzapp/js/jquery-2.1.1.min.js') }}"></script>
+        <script src="{{ asset('bundles/fuzapp/js/bootstrap.min.js') }}"></script>
+        {% block extra_js %}{% endblock %}
+
+    </body>
+</html>

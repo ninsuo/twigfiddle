@@ -1,0 +1,141 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*
+1. GENERAL
+2. LAYOUTS
+3. MARGIN
+4. RESPONSIVE FIX
+*/
+
+/******************************************************/
+/************** STYLES TEMPORAIRES ********************/
+/******************************************************/
+/*[class*="col-"] {
+ border: 1px solid #CC0000;
+}*/
+.bordertemp {
+    border: 1px solid #CC0000;
+}
+textarea { height: auto; }
+/******************************************************/
+/********************* GENERAL ***********************/
+/******************************************************/
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background:#f5f5f5;
+}
+body {
+    font-family: 'Archivo Narrow', verdana, sans-serif;
+}
+a {
+    text-decoration: none;
+    color: #FFF;
+}
+a:hover {
+    text-decoration: underline;
+    color: #85c128;
+}
+img {
+    border: none;
+}
+.clear {
+    clear: both;
+}
+/******************************************************/
+/********************* LAYOUT *************************/
+/******************************************************/
+#header {
+    background-color:#333;
+    box-shadow: -1px 2px 5px 1px rgba(0, 0, 0, 0.7);
+}
+#infos {
+    padding:0 0 20px 0;
+}
+#search {
+    padding:20px 0 20px 0;
+}
+#about {
+    padding:20px 0 20px 0;
+}
+#content {
+    padding:20px 0 20px 0;
+    background:url(../img/background/bg_t_11.png) repeat;
+}
+#result {
+    padding:10px 0 20px 0;
+    background:url(../img/background/bg_t_11.png) repeat;
+}
+#footernav {
+    padding:10px 0 20px 0;
+}
+#footernav a{
+    color: #85c128;
+}
+#footernav a:hover{
+    text-decoration: underline;
+}
+#footer {
+    background-color:#333;
+    height:70px;
+    color:#85c128;
+    padding:15px 0 0 0;
+}
+.space {
+    padding-left:10px;
+    padding-right:10px;
+}
+/******************************************************/
+/********************* MARGIN *************************/
+/******************************************************/
+.logo {
+    padding:10px;
+}
+.logo img{
+    margin:auto;
+}
+.version {
+    margin-top:35px;
+}
+.top-menu {
+    margin-top:35px;
+}
+.user-menu {
+    margin-top:35px;
+}
+.title {
+    margin-top:5px;
+}
+.tags {
+    margin-top:5px;
+}
+.searchbloc {
+    padding:10px;
+    border-bottom:1px solid #f5f5f5;
+}
+/******************************************************/
+/***************** RESPONSIVE FIX *********************/
+/******************************************************/
+@media (max-width: 1200px) {
+}
+@media (max-width: 992px) {
+    .top-menu {
+        margin:15px 0 15px 0;
+    }
+    .user-menu {
+        margin:15px 0 15px 0;
+    }
+    .logo img{
+        margin:0;
+    }
+}
+@media (max-width: 768px) {
+    .top-menu {
+        margin:5px 0 5px 0;
+    }
+    .user-menu {
+        margin:5px 0 5px 0;
+    }
+}
