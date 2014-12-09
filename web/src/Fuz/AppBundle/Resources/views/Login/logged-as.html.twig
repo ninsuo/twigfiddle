@@ -1,0 +1,9 @@
+{# FuzAppBundle:Login:logged-as.html.twig #}
+{% if is_granted('ROLE_USER') %}
+    <div class="text-right white">
+        <div style="float:right;">{{ app.user.username }}</div>
+        <img src="{{ asset('bundles/fuzapp/img/oauth/' ~ app.user.resourceOwner ~ '-small.png') }}" alt="" style="float:right;margin-right:5px;height:18px;"/>
+        <div style="float:right;margin-right:5px;">Logged as</div>
+    </div>
+    <div class="clear"></div>
+{% endif %}

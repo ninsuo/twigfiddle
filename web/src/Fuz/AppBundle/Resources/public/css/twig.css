@@ -45,6 +45,12 @@ img {
 .clear {
     clear: both;
 }
+.black {
+    color: black;
+}
+.white {
+    color: white;
+}
 /******************************************************/
 /********************* LAYOUT *************************/
 /******************************************************/
@@ -160,8 +166,4 @@ img {
 
 #login div.oauth:hover {
     border: 1px solid #85c128;
-}
-
-.black {
-    color: black;
 }

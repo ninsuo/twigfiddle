@@ -21,7 +21,7 @@ class FiddleContext
     /**
      * @var Fiddle
      *
-     * @ORM\OneToOne(targetEntity="Fiddle")
+     * @ORM\OneToOne(targetEntity="Fiddle", inversedBy="context")
      * @ORM\JoinColumn(name="fiddle_id", referencedColumnName="id", onDelete="cascade")
      * @ORM\Id
      */
