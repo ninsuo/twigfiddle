@@ -16,7 +16,7 @@ class UserPreference
     /**
      * @var User
      *
-     * @ORM\OneToOne(targetEntity="User")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="preferences")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="cascade")
      * @ORM\Id
      */

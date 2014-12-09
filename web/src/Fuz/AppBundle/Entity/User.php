@@ -3,6 +3,7 @@
 namespace Fuz\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 
@@ -11,7 +12,9 @@ use Symfony\Component\Security\Core\User\EquatableInterface;
  *
  * @ORM\Table(
  *      name="user",
- *      uniqueConstraints={@ORM\UniqueConstraint(name="resource_owner_idx", columns={"resource_owner", "resource_owner_id"})}
+ *      uniqueConstraints={
+ *          @ORM\UniqueConstraint(name="resource_owner_idx", columns={"resource_owner", "resource_owner_id"})
+ *      }
  * )
  * @ORM\Entity(repositoryClass="Fuz\AppBundle\Entity\UserRepository")
  * @ORM\HasLifecycleCallbacks
@@ -64,20 +67,24 @@ class User implements UserInterface, EquatableInterface
     protected $signinCount = 0;
 
     /**
-     * @var array[UserPreference]
+     * @var ArrayCollection[UserPreference]
      *
-     * @ORM\OneToMany(targetEntity="UserPreference", mappedBy="user_id")
-     * @ORM\JoinColumn(name="id", referencedColumnName="user_id")
+     * @ORM\OneToMany(targetEntity="UserPreference", mappedBy="user")
      */
     protected $preferences;
 
     /**
-     * @var array[UserFavorite]
+     * @var ArrayCollection[UserFavorite]
      *
-     * @ORM\OneToMany(targetEntity="UserFavorite", mappedBy="user_id")
-     * @ORM\JoinColumn(name="id", referencedColumnName="user_id")
+     * @ORM\OneToMany(targetEntity="UserFavorite", mappedBy="user")
      */
     protected $favorites;
+
+    public function __construct()
+    {
+        $this->preferences = new ArrayCollection();
+        $this->favorites = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -205,10 +212,10 @@ class User implements UserInterface, EquatableInterface
     /**
      * Set preferences
      *
-     * @param array[UserPreference] $preferences
+     * @param ArrayCollection[UserPreference] $preferences
      * @return User
      */
-    public function setPreferences(array $preferences)
+    public function setPreferences(ArrayCollection $preferences)
     {
         $this->preferences = $preferences;
 
@@ -218,7 +225,7 @@ class User implements UserInterface, EquatableInterface
     /**
      * Get preferences
      *
-     * @return array[UserPreference]
+     * @return ArrayCollection[UserPreference]
      */
     public function getPreferences()
     {
@@ -228,10 +235,10 @@ class User implements UserInterface, EquatableInterface
     /**
      * Set favorites
      *
-     * @param array[UserFavorite] $favorites
+     * @param ArrayCollection[UserFavorite] $favorites
      * @return User
      */
-    public function setFavorites(array $favorites)
+    public function setFavorites(ArrayCollection $favorites)
     {
         $this->favorites = $favorites;
 
@@ -241,7 +248,7 @@ class User implements UserInterface, EquatableInterface
     /**
      * Get favorites
      *
-     * @return array[UserFavorite]
+     * @return ArrayCollection[UserFavorite]
      */
     public function getFavorites()
     {
@@ -296,6 +303,9 @@ class User implements UserInterface, EquatableInterface
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function isEqualTo(UserInterface $user)
     {
         if ((int) $this->getId() === $user->getId())

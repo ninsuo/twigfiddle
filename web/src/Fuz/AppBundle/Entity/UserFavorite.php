@@ -3,6 +3,7 @@
 namespace Fuz\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * UserFavorite
@@ -16,38 +17,62 @@ class UserFavorite
     /**
      * @var integer
      *
-     * @ORM\OneToOne(targetEntity="User")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="cascade")
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $user;
+    protected $id;
+
+    /**
+     * @var integer
+     *
+     * @ORM\ManyToOne(targetEntity="User", cascade="remove", inversedBy="favorites")
+     */
+    protected $user;
 
     /**
      * @var Fiddle
      *
-     * @ORM\ManyToOne(targetEntity="Fiddle")
-     * @ORM\JoinColumn(name="fiddle_id", referencedColumnName="id", nullable=true, onDelete="cascade")
-     * @ORM\Id
+     * @ORM\ManyToOne(targetEntity="Fiddle", cascade="remove")
      */
-    private $fiddle;
+    protected $fiddle;
 
     /**
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255, nullable=true)
      */
-    private $title;
+    protected $title;
 
     /**
-     * @var array[UserTag]
+     * @var ArrayCollection[UserFavoriteTag]
      *
-     * @ORM\OneToMany(targetEntity="UserTag", mappedBy="fiddle_id")
-     * @ORM\JoinColumns({
-     *    @ORM\JoinColumn(name="user_id", referencedColumnName="user_id"),
-     *    @ORM\JoinColumn(name="fiddle_id", referencedColumnName="fiddle_id")
-     * })
+     * @ORM\OneToMany(targetEntity="UserFavoriteTag", mappedBy="userFavorite")
      */
     protected $tags;
+
+    /**
+     * Set id
+     *
+     * @param int $id
+     * @return UserFavorite
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * Set user
@@ -121,10 +146,10 @@ class UserFavorite
     /**
      * Set tags
      *
-     * @param FiddleTag $tags
-     * @return Fiddle
+     * @param ArrayCollection[UserFavoriteTag] $tags
+     * @return UserFavorite
      */
-    public function setTags(array $tags)
+    public function setTags(ArrayCollection $tags)
     {
         $this->tags = $tags;
 
@@ -134,7 +159,7 @@ class UserFavorite
     /**
      * Get tags
      *
-     * @return FiddleTag
+     * @return ArrayCollection[UserFavoriteTag]
      */
     public function getTags()
     {

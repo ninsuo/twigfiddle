@@ -16,7 +16,7 @@ class FiddleTemplate
     /**
      * @var Fiddle
      *
-     * @ORM\OneToOne(targetEntity="Fiddle")
+     * @ORM\ManyToOne(targetEntity="Fiddle", inversedBy="templates")
      * @ORM\JoinColumn(name="fiddle_id", referencedColumnName="id", onDelete="cascade")
      * @ORM\Id
      */

@@ -134,10 +134,7 @@ class EnginesTest extends \PHPUnit_Framework_TestCase
     protected function prepareFiddle($version)
     {
         $fiddle = new Fiddle();
-
-        $config = new FiddleConfig();
-        $config->setTwigVersion($version);
-        $fiddle->setConfig($config);
+        $fiddle->setTwigVersion($version);
 
         $context = new FiddleContext();
         $context->setFormat(FiddleContext::FORMAT_JSON);

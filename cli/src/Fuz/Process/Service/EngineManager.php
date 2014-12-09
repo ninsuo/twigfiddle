@@ -33,7 +33,7 @@ class EngineManager extends BaseService
             throw new \LogicException("You should load a fiddle before trying to prepare its twig engine.");
         }
 
-        $version = $fiddle->getConfig()->getTwigVersion();
+        $version = $fiddle->getTwigVersion();
         $this->logger->debug("Loading Twig Engine version: {$version}\n");
         $engine = $this->findRightEngine($version);
         if (is_null($engine))

@@ -26,17 +26,19 @@
             <div class="row" id="header">
                 <div class="col-md-2 col-sm-6 col-xs-6 logo"><a href="{{ path('home') }}"><img src="{{ asset('bundles/fuzapp/img/logo_twig-fiddle.png') }}" alt="Twig Fiddle"></a></div>
                 <div class="col-md-2 col-sm-6 col-xs-6 version">
-                    {% block twig_version %}&nbsp;{% endblock %}
+                    {% block header_left %}&nbsp;{% endblock %}
                 </div>
                 <div class="clearfix hidden-md hidden-lg"></div>
                 <div class="col-md-3 col-sm-6 col-xs-12 top-menu text-right">
-                    {% block fiddle_actions  %}&nbsp;{% endblock %}
+                    {% block header_middle  %}&nbsp;{% endblock %}
                 </div>
                 <div class="col-md-5 col-sm-6 col-xs-12 user-menu text-right">
+                    {% block header_right %}
                     <button type="button" class="btn btn-success"><span class="glyphicon glyphicon glyphicon-cloud hidden-md hidden-sm hidden-xs"></span> Samples</button>
                     <a  class="btn btn-info" href="about.html"><span class="glyphicon glyphicon glyphicon-info-sign hidden-md hidden-sm hidden-xs"></span> About</a>
                     <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#login-modal"><span class="glyphicon glyphicon glyphicon-share hidden-md hidden-sm hidden-xs"></span> Login</a>
                     {{ include('FuzAppBundle:Login:modal.html.twig') }}
+                    {% endblock %}
                 </div>
             </div>
             {# End Header #}

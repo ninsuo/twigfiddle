@@ -7,20 +7,20 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * FiddleTag
  *
- * @ORM\Table(name="fiddle_tag")
+ * @ORM\Table(name="user_favorite_tag")
  * @ORM\Entity
  */
-class FiddleTag
+class UserFavoriteTag
 {
 
     /**
-     * @var Fiddle
+     * @var User
      *
-     * @ORM\ManyToOne(targetEntity="Fiddle", inversedBy="tags")
-     * @ORM\JoinColumn(name="fiddle_id", referencedColumnName="id", onDelete="cascade")
+     * @ORM\ManyToOne(targetEntity="UserFavorite", inversedBy="tags")
+     * @ORM\JoinColumn(name="user_favorite_id", referencedColumnName="id", onDelete="cascade")
      * @ORM\Id
      */
-    protected $fiddle;
+    protected $userFavorite;
 
     /**
      * @var string
@@ -31,33 +31,33 @@ class FiddleTag
     protected $tag;
 
     /**
-     * Set fiddle
+     * Set userFavorite
      *
-     * @param Fiddle $fiddle
-     * @return FiddleTag
+     * @param UserFavorite $userFavorite
+     * @return UserFavoriteTag
      */
-    public function setFiddle(Fiddle $fiddle)
+    public function setUserFavorite(UserFavoriteTag $userFavorite)
     {
-        $this->fiddle = $fiddle;
+        $this->userFavorite = $userFavorite;
 
         return $this;
     }
 
     /**
-     * Get fiddle
+     * Get userFavorite
      *
-     * @return Fiddle|null
+     * @return UserFavorite
      */
-    public function getFiddle()
+    public function getUserFavorite()
     {
-        return $this->fiddle;
+        return $this->userFavorite;
     }
 
     /**
      * Set tag
      *
      * @param string $tag
-     * @return FiddleTag
+     * @return UserTag
      */
     public function setTag($tag)
     {

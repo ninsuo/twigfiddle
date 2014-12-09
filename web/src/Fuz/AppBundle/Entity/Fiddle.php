@@ -50,6 +50,48 @@ class Fiddle
     protected $user;
 
     /**
+     * @var ArrayCollection[FiddleTemplate]
+     *
+     * @ORM\OneToMany(targetEntity="FiddleTemplate", mappedBy="fiddle")
+     */
+    protected $templates;
+
+    /**
+     * @var FiddleContext
+     *
+     * @ORM\OneToOne(targetEntity="FiddleContext", mappedBy="fiddle")
+     */
+    protected $context;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="twig_version", type="string", length=32)
+     */
+    protected $twigVersion;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=255, nullable=true)
+     */
+    protected $title;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="is_private", type="boolean")
+     */
+    protected $isPrivate = false;
+
+    /**
+     * @var ArrayCollection[UserTag]
+     *
+     * @ORM\OneToMany(targetEntity="FiddleTag", mappedBy="fiddle")
+     */
+    protected $tags;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="creation_tm", type="datetime")
@@ -69,38 +111,6 @@ class Fiddle
      * @ORM\Column(name="visits_count", type="integer")
      */
     protected $visitsCount;
-
-    /**
-     * @var FiddleConfig
-     *
-     * @ORM\OneToOne(targetEntity="FiddleConfig")
-     * @ORM\JoinColumn(name="id", referencedColumnName="fiddle_id")
-     */
-    protected $config;
-
-    /**
-     * @var ArrayCollection[FiddleTemplate]
-     *
-     * @ORM\OneToMany(targetEntity="FiddleTemplate", mappedBy="fiddle_id")
-     * @ORM\JoinColumn(name="fiddle_id", referencedColumnName="fiddle_id")
-     */
-    protected $templates;
-
-    /**
-     * @var FiddleContext
-     *
-     * @ORM\OneToOne(targetEntity="FiddleContext")
-     * @ORM\JoinColumn(name="fiddle_id", referencedColumnName="fiddle_id")
-     */
-    protected $context;
-
-    /**
-     * @var array[UserTag]
-     *
-     * @ORM\OneToMany(targetEntity="UserTag", mappedBy="fiddle_id")
-     * @ORM\JoinColumn(name="fiddle_id", referencedColumnName="fiddle_id")
-     */
-    protected $tags;
 
     /**
      * Get id
@@ -182,6 +192,144 @@ class Fiddle
     }
 
     /**
+     * Set templates
+     *
+     * @param  ArrayCollection[FiddleTemplate] $templates
+     * @return Fiddle
+     */
+    public function setTemplates(ArrayCollection $templates)
+    {
+        $this->templates = $templates;
+
+        return $this;
+    }
+
+    /**
+     * Get templates
+     *
+     * @return array[FiddleTemplate]
+     */
+    public function getTemplates()
+    {
+        return $this->templates;
+    }
+
+    /**
+     * Set context
+     *
+     * @param FiddleTag $context
+     * @return Fiddle
+     */
+    public function setContext(FiddleContext $context)
+    {
+        $this->context = $context;
+
+        return $this;
+    }
+
+    /**
+     * Get context
+     *
+     * @return FiddleContext
+     */
+    public function getContext()
+    {
+        return $this->context;
+    }
+
+    /**
+     * Set twigVersion
+     *
+     * @param string $twigVersion
+     * @return Fiddle
+     */
+    public function setTwigVersion($twigVersion)
+    {
+        $this->twigVersion = $twigVersion;
+
+        return $this;
+    }
+
+    /**
+     * Get twigVersion
+     *
+     * @return string
+     */
+    public function getTwigVersion()
+    {
+        return $this->twigVersion;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     * @return Fiddle
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set isPrivate
+     *
+     * @param boolean $isPrivate
+     * @return Fiddle
+     */
+    public function setIsPrivate($isPrivate)
+    {
+        $this->isPrivate = $isPrivate;
+
+        return $this;
+    }
+
+    /**
+     * Get isPrivate
+     *
+     * @return boolean
+     */
+    public function getIsPrivate()
+    {
+        return $this->isPrivate;
+    }
+
+    /**
+     * Set tags
+     *
+     * @param ArrayCollection[FiddleTag] $tags
+     * @return Fiddle
+     */
+    public function setTags(ArrayCollection $tags)
+    {
+        $this->tags = $tags;
+
+        return $this;
+    }
+
+    /**
+     * Get tags
+     *
+     * @return ArrayCollection[FiddleTag]
+     */
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
+    /**
      * Set creationTm
      *
      * @param \DateTime $creationTm
@@ -248,98 +396,6 @@ class Fiddle
     public function getVisitsCount()
     {
         return $this->visitsCount;
-    }
-
-    /**
-     * Set config
-     *
-     * @param FiddleConfig $config
-     * @return Fiddle
-     */
-    public function setConfig(FiddleConfig $config)
-    {
-        $this->config = $config;
-
-        return $this;
-    }
-
-    /**
-     * Get config
-     *
-     * @return FiddleConfig
-     */
-    public function getConfig()
-    {
-        return $this->config;
-    }
-
-    /**
-     * Set templates
-     *
-     * @param  ArrayCollection[FiddleTemplate] $templates
-     * @return Fiddle
-     */
-    public function setTemplates(ArrayCollection $templates)
-    {
-        $this->templates = $templates;
-
-        return $this;
-    }
-
-    /**
-     * Get templates
-     *
-     * @return array[FiddleTemplate]
-     */
-    public function getTemplates()
-    {
-        return $this->templates;
-    }
-
-    /**
-     * Set context
-     *
-     * @param FiddleTag $context
-     * @return Fiddle
-     */
-    public function setContext(FiddleContext $context)
-    {
-        $this->context = $context;
-
-        return $this;
-    }
-
-    /**
-     * Get context
-     *
-     * @return FiddleContext
-     */
-    public function getContext()
-    {
-        return $this->context;
-    }
-
-    /**
-     * Set tags
-     *
-     * @param ArrayCollection[FiddleTag] $tags
-     * @return Fiddle
-     */
-    public function setTags(ArrayCollection $tags)
-    {
-        $this->tags = $tags;
-
-        return $this;
-    }
-
-    /**
-     * Get tags
-     *
-     * @return ArrayCollection[FiddleTag]
-     */
-    public function getTags()
-    {
-        return $this->tags;
     }
 
     /**
