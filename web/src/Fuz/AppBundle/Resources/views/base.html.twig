@@ -30,10 +30,11 @@
                 </div>
                 <div class="clearfix hidden-md hidden-lg"></div>
                 <div class="col-md-3 col-sm-6 col-xs-12 top-menu text-right">
-                    {% block header_middle  %}&nbsp;{% endblock %}
+                    {% block header_middle %}&nbsp;{% endblock %}
                 </div>
                 <div class="col-md-5 col-sm-6 col-xs-12 user-menu text-right">
                     {% block header_right %}
+
                         {% if is_granted('ROLE_USER') %}
                             {{ include('FuzAppBundle:Login:logged-as.html.twig') }}
                         {% endif %}
@@ -45,6 +46,7 @@
                             <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#login-modal"><span class="glyphicon glyphicon glyphicon-lock hidden-md hidden-sm hidden-xs"></span> Login</a>
                         {% endif %}
                         {{ include('FuzAppBundle:Login:modal.html.twig') }}
+
                     {% endblock %}
                 </div>
             </div>

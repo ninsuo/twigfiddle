@@ -1,15 +1,21 @@
-{# FuzAppBundle:Default:index.html.twig #}
+{# TwigBundle:Exception:error404.html.twig #}
 {% extends 'FuzAppBundle::base.html.twig' %}
 
 {% block header_right %}{% endblock %}
 
-{% block title %}{{ status_code }} - {{ status_text }}{% endblock %}
+{% block title %}Permission Denied{% endblock %}
 
 {% block content %}
 
 <div class="row">
     <div class="col-md-12">
-        <h3>{{ status_code }} - {{ status_text }}</h3>
+        <h3>403 - Permission Denied!</h3>
+
+        <div class="text-center">
+            You need to be logged-on or/and do not have the required privileges to access this resource.
+        </div>
+
+        <div>&nbsp;</div>
 
         <div class="text-center">
             Use the Back button, the navigation menu or click on the Home button to continue.

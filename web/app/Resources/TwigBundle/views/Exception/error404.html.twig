@@ -1,15 +1,21 @@
-{# FuzAppBundle:Default:index.html.twig #}
+{# TwigBundle:Exception:error404.html.twig #}
 {% extends 'FuzAppBundle::base.html.twig' %}
 
 {% block header_right %}{% endblock %}
 
-{% block title %}{{ status_code }} - {{ status_text }}{% endblock %}
+{% block title %}Page Not Found{% endblock %}
 
 {% block content %}
 
 <div class="row">
     <div class="col-md-12">
-        <h3>{{ status_code }} - {{ status_text }}</h3>
+        <h3>404 - Page not found!</h3>
+
+        <div class="text-center">
+            The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.
+        </div>
+
+        <div>&nbsp;</div>
 
         <div class="text-center">
             Use the Back button, the navigation menu or click on the Home button to continue.
