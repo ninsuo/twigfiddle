@@ -18,8 +18,23 @@ twitter_login:
 sensio_login:
     pattern: /login/check-sensio-connect
 
-fuz_app:
-    resource: "@FuzAppBundle/Controller/"
+fuz_app_login:
+    resource: "@FuzAppBundle/Controller/LoginController.php"
+    type:     annotation
+    prefix:   /
+
+fuz_app_browse:
+    resource: "@FuzAppBundle/Controller/BrowseController.php"
+    type:     annotation
+    prefix:   /browse
+
+fuz_app_about:
+    resource: "@FuzAppBundle/Controller/AboutController.php"
+    type:     annotation
+    prefix:   /
+
+fuz_app_fiddle:
+    resource: "@FuzAppBundle/Controller/FiddleController.php"
     type:     annotation
     prefix:   /
 

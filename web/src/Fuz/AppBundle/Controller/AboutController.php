@@ -6,22 +6,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-class FiddleController extends Controller
+class AboutController extends Controller
 {
 
     /**
-     * @param string $fiddleHash
-     * @Route("/", name="home")
+     * @Route("/about", name="about")
      * @Template()
      */
-    public function indexAction($fiddleHash = null)
+    public function indexAction()
     {
-
-
-
-
         return array ();
     }
-
 
 }

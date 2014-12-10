@@ -47,14 +47,7 @@ class Fiddle
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
-    protected $user;
-
-    /**
-     * @var ArrayCollection[FiddleTemplate]
-     *
-     * @ORM\OneToMany(targetEntity="FiddleTemplate", mappedBy="fiddle")
-     */
-    protected $templates;
+    protected $user = null;
 
     /**
      * @var FiddleContext
@@ -62,6 +55,13 @@ class Fiddle
      * @ORM\OneToOne(targetEntity="FiddleContext", mappedBy="fiddle")
      */
     protected $context;
+
+    /**
+     * @var ArrayCollection[FiddleTemplate]
+     *
+     * @ORM\OneToMany(targetEntity="FiddleTemplate", mappedBy="fiddle")
+     */
+    protected $templates;
 
     /**
      * @var string
@@ -111,6 +111,12 @@ class Fiddle
      * @ORM\Column(name="visits_count", type="integer")
      */
     protected $visitsCount;
+
+    public function __construct()
+    {
+        $this->context = new FiddleContext();
+        $this->templates = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -192,29 +198,6 @@ class Fiddle
     }
 
     /**
-     * Set templates
-     *
-     * @param  ArrayCollection[FiddleTemplate] $templates
-     * @return Fiddle
-     */
-    public function setTemplates(ArrayCollection $templates)
-    {
-        $this->templates = $templates;
-
-        return $this;
-    }
-
-    /**
-     * Get templates
-     *
-     * @return array[FiddleTemplate]
-     */
-    public function getTemplates()
-    {
-        return $this->templates;
-    }
-
-    /**
      * Set context
      *
      * @param FiddleTag $context
@@ -235,6 +218,29 @@ class Fiddle
     public function getContext()
     {
         return $this->context;
+    }
+    
+    /**
+     * Set templates
+     *
+     * @param  ArrayCollection[FiddleTemplate] $templates
+     * @return Fiddle
+     */
+    public function setTemplates(ArrayCollection $templates)
+    {
+        $this->templates = $templates;
+
+        return $this;
+    }
+
+    /**
+     * Get templates
+     *
+     * @return array[FiddleTemplate]
+     */
+    public function getTemplates()
+    {
+        return $this->templates;
     }
 
     /**

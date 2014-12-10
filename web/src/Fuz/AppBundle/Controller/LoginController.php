@@ -4,19 +4,9 @@ namespace Fuz\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-class DefaultController extends Controller
+class LoginController extends Controller
 {
-
-    /**
-     * @Route("/", name="home")
-     * @Template()
-     */
-    public function indexAction()
-    {
-        return array ();
-    }
 
     /**
      * @Route("/login", name="login")
@@ -26,7 +16,7 @@ class DefaultController extends Controller
         $hasUser = $this->container->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED');
         if ($hasUser)
         {
-            return $this->redirect($this->generateUrl('home'));
+            return $this->redirect($this->getRequest()->headers->get('referer'));
         }
         else
         {
@@ -40,7 +30,7 @@ class DefaultController extends Controller
     public function logoutAction()
     {
         $this->container->get('security.context')->setToken(null);
-        return $this->redirect($this->generateUrl('home'));
+        return $this->redirect($this->getRequest()->headers->get('referer'));
     }
 
 }
