@@ -15,7 +15,6 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        throw new \Exception("hohoho");
         return array ();
     }
 
