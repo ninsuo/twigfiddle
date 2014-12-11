@@ -90,7 +90,6 @@ class Application
         $dir = $this->rootDir . "/config/";
         $config = $this->container->get('file_loader')->load($dir, 'config.yml');
         $configs = array ($this->container->getParameterBag()->resolveValue($config));
-        $processor = new Processor();
         $serviceIds = array_keys($this->container->findTaggedServiceIds('configuration.node'));
         $nodes = array ();
         foreach ($serviceIds as $serviceId)
@@ -101,6 +100,7 @@ class Application
                 $nodes[] = $service;
             }
         }
+        $processor = new Processor();
         $configuration = new ApplicationConfiguration($nodes);
         foreach ($processor->processConfiguration($configuration, $configs) as $name => $value)
         {

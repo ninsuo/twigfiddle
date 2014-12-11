@@ -1,5 +1,5 @@
 logger:
-    level: DEBUG
+    level: %logger_level%
     max_files: 30
     name: %env%.log
 
