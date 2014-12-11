@@ -22,10 +22,7 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
            ->children()
-                ->scalarNode('container_prefix')
-                    ->defaultValue('twigfiddle')
-                ->end()
-                ->arrayNode('process')
+                ->arrayNode('twigfiddle')
                     ->isRequired()
                     ->children()
                         ->scalarNode("root_dir")

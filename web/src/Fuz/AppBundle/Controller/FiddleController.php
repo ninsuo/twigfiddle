@@ -16,10 +16,6 @@ class FiddleController extends Controller
      */
     public function indexAction($fiddleHash = null)
     {
-
-
-
-
         return array ();
     }
 

@@ -71,8 +71,7 @@ swiftmailer:
 
 # Twigfiddle configuration
 fuz_app:
-    container_prefix: twigfiddle
-    process:
+    twigfiddle:
         root_dir: %twigfiddle_process_root_dir%
         config_path: %twigfiddle_process_root_dir%/config/config.yml
         parameters_paths:
