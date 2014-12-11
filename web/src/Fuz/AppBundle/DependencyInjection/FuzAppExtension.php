@@ -31,11 +31,30 @@ class FuzAppExtension extends Extension
             }
         }
 
+        $this->loadProcessConfig($config['process']['root_dir'], $config['process']['config_path'], $config['process']['parameters_paths'], $container);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
     }
 
+    public function loadProcessConfig($rootDir, $configFile, $parameterFiles, ContainerBuilder $container)
+    {
+        $sluggedConfig = Yaml::parse($configFile);
 
+        $processContainer = new ContainerBuilder();
+
+        foreach ($parameterFiles as $parameterFile)
+        {
+            $locator = new FileLocator(dirname($parameterFile));
+            $loader = new Loader\YamlFileLoader($processContainer, $locator);
+            $loader->load(basename($parameterFile));
+        }
+
+        $processContainer->setParameter('env', $container->getParameter('kernel.environment'));
+        $processContainer->setParameter('root_dir', $rootDir);
+        $config = $processContainer->getParameterBag()->resolveValue($sluggedConfig);
+
+        $container->setParameter('runner', $config);
+    }
 
 }
