@@ -68,3 +68,14 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+# Twigfiddle configuration
+fuz_app:
+    container_prefix: twigfiddle
+    process:
+        root_dir: %twigfiddle_process_root_dir%
+        config_path: %twigfiddle_process_root_dir%/config/config.yml
+        parameters_paths:
+            - %twigfiddle_process_root_dir%/config/parameters.%kernel.environment%.yml
+        command: /usr/bin/php %kernel.root_dir%/../../cli/run.php twigfiddle:run <env_id>
+        max_exec_time: 5

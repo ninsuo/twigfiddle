@@ -20,9 +20,53 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('fuz_app');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode
+           ->children()
+                ->scalarNode('container_prefix')
+                    ->defaultValue('twigfiddle')
+                ->end()
+                ->arrayNode('process')
+                    ->isRequired()
+                    ->children()
+                        ->scalarNode("root_dir")
+                            ->isRequired()
+                            ->validate()
+                                ->ifTrue(function($file) {
+                                    return !is_dir($file) || !is_readable($file);
+                                })
+                                ->thenInvalid("Unable to read Twigfiddle's root directory at: %s")
+                            ->end()
+                        ->end()
+                        ->scalarNode("config_path")
+                            ->isRequired()
+                            ->validate()
+                                ->ifTrue(function($file) {
+                                    return !is_file($file) || !is_readable($file);
+                                })
+                                ->thenInvalid("Unable to read Twigfiddle's process config file at: %s")
+                            ->end()
+                        ->end()
+                        ->arrayNode('parameters_paths')
+                            ->useAttributeAsKey('name')
+                            ->prototype('scalar')
+                                ->validate()
+                                    ->ifTrue(function($file) {
+                                        return !is_file($file) || !is_readable($file);
+                                    })
+                                    ->thenInvalid("Unable to read Twigfiddle's process parameters file at: %s")
+                                ->end()
+                            ->end()
+                        ->end()
+                        ->scalarNode("command")
+                            ->isRequired()
+                        ->end()
+                        ->integerNode('max_exec_time')
+                            ->defaultValue(5)
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
 
         return $treeBuilder;
     }
