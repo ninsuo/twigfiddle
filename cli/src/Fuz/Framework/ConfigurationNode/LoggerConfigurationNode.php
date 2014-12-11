@@ -25,6 +25,16 @@ class LoggerConfigurationNode implements ConfigurationNodeInterface
                 ->end()
                 ->scalarNode('name')
                     ->defaultValue('app.log')
+                    ->validate()
+                        ->ifTrue(function($file) {
+                            return strpos($file, '/') !== false;
+                        })
+                        ->thenInvalid("The log file name can't contain a slash ( / ): %s")
+                        ->ifTrue(function($file) {
+                            return is_file($file) && !is_writeable($file);
+                        })
+                        ->thenInvalid("The log file exists but is not writeable: %s")
+                    ->end()
                 ->end()
            ->end()
         ;

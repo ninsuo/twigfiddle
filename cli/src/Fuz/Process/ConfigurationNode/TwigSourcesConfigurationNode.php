@@ -17,6 +17,12 @@ class TwigSourcesConfigurationNode implements ConfigurationNodeInterface
            ->children()
                 ->scalarNode("directory")
                     ->isRequired()
+                    ->validate()
+                        ->ifTrue(function($dir) {
+                            return !is_dir($dir) || !is_readable($dir);
+                        })
+                        ->thenInvalid("Unable to find twig sources in %s: did you run the installation script?")
+                    ->end()
                 ->end()
            ->end()
         ;

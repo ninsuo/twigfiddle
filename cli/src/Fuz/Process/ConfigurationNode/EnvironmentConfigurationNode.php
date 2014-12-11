@@ -17,9 +17,21 @@ class EnvironmentConfigurationNode implements ConfigurationNodeInterface
            ->children()
                 ->scalarNode("directory")
                     ->isRequired()
+                    ->validate()
+                        ->ifTrue(function($dir) {
+                            return !is_dir($dir) || !is_writeable($dir);
+                        })
+                        ->thenInvalid("Environment's directory does not exist or is not writeable: %s")
+                    ->end()
                 ->end()
                 ->scalarNode("validation")
                     ->defaultValue('^[a-zA-Z0-9-]{4,16}$')
+                    ->validate()
+                        ->ifTrue(function($expr) {
+                            return preg_match("/{$expr}/", '/') === true;
+                        })
+                        ->thenInvalid("Environment validation must reject names containing slashs ( / ): current expresion %s is too permissive.")
+                    ->end()
                 ->end()
                 ->integerNode('expiry')
                     ->defaultValue(24)

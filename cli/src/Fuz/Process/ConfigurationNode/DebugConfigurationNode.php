@@ -20,9 +20,21 @@ class DebugConfigurationNode implements ConfigurationNodeInterface
                 ->end()
                 ->scalarNode("directory")
                     ->isRequired()
+                    ->validate()
+                        ->ifTrue(function($dir) {
+                            return !is_dir($dir) || !is_writeable($dir);
+                        })
+                        ->thenInvalid("Debug's directory does not exist or is not writeable: %s")
+                    ->end()
                 ->end()
                 ->scalarNode("context_file")
                     ->defaultValue('context.srz')
+                    ->validate()
+                        ->ifTrue(function($file) {
+                            return strpos($file, '/') !== false;
+                        })
+                        ->thenInvalid("The context file name can't contain a slash ( / ): %s")
+                    ->end()
                 ->end()
                 ->integerNode('expiry')
                     ->defaultValue(720)
