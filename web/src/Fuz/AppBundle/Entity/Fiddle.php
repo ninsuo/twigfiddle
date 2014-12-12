@@ -34,7 +34,7 @@ class Fiddle
     /**
      * @var string
      *
-     * @ORM\Column(name="hash", type="string", length=8)
+     * @ORM\Column(name="hash", type="string", length=16)
      */
     protected $hash;
 

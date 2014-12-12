@@ -2,9 +2,9 @@
 
 namespace Fuz\AppBundle\Entity;
 
-use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
+use Fuz\AppBundle\Entity\User;
 use Fuz\AppBundle\Entity\Fiddle;
 
 /**
@@ -16,26 +16,33 @@ use Fuz\AppBundle\Entity\Fiddle;
 class FiddleRepository extends EntityRepository
 {
 
-    public function getFiddle($hash, $version, UserInterface $user = null)
+    public function getFiddle($hash, $revision, User $user = null)
     {
         if (!is_null($hash))
         {
-            $qb = $this->createQueryBuilder();
+            $qb = $this
+               ->createQueryBuilder('f');
             $qb
-               ->select('f')
-               ->from('Fiddle', 'f')
-               ->where()
-
-               // todo ..
-
-               ;
-
-            try
-            {
-
-
-            }
-            catch (NoResultException $e)
+               ->where(
+                  $qb->expr()->andX(
+                     $qb->expr()->eq('f.hash', ':hash'),
+                     $qb->expr()->eq('f.revision', ':revision'),
+                     $qb->expr()->orX(
+                        $qb->expr()->neq('f.visibility', ':private'),
+                        $qb->expr()->eq('f.user', ':user')
+                     )
+                  )
+               )
+               ->setParameters(array(
+                       'hash' => $hash,
+                       'revision' => $revision,
+                       'private' => Fiddle::VISIBILITY_PRIVATE,
+                       'user' => $user ? $user->getId() : -1,
+               ))
+            ;
+            $query = $qb->getQuery();
+            $fiddle = $query->getOneOrNullResult();
+            if (is_null($fiddle))
             {
                 $fiddle = new Fiddle();
                 $fiddle->setHash($hash);
