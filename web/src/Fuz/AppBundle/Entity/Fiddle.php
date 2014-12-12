@@ -18,6 +18,10 @@ use Doctrine\ORM\Mapping as ORM;
 class Fiddle
 {
 
+    const VISIBILITY_PUBLIC = 'public';
+    const VISIBILITY_UNLISTED = 'unlisted';
+    const VISIBILITY_PRIVATE = 'private';
+
     /**
      * @var integer
      *
@@ -80,9 +84,9 @@ class Fiddle
     /**
      * @var boolean
      *
-     * @ORM\Column(name="is_private", type="boolean")
+     * @ORM\Column(name="visibility", type="string", length=16)
      */
-    protected $isPrivate = false;
+    protected $visibility = self::VISIBILITY_PUBLIC;
 
     /**
      * @var ArrayCollection[UserTag]
@@ -219,7 +223,7 @@ class Fiddle
     {
         return $this->context;
     }
-    
+
     /**
      * Set templates
      *
@@ -290,26 +294,36 @@ class Fiddle
     }
 
     /**
-     * Set isPrivate
+     * Set visibility
      *
-     * @param boolean $isPrivate
+     * @param boolean $visibility
      * @return Fiddle
      */
-    public function setIsPrivate($isPrivate)
+    public function setVisibility($visibility)
     {
-        $this->isPrivate = $isPrivate;
+        if (!in_array($visibility,
+              array (
+                   self::VISIBILITY_PUBLIC,
+                   self::VISIBILITY_UNLISTED,
+                   self::VISIBILITY_PRIVATE,
+           )))
+        {
+            throw new \InvalidArgumentException(sprintf("Invalid Fiddle's visibility: %s", $visibility));
+        }
+
+        $this->visibility = $visibility;
 
         return $this;
     }
 
     /**
-     * Get isPrivate
+     * Get visibility
      *
      * @return boolean
      */
-    public function getIsPrivate()
+    public function getVisibility()
     {
-        return $this->isPrivate;
+        return $this->visibility;
     }
 
     /**
