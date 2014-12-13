@@ -22,7 +22,7 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
            ->children()
-                ->arrayNode('twigfiddle')
+                ->arrayNode('process')
                     ->isRequired()
                     ->children()
                         ->scalarNode("root_dir")
@@ -59,6 +59,9 @@ class Configuration implements ConfigurationInterface
                         ->end()
                         ->integerNode('max_exec_time')
                             ->defaultValue(5)
+                        ->end()
+                        ->scalarNode("apc_cache_key")
+                            ->defaultValue('twigfiddle.process')
                         ->end()
                     ->end()
                 ->end()

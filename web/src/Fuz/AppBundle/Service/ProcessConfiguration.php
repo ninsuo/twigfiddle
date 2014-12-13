@@ -2,6 +2,7 @@
 
 namespace Fuz\AppBundle\Service;
 
+use Doctrine\Common\Cache\ApcCache;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader;
@@ -10,27 +11,47 @@ use Symfony\Component\Yaml\Yaml;
 class ProcessConfiguration
 {
 
-    protected $twigfiddleConfig;
+    protected $localConfig;
     protected $environment;
-    protected $processConfig;
+    protected $remoteConfig;
 
-    public function __construct(array $twigfiddleConfig, $environment)
+    public function __construct(array $localConfig, $environment)
     {
-        $this->twigfiddleConfig = $twigfiddleConfig;
+        $this->localConfig = $localConfig;
         $this->environment = $environment;
-        $this->processConfig = null;
+        $this->remoteConfig = null;
     }
 
     public function getProcessConfig()
     {
-        if (!is_null($this->processConfig))
+        if (!is_null($this->remoteConfig))
         {
-            return $this->processConfig;
+            return $this->remoteConfig;
         }
 
-        $rootDir = $this->twigfiddleConfig['root_dir'];
-        $configFile = $this->twigfiddleConfig['config_path'];
-        $parameterFiles = $this->twigfiddleConfig['parameters_paths'];
+        if ($this->environment === 'prod')
+        {
+            $apc = new ApcCache();
+            $id = $this->localConfig['apc_cache_key'];
+            if ($apc->contains($id))
+            {
+                $this->remoteConfig = $apc->fetch($id);
+            }
+            else
+            {
+                $this->remoteConfig = $this->loadRemoteConfig();
+                $apc->save($id, $this->remoteConfig);
+            }
+        }
+
+        return $this->remoteConfig;
+    }
+
+    public function loadRemoteConfig()
+    {
+        $rootDir = $this->localConfig['root_dir'];
+        $configFile = $this->localConfig['config_path'];
+        $parameterFiles = $this->localConfig['parameters_paths'];
 
         $sluggedConfig = Yaml::parse($configFile);
 
@@ -47,8 +68,13 @@ class ProcessConfiguration
         $processContainer->setParameter('root_dir', $rootDir);
         $config = $processContainer->getParameterBag()->resolveValue($sluggedConfig);
 
-        $this->processConfig = $config;
+        $this->remoteConfig = $config;
         return $config;
+    }
+
+    public function getSupportedTwigVersions()
+    {
+        $cfg = $this->getProcessConfig();
     }
 
 }

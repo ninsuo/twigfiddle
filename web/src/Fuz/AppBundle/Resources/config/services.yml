@@ -20,7 +20,7 @@ services:
 
     app.process_configuration:
         class: %app.process_configuration.class%
-        arguments: [%twigfiddle%, %kernel.environment%]
+        arguments: [%process%, %kernel.environment%]
 
     app.form.fiddle:
          class: %app.form.fiddle.class%
