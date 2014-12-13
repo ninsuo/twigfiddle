@@ -3,6 +3,7 @@ parameters:
     hwi_oauth.account.connector: Fuz\AppBundle\Connect\AccountConnect
     app.daemon.class: Fuz\AppBundle\Component\Daemon
     app.process_configuration.class: Fuz\AppBundle\Service\ProcessConfiguration
+    app.form.fiddle.class: Fuz\AppBundle\Form\FiddleType
 
 services:
 
@@ -20,3 +21,9 @@ services:
     app.process_configuration:
         class: %app.process_configuration.class%
         arguments: [%twigfiddle%, %kernel.environment%]
+
+    app.form.fiddle:
+         class: %app.form.fiddle.class%
+         arguments: [@app.process_configuration]
+         tags:
+            - { name: form.type, alias: task }

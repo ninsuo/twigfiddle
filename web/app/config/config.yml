@@ -69,6 +69,12 @@ swiftmailer:
     password:  "%mailer_password%"
     spool:     { type: memory }
 
+# Ornicar APC configuration
+ornicar_apc:
+    host: %twigfiddle_url%
+    web_dir: %kernel.root_dir%/../web
+    mode: curl
+
 # Twigfiddle configuration
 fuz_app:
     twigfiddle:
