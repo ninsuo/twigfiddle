@@ -43,38 +43,60 @@ class ProcessConfiguration
                 $apc->save($id, $this->remoteConfig);
             }
         }
+        else
+        {
+            $this->remoteConfig = $this->loadRemoteConfig();
+        }
 
         return $this->remoteConfig;
     }
 
-    public function loadRemoteConfig()
+    protected function loadRemoteConfig()
     {
         $rootDir = $this->localConfig['root_dir'];
         $configFile = $this->localConfig['config_path'];
-        $parameterFiles = $this->localConfig['parameters_paths'];
+        $containerFiles = $this->localConfig['container_file_paths'];
 
         $sluggedConfig = Yaml::parse($configFile);
 
         $processContainer = new ContainerBuilder();
 
-        foreach ($parameterFiles as $parameterFile)
+        foreach ($containerFiles as $containerFile)
         {
-            $locator = new FileLocator(dirname($parameterFile));
+            $locator = new FileLocator(dirname($containerFile));
             $loader = new Loader\YamlFileLoader($processContainer, $locator);
-            $loader->load(basename($parameterFile));
+            $loader->load(basename($containerFile));
         }
 
         $processContainer->setParameter('env', $this->environment);
         $processContainer->setParameter('root_dir', $rootDir);
         $config = $processContainer->getParameterBag()->resolveValue($sluggedConfig);
 
+        $config['supported_versions'] = $this->getSupportedTwigVersions($processContainer);
+
         $this->remoteConfig = $config;
         return $config;
     }
 
-    public function getSupportedTwigVersions()
+    protected function getSupportedTwigVersions(ContainerBuilder $processContainer)
     {
-        $cfg = $this->getProcessConfig();
+        $versions = array ();
+
+        $engineServiceIds = $processContainer->findTaggedServiceIds('twig.engine');
+        foreach ($engineServiceIds as $tags)
+        {
+            foreach ($tags as $tag)
+            {
+                if (!array_key_exists('versions', $tag))
+                {
+                    continue;
+                }
+                $versions = array_merge($versions,
+                   array_map('trim', array_map('strtolower', explode("/", $tag['versions']))));
+            }
+        }
+
+        return $versions;
     }
 
 }

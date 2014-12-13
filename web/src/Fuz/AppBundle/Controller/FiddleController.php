@@ -5,6 +5,7 @@ namespace Fuz\AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Fuz\AppBundle\Base\BaseController;
+use Fuz\AppBundle\Form\FiddleType;
 
 class FiddleController extends BaseController
 {
@@ -31,10 +32,16 @@ class FiddleController extends BaseController
     public function indexAction($hash, $revision)
     {
 
+        $config = $this->get('app.process_configuration')->getProcessConfig();
+        var_dump($config);
+        die();
+
         $repository = $this->getDoctrine()
            ->getRepository('FuzAppBundle:Fiddle');
-        $fiddle = $repository->getFiddle($hash, $revision, $this->getUser());
-
+//
+//        $fiddleData = $repository->getFiddle($hash, $revision, $this->getUser());
+//        $fiddleType = new FiddleType();
+//        $fiddleForm = $this->createForm($fiddleType, $fiddleData);
 
         return array ();
     }

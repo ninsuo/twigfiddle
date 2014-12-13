@@ -4,6 +4,7 @@ namespace Fuz\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * FiddleContext
@@ -114,6 +115,25 @@ class FiddleContext
     public function getContent()
     {
         return $this->content;
+    }
+
+    /**
+     * @Assert\Callback
+     */
+    public function validateFormat(ExecutionContextInterface $context)
+    {
+        if (!in_array($this->visibility,
+              array (
+                      self::FORMAT_YAML,
+                      self::FORMAT_XML,
+                      self::FORMAT_JSON,
+                      self::FORMAT_INI,
+           )))
+        {
+            $context->buildViolation('You should choose a valid visibility.')
+               ->atPath('visibility')
+               ->addViolation();
+        }
     }
 
 }

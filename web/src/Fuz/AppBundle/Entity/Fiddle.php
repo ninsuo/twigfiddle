@@ -5,6 +5,7 @@ namespace Fuz\AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * Fiddle
@@ -74,7 +75,7 @@ class Fiddle
      * @var string
      *
      * @ORM\Column(name="twig_version", type="string", length=32)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      */
     protected $twigVersion;
 
@@ -90,10 +91,6 @@ class Fiddle
      * @var boolean
      *
      * @ORM\Column(name="visibility", type="string", length=16)
-     * @Assert\Choice(
-     *      choices = {"public", "unlisted", "private"},
-     *      message = "Choose a valid visibility."
-     * )
      */
     protected $visibility = self::VISIBILITY_PUBLIC;
 
@@ -311,16 +308,6 @@ class Fiddle
      */
     public function setVisibility($visibility)
     {
-        if (!in_array($visibility,
-              array (
-                   self::VISIBILITY_PUBLIC,
-                   self::VISIBILITY_UNLISTED,
-                   self::VISIBILITY_PRIVATE,
-           )))
-        {
-            throw new \InvalidArgumentException(sprintf("Invalid Fiddle's visibility: %s", $visibility));
-        }
-
         $this->visibility = $visibility;
 
         return $this;
@@ -449,7 +436,7 @@ class Fiddle
     /**
      * @Assert\Callback
      */
-    public function validate(ExecutionContextInterface $context)
+    public function validateTemplates(ExecutionContextInterface $context)
     {
         $isMainCount = 0;
         foreach ($this->templates as $template)
@@ -468,6 +455,24 @@ class Fiddle
         {
             $context->buildViolation('You need to set only one main template.')
                ->atPath('templates')
+               ->addViolation();
+        }
+    }
+
+    /**
+     * @Assert\Callback
+     */
+    public function validateVisibility(ExecutionContextInterface $context)
+    {
+        if (!in_array($this->visibility,
+              array (
+                   self::VISIBILITY_PUBLIC,
+                   self::VISIBILITY_UNLISTED,
+                   self::VISIBILITY_PRIVATE,
+           )))
+        {
+            $context->buildViolation('You should choose a valid visibility.')
+               ->atPath('visibility')
                ->addViolation();
         }
     }

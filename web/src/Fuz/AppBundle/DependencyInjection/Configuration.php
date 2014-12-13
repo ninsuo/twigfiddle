@@ -43,7 +43,7 @@ class Configuration implements ConfigurationInterface
                                 ->thenInvalid("Unable to read Twigfiddle's process config file at: %s")
                             ->end()
                         ->end()
-                        ->arrayNode('parameters_paths')
+                        ->arrayNode('container_file_paths')
                             ->useAttributeAsKey('name')
                             ->prototype('scalar')
                                 ->validate()
