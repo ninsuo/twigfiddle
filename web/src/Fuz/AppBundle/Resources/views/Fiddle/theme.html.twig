@@ -1,0 +1,37 @@
+{# FuzAppBundle:Fiddle:theme.html.twig #}
+
+{% block form_row -%}
+    <div class="form-group {% if errors|length > 0 %}has-error{% endif %}">
+        {{- form_label(form) -}}
+        {{- form_errors(form) -}}
+        {{- form_widget(form) -}}
+    </div>
+{%- endblock form_row %}
+
+{% block choice_widget_collapsed -%}
+    {% if required and empty_value is none and not empty_value_in_choices and not multiple -%}
+        {% set required = false %}
+    {%- endif -%}
+    <select class="form-control" {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
+        {% if empty_value is not none -%}
+            <option value=""{% if required and value is empty %} selected="selected"{% endif %}>{{ empty_value|trans({}, translation_domain) }}</option>
+        {%- endif %}
+        {%- if preferred_choices|length > 0 -%}
+            {% set options = preferred_choices %}
+            {{- block('choice_widget_options') -}}
+            {% if choices|length > 0 and separator is not none -%}
+                <option disabled="disabled">{{ separator }}</option>
+            {%- endif %}
+        {%- endif -%}
+        {% set options = choices -%}
+        {{- block('choice_widget_options') -}}
+    </select>
+  {%- endblock choice_widget_collapsed %}
+
+{% block form_errors -%}
+    {% if errors|length > 0 -%}
+        {%- for error in errors -%}
+            <div class="control-label"><strong>{{ error.message }}</strong></div>
+        {%- endfor -%}
+    {%- endif %}
+{%- endblock form_errors %}

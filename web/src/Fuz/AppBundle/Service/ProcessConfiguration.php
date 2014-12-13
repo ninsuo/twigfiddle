@@ -91,8 +91,7 @@ class ProcessConfiguration
                 {
                     continue;
                 }
-                $versions = array_merge($versions,
-                   array_map('trim', array_map('strtolower', explode("/", $tag['versions']))));
+                $versions = array_merge($versions, array_map('trim', explode("/", $tag['versions'])));
             }
         }
 

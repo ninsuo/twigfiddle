@@ -1,27 +1,118 @@
 {# FuzAppBundle:Fiddle:index.html.twig #}
 {% extends 'FuzAppBundle::base.html.twig' %}
 
+{% form_theme fiddleForm 'FuzAppBundle:Fiddle:theme.html.twig' %}
 
-{# Twig version #}
 {% block header_left %}
 
-    {{ form_errors(fiddleForm.twigVersion) }}
-    {{
-        form_widget(fiddleForm.twigVersion, {
-            'attr': {
-                'class': 'form-control',
-            }
-        })
-    }}
+    {# Twig version #}
+    <div class="form-group has-error has-feedback">
+        {{ form_widget(fiddleForm.twigVersion) }}
+        {{ form_errors(fiddleForm.twigVersion) }}
+    </div>
 
 {% endblock %}
 
-
 {% block content %}
 
-    <div class="row">
-        <div class="col-md-12"><h1>Text Bloc Title</h1><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum a tempus eros. Suspendisse tincidunt felis at eleifend mollis. Cras aliquet dapibus enim, a sodales leo fermentum id. Sed dignissim sodales velit a facilisis. In id leo eu tellus pharetra aliquet.</p><p> Cras quis quam ullamcorper, varius arcu sed, tincidunt arcu. Quisque vitae ante sit amet odio mollis molestie.Cras sollicitudin ut metus nec vehicula. Nam sit amet arcu ipsum. Nulla eget urna in diam rhoncus tempus. Vestibulum sit amet magna pharetra, suscipit odio sit amet, facilisis libero. Vestibulum in nisl nibh. Phasellus lobortis interdum cursus.</p><p> Nam mi sem, accumsan vitae egestas ut, bibendum et neque. Sed imperdiet, arcu vitae egestas ornare, nisl eros fringilla ligula, ut lacinia ipsum justo non ex. Curabitur commodo, nibh rutrum feugiat commodo, sapien ex fringilla dui, sed egestas lorem mauris et justo. Curabitur efficitur tortor at mauris imperdiet, sit amet tempus dolor eleifend. Sed non quam quam. Vestibulum maximus neque in lacus euismod scelerisque.</p></div>
-        <div class="clear">&nbsp;</div>
+<!-- Start infos -->
+<div class="row" id="config">
+    <div class="col-md-3">
+        <select class="form-control input-sm">
+            <option>Revision 2014-03-01 20.53</option>
+            <option>Revision 2014-02-05 10.20</option>
+        </select>
     </div>
+    <div class="col-md-4 title"><strong>TITLE</strong> : This is my title</div>
+    <div class="col-md-5 tags"><strong>TAGS</strong> : word, word, word, word </div>
+</div>
+<!-- End Infos -->
+
+<!-- Start Content -->
+<div class="row" id="content">
+
+    <!-- Start Left Col -->
+    <div class="col-md-6">
+
+        <!-- Start Twig Bloc -->
+        <div class="row">
+            <div class="col-md-8 col-sm-8 col-xs-8">
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon">File</div>
+                        <select class="form-control input-sm">
+                            <option>Main TWIG</option>
+                            <option>...</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-4  col-xs-4">
+                <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon glyphicon-plus"></span></button>
+                <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon glyphicon-trash"></span></button>
+            </div>
+        </div>
+        <textarea class="form-control" rows="35" placeholder="TWIG"></textarea>
+        <!-- End Twig Bloc -->
+
+    </div>
+    <!-- End Left Col -->
+
+    <div class="clearfix hidden-md hidden-lg">&nbsp;</div>
+
+    <!-- Start Right Col -->
+    <div class="col-md-6">
+
+        <!-- Start Context Bloc -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon">Format</div>
+                        <select class="form-control input-sm">
+                            <option>YAML</option>
+                            <option>...</option>
+                        </select>
+                    </div>
+                </div>
+                <textarea class="form-control" rows="15" placeholder="CONTEXT"></textarea>
+            </div>
+        </div>
+        <!-- End Context Bloc -->
+
+        <div class="clearfix">&nbsp;</div>
+
+        <!-- Start Result Bloc -->
+        <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-6">
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon">Format</div>
+                        <select class="form-control input-sm">
+                            <option>Plained Text</option>
+                            <option>...</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-6">
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon">Generated File(s)</div>
+                        <select class="form-control input-sm">
+                            <option>file.php</option>
+                            <option>...</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <textarea class="form-control" rows="16" placeholder="RESULT"></textarea>
+            </div>
+        </div>
+        <!-- End Result Bloc -->
+
+    </div>
+    <!-- End Right Col -->
 
 {% endblock %}
