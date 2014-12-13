@@ -48,7 +48,7 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::removeSymfonyStandardFiles",
-            "Ornicar\\ApcBundle\\Composer\\ScriptHandler::clearApcCache"
+            "Fuz\\AppBundle\\Composer\\ScriptHandler::clearApcCache"
         ]
     },
     "config": {
