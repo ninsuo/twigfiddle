@@ -12,20 +12,25 @@ class UserRepository extends EntityRepository
 
     public function getUserByResourceOwnerId($resourceOwner, $resourceOwnerId)
     {
-        $qb = $this->_em->createQueryBuilder();
-        $qb->select('u')
-           ->from('FuzAppBundle:User', 'u')
-           ->where('u.resourceOwner = :resourceOwner')
-           ->andWhere('u.resourceOwnerId = :resourceOwnerId')
-           ->setParameter('resourceOwner', $resourceOwner)
-           ->setParameter('resourceOwnerId', $resourceOwnerId)
-           ->setMaxResults(1);
-        $result = $qb->getQuery()->getResult();
-        if (count($result))
-        {
-            return $result[0];
-        }
-        return null;
+        $query = $this->_em->createQuery("
+            SELECT u
+            FROM Fuz\AppBundle\Entity\User u
+            WHERE u.resourceOwner = :resourceOwner
+            AND u.resourceOwnerId = :resourceOwnerId
+        ");
+
+        $params = array (
+                'resourceOwner' => $resourceOwner,
+                'resourceOwnerId' => $resourceOwnerId,
+        );
+
+        $user = $query
+           ->setMaxResults(1)
+           ->setParameters($params)
+           ->getOneOrNullResult()
+        ;
+
+        return $user;
     }
 
 }

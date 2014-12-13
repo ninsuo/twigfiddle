@@ -20,28 +20,29 @@ class FiddleRepository extends EntityRepository
     {
         if (!is_null($hash))
         {
-            $qb = $this
-               ->createQueryBuilder('f');
-            $qb
-               ->where(
-                  $qb->expr()->andX(
-                     $qb->expr()->eq('f.hash', ':hash'),
-                     $qb->expr()->eq('f.revision', ':revision'),
-                     $qb->expr()->orX(
-                        $qb->expr()->neq('f.visibility', ':private'),
-                        $qb->expr()->eq('f.user', ':user')
-                     )
-                  )
-               )
-               ->setParameters(array(
-                       'hash' => $hash,
-                       'revision' => $revision,
-                       'private' => Fiddle::VISIBILITY_PRIVATE,
-                       'user' => $user ? $user->getId() : -1,
-               ))
+            $query = $this->_em->createQuery("
+                SELECT f
+                FROM Fuz\AppBundle\Entity\Fiddle f
+                WHERE f.hash = :hash
+                AND f.revision = :revision
+                AND (
+                    f.visibility <> :private
+                    OR f.user = :user
+                )
+            ");
+
+            $params = array (
+                    'hash' => $hash,
+                    'revision' => $revision,
+                    'private' => Fiddle::VISIBILITY_PRIVATE,
+                    'user' => $user ? $user->getId() : -1,
+            );
+
+            $fiddle = $query
+               ->setParameters($params)
+               ->getOneOrNullResult()
             ;
-            $query = $qb->getQuery();
-            $fiddle = $query->getOneOrNullResult();
+
             if (is_null($fiddle))
             {
                 $fiddle = new Fiddle();
