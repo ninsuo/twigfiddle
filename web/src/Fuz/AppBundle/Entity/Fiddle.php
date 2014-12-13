@@ -4,6 +4,7 @@ namespace Fuz\AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Fiddle
@@ -64,6 +65,8 @@ class Fiddle
      * @var ArrayCollection[FiddleTemplate]
      *
      * @ORM\OneToMany(targetEntity="FiddleTemplate", mappedBy="fiddle")
+     * @Assert\Count(min = 1, minMessage = "You need at least 1 template.")
+     * @Assert\Count(max = 20, maxMessage = "You can't write more than 20 templates.")
      */
     protected $templates;
 
@@ -71,6 +74,7 @@ class Fiddle
      * @var string
      *
      * @ORM\Column(name="twig_version", type="string", length=32)
+     * @Assert\NotBlank()
      */
     protected $twigVersion;
 
@@ -78,6 +82,7 @@ class Fiddle
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255, nullable=true)
+     * @Assert\Length(max = 255)
      */
     protected $title;
 
@@ -85,6 +90,10 @@ class Fiddle
      * @var boolean
      *
      * @ORM\Column(name="visibility", type="string", length=16)
+     * @Assert\Choice(
+     *      choices = {"public", "unlisted", "private"},
+     *      message = "Choose a valid visibility."
+     * )
      */
     protected $visibility = self::VISIBILITY_PUBLIC;
 
@@ -92,6 +101,7 @@ class Fiddle
      * @var ArrayCollection[UserTag]
      *
      * @ORM\OneToMany(targetEntity="FiddleTag", mappedBy="fiddle")
+     * @Assert\Count(max = 5, maxMessage = "You can't set more than 5 tags.")
      */
     protected $tags;
 
@@ -433,6 +443,33 @@ class Fiddle
     public function onPreUpdate()
     {
         $this->setUpdateTm(new \DateTime());
+        $this->setVisitsCount($this->visitsCount + 1);
+    }
+
+    /**
+     * @Assert\Callback
+     */
+    public function validate(ExecutionContextInterface $context)
+    {
+        $isMainCount = 0;
+        foreach ($this->templates as $template)
+        {
+            $isMainCount += (int) $template->isMain();
+        }
+
+        if ($isMainCount == 0)
+        {
+            $context->buildViolation('You need to set a main template.')
+               ->atPath('templates')
+               ->addViolation();
+        }
+
+        if ($isMainCount >= 2)
+        {
+            $context->buildViolation('You need to set only one main template.')
+               ->atPath('templates')
+               ->addViolation();
+        }
     }
 
 }

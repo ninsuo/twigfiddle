@@ -3,6 +3,7 @@
 namespace Fuz\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * FiddleContext
@@ -31,6 +32,10 @@ class FiddleContext
      * @var string
      *
      * @ORM\Column(name="format", type="string", length=8)
+     * @Assert\Choice(
+     *      choices = {"YML", "XML", "JSON", "INI"},
+     *      message = "Choose a supported context format."
+     * )
      */
     protected $format = self::FORMAT_YAML;
 
@@ -38,6 +43,7 @@ class FiddleContext
      * @var string
      *
      * @ORM\Column(name="content", type="text")
+     * @Assert\Length(max = 8192)
      */
     protected $content = '';
 

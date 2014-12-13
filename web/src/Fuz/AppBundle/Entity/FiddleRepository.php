@@ -3,7 +3,6 @@
 namespace Fuz\AppBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\NoResultException;
 use Fuz\AppBundle\Entity\User;
 use Fuz\AppBundle\Entity\Fiddle;
 

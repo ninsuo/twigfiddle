@@ -3,6 +3,7 @@
 namespace Fuz\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * FiddleTemplate
@@ -27,6 +28,7 @@ class FiddleTemplate
      *
      * @ORM\Column(name="filename", type="string", length=64)
      * @ORM\Id
+     * @Assert\NotBlank()
      */
     protected $filename = 'main.twig';
 
@@ -34,6 +36,7 @@ class FiddleTemplate
      * @var string
      *
      * @ORM\Column(name="content", type="text")
+     * @Assert\Length(max = 8192)
      */
     protected $content = '';
 

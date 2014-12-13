@@ -3,6 +3,7 @@
 namespace Fuz\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * FiddleTag
@@ -27,6 +28,7 @@ class FiddleTag
      *
      * @ORM\Column(name="tag", type="string", length=32)
      * @ORM\Id
+     * @Assert\NotBlank()
      */
     protected $tag;
 
