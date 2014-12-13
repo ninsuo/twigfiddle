@@ -26,4 +26,4 @@ services:
          class: %app.form.fiddle.class%
          arguments: [@app.process_configuration]
          tags:
-            - { name: form.type, alias: task }
+            - { name: form.type, alias: FiddleType }

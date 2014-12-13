@@ -19,12 +19,15 @@
 
     <body>
 
-        {# Start Container #}
+        {# debug - will be run asynchronously in the future) #}
+        <form action="{{ path('run_fiddle', {'hash': hash, 'revision': revision}) }}" method="post">
+
+         {# Start Container #}
         <div class="container-fluid">
 
             {# Start Header #}
             <div class="row" id="header">
-                <div class="col-md-2 col-sm-6 col-xs-6 logo"><a href="{{ path('home') }}"><img src="{{ asset('bundles/fuzapp/img/logo_twig-fiddle.png') }}" alt="Twig Fiddle"></a></div>
+                <div class="col-md-2 col-sm-6 col-xs-6 logo"><a href="{{ path('fiddle') }}"><img src="{{ asset('bundles/fuzapp/img/logo_twig-fiddle.png') }}" alt="Twig Fiddle"></a></div>
                 <div class="col-md-2 col-sm-6 col-xs-6 version">
                     {% block header_left %}&nbsp;{% endblock %}
                 </div>
@@ -39,7 +42,7 @@
                             {{ include('FuzAppBundle:Login:logged-as.html.twig') }}
                         {% endif %}
                         <button type="button" class="btn btn-success"><span class="glyphicon glyphicon glyphicon-cloud hidden-md hidden-sm hidden-xs"></span> Samples</button>
-                        <a  class="btn btn-success" href="{{ path('about') }}"><span class="glyphicon glyphicon glyphicon-info-sign hidden-md hidden-sm hidden-xs"></span> About</a>
+                        <a  class="btn btn-info" href="{{ path('about') }}"><span class="glyphicon glyphicon glyphicon-info-sign hidden-md hidden-sm hidden-xs"></span> About</a>
                         {% if is_granted('ROLE_USER') %}
                             <a href="{{ path('logout') }}" class="btn btn-warning"><span class="glyphicon glyphicon glyphicon-remove-circle hidden-md hidden-sm hidden-xs"></span> Logout</a>
                         {% else %}
@@ -92,6 +95,10 @@
         {% block extra_js %}{% endblock %}
 
         {% block script %}{% endblock %}
+
+         {# debug #}
+             <input type="submit"/>
+         </form>
 
     </body>
 </html>

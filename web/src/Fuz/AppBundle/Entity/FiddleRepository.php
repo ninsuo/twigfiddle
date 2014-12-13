@@ -32,7 +32,7 @@ class FiddleRepository extends EntityRepository
 
             $params = array (
                     'hash' => $hash,
-                    'revision' => $revision,
+                    'revision' => $revision <= 0 ?: $revision,
                     'private' => Fiddle::VISIBILITY_PRIVATE,
                     'user' => $user ? $user->getId() : -1,
             );
