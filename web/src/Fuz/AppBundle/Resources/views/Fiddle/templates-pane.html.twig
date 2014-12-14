@@ -3,7 +3,9 @@
 {% form_theme fiddleForm.templates 'FuzAppBundle:Fiddle:templates-theme.html.twig' %}
 
 <div id="templates" data-prototype="{{ form_widget(fiddleForm.templates.vars.prototype)|e('html_attr') }}">
-    {{ form_widget(fiddleForm.templates) }}
+    {% for template in fiddleForm.templates %}
+        {{ form_widget(template) }}
+    {% endfor %}
 </div>
 
 {# Add template button #}

@@ -29,7 +29,12 @@ class FiddleTemplate
      * @ORM\Column(name="filename", type="string", length=64)
      * @ORM\Id
      * @Assert\NotBlank()
-     * @Assert\Regex("/^[A-Za-z0-9-_]{1,16}\.twig$/")
+     * @Assert\Length(min = 1, max = 21)
+     * @Assert\Regex("/\.[tT][wW][iI][gG]$/", message = "Your template name must end by .twig.")
+     * @Assert\Regex(
+     *      "/^[A-Za-z0-9-_]+(\.[tT][wW][iI][gG])?$/",
+     *      message = "Your template name must be composed of alphanumeric, _ and - characters."
+     * )
      */
     protected $filename = 'main.twig';
 

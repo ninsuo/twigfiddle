@@ -20,7 +20,7 @@ fiddle:
     compiled_dir: php
 
 templates:
-    validation: ^[A-Za-z0-9-_]{1,16}\.twig$
+    validation: ^[A-Za-z0-9-_]{1,16}\.[tT][wW][iI][gG]$
 
 twig_sources:
     directory: %root_dir%/twig/uncompressed

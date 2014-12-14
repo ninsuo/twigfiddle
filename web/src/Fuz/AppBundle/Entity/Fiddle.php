@@ -70,6 +70,7 @@ class Fiddle
      * fiddle.max_templates
      *
      * @ORM\OneToMany(targetEntity="FiddleTemplate", mappedBy="fiddle")
+     * @ORM\OrderBy({"isMain" = "DESC"})
      * @Assert\Count(min = 1, minMessage = "You need at least 1 template.")
      * @Assert\Count(max = 10, maxMessage = "You can't create more than 15 templates.")
      * @Assert\Valid()
@@ -421,19 +422,6 @@ class Fiddle
     public function getVisitsCount()
     {
         return $this->visitsCount;
-    }
-
-    /**
-     * @ORM\PostLoad
-     */
-    public function onPostLoad()
-    {
-        $templates = $this->getTemplates()->toArray();
-        usort($templates, function($a, $b)
-        {
-            return $a->isMain() ? -1 : 1;
-        });
-        $this->templates = new ArrayCollection($templates);
     }
 
     /**

@@ -13,10 +13,10 @@ class FiddleTemplateType extends AbstractType
     {
         $builder
            ->add('filename', 'text', array(
-                   'required' => false,
+                   'required' => true,
            ))
            ->add('content', 'textarea', array(
-                   'required' => false,
+                   'required' => true,
            ))
            ->add('isMain', 'checkbox', array(
                    'required' => false,

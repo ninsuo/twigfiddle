@@ -6,45 +6,43 @@
 {% block FiddleTemplateType_widget %}
 {% spaceless %}
 <div id="row-{{ form.content.vars.id }}" class="template" data-id="{{ form.content.vars.id }}">
-    <div class="row">
-        <div class="col-md-8 col-sm-8 col-xs-8">
-            <div class="form-group">
-                <div class="input-group">
-                    <div class="input-group-addon">File</div>
-                    {{ form_widget(form.filename) }}
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-8 col-sm-8 col-xs-8">
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon">File</div>
+                        {{ form_widget(form.filename) }}
+                    </div>
+                    {% if form.filename.vars.errors|length > 0 %}
+                        {% for error in form.filename.vars.errors %}
+                            <div class="control-label text-danger">{{ error.message }}</div>
+                        {% endfor %}
+                    {% endif %}
                 </div>
-                {% if form.filename.vars.errors|length > 0 %}
-                    {% for error in form.filename.vars.errors %}
-                        <div class="control-label text-danger">{{ error.message }}</div>
-                    {% endfor %}
-                {% endif %}
             </div>
-        </div>
-        <div class="col-md-3 col-sm-3  col-xs-3">
-            <div class="checkbox">
-                <label>
-                    {{
-                        form_widget(form.isMain, {
-                            'attr': {
-                                'class': 'main-template',
-                                'data-id': form.content.vars.id
-                            }
-                        })
-                    }}
-                    Main template
-                </label>
-          </div>
-        </div>
-        <div class="col-md-1 col-sm-1  col-xs-1">
-            <div class="checkbox form-group">
-                <button class="btn btn-default btn-sm delete-template" data-id="{{ form.content.vars.id }}" type="button">
+            <div class="col-md-3 col-sm-3  col-xs-3">
+               <button class="btn {% if form.isMain.vars.data %}btn-primary{% else %}btn-default{% endif %} btn-sm btn-twigfiddle main-template" data-id="{{ form.content.vars.id }}" type="button" {% if form.isMain.vars.data %}disabled{% endif %}>
+                   <span class="glyphicon glyphicon glyphicon-trash"></span> Set as main template
+               </button>
+            </div>
+            <div class="col-md-1 col-sm-1  col-xs-1">
+                <button class="btn btn-default btn-sm btn-twigfiddle delete-template hide" data-id="{{ form.content.vars.id }}" type="button">
                     <span class="glyphicon glyphicon glyphicon-trash"></span>
                 </button>
-          </div>
+            </div>
         </div>
+        <div class="hide">
+            {{ form_widget(form.isMain) }}{# {{ dump(form.isMain.vars.data) }} #}
+        </div>
+         {{
+            form_widget(form.content, {
+                'attr': {
+                    'class': 'codemirror-template',
+                },
+            })
+         }}
     </div>
-    {{ form_widget(form.content) }}
-    <div class="clear">&nbsp;</div>
 </div>
 {% endspaceless %}
 {% endblock %}
