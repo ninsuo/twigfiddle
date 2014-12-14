@@ -424,6 +424,19 @@ class Fiddle
     }
 
     /**
+     * @ORM\PostLoad
+     */
+    public function onPostLoad()
+    {
+        $templates = $this->getTemplates()->toArray();
+        usort($templates, function($a, $b)
+        {
+            return $a->isMain() ? -1 : 1;
+        });
+        $this->templates = new ArrayCollection($templates);
+    }
+
+    /**
      * @ORM\PrePersist
      */
     public function onPrePersist()

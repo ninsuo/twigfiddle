@@ -10,13 +10,17 @@ $(document).ready(function() {
     $('body').on('click', '.add-template', function () {
         var templates = $('#templates');
         var prototype = templates.data('prototype');
-        for (var index = 0; (index < 10 {# fiddle.max_templates #}); index++) {
+        var max_templates = 10; {# fiddle.max_templates #}
+        for (var index = 0; (index < max_templates); index++) {
             var template = $(prototype.replace(/__name__/g, index));
             var container = $('#template-container');
             var id = container.html(template).find('.template').data('id');
             container.empty();
             if ($('#row-' + id).length === 0) {
                 template.find(".text-danger").remove().end().appendTo(templates);
+                if ($('.template').length === max_templates) {
+                    $('#add-template').addClass('hide');
+                }
                 break ;
             }
         }
@@ -26,6 +30,7 @@ $(document).ready(function() {
     $('body').on('click', '.delete-template', function () {
        var id = $(this).data('id');
        $('#row-' + id).remove();
+       $('#add-template').removeClass('hide');
     });
 
     {# used in FuzAppBundle:Fiddle:templates-theme.html.twig #}
