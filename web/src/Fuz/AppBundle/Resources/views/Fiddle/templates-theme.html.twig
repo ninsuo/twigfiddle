@@ -1,39 +1,50 @@
 {# FuzAppBundle:Fiddle:templates-theme.html.twig #}
 
-{# We need to define the required layout in a theme because we need a field prototype #}
-
 {% block FiddleTemplateType_label %}{% endblock %}
 {% block FiddleTemplateType_errors %}{% endblock %}
 
 {% block FiddleTemplateType_widget %}
 {% spaceless %}
-    <tr id="row-{{ form.content.vars.id }}" class="template" data-id="{{ form.content.vars.id }}">
-        <td>
-            <div>{{ form_widget(form.filename) }}</div>
-            {% if form.filename.vars.errors|length > 0 %}
-                {% for error in form.filename.vars.errors %}
-                    <div class="control-label text-danger">{{ error.message }}</div>
-                {% endfor %}
-            {% endif %}
-        </td>
-        <td>
-            <div>
-                {{
-                    form_widget(form.isMain, {
-                        'attr': {
-                            'class': 'main-template',
-                            'data-id': form.content.vars.id
-                        }
-                    })
-                }}
-                {{ form_widget(form.content) }}
+<div id="row-{{ form.content.vars.id }}" class="template" data-id="{{ form.content.vars.id }}">
+    <div class="row">
+        <div class="col-md-8 col-sm-8 col-xs-8">
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon">File</div>
+                    {{ form_widget(form.filename) }}
+                </div>
+                {% if form.filename.vars.errors|length > 0 %}
+                    {% for error in form.filename.vars.errors %}
+                        <div class="control-label text-danger">{{ error.message }}</div>
+                    {% endfor %}
+                {% endif %}
             </div>
-        </td>
-        <td class="text-center">
-            <button class="btn btn-default btn-sm delete-template" data-id="{{ form.content.vars.id }}" type="button">
-                <span class="glyphicon glyphicon glyphicon-trash"></span>
-            </button>
-        </td>
-    </tr>
+        </div>
+        <div class="col-md-3 col-sm-3  col-xs-3">
+            <div class="checkbox">
+                <label>
+                    {{
+                        form_widget(form.isMain, {
+                            'attr': {
+                                'class': 'main-template',
+                                'data-id': form.content.vars.id
+                            }
+                        })
+                    }}
+                    Main template
+                </label>
+          </div>
+        </div>
+        <div class="col-md-1 col-sm-1  col-xs-1">
+            <div class="checkbox form-group">
+                <button class="btn btn-default btn-sm delete-template" data-id="{{ form.content.vars.id }}" type="button">
+                    <span class="glyphicon glyphicon glyphicon-trash"></span>
+                </button>
+          </div>
+        </div>
+    </div>
+    {{ form_widget(form.content) }}
+    <div class="clear">&nbsp;</div>
+</div>
 {% endspaceless %}
 {% endblock %}

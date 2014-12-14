@@ -1,12 +1,5 @@
 {# FuzAppBundle::fields.html.twig #}
 
-{#
-Twigfiddle's theme
-
-Do not use this theme outside Twigfiddle
-Use BraincraftedBootstrapBundle ( http://bootstrap.braincrafted.com/ ) instead.
-#}
-
 {% block form_row -%}
     <div class="form-group {% if errors|length > 0 %}has-error{% endif %}">
         {{- form_label(form) -}}
@@ -48,6 +41,9 @@ Use BraincraftedBootstrapBundle ( http://bootstrap.braincrafted.com/ ) instead.
     <input class="form-control" type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
 {%- endblock form_widget_simple %}
 
-{% block checkbox_widget -%}
-    <input class="checkbox-inline {% if attr.class|default(null) != null %}{{ attr.class }}{% set attr = attr|merge({'class': false}) %}{% endif %}" type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
-{%- endblock checkbox_widget %}
+{% block textarea_widget -%}
+    {% set orig = attr %}
+    {% set attr = attr|merge({'rows':15})|merge(orig) %}
+    <textarea class="form-control {% if attr.class|default(null) != null %}{{ attr.class }}{% set attr = attr|merge({'class': false}) %}{% endif %}" {{ block('widget_attributes') }}>{{ value }}</textarea>
+{%- endblock textarea_widget %}
+

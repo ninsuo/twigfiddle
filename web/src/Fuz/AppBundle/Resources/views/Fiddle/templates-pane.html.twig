@@ -2,27 +2,14 @@
 
 {% form_theme fiddleForm.templates 'FuzAppBundle:Fiddle:templates-theme.html.twig' %}
 
-{{ include('FuzAppBundle:Fiddle:templates-modal.html.twig') }}
-
-<div class="row">
-    <div class="col-md-8 col-sm-8 col-xs-8">
-        <div class="form-group">
-            <div class="input-group">
-                <div class="input-group-addon">File</div>
-                <select id="template-browser" class="form-control input-sm">
-                    {% for template in fiddleForm.templates %}
-                        <option data-id="{{ template.content.vars.id }}">{{ template.vars.value.filename }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4 col-sm-4  col-xs-4">
-        <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#templates-modal">
-            <span class="glyphicon glyphicon glyphicon-plus"></span> Manage templates
-        </button>
-    </div>
+<div id="templates" data-prototype="{{ form_widget(fiddleForm.templates.vars.prototype)|e('html_attr') }}">
+    {{ form_widget(fiddleForm.templates) }}
 </div>
 
-<textarea id="template-editor" class="form-control" rows="15" placeholder="Your twig code here"></textarea>
-
+{# Add template button #}
+<div align="right" id="add-template">
+    <button class="btn btn-default btn-sm add-template" type="button">
+        <span class="glyphicon glyphicon glyphicon-plus"></span>
+        <span>Add a template</span>
+    </button>
+</div>
