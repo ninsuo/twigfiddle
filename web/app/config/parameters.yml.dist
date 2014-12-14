@@ -30,3 +30,4 @@ parameters:
 
     twigfiddle_url: http://twigfiddle.com
     twigfiddle_process_root_dir: %kernel.root_dir%/../../cli
+    twigfiddle_process_timeout: 5

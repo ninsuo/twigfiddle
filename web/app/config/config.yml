@@ -86,6 +86,5 @@ fuz_app:
         container_file_paths:
             - %twigfiddle_process_root_dir%/config/parameters.%kernel.environment%.yml
             - %twigfiddle_process_root_dir%/config/services.yml
-        command: /usr/bin/php %twigfiddle_process_root_dir%/run.php twigfiddle:run <env_id>
-        max_exec_time: 5
+        command: %twigfiddle_process_root_dir%/timeout.sh %twigfiddle_process_timeout% /usr/bin/php %twigfiddle_process_root_dir%/run.php twigfiddle:run <env_id>
         apc_cache_key: twigfiddle.process
