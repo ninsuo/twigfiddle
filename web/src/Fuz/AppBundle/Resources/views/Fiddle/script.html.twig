@@ -28,6 +28,7 @@ $(document).ready(function() {
             }
         }
         $('.delete-template').removeClass('hide');
+        $('.main-template').removeClass('hide');
     });
 
     {#
@@ -48,10 +49,12 @@ $(document).ready(function() {
        $('#add-template').removeClass('hide');
        if ($('.template').length === 1) {
            $('.delete-template').addClass('hide');
+           $('.main-template').addClass('hide');
        }
     });
     if ($('.template').length > 1) {
         $('.delete-template').removeClass('hide');
+        $('.main-template').removeClass('hide');
     }
 
     {#
