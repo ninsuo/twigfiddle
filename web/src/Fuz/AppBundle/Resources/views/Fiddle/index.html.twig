@@ -8,16 +8,16 @@
 {% block header_left %}
 
     {# Twig version #}
-    <div class="form-group {% if fiddleForm.twigVersion.vars.errors|length > 0 %}has-error{% endif %}">
-        {{ form_widget(fiddleForm.twigVersion) }}
-        {{ form_errors(fiddleForm.twigVersion) }}
+    <div class="form-group {% if form.twigVersion.vars.errors|length > 0 %}has-error{% endif %}">
+        {{ form_widget(form.twigVersion) }}
+        {{ form_errors(form.twigVersion) }}
     </div>
 
 {% endblock %}
 
 {% block content %}
 
-{{ macros.form_global_errors(fiddleForm) }}
+{{ macros.form_global_errors(form) }}
 
 {# Revision browser, title, tags #}
 <div class="row">
@@ -36,7 +36,7 @@
 {# Panes #}
 <div class="row" id="content">
 
-    {# Left Side #}
+    {# Start Left Side #}
     <div class="col-md-6">
 
         {# Templates Pane #}
@@ -49,26 +49,14 @@
 
     <div class="clearfix hidden-md hidden-lg">&nbsp;</div>
 
-    <!-- Start Right Col -->
+    {# Start Right Side #}
     <div class="col-md-6">
 
-        <!-- Start Context Bloc -->
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <div class="input-group">
-                        <div class="input-group-addon">Format</div>
-                        <select class="form-control input-sm">
-                            <option>YAML</option>
-                            <option>...</option>
-                        </select>
-                    </div>
-                </div>
-                <textarea class="form-control" rows="15" placeholder="CONTEXT"></textarea>
-            </div>
+        <div id="context-pane">
+            {{ include('FuzAppBundle:Fiddle:context-pane.html.twig') }}
         </div>
-        <!-- End Context Bloc -->
 
+        {#
         <div class="clearfix">&nbsp;</div>
 
         <!-- Start Result Bloc -->
@@ -100,19 +88,23 @@
             </div>
         </div>
         <!-- End Result Bloc -->
+        #}
 
     </div>
-    <!-- End Right Col -->
-
+    {# End Right Side #}
 
     {# CSRF token #}
-    {{ form_rest(fiddleForm) }}
+    {{ form_rest(form) }}
 
 {% endblock %}
 
 {% block extra_js %}
 <script type="text/javascript" src="{{ asset('bundles/fuzapp/codemirror-4.8/lib/codemirror.js') }}"></script>
 <script type="text/javascript" src="{{ asset('bundles/fuzapp/codemirror-4.8/mode/jinja2/jinja2.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fuzapp/codemirror-4.8/mode/yaml/yaml.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fuzapp/codemirror-4.8/mode/xml/xml.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fuzapp/codemirror-4.8/mode/javascript/javascript.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fuzapp/codemirror-4.8/mode/properties/properties.js') }}"></script>
 {% endblock %}
 
 {% block script %}

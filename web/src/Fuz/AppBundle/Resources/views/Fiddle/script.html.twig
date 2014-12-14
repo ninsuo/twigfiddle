@@ -21,6 +21,7 @@ $(document).ready(function() {
             container.empty();
             if ($('#row-' + id).length === 0) {
                 template.find(".text-danger").remove().end().appendTo(templates);
+                initCodeMirrorForTemplate($('#row-' + id).find('textarea').attr('id'));
                 if ($('.template').length === max_templates) {
                     $('#add-template').addClass('hide');
                 }
@@ -52,6 +53,7 @@ $(document).ready(function() {
            $('.main-template').addClass('hide');
        }
     });
+
     if ($('.template').length > 1) {
         $('.delete-template').removeClass('hide');
         $('.main-template').removeClass('hide');
@@ -61,7 +63,7 @@ $(document).ready(function() {
      #  Set as main template button
      #  Used in FuzAppBundle:Fiddle:templates-theme.html.twig
      #}
-    $('body').on('click', '.main-template', function (e) {
+    $('body').on('click', '.main-template', function () {
         var ticked = $(this).data('id');
         $('.template').each(function() {
             var that = $(this);
@@ -76,35 +78,98 @@ $(document).ready(function() {
     });
 
     {#
-     #  Template syntax highlighting loader
+     #  Template Syntax Highlighting Loader
      #  Used in FuzAppBundle:Fiddle:templates-theme.html.twig
      #}
-     var initCodeMirrorForTemplate = function(id, mode) {
+    var initCodeMirrorForTemplate = function (id) {
         return CodeMirror.fromTextArea(document.getElementById(id), {
-           lineNumbers: true,
-           mode: {
-               name: "jinja2",
-               htmlMode: true
-           },
-           indentUnit: 4,
-           indentWithTabs: false,
-           enterMode: "keep",
-           tabMode: "shift",
-           smartIndent: true,
-           matchBrackets: true,
-           fixedGutter: true,
-           extraKeys: {
-              Tab: function(cm) {
-                 var spaces = Array(cm.getOption("indentUnit") + 1).join(" ");
-                 cm.replaceSelection(spaces, 'end');
-              }
-           }
-       });
-     };
+            lineNumbers: true,
+            mode: {
+                name: "jinja2",
+                htmlMode: true
+            },
+            indentUnit: 4,
+            indentWithTabs: false,
+            enterMode: "keep",
+            tabMode: "shift",
+            smartIndent: true,
+            matchBrackets: true,
+            fixedGutter: true,
+            extraKeys: {
+                Tab: function (cm) {
+                    var spaces = Array(cm.getOption("indentUnit") + 1).join(" ");
+                    cm.replaceSelection(spaces, 'end');
+                }
+            }
+        });
+    };
+
      $('.codemirror-template').each(function() {
          var that = $(this);
-         initCodeMirrorForTemplate(that.attr('id'), that.data('mode'));
+         initCodeMirrorForTemplate(that.attr('id'));
      });
+
+    {#
+     #  Context Syntax Highlighting Loader
+     #  Used in FuzAppBundle:Fiddle:context-pane.html.twig
+     #}
+     var convertContextModeToCodeMirrorMode = function(id) {
+        var selectedMode = $('#' + $('#' + id).data('format-id')).val();
+        var codeMirrorMode = null;
+        switch (selectedMode) {
+            case 'YAML':
+                codeMirrorMode = 'yaml';
+                break;
+            case 'XML':
+                codeMirrorMode = 'xml';
+                break;
+            case 'JSON':
+                codeMirrorMode = 'javascript';
+                break;
+            case 'INI':
+                codeMirrorMode = 'properties';
+                break;
+            default:
+                codeMirrorMode = 'text';
+                break;
+        }
+        return codeMirrorMode;
+     };
+
+    var initCodeMirrorForContext = function (id) {
+        return CodeMirror.fromTextArea(document.getElementById(id), {
+            lineNumbers: true,
+            mode: {
+                name: convertContextModeToCodeMirrorMode(id)
+            },
+            indentUnit: 4,
+            indentWithTabs: false,
+            enterMode: "keep",
+            tabMode: "shift",
+            smartIndent: true,
+            matchBrackets: true,
+            fixedGutter: true,
+            extraKeys: {
+                Tab: function (cm) {
+                    var spaces = Array(cm.getOption("indentUnit") + 1).join(" ");
+                    cm.replaceSelection(spaces, 'end');
+                }
+            }
+        });
+    };
+
+    var contextEditor = null;
+    $('.codemirror-context').each(function() {
+        contextEditor = initCodeMirrorForContext($(this).attr('id'));
+    });
+
+    {#
+     #  Context Syntax Highlighting Switcher
+     #  Used in FuzAppBundle:Fiddle:context-pane.html.twig
+     #}
+    $('body').on('change', '.switcher-context-format', function () {
+        contextEditor.setOption("mode", convertContextModeToCodeMirrorMode($(this).data('content-id')));
+    });
 
 });
 

@@ -1,9 +1,9 @@
 {# FuzAppBundle:Fiddle:templates-pane.html.twig #}
 
-{% form_theme fiddleForm.templates 'FuzAppBundle:Fiddle:templates-theme.html.twig' %}
+{% form_theme form.templates 'FuzAppBundle:Fiddle:templates-theme.html.twig' %}
 
-<div id="templates" data-prototype="{{ form_widget(fiddleForm.templates.vars.prototype)|e('html_attr') }}">
-    {% for template in fiddleForm.templates %}
+<div id="templates" data-prototype="{{ form_widget(form.templates.vars.prototype)|e('html_attr') }}">
+    {% for template in form.templates %}
         {{ form_widget(template) }}
     {% endfor %}
 </div>

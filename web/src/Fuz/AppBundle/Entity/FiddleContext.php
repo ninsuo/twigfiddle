@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 class FiddleContext
 {
 
-    const FORMAT_YAML = 'YML';
+    const FORMAT_YAML = 'YAML';
     const FORMAT_XML = 'XML';
     const FORMAT_JSON = 'JSON';
     const FORMAT_INI = 'INI';
@@ -33,10 +33,7 @@ class FiddleContext
      * @var string
      *
      * @ORM\Column(name="format", type="string", length=8)
-     * @Assert\Choice(
-     *      choices = {"YML", "XML", "JSON", "INI"},
-     *      message = "Choose a supported context format."
-     * )
+     * @Assert\NotBlank
      */
     protected $format = self::FORMAT_YAML;
 
@@ -122,18 +119,23 @@ class FiddleContext
      */
     public function validateFormat(ExecutionContextInterface $context)
     {
-        if (!in_array($this->format,
-              array (
-                      self::FORMAT_YAML,
-                      self::FORMAT_XML,
-                      self::FORMAT_JSON,
-                      self::FORMAT_INI,
-           )))
+        if (!in_array($this->format, $this->getSupportedFormats()))
         {
-            $context->buildViolation('You should choose a valid visibility.')
-               ->atPath('visibility')
-               ->addViolation();
+            $context->buildViolation('Choose a supported context format.')
+               ->atPath('format')
+               ->addViolation()
+            ;
         }
+    }
+
+    public static function getSupportedFormats()
+    {
+        return array (
+                self::FORMAT_YAML,
+                self::FORMAT_XML,
+                self::FORMAT_JSON,
+                self::FORMAT_INI,
+        );
     }
 
 }

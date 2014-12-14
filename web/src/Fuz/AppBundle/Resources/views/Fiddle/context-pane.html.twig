@@ -1,0 +1,27 @@
+{# FuzAppBundle:Fiddle:context-pane.html.twig #}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-addon">Format</div>
+                {{
+                    form_widget(form.context.format, {
+                        'attr': {
+                            'class': 'switcher-context-format input-sm',
+                            'data-content-id': form.context.content.vars.id,
+                        }
+                    })
+                }}
+            </div>
+        </div>
+        {{
+            form_widget(form.context.content, {
+                'attr': {
+                    'class': 'codemirror-context',
+                    'data-format-id': form.context.format.vars.id,
+                }
+            })
+        }}
+    </div>
+</div>

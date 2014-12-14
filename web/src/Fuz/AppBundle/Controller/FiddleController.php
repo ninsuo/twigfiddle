@@ -45,8 +45,8 @@ class FiddleController extends BaseController
 
 
         return array (
-                'fiddleForm' => $fiddleForm->createView(),
-                'fiddleData' => $fiddleData,
+                'form' => $fiddleForm->createView(),
+                'data' => $fiddleData,
                 'hash' => $hash,
                 'revision' => $revision,
         );
@@ -80,8 +80,8 @@ class FiddleController extends BaseController
         $fiddleForm = $this->createForm('FiddleType', $fiddleData);
 
         return array (
-                'fiddleForm' => $fiddleForm->createView(),
-                'fiddleData' => $fiddleData,
+                'form' => $fiddleForm->createView(),
+                'data' => $fiddleData,
                 'hash' => $hash,
                 'revision' => $revision,
         );

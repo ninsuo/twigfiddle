@@ -23,7 +23,7 @@ class FiddleType extends AbstractType
     {
         $builder
            ->add('twigVersion', 'choice', array(
-                   'choices' => array_intersect($this->twigVersions, $this->twigVersions),
+                   'choices' => array_combine($this->twigVersions, $this->twigVersions),
                    'required' => true,
            ))
            ->add('templates', 'collection', array(
@@ -32,6 +32,10 @@ class FiddleType extends AbstractType
                    'allow_delete' => true,
                    'prototype' => true,
                    'error_bubbling' => false,
+                   'required' => false,
+           ))
+           ->add('context', new FiddleContextType(), array(
+                   'required' => false,
            ))
         ;
     }
