@@ -1,6 +1,10 @@
 {# FuzAppBundle:Fiddle:index.html.twig #}
 {% extends 'FuzAppBundle::base.html.twig' %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{{ asset('bundles/fuzapp/codemirror-4.8/lib/codemirror.css') }}" />
+{% endblock %}
+
 {% block header_left %}
 
     {# Twig version #}
@@ -26,6 +30,8 @@
     <div class="col-md-4 title"><strong>TITLE</strong> : This is my title</div>
     <div class="col-md-5 tags"><strong>TAGS</strong> : word, word, word, word </div>
 </div>
+
+<div class="clear">&nbsp</div>
 
 {# Panes #}
 <div class="row" id="content">
@@ -102,6 +108,11 @@
     {# CSRF token #}
     {{ form_rest(fiddleForm) }}
 
+{% endblock %}
+
+{% block extra_js %}
+<script type="text/javascript" src="{{ asset('bundles/fuzapp/codemirror-4.8/lib/codemirror.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fuzapp/codemirror-4.8/mode/jinja2/jinja2.js') }}"></script>
 {% endblock %}
 
 {% block script %}

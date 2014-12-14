@@ -7,6 +7,19 @@
 $(document).ready(function() {
 
     {# used in FuzAppBundle:Fiddle:templates-pane.html.twig #}
+            {# $('#template-browser').change(function (e) {
+
+    }); #}
+
+    {# used in FuzAppBundle:Fiddle:templates-pane.html.twig #}
+
+    {# $('#template-editor').
+        todo: load codemirror here
+    });#}
+
+
+
+    {# used in FuzAppBundle:Fiddle:templates-modal.html.twig #}
     $('body').on('click', '.add-template', function () {
         var templates = $('#templates');
         var prototype = templates.data('prototype');

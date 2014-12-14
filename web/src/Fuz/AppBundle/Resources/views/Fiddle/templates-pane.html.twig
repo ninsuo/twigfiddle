@@ -9,9 +9,10 @@
         <div class="form-group">
             <div class="input-group">
                 <div class="input-group-addon">File</div>
-                <select class="form-control input-sm">
-                    <option>Main TWIG</option>
-                    <option>...</option>
+                <select id="template-browser" class="form-control input-sm">
+                    {% for template in fiddleForm.templates %}
+                        <option data-id="{{ template.content.vars.id }}">{{ template.vars.value.filename }}</option>
+                    {% endfor %}
                 </select>
             </div>
         </div>
@@ -23,5 +24,5 @@
     </div>
 </div>
 
-<textarea class="form-control" rows="35" placeholder="TWIG"></textarea>
+<textarea id="template-editor" class="form-control" rows="15" placeholder="Your twig code here"></textarea>
 
