@@ -4,18 +4,12 @@
 
     {% if error is defined and error %}
         <div class="row" id="login">
-            <div class="col-md-12 alert-danger text-center">
+            <div class="col-md-12 alert alert-danger text-center">
                 <span class="error">{{ error }}</span>
             </div>
         </div>
     {% endif %}
 
     {{ include('FuzAppBundle:Login:content.html.twig') }}
-
-    {#
-        {% for owner in hwi_oauth_resource_owners() %}
-        <a href="{{ hwi_oauth_login_url(owner) }}">{{ owner | trans({}, 'HWIOAuthBundle') }}</a> <br />
-        {% endfor %}
-    #}
 
 {% endblock hwi_oauth_content %}

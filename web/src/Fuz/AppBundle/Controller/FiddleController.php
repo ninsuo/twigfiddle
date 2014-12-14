@@ -43,6 +43,7 @@ class FiddleController extends BaseController
             // ...
         }
 
+
         return array (
                 'fiddleForm' => $fiddleForm->createView(),
                 'fiddleData' => $fiddleData,

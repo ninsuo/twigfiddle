@@ -122,7 +122,7 @@ class FiddleContext
      */
     public function validateFormat(ExecutionContextInterface $context)
     {
-        if (!in_array($this->visibility,
+        if (!in_array($this->format,
               array (
                       self::FORMAT_YAML,
                       self::FORMAT_XML,

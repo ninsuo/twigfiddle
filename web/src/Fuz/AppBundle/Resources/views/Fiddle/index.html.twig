@@ -1,12 +1,10 @@
 {# FuzAppBundle:Fiddle:index.html.twig #}
 {% extends 'FuzAppBundle::base.html.twig' %}
 
-{% form_theme fiddleForm 'FuzAppBundle:Fiddle:theme.html.twig' %}
-
 {% block header_left %}
 
     {# Twig version #}
-    <div class="form-group has-error has-feedback">
+    <div class="form-group {% if fiddleForm.twigVersion.vars.errors|length > 0 %}has-error{% endif %}">
         {{ form_widget(fiddleForm.twigVersion) }}
         {{ form_errors(fiddleForm.twigVersion) }}
     </div>
@@ -15,8 +13,10 @@
 
 {% block content %}
 
-<!-- Start infos -->
-<div class="row" id="config">
+    {{ macros.form_global_errors(fiddleForm) }}
+
+{# Revision browser, title, tags #}
+<div class="row">
     <div class="col-md-3">
         <select class="form-control input-sm">
             <option>Revision 2014-03-01 20.53</option>
@@ -26,37 +26,20 @@
     <div class="col-md-4 title"><strong>TITLE</strong> : This is my title</div>
     <div class="col-md-5 tags"><strong>TAGS</strong> : word, word, word, word </div>
 </div>
-<!-- End Infos -->
 
-<!-- Start Content -->
+{# Panes #}
 <div class="row" id="content">
 
-    <!-- Start Left Col -->
+    {# Left Side #}
     <div class="col-md-6">
 
-        <!-- Start Twig Bloc -->
-        <div class="row">
-            <div class="col-md-8 col-sm-8 col-xs-8">
-                <div class="form-group">
-                    <div class="input-group">
-                        <div class="input-group-addon">File</div>
-                        <select class="form-control input-sm">
-                            <option>Main TWIG</option>
-                            <option>...</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-4  col-xs-4">
-                <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon glyphicon-plus"></span></button>
-                <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon glyphicon-trash"></span></button>
-            </div>
+        {# Templates Pane #}
+        <div id="templates-pane">
+            {{ include('FuzAppBundle:Fiddle:templates-pane.html.twig') }}
         </div>
-        <textarea class="form-control" rows="35" placeholder="TWIG"></textarea>
-        <!-- End Twig Bloc -->
 
     </div>
-    <!-- End Left Col -->
+    {# End Left Side #}
 
     <div class="clearfix hidden-md hidden-lg">&nbsp;</div>
 
@@ -115,4 +98,12 @@
     </div>
     <!-- End Right Col -->
 
+
+    {# CSRF token #}
+    {{ form_rest(fiddleForm) }}
+
+{% endblock %}
+
+{% block script %}
+    {{ include('FuzAppBundle:Fiddle:script.html.twig') }}
 {% endblock %}

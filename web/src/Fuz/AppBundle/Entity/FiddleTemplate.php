@@ -29,6 +29,7 @@ class FiddleTemplate
      * @ORM\Column(name="filename", type="string", length=64)
      * @ORM\Id
      * @Assert\NotBlank()
+     * @Assert\Regex("/^[A-Za-z0-9-_]{1,16}\.twig$/")
      */
     protected $filename = 'main.twig';
 
@@ -44,6 +45,7 @@ class FiddleTemplate
      * @var boolean
      *
      * @ORM\Column(name="is_main", type="boolean")
+     * @Assert\Type(type="bool")
      */
     protected $isMain = true;
 

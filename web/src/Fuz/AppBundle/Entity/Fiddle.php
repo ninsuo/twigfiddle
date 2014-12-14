@@ -59,6 +59,8 @@ class Fiddle
      * @var FiddleContext
      *
      * @ORM\OneToOne(targetEntity="FiddleContext", mappedBy="fiddle")
+     * @Assert\Type(type="Fuz\AppBundle\Entity\FiddleContext")
+     * @Assert\Valid()
      */
     protected $context;
 
@@ -67,7 +69,8 @@ class Fiddle
      *
      * @ORM\OneToMany(targetEntity="FiddleTemplate", mappedBy="fiddle")
      * @Assert\Count(min = 1, minMessage = "You need at least 1 template.")
-     * @Assert\Count(max = 20, maxMessage = "You can't write more than 20 templates.")
+     * @Assert\Count(max = 15, maxMessage = "You can't create more than 15 templates.")
+     * @Assert\Valid()
      */
     protected $templates;
 
@@ -127,6 +130,7 @@ class Fiddle
     {
         $this->context = new FiddleContext();
         $this->templates = new ArrayCollection();
+        $this->templates->add(new FiddleTemplate());
     }
 
     /**
@@ -422,6 +426,10 @@ class Fiddle
     {
         $this->setCreationTm(new \DateTime());
         $this->setUpdateTm(new \DateTime());
+        foreach ($this->templates as $template)
+        {
+            $template->setFiddle($this);
+        }
     }
 
     /**
@@ -431,6 +439,10 @@ class Fiddle
     {
         $this->setUpdateTm(new \DateTime());
         $this->setVisitsCount($this->visitsCount + 1);
+        foreach ($this->templates as $template)
+        {
+            $template->setFiddle($this);
+        }
     }
 
     /**

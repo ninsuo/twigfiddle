@@ -1,7 +1,6 @@
 {# FuzAppBundle::macros.html.twig #}
 
 {% macro modal(id, title, body, ok_endpoint, options) %}
-
     <div class="modal fade" id="{{ id }}" tabindex="-1" role="dialog" aria-labelledby="{{ id }}" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -13,7 +12,7 @@
                     {{ body }}
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     {% if ok_endpoint %}
                         <button
                             type="button"
@@ -26,5 +25,25 @@
             </div>
         </div>
     </div>
+{% endmacro %}
 
+{% macro form_global_errors(form) %}
+    {% if form.vars.errors|length > 0 %}
+        <div class="row" id="login">
+            <div class="col-md-12 alert alert-danger text-center">
+                {% for error in form.vars.errors %}
+                    <div class="error">{{ error.message }}</div>
+                {% endfor %}
+            </div>
+            <div>&nbsp;</div>
+        </div>
+    {% endif %}
+{% endmacro %}
+
+{% macro form_specific_errors(field) %}
+    {% if field.vars.errors|length > 0 %}
+        {%- for error in field.vars.errors -%}
+            <div class="control-label text-danger">{{ error.message }}</div>
+        {%- endfor -%}
+    {% endif %}
 {% endmacro %}

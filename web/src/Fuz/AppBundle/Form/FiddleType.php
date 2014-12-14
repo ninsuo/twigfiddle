@@ -26,8 +26,14 @@ class FiddleType extends AbstractType
                    'choices' => array_intersect($this->twigVersions, $this->twigVersions),
                    'required' => true,
            ))
+           ->add('templates', 'collection', array(
+                   'type' => new FiddleTemplateType(),
+                   'allow_add' => true,
+                   'allow_delete' => true,
+                   'prototype' => true,
+                   'error_bubbling' => false,
+           ))
         ;
-
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

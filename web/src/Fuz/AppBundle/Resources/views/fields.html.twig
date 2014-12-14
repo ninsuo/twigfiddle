@@ -1,4 +1,11 @@
-{# FuzAppBundle:Fiddle:theme.html.twig #}
+{# FuzAppBundle::fields.html.twig #}
+
+{#
+Twigfiddle's theme
+
+Do not use this theme outside Twigfiddle
+Use BraincraftedBootstrapBundle ( http://bootstrap.braincrafted.com/ ) instead.
+#}
 
 {% block form_row -%}
     <div class="form-group {% if errors|length > 0 %}has-error{% endif %}">
@@ -26,7 +33,7 @@
         {% set options = choices -%}
         {{- block('choice_widget_options') -}}
     </select>
-  {%- endblock choice_widget_collapsed %}
+{%- endblock choice_widget_collapsed %}
 
 {% block form_errors -%}
     {% if errors|length > 0 -%}
@@ -35,3 +42,12 @@
         {%- endfor -%}
     {%- endif %}
 {%- endblock form_errors %}
+
+{% block form_widget_simple -%}
+    {% set type = type|default('text') -%}
+    <input class="form-control" type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+{%- endblock form_widget_simple %}
+
+{% block checkbox_widget -%}
+    <input class="checkbox-inline {% if attr.class|default(null) != null %}{{ attr.class }}{% set attr = attr|merge({'class': false}) %}{% endif %}" type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
+{%- endblock checkbox_widget %}
