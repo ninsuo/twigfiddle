@@ -43,11 +43,18 @@ hwi_oauth:
             client_id: %google_client_id%
             client_secret: %google_secret%
             scope: "profile"
+            options:
+                display: page
+                access_type: online
+                approval_prompt: auto
+                login_hint: email address
         facebook:
             type: facebook
             client_id: %facebook_client_id%
             client_secret: %facebook_secret%
             scope: "public_profile"
+            options:
+                display: page
         twitter:
             type: twitter
             client_id: %twitter_client_id%

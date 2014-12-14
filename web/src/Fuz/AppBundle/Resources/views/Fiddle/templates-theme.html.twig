@@ -21,12 +21,12 @@
                     {% endif %}
                 </div>
             </div>
-            <div class="col-md-3 col-sm-3  col-xs-3">
+            <div class="col-md-3 col-sm-3  col-xs-3 text-center">
                <button class="btn {% if form.isMain.vars.data %}btn-primary{% else %}btn-default{% endif %} btn-sm btn-twigfiddle main-template hide" data-id="{{ form.content.vars.id }}" type="button" {% if form.isMain.vars.data %}disabled{% endif %}>
                    <span class="glyphicon glyphicon glyphicon-check"></span> Set as main template
                </button>
             </div>
-            <div class="col-md-1 col-sm-1  col-xs-1">
+            <div class="col-md-1 col-sm-1  col-xs-1 text-right">
                 <button class="btn btn-default btn-sm btn-twigfiddle delete-template hide" data-id="{{ form.content.vars.id }}" type="button">
                     <span class="glyphicon glyphicon glyphicon-trash"></span>
                 </button>

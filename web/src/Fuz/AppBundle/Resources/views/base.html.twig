@@ -20,7 +20,7 @@
     <body>
 
         {# debug #}
-        <form action="{{ path('run_fiddle', {'hash': hash, 'revision': revision}) }}" method="post">
+        <form action="{{ path('run_fiddle', {'hash': hash|default(null), 'revision': revision|default(1)}) }}" method="post">
 
          {# Start Container #}
         <div class="container-fluid">
@@ -38,11 +38,6 @@
                 <div class="col-md-5 col-sm-6 col-xs-12 user-menu text-right">
                     {% block header_right %}
 
-                        {# Logged as Ninsuo #}
-                        {% if is_granted('ROLE_USER') %}
-                            {{ include('FuzAppBundle:Login:logged-as.html.twig') }}
-                        {% endif %}
-
                         {# Samples #}
                         <button type="button" class="btn btn-success"><span class="glyphicon glyphicon glyphicon-cloud hidden-md hidden-sm hidden-xs"></span> Samples</button>
 
@@ -51,7 +46,12 @@
 
                         {# Login / Logout #}
                         {% if is_granted('ROLE_USER') %}
-                            <a href="{{ path('logout') }}" class="btn btn-warning"><span class="glyphicon glyphicon glyphicon-remove-circle hidden-md hidden-sm hidden-xs"></span> Logout</a>
+                            <a href="{{ path('logout') }}" class="btn btn-warning">
+                                <span class="glyphicon glyphicon glyphicon-remove-circle hidden-md hidden-sm hidden-xs"></span>
+                                Logout
+                                <img id="logout-image" src="{{ asset('bundles/fuzapp/img/oauth/' ~ app.user.resourceOwner ~ '-small.png') }}" alt=""/>
+                                {{ app.user.username }}
+                            </a>
                         {% else %}
                             <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#login-modal"><span class="glyphicon glyphicon glyphicon-lock hidden-md hidden-sm hidden-xs"></span> Login</a>
                             {{ include('FuzAppBundle:Login:modal.html.twig') }}
