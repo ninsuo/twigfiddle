@@ -67,9 +67,11 @@ class Fiddle
     /**
      * @var ArrayCollection[FiddleTemplate]
      *
+     * fiddle.max_templates
+     *
      * @ORM\OneToMany(targetEntity="FiddleTemplate", mappedBy="fiddle")
      * @Assert\Count(min = 1, minMessage = "You need at least 1 template.")
-     * @Assert\Count(max = 15, maxMessage = "You can't create more than 15 templates.")
+     * @Assert\Count(max = 10, maxMessage = "You can't create more than 15 templates.")
      * @Assert\Valid()
      */
     protected $templates;
@@ -99,6 +101,8 @@ class Fiddle
 
     /**
      * @var ArrayCollection[UserTag]
+     *
+     * fiddle.max_tags
      *
      * @ORM\OneToMany(targetEntity="FiddleTag", mappedBy="fiddle")
      * @Assert\Count(max = 5, maxMessage = "You can't set more than 5 tags.")

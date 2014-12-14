@@ -12,8 +12,12 @@ class FiddleTemplateType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-           ->add('filename', 'text')
-           ->add('content', 'hidden')
+           ->add('filename', 'text', array(
+                   'required' => false,
+           ))
+           ->add('content', 'hidden', array(
+                   'required' => false,
+           ))
            ->add('isMain', 'checkbox', array(
                    'required' => false,
            ))

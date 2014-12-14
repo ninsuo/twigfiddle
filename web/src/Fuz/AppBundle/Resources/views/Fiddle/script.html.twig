@@ -1,27 +1,35 @@
 {# FuzAppBundle:Fiddle:script.html.twig #}
 
+<div id="template-container" class="hide"></div>
+
 <script type="text/javascript">
 
+$(document).ready(function() {
+
     {# used in FuzAppBundle:Fiddle:templates-pane.html.twig #}
-    $('.add-template').on('click', function () {
+    $('body').on('click', '.add-template', function () {
         var templates = $('#templates');
         var prototype = templates.data('prototype');
-        var count = $('#templates .template').length;
-        var index = count + 1;
-        var template = $(prototype.replace(/__name__/g, index));
-        template.remove(".text-danger");
-        template.find(".text-danger").remove().end().appendTo(templates);
-        templates.append(template);
+        for (var index = 0; (index < 10 {# fiddle.max_templates #}); index++) {
+            var template = $(prototype.replace(/__name__/g, index));
+            var container = $('#template-container');
+            var id = container.html(template).find('.template').data('id');
+            container.empty();
+            if ($('#row-' + id).length === 0) {
+                template.find(".text-danger").remove().end().appendTo(templates);
+                break ;
+            }
+        }
     });
 
     {# used in FuzAppBundle:Fiddle:templates-theme.html.twig #}
-    $('.delete-template').on('click', function () {
+    $('body').on('click', '.delete-template', function () {
        var id = $(this).data('id');
        $('#row-' + id).remove();
     });
 
     {# used in FuzAppBundle:Fiddle:templates-theme.html.twig #}
-    $('.main-template').on('change', function (e) {
+    $('body').on('change', '.main-template', function (e) {
         var ticked = $(this).data('id');
         $('.template').each(function() {
             var that = $(this);
@@ -32,5 +40,7 @@
             }
         });
     });
+
+});
 
 </script>

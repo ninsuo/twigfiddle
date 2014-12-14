@@ -38,11 +38,18 @@
                 <div class="col-md-5 col-sm-6 col-xs-12 user-menu text-right">
                     {% block header_right %}
 
+                        {# Logged as Ninsuo #}
                         {% if is_granted('ROLE_USER') %}
                             {{ include('FuzAppBundle:Login:logged-as.html.twig') }}
                         {% endif %}
+
+                        {# Samples #}
                         <button type="button" class="btn btn-success"><span class="glyphicon glyphicon glyphicon-cloud hidden-md hidden-sm hidden-xs"></span> Samples</button>
+
+                        {# About #}
                         <a  class="btn btn-info" href="{{ path('about') }}"><span class="glyphicon glyphicon glyphicon-info-sign hidden-md hidden-sm hidden-xs"></span> About</a>
+
+                        {# Login / Logout #}
                         {% if is_granted('ROLE_USER') %}
                             <a href="{{ path('logout') }}" class="btn btn-warning"><span class="glyphicon glyphicon glyphicon-remove-circle hidden-md hidden-sm hidden-xs"></span> Logout</a>
                         {% else %}

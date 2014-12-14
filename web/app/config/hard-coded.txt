@@ -1,0 +1,8 @@
+Some parameters are hardcoded by design (such as, not possible to add parameters in validation constraints).
+But for an easier maintenance, a string has been placed close to them.
+
+Purpose of this file is to list them with their default values for easier updates: just grep those strings within the app and you're done.
+
+fiddle.max_templates = 10
+fiddle.max_tags = 5
+
