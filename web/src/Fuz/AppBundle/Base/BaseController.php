@@ -99,7 +99,6 @@ class BaseController extends Controller
             $normalizedErrors['#'] = $globalErrors;
         }
 
-        $this->dump($normalizedErrors);
         return $normalizedErrors;
     }
 
