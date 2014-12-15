@@ -32,7 +32,7 @@ class FiddleTemplate
      * @Assert\Length(min = 1, max = 21)
      * @Assert\Regex("/\.[tT][wW][iI][gG]$/", message = "Your template name must end by .twig.")
      * @Assert\Regex(
-     *      "/^[A-Za-z0-9-_]+(\.[tT][wW][iI][gG])?$/",
+     *      "/^[A-Za-z0-9-_]+(\.)?[A-Za-z0-9-_]*$/",
      *      message = "Your template name must be composed of alphanumeric, _ and - characters."
      * )
      */
