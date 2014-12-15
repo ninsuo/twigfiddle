@@ -34,19 +34,23 @@ class FiddleController extends BaseController
         $repository = $this->getDoctrine()
            ->getRepository('FuzAppBundle:Fiddle');
 
-        $fiddleData = $repository->getFiddle($hash, $revision, $this->getUser());
-        $fiddleForm = $this->createForm('FiddleType', $fiddleData);
-        $fiddleForm->handleRequest($request);
+        $data = $repository->getFiddle($hash, $revision, $this->getUser());
+        $form = $this->createForm('FiddleType', $data);
+        $form->handleRequest($request);
 
-        if ($fiddleForm->isValid())
+        if ($form->isValid())
         {
             // ...
+        }
+        else
+        {
+            $errors = $this->getErrorMessagesAjaxFormat($form);
         }
 
 
         return array (
-                'form' => $fiddleForm->createView(),
-                'data' => $fiddleData,
+                'form' => $form->createView(),
+                'data' => $data,
                 'hash' => $hash,
                 'revision' => $revision,
         );
@@ -76,12 +80,13 @@ class FiddleController extends BaseController
         $repository = $this->getDoctrine()
            ->getRepository('FuzAppBundle:Fiddle');
 
-        $fiddleData = $repository->getFiddle($hash, $revision, $this->getUser());
-        $fiddleForm = $this->createForm('FiddleType', $fiddleData);
+        $data = $repository->getFiddle($hash, $revision, $this->getUser());
+        $form = $this->createForm('FiddleType', $data);
+
 
         return array (
-                'form' => $fiddleForm->createView(),
-                'data' => $fiddleData,
+                'form' => $form->createView(),
+                'data' => $data,
                 'hash' => $hash,
                 'revision' => $revision,
         );
