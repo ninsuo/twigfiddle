@@ -24,7 +24,7 @@ class BaseController extends Controller
      * http://stackoverflow.com/a/17428869/731138
      *
      * @param Form $form
-     * @return type
+     * @return array
      */
     protected function getErrorMessages(Form $form)
     {
@@ -32,7 +32,14 @@ class BaseController extends Controller
 
         foreach ($form->getErrors() as $error)
         {
-            $errors[] = $error->getMessage();
+            if ($form->isRoot())
+            {
+                $errors['#'][] = $error->getMessage();
+            }
+            else
+            {
+                $errors[] = $error->getMessage();
+            }
         }
 
         foreach ($form->all() as $child)
@@ -49,7 +56,9 @@ class BaseController extends Controller
     /**
      * Builds a javascript-friendly list of errors for validating forms using ajax.
      *
-     * In your twig views, use:
+     * Implementation example:
+     *
+     * In your twig views, use for each of your fields:
      *
      * <div id="errors-{{ form.field.vars.id }}">{{ form_errors(form.field) }}</div>
      *
@@ -61,22 +70,55 @@ class BaseController extends Controller
      *       html += '<p class="error">' + error + '</p>';
      *    }
      *    html += '</div>';
-     *    $(id).html(html);
+     *    if (id !== '#') {
+     *      $("#errors-" + id).html(html);
+     *    } else {
+     *      $("#general-errors").html(html);
+     *    }
      * });
      *
      * Note: ids are built following FormDataExtractor::buildId's method pattern.
      *
      * @param Form $form
-     * @param string prefix
      * @return array
      */
-    protected function getErrorMessagesAjaxFormat(Form $form, $prefix = 'errors-')
+    protected function getErrorMessagesAjaxFormat(Form $form)
     {
-        $errors = $this->getErrorMessages($form);
+        $originalErrors = $this->getErrorMessages($form);
 
-        // todo
+        $globalErrors = null;
+        if (array_key_exists('#', $originalErrors))
+        {
+            $globalErrors = $originalErrors['#'];
+            unset($form['#']);
+        }
 
-        $this->dump($errors);
+        $normalizedErrors = $this->normalizeErrorMessagesAjaxFormat($originalErrors, $form->getName());
+        if (!is_null($globalErrors))
+        {
+            $normalizedErrors['#'] = $globalErrors;
+        }
+
+        $this->dump($normalizedErrors);
+        return $normalizedErrors;
+    }
+
+    private function normalizeErrorMessagesAjaxFormat(array $errors, $prefix)
+    {
+        $normalizedErrors = array ();
+        foreach ($errors as $key => $error)
+        {
+            if (is_array($error))
+            {
+                $normalizedErrors = array_merge($normalizedErrors,
+                   $this->normalizeErrorMessagesAjaxFormat($error, "{$prefix}_{$key}"));
+            }
+            else
+            {
+                $normalizedErrors[$prefix][$key] = $error;
+            }
+        }
+        return $normalizedErrors;
     }
 
 }
