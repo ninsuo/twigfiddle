@@ -44,7 +44,14 @@ $(document).ready(function() {
        if ($(id).find(':checkbox').prop('checked')) {
            var first = $('.template').not(id).first();
            first.find(':checkbox').prop('checked', true);
-           first.find('.main-template').removeClass('btn-default').addClass('btn-primary').attr('disabled', 'disabled');
+           first
+                   .find('.main-template')
+                   .removeClass('btn-default')
+                   .addClass('btn-primary')
+                   .find('span.glyphicon')
+                   .removeClass('glyphicon-unchecked')
+                   .addClass('glyphicon-check')
+           ;
        }
        $(id).remove();
        $('#add-template').removeClass('hide');
@@ -69,10 +76,24 @@ $(document).ready(function() {
             var that = $(this);
             if (that.data('id') === ticked) {
                 that.find(':checkbox').prop('checked', true);
-                that.find('.main-template').removeClass('btn-default').addClass('btn-primary').attr('disabled', 'disabled');
+                that
+                        .find('.main-template')
+                        .removeClass('btn-default')
+                        .addClass('btn-primary')
+                        .find('span.glyphicon')
+                        .removeClass('glyphicon-unchecked')
+                        .addClass('glyphicon-check')
+                ;
             } else {
                 that.find(':checkbox').prop('checked', false);
-                that.find('.main-template').removeClass('btn-primary').addClass('btn-default').removeAttr('disabled');
+                that
+                        .find('.main-template')
+                        .removeClass('btn-primary')
+                        .addClass('btn-default')
+                        .find('span.glyphicon')
+                        .removeClass('glyphicon-check')
+                        .addClass('glyphicon-unchecked')
+                ;
             }
         });
     });
