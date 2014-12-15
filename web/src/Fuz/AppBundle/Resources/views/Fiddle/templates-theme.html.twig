@@ -14,11 +14,7 @@
                         <div class="input-group-addon">File</div>
                         {{ form_widget(form.filename) }}
                     </div>
-                    {% if form.filename.vars.errors|length > 0 %}
-                        {% for error in form.filename.vars.errors %}
-                            <div class="control-label text-danger">{{ error.message }}</div>
-                        {% endfor %}
-                    {% endif %}
+                    <div id="errors-{{ form.filename.vars.id }}">{{ form_errors(form.filename) }}</div>
                 </div>
             </div>
             <div class="col-md-3 col-sm-3  col-xs-3 text-center">
@@ -42,6 +38,7 @@
                 },
             })
          }}
+         <div id="errors-{{ form.content.vars.id }}">{{ form_errors(form.content) }}</div>
     </div>
 </div>
 {% endspaceless %}

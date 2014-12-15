@@ -31,7 +31,7 @@
 {% block form_errors -%}
     {% if errors|length > 0 -%}
         {%- for error in errors -%}
-            <div class="control-label"><strong>{{ error.message }}</strong></div>
+            <div class="control-label text-danger">{{ error.message }}</div>
         {%- endfor -%}
     {%- endif %}
 {%- endblock form_errors %}

@@ -27,9 +27,9 @@
     </div>
 {% endmacro %}
 
-{% macro form_global_errors(form) %}
+{% macro form_general_errors(form) %}
     {% if form.vars.errors|length > 0 %}
-        <div class="row" id="login">
+        <div class="row" id="errors">
             <div class="col-md-12 alert alert-danger text-center">
                 {% for error in form.vars.errors %}
                     <div class="error">{{ error.message }}</div>

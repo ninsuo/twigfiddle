@@ -10,14 +10,14 @@
     {# Twig version #}
     <div class="form-group {% if form.twigVersion.vars.errors|length > 0 %}has-error{% endif %}">
         {{ form_widget(form.twigVersion) }}
-        {{ form_errors(form.twigVersion) }}
+        <div id="errors-{{ form.twigVersion.vars.id }}">{{ form_errors(form.twigVersion) }}</div>
     </div>
 
 {% endblock %}
 
 {% block content %}
 
-{{ macros.form_global_errors(form) }}
+<div id="general-errors">{{ macros.form_general_errors(form) }}</div>
 
 {# Revision browser, title, tags #}
 <div class="row">
@@ -99,6 +99,9 @@
 {% endblock %}
 
 {% block extra_js %}
+<script type="text/javascript" src="{{ asset('bundles/fuzapp/js/jquery.symfony2.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fuzapp/js/jquery.domajax.js') }}"></script>
+
 <script type="text/javascript" src="{{ asset('bundles/fuzapp/codemirror-4.8/lib/codemirror.js') }}"></script>
 <script type="text/javascript" src="{{ asset('bundles/fuzapp/codemirror-4.8/mode/jinja2/jinja2.js') }}"></script>
 <script type="text/javascript" src="{{ asset('bundles/fuzapp/codemirror-4.8/mode/yaml/yaml.js') }}"></script>
@@ -108,5 +111,5 @@
 {% endblock %}
 
 {% block script %}
-    {{ include('FuzAppBundle:Fiddle:script.html.twig') }}
+{{ include('FuzAppBundle:Fiddle:script.html.twig') }}
 {% endblock %}
