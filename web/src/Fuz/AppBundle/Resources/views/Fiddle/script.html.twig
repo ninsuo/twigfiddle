@@ -121,6 +121,8 @@ $(document).ready(function() {
                     cm.replaceSelection(spaces, 'end');
                 }
             }
+        }).on('change', function(cm) {
+            $('#' + id).html(cm.getValue());
         });
     };
 
@@ -175,6 +177,8 @@ $(document).ready(function() {
                     cm.replaceSelection(spaces, 'end');
                 }
             }
+        }).on('change', function(cm) {
+            $('#' + id).html(cm.getValue());
         });
     };
 
