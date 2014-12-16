@@ -13,7 +13,7 @@
                     })
                 }}
             </div>
-            <div id="errors-{{ form.context.format.vars.id }}">{{ form_errors(form.context.format) }}</div>
+            <div class="error-container" id="errors-{{ form.context.format.vars.id }}">{{ form_errors(form.context.format) }}</div>
         </div>
         {{
             form_widget(form.context.content, {
@@ -23,6 +23,6 @@
                 }
             })
         }}
-        <div id="errors-{{ form.context.content.vars.id }}">{{ form_errors(form.context.content) }}</div>
+        <div class="error-container" id="errors-{{ form.context.content.vars.id }}">{{ form_errors(form.context.content) }}</div>
     </div>
 </div>

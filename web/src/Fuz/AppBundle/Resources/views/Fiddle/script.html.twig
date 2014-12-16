@@ -197,4 +197,15 @@ $(document).ready(function() {
 
 });
 
+
+    {#
+     #  Ajax response handler used by the "Run" button
+     #  Used in FuzAppBundle:Fiddle:index.html.twig
+     #}
+    function processRunFiddleResponse(elem, response) {
+
+        $.symfony2.dispatchErrors(response.errors);
+
+    };
+
 </script>

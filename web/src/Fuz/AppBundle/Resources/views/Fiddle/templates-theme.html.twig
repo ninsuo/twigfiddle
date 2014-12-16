@@ -14,7 +14,7 @@
                         <div class="input-group-addon">File</div>
                         {{ form_widget(form.filename) }}
                     </div>
-                    <div id="errors-{{ form.filename.vars.id }}">{{ form_errors(form.filename) }}</div>
+                    <div class="error-container" id="errors-{{ form.filename.vars.id }}">{{ form_errors(form.filename) }}</div>
                 </div>
             </div>
             <div class="col-md-3 col-sm-3  col-xs-3 text-center">
@@ -29,7 +29,7 @@
             </div>
         </div>
         <div class="hide">
-            {{ form_widget(form.isMain) }}{# {{ dump(form.isMain.vars.data) }} #}
+            {{ form_widget(form.isMain) }}
         </div>
          {{
             form_widget(form.content, {
@@ -38,7 +38,7 @@
                 },
             })
          }}
-         <div id="errors-{{ form.content.vars.id }}">{{ form_errors(form.content) }}</div>
+         <div class="error-container" id="errors-{{ form.content.vars.id }}">{{ form_errors(form.content) }}</div>
     </div>
 </div>
 {% endspaceless %}

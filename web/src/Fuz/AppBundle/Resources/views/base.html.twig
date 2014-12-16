@@ -19,11 +19,8 @@
 
     <body>
 
-        {# debug #}
-        <form action="{{ path('run_fiddle', {'hash': hash|default(null), 'revision': revision|default(1)}) }}" method="post">
-
          {# Start Container #}
-        <div class="container-fluid">
+        <div id="page-container" class="container-fluid">
 
             {# Start Header #}
             <div class="row" id="header">
@@ -32,7 +29,7 @@
                     {% block header_left %}&nbsp;{% endblock %}
                 </div>
                 <div class="clearfix hidden-md hidden-lg"></div>
-                <div class="col-md-3 col-sm-6 col-xs-12 top-menu text-right">
+                <div id="actions" class="col-md-3 col-sm-6 col-xs-12 top-menu text-right">
                     {% block header_middle %}&nbsp;{% endblock %}
                 </div>
                 <div class="col-md-5 col-sm-6 col-xs-12 user-menu text-right">
@@ -78,6 +75,8 @@
                         <br/>
                         <a href="#">Contact</a>
                         <span class="space"></span>
+                        <a href="#">Report issue</a>
+                        <span class="space"></span>
                         <a href="#">GitHub</a>
                         <span class="space"></span>
                         <a href="#">Google Groups</a>
@@ -97,7 +96,9 @@
 
         {# Wait gif #}
         <div id="wait" class="hide">
-            <img src="{{ asset('bundles/fuzapp/img/wait.gif') }}" alt="Please wait..."/>
+            <div class="text-center">
+                <img src="{{ asset('bundles/fuzapp/img/wait.gif') }}" alt="Please wait..."/>
+            </div>
         </div>
 
         {# Bootstrap core JS #}
@@ -106,10 +107,6 @@
         {% block extra_js %}{% endblock %}
 
         {% block script %}{% endblock %}
-
-         {# debug #}
-             <input type="submit"/>
-         </form>
 
     </body>
 </html>

@@ -2,7 +2,10 @@
 
 namespace Fuz\AppBundle\Controller;
 
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Fuz\AppBundle\Base\BaseController;
@@ -27,10 +30,23 @@ class FiddleController extends BaseController
      *          "revision" = 1
      *      }
      * )
-     * @Template("FuzAppBundle:Fiddle:index.html.twig")
      */
     public function runAction(Request $request, $hash, $revision)
     {
+        if (!$request->isXmlHttpRequest())
+        {
+            return new RedirectResponse($this->generateUrl('fiddle',
+                  array (
+                       'hash' => $hash,
+                       'revision' => $revision
+                  ), Response::HTTP_PRECONDITION_REQUIRED));
+        }
+
+        $response = array (
+                'hash' => $hash,
+                'revision' => $revision,
+        );
+
         $repository = $this->getDoctrine()
            ->getRepository('FuzAppBundle:Fiddle');
 
@@ -44,16 +60,10 @@ class FiddleController extends BaseController
         }
         else
         {
-            $errors = $this->getErrorMessagesAjaxFormat($form);
+            $response['errors'] = $this->getErrorMessagesAjaxFormat($form);
         }
 
-
-        return array (
-                'form' => $form->createView(),
-                'data' => $data,
-                'hash' => $hash,
-                'revision' => $revision,
-        );
+        return new JsonResponse($response);
     }
 
     /**
@@ -82,7 +92,6 @@ class FiddleController extends BaseController
 
         $data = $repository->getFiddle($hash, $revision, $this->getUser());
         $form = $this->createForm('FiddleType', $data);
-
 
         return array (
                 'form' => $form->createView(),

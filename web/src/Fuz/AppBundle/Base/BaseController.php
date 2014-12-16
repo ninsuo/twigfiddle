@@ -60,7 +60,7 @@ class BaseController extends Controller
      *
      * In your twig views, use for each of your fields:
      *
-     * <div id="errors-{{ form.field.vars.id }}">{{ form_errors(form.field) }}</div>
+     * <div class="error-container" id="errors-{{ form.field.vars.id }}">{{ form_errors(form.field) }}</div>
      *
      * In jQuery, you'll use something like that after your ajax call:
      *
@@ -76,6 +76,10 @@ class BaseController extends Controller
      *      $("#general-errors").html(html);
      *    }
      * });
+     *
+     * Do not forget to clean all errors before submitting your form:
+     *
+     * $('.error-container').html('');
      *
      * @param Form $form
      * @return array

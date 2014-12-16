@@ -7,17 +7,36 @@
 
 {% block header_left %}
 
-    {# Twig version #}
-    <div class="form-group {% if form.twigVersion.vars.errors|length > 0 %}has-error{% endif %}">
-        {{ form_widget(form.twigVersion) }}
-        <div id="errors-{{ form.twigVersion.vars.id }}">{{ form_errors(form.twigVersion) }}</div>
-    </div>
+{# Twig version #}
+<div class="form-group {% if form.twigVersion.vars.errors|length > 0 %}has-error{% endif %}">
+    {{ form_widget(form.twigVersion) }}
+    <div class="error-container" id="errors-{{ form.twigVersion.vars.id }}">{{ form_errors(form.twigVersion) }}</div>
+</div>
 
+{% endblock %}
+
+{% block header_middle %}
+
+ {# Run button #}
+<button
+    type="button"
+    class="btn btn-primary domajax click"
+    data-endpoint="{{ path('run_fiddle', {'hash': hash, 'revision': revision}) }}"
+    data-input="#page-container"
+    data-callback-success="processRunFiddleResponse"
+    data-lock="#actions"
+    data-replace="#results"
+    data-replace-by="#wait"
+><span class="glyphicon glyphicon glyphicon-play hidden-md hidden-sm hidden-xs"></span> Run</button>
+
+<button type="button" class="btn btn-primary"><span class="glyphicon glyphicon glyphicon-floppy-disk hidden-md hidden-sm hidden-xs"></span> Save</button>
+
+<button type="button" class="btn btn-primary"><span class="glyphicon glyphicon glyphicon-floppy-disk hidden-md hidden-sm hidden-xs"></span> Share</button>
 {% endblock %}
 
 {% block content %}
 
-<div id="general-errors">{{ macros.form_general_errors(form) }}</div>
+<div class="error-container" id="general-errors">{{ macros.form_general_errors(form) }}</div>
 
 {# Revision browser, title, tags #}
 <div class="row">
@@ -55,6 +74,8 @@
         <div id="context-pane">
             {{ include('FuzAppBundle:Fiddle:context-pane.html.twig') }}
         </div>
+
+        <div id="results"></div>
 
         {#
         <div class="clearfix">&nbsp;</div>
