@@ -43,6 +43,7 @@ class FiddleTemplate
      *
      * @ORM\Column(name="content", type="text")
      * @Assert\Length(max = 8192)
+     * @Assert\NotBlank
      */
     protected $content = '';
 
