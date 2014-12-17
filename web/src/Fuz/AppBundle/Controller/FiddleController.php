@@ -56,7 +56,7 @@ class FiddleController extends BaseController
 
         if ($form->isValid())
         {
-            // ...
+            $response['result'] = $this->get('app.run_fiddle')->run($data);
         }
         else
         {

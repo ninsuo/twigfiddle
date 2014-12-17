@@ -77,7 +77,7 @@ class BaseController extends Controller
      *    }
      * });
      *
-     * Do not forget to clean all errors before submitting your form:
+     * Do not forget to clean all errors before processing errors:
      *
      * $('.error-container').html('');
      *

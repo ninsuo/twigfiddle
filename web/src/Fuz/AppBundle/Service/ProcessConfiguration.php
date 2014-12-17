@@ -7,16 +7,19 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\Yaml\Yaml;
+use Psr\Log\LoggerInterface;
 
 class ProcessConfiguration
 {
 
+    protected $logger;
     protected $localConfig;
     protected $environment;
     protected $remoteConfig;
 
-    public function __construct(array $localConfig, $environment)
+    public function __construct(LoggerInterface $logger, array $localConfig, $environment)
     {
+        $this->logger = $logger;
         $this->localConfig = $localConfig;
         $this->environment = $environment;
         $this->remoteConfig = null;
@@ -56,6 +59,8 @@ class ProcessConfiguration
         $rootDir = $this->localConfig['root_dir'];
         $configFile = $this->localConfig['config_path'];
         $containerFiles = $this->localConfig['container_file_paths'];
+
+        $this->logger->info("Reloading process configuration from {$configFile}");
 
         $sluggedConfig = Yaml::parse($configFile);
 

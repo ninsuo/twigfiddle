@@ -1,9 +1,9 @@
 parameters:
     app.oauth_user_provider.class: Fuz\AppBundle\Model\OAuthUserProvider
     hwi_oauth.account.connector: Fuz\AppBundle\Connect\AccountConnect
-    app.daemon.class: Fuz\AppBundle\Component\Daemon
     app.process_configuration.class: Fuz\AppBundle\Service\ProcessConfiguration
     app.form.fiddle.class: Fuz\AppBundle\Form\FiddleType
+    app.run_fiddle.class: Fuz\AppBundle\Service\RunFiddle
 
 services:
 
@@ -14,16 +14,20 @@ services:
     hwi_oauth.account.connector:
         class: %hwi_oauth.account.connector%
 
-    app.daemon:
-        class: %app.daemon.class%
-        arguments: [@kernel]
-
     app.process_configuration:
         class: %app.process_configuration.class%
-        arguments: [%process%, %kernel.environment%]
+        arguments: [@logger, %process%, %kernel.environment%]
+        tags:
+            - { name: monolog.logger, channel: process_configuration }
 
     app.form.fiddle:
          class: %app.form.fiddle.class%
          arguments: [@app.process_configuration]
          tags:
             - { name: form.type, alias: FiddleType }
+
+    app.run_fiddle:
+         class: %app.run_fiddle.class%
+         arguments: [@logger]
+         tags:
+             - { name: monolog.logger, channel: run_fiddle }
