@@ -28,6 +28,6 @@ services:
 
     app.run_fiddle:
          class: %app.run_fiddle.class%
-         arguments: [@logger]
+         arguments: [@logger, @filesystem, @app.process_configuration, %process%]
          tags:
              - { name: monolog.logger, channel: run_fiddle }

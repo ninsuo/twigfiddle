@@ -10,11 +10,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Fuz\Component\SharedMemory\Storage\StorageFile;
 use Fuz\Component\SharedMemory\SharedMemory;
 use Fuz\AppBundle\Entity\Fiddle;
-use Fuz\AppBundle\Entity\FiddleConfig;
 use Fuz\AppBundle\Entity\FiddleContext;
 use Fuz\AppBundle\Entity\FiddleTemplate;
 
-class EnginesTest extends \PHPUnit_Framework_TestCase
+class DefaultEngineTest extends \PHPUnit_Framework_TestCase
 {
 
     const PHP_PATH = '/usr/bin/php';
