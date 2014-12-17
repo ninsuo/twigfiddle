@@ -2,7 +2,6 @@
 
 namespace Fuz\AppBundle\Service;
 
-use Fuz\AppBundlerk\Base\BaseService;
 use Psr\Log\LoggerInterface;
 
 class RunFiddle
