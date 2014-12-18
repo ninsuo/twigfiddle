@@ -194,7 +194,7 @@ class DefaultEngineTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('template.twig', key($compiled));
 
         // Interesting to see how evolved generated templates
-//        echo $this->shared->fiddle->getConfig()->getTwigVersion(), PHP_EOL;
+//        echo $this->shared->fiddle->getTwigVersion(), PHP_EOL;
 //        echo reset($compiled), PHP_EOL;
 
         return $this;
