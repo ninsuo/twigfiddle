@@ -1,5 +1,6 @@
 {# FuzAppBundle:Fiddle:script.html.twig #}
 
+{# Used to work on template's prototype before displaying it #}
 <div id="template-container" class="hide"></div>
 
 <script type="text/javascript">
@@ -205,6 +206,16 @@ $(document).ready(function() {
     function processRunFiddleResponse(elem, response) {
 
         $.symfony2.dispatchErrors(response.errors);
+
+    };
+
+    {#
+     #  Ajax error handler
+     #  Used in FuzAppBundle:Fiddle:index.html.twig
+     #}
+    function handleAjaxErrors(elem, errorThrown) {
+
+        // todo
 
     };
 

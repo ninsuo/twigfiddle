@@ -24,6 +24,7 @@
     data-endpoint="{{ path('run_fiddle', {'hash': hash, 'revision': revision}) }}"
     data-input="#page-container"
     data-callback-success="processRunFiddleResponse"
+    data-callback-failure="handleAjaxErrors"
     data-lock="#actions"
     data-replace="#results"
     data-replace-by="#wait"
