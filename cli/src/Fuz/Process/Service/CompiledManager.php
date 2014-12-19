@@ -30,7 +30,7 @@ class CompiledManager extends BaseService
         $cacheDirectory = $dir . DIRECTORY_SEPARATOR . $this->fiddleConfiguration['compiled_dir'];
         $this->logger->debug("Extracting compiled files in: $cacheDirectory");
 
-        $compiled = array();
+        $compiled = array ();
         $directoryIterator = new \RecursiveDirectoryIterator($cacheDirectory, \RecursiveDirectoryIterator::SKIP_DOTS);
         $recursiveIterator = new \RecursiveIteratorIterator($directoryIterator);
         foreach ($recursiveIterator as $fileinfo)
@@ -41,12 +41,12 @@ class CompiledManager extends BaseService
 
             if (is_null($template))
             {
-                $agent->addError(Error::E_UNKNOWN_COMPILED_FILE, array('File' => $compiledFile));
+                $agent->addError(Error::E_UNKNOWN_COMPILED_FILE, array ('File' => $compiledFile));
             }
 
             if (!in_array($template, array_map('basename', $agent->getTemplates())))
             {
-                $agent->addError(Error::E_UNEXPECTED_COMPILED_FILE, array('File' => $compiledFile));
+                $agent->addError(Error::E_UNEXPECTED_COMPILED_FILE, array ('File' => $compiledFile));
             }
 
             $compiled[$template] = $content;

@@ -54,7 +54,7 @@ class RunTimeoutCommand extends BaseCommand
         {
             if ((!is_null($err = error_get_last())) && (!in_array($err['type'], array (E_NOTICE, E_WARNING))))
             {
-               $this->saveError(Error::E_UNEXPECTED, $err);
+                $this->saveError(Error::E_UNEXPECTED, $err);
             }
         });
         return $this;

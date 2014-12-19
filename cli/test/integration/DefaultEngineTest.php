@@ -24,7 +24,7 @@ class DefaultEngineTest extends \PHPUnit_Framework_TestCase
     protected $rootDir;
     protected $shared;
 
-    public function __construct($name = null, array $data = array(), $dataName = '')
+    public function __construct($name = null, array $data = array (), $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
         $this->fs = new Filesystem();
@@ -169,7 +169,7 @@ class DefaultEngineTest extends \PHPUnit_Framework_TestCase
               array_map('escapeshellarg',
                  array (
                    $this->rootDir . '/run-test.php',
-                    'twigfiddle:run',
+                   'twigfiddle:run',
                    $this->envId,
         )));
 

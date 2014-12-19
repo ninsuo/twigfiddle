@@ -56,15 +56,15 @@ class DefaultTwigEngine extends BaseService implements TwigEngineInterface
         {
             if (!is_array($token))
             {
-                continue ;
+                continue;
             }
             list($identifier, $string, $lineno) = $token;
             if ($identifier !== T_COMMENT)
             {
-                continue ;
+                continue;
             }
-            $templateName = trim(str_replace(array('/*', '*/'), '', $string));
-            break ;
+            $templateName = trim(str_replace(array ('/*', '*/'), '', $string));
+            break;
         }
         return $templateName;
     }

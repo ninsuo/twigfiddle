@@ -64,7 +64,8 @@ class EngineManager extends BaseService
                 {
                     continue;
                 }
-                if (in_array(strtolower($expectedVersion), array_map('trim', array_map('strtolower', explode("/", $tag['versions'])))))
+                if (in_array(strtolower($expectedVersion),
+                      array_map('trim', array_map('strtolower', explode("/", $tag['versions'])))))
                 {
                     $service = $this->container->get($serviceId);
                     break;

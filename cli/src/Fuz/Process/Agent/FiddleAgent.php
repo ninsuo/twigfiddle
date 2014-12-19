@@ -11,271 +11,271 @@ use Fuz\Process\TwigEngine\TwigEngineInterface;
 class FiddleAgent
 {
 
-   /**
-    * Error Management service
-    *
-    * @var ErrorManager
-    */
-   protected $errorManager;
+    /**
+     * Error Management service
+     *
+     * @var ErrorManager
+     */
+    protected $errorManager;
 
-   /**
-    * Execution's environment ID
-    *
-    * @var string
-    */
-   protected $environmentId;
+    /**
+     * Execution's environment ID
+     *
+     * @var string
+     */
+    protected $environmentId;
 
-   /**
-    * Fiddles taken from debug directory?
-    *
-    * @var bool
-    */
-   protected $isDebug;
+    /**
+     * Fiddles taken from debug directory?
+     *
+     * @var bool
+     */
+    protected $isDebug;
 
-   /**
-    * Execution's environment directory
-    *
-    * @var string|null
-    */
-   protected $directory = null;
+    /**
+     * Execution's environment directory
+     *
+     * @var string|null
+     */
+    protected $directory = null;
 
-   /**
-    * User's fiddle
-    *
-    * @var Fiddle
-    */
-   protected $fiddle;
+    /**
+     * User's fiddle
+     *
+     * @var Fiddle
+     */
+    protected $fiddle;
 
-   /**
-    * Execution error(s)
-    *
-    * @var Error[]
-    */
-   protected $errors = array ();
+    /**
+     * Execution error(s)
+     *
+     * @var Error[]
+     */
+    protected $errors = array ();
 
-   /**
-    * File that contains the shared memory
-    *
-    * @var string
-    */
-   protected $storageName;
+    /**
+     * File that contains the shared memory
+     *
+     * @var string
+     */
+    protected $storageName;
 
-   /**
-    * Variable shared with web application
-    *
-    * @var SharedMemory
-    */
-   protected $sharedMemory;
+    /**
+     * Variable shared with web application
+     *
+     * @var SharedMemory
+     */
+    protected $sharedMemory;
 
-   /**
-    * Twig Engine for the right Twig's version
-    *
-    * @var TwigEngineInterface
-    */
-   protected $engine;
+    /**
+     * Twig Engine for the right Twig's version
+     *
+     * @var TwigEngineInterface
+     */
+    protected $engine;
 
-   /**
-    * Twig's source directory for the requested version
-    *
-    * @var string
-    */
-   protected $sourceDirectory;
+    /**
+     * Twig's source directory for the requested version
+     *
+     * @var string
+     */
+    protected $sourceDirectory;
 
-   /**
-    * Fiddle's context converted to array
-    *
-    * @var mixed[]|null
-    */
-   protected $context = null;
+    /**
+     * Fiddle's context converted to array
+     *
+     * @var mixed[]|null
+     */
+    protected $context = null;
 
-   /**
-    * List templates full paths
-    *
-    * @var string[]|null
-    */
-   protected $templates = null;
+    /**
+     * List templates full paths
+     *
+     * @var string[]|null
+     */
+    protected $templates = null;
 
-   /**
-    * Fiddle's result
-    *
-    * @var string|null
-    */
-   protected $rendered = null;
+    /**
+     * Fiddle's result
+     *
+     * @var string|null
+     */
+    protected $rendered = null;
 
-   /**
-    * Compiled templates
-    *
-    * @var array[]
-    */
-   protected $compiled = array ();
+    /**
+     * Compiled templates
+     *
+     * @var array[]
+     */
+    protected $compiled = array ();
 
-   public function __construct(ErrorManager $errorManager)
-   {
-      $this->errorManager = $errorManager;
-   }
+    public function __construct(ErrorManager $errorManager)
+    {
+        $this->errorManager = $errorManager;
+    }
 
-   public function setEnvironmentId($environmentId)
-   {
-      $this->environmentId = $environmentId;
-      return $this;
-   }
+    public function setEnvironmentId($environmentId)
+    {
+        $this->environmentId = $environmentId;
+        return $this;
+    }
 
-   public function getEnvironmentId()
-   {
-      return $this->environmentId;
-   }
+    public function getEnvironmentId()
+    {
+        return $this->environmentId;
+    }
 
-   public function setIsDebug($isDebug)
-   {
-      $this->isDebug = $isDebug;
-      return $this;
-   }
+    public function setIsDebug($isDebug)
+    {
+        $this->isDebug = $isDebug;
+        return $this;
+    }
 
-   public function isDebug()
-   {
-      return $this->isDebug;
-   }
+    public function isDebug()
+    {
+        return $this->isDebug;
+    }
 
-   public function setDirectory($directory)
-   {
-      $this->directory = $directory;
-      return $this;
-   }
+    public function setDirectory($directory)
+    {
+        $this->directory = $directory;
+        return $this;
+    }
 
-   public function getDirectory()
-   {
-      return $this->directory;
-   }
+    public function getDirectory()
+    {
+        return $this->directory;
+    }
 
-   public function setFiddle(Fiddle $fiddle)
-   {
-      $this->fiddle = $fiddle;
-      return $this;
-   }
+    public function setFiddle(Fiddle $fiddle)
+    {
+        $this->fiddle = $fiddle;
+        return $this;
+    }
 
-   public function getFiddle()
-   {
-      return $this->fiddle;
-   }
+    public function getFiddle()
+    {
+        return $this->fiddle;
+    }
 
-   public function addError($error, $context = array ())
-   {
-      if (!($error instanceof Error))
-      {
-         if ($this->errorManager)
-         {
-            return $this->addError($this->errorManager->getError($error, $context));
-         }
-         else
-         {
-            throw new \LogicException("Unserialized agent cannot be reused at runtime.");
-         }
-      }
-      $this->errors[] = $error;
-      return $this;
-   }
+    public function addError($error, $context = array ())
+    {
+        if (!($error instanceof Error))
+        {
+            if ($this->errorManager)
+            {
+                return $this->addError($this->errorManager->getError($error, $context));
+            }
+            else
+            {
+                throw new \LogicException("Unserialized agent cannot be reused at runtime.");
+            }
+        }
+        $this->errors[] = $error;
+        return $this;
+    }
 
-   public function getErrors()
-   {
-      return $this->errors;
-   }
+    public function getErrors()
+    {
+        return $this->errors;
+    }
 
-   public function setStorageName($storageName)
-   {
-      $this->storageName = $storageName;
-      return $this;
-   }
+    public function setStorageName($storageName)
+    {
+        $this->storageName = $storageName;
+        return $this;
+    }
 
-   public function getStorageName()
-   {
-      return $this->storageName;
-   }
+    public function getStorageName()
+    {
+        return $this->storageName;
+    }
 
-   public function setSharedMemory(SharedMemory $sharedMemory)
-   {
-      $this->sharedMemory = $sharedMemory;
-      return $this;
-   }
+    public function setSharedMemory(SharedMemory $sharedMemory)
+    {
+        $this->sharedMemory = $sharedMemory;
+        return $this;
+    }
 
-   public function getSharedMemory()
-   {
-      return $this->sharedMemory;
-   }
+    public function getSharedMemory()
+    {
+        return $this->sharedMemory;
+    }
 
-   public function setEngine(TwigEngineInterface $engine)
-   {
-      $this->engine = $engine;
-      return $this;
-   }
+    public function setEngine(TwigEngineInterface $engine)
+    {
+        $this->engine = $engine;
+        return $this;
+    }
 
-   public function getEngine()
-   {
-      return $this->engine;
-   }
+    public function getEngine()
+    {
+        return $this->engine;
+    }
 
-   public function setSourceDirectory($sourceDirectory)
-   {
-      $this->sourceDirectory = $sourceDirectory;
-      return $this;
-   }
+    public function setSourceDirectory($sourceDirectory)
+    {
+        $this->sourceDirectory = $sourceDirectory;
+        return $this;
+    }
 
-   public function getSourceDirectory()
-   {
-      return $this->sourceDirectory;
-   }
+    public function getSourceDirectory()
+    {
+        return $this->sourceDirectory;
+    }
 
-   public function setContext(array $context)
-   {
-      $this->context = $context;
-      return $this;
-   }
+    public function setContext(array $context)
+    {
+        $this->context = $context;
+        return $this;
+    }
 
-   public function getContext()
-   {
-      return $this->context;
-   }
+    public function getContext()
+    {
+        return $this->context;
+    }
 
-   public function setTemplates(array $templates)
-   {
-      $this->templates = $templates;
-      return $this;
-   }
+    public function setTemplates(array $templates)
+    {
+        $this->templates = $templates;
+        return $this;
+    }
 
-   public function getTemplates()
-   {
-      return $this->templates;
-   }
+    public function getTemplates()
+    {
+        return $this->templates;
+    }
 
-   public function setRendered($rendered)
-   {
-      $this->rendered = $rendered;
-      return $this;
-   }
+    public function setRendered($rendered)
+    {
+        $this->rendered = $rendered;
+        return $this;
+    }
 
-   public function getRendered()
-   {
-      return $this->rendered;
-   }
+    public function getRendered()
+    {
+        return $this->rendered;
+    }
 
-   public function setCompiled(array $compiled)
-   {
-      $this->compiled = $compiled;
-      return $this;
-   }
+    public function setCompiled(array $compiled)
+    {
+        $this->compiled = $compiled;
+        return $this;
+    }
 
-   public function getCompiled()
-   {
-      return $this->compiled;
-   }
+    public function getCompiled()
+    {
+        return $this->compiled;
+    }
 
-   public function __sleep()
-   {
-      return array_diff(array_keys(get_object_vars($this)), array ('errorManager', 'engine'));
-   }
+    public function __sleep()
+    {
+        return array_diff(array_keys(get_object_vars($this)), array ('errorManager', 'engine'));
+    }
 
-   public function __wakeup()
-   {
-      $this->errorManager = null;
-   }
+    public function __wakeup()
+    {
+        $this->errorManager = null;
+    }
 
 }
