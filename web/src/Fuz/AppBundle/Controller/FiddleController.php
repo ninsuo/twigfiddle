@@ -63,6 +63,9 @@ class FiddleController extends BaseController
             $response['errors'] = $this->getErrorMessagesAjaxFormat($form);
         }
 
+        $this->dump($response);
+        die();
+
         return new JsonResponse($response);
     }
 

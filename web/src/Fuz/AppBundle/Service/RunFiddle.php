@@ -4,9 +4,11 @@ namespace Fuz\AppBundle\Service;
 
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\Process\ProcessBuilder;
 use Psr\Log\LoggerInterface;
 use Fuz\AppBundle\Entity\Fiddle;
-use Fuz\Component\SharedMemory\Storage\FileStorage;
+use Fuz\AppBundle\Entity\Result;
+use Fuz\Component\SharedMemory\Storage\StorageFile;
 use Fuz\Component\SharedMemory\SharedMemory;
 
 class RunFiddle
@@ -20,6 +22,8 @@ class RunFiddle
     protected $remoteConfig;
     protected $envId;
     protected $envPath;
+    protected $sharedObject;
+    protected $process;
 
     public function __construct(LoggerInterface $logger, Filesystem $filesystem,
        ProcessConfiguration $processConfiguration, array $localConfig)
@@ -32,13 +36,17 @@ class RunFiddle
 
     public function run(Fiddle $fiddle)
     {
+        $result = new Result();
+
         $this
            ->createEnvironment()
-           ->createSharedMemory($fiddle)
-           ;
+           ->createSharedObject($fiddle)
+           ->execute()
+           ->fetchResult($result)
+           //->clearEnvironment()
+        ;
 
-
-        //$this->clearEnvironment();
+        return $result;
     }
 
     protected function createEnvironment()
@@ -59,7 +67,7 @@ class RunFiddle
             $env = '';
             for ($i = 0; ($i < self::ENV_NAME_LENGTH); $i++)
             {
-               $env .= $letters[mt_rand(0, $base)];
+                $env .= $letters[mt_rand(0, $base - 1)];
             }
         }
         while (is_dir("{$envRoot}/{$env}"));
@@ -70,26 +78,65 @@ class RunFiddle
         return $this;
     }
 
-    protected function createSharedMemory(Fiddle $fiddle)
+    protected function createSharedObject(Fiddle $fiddle)
     {
+        $sharedFile = "{$this->envPath}/{$this->remoteConfig['fiddle']['file']}";
 
-        // shared memory file name on remote config
+        $storage = new StorageFile($sharedFile);
 
+        $this->sharedObject = new SharedMemory($storage);
+        $this->sharedObject->fiddle = $fiddle;
 
-//        $storage = new StorageFile("{$this->envDir}/{$this->envId}/fiddle.shr");
-//        $this->shared = new SharedMemory($storage);
-//
-//        $this->shared->fiddle = $fiddle;
-//        $this->shared->begin_tm = null;
-//        $this->shared->finish_tm = null;
-//        $this->shared->result = null;
+        return $this;
+    }
 
+    protected function execute()
+    {
+        $command = str_replace('<env_id>', $this->envId, $this->localConfig['command']);
+        $builder = new ProcessBuilder(explode(' ', $command));
 
+        $this->process = $builder->getProcess();
+
+        $this->process
+           ->disableOutput()
+           ->run()
+        ;
+
+        return $this;
+    }
+
+    protected function fetchResult(Result $result)
+    {
+        list($start, $end) = array ($this->sharedObject->begin_tm, $this->sharedObject->finish_tm);
+        if (!is_null($start) && !is_null($end))
+        {
+            $diff = $end - $start;
+            $sec = intval($diff);
+            $micro = $diff - $sec;
+            $result->setDuration(strftime('%T', mktime(0, 0, $sec)) . str_replace('0.', '.', sprintf('%.3f', $micro)));
+        }
+
+        $fiddleResult = $this->sharedObject->result;
+        if (is_null($fiddleResult))
+        {
+            $this->logger->error("Fiddle {$this->envId} did not returned any result.");
+        }
+        else
+        {
+            $result->setResult($fiddleResult);
+        }
+
+        return $this;
     }
 
     protected function clearEnvironment()
     {
-        $this->filesystem->remove($this->envPath);
+        if (!is_null($this->envPath))
+        {
+            $this->filesystem->remove($this->envPath);
+            list($this->envId, $this->envPath, $this->sharedObject) = null;
+        }
+
         return $this;
     }
 

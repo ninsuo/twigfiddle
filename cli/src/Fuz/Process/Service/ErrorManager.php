@@ -172,6 +172,7 @@ class ErrorManager extends BaseService
         $error->setNo($no);
         $error->setGroup($details['group']);
         $error->setMessage($details['message']);
+        $error->setContext($context);
         $error->setIsPublic($details['public']);
         $error->setIsDebug($details['debug']);
         $error->setCaller($caller);

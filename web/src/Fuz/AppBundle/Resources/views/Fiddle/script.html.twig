@@ -205,7 +205,9 @@ $(document).ready(function() {
      #}
     function processRunFiddleResponse(elem, response) {
 
-        $.symfony2.dispatchErrors(response.errors);
+    $('#result').html(response);
+
+//        $.symfony2.dispatchErrors(response.errors);
 
     };
 
