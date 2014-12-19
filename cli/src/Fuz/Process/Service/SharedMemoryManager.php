@@ -47,7 +47,9 @@ class SharedMemoryManager extends BaseService
         $storage = new StorageFile($sharedFile);
         $sharedMemory = new SharedMemory($storage);
 
+        $agent->setStorageName($sharedFile);
         $agent->setSharedMemory($sharedMemory);
+
         return $this;
     }
 
@@ -61,7 +63,7 @@ class SharedMemoryManager extends BaseService
         if (!is_null($sharedMemory->begin_tm))
         {
             $sharedMemory->unlock();
-            $agent->addError(Error::E_FIDDLE_ALREADY_RUN, array ('Shared File' => $sharedFile));
+            $agent->addError(Error::E_FIDDLE_ALREADY_RUN, array ('Shared File' => $agent->getStorageName()));
             throw new StopExecutionException();
         }
         $sharedMemory->begin_tm = microtime(true);
@@ -70,7 +72,7 @@ class SharedMemoryManager extends BaseService
         if (is_null($fiddle))
         {
             $sharedMemory->unlock();
-            $agent->addError(Error::E_FIDDLE_NOT_STORED, array ('Shared File' => $sharedFile));
+            $agent->addError(Error::E_FIDDLE_NOT_STORED, array ('Shared File' => $agent->getStorageName()));
             throw new StopExecutionException();
         }
 

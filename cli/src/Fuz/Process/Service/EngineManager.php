@@ -92,7 +92,7 @@ class EngineManager extends BaseService
         $dir = $this->twigSourceConfiguration['directory'] . DIRECTORY_SEPARATOR . $version;
         if (!is_dir($dir))
         {
-            throw new IOException("Twig source's directory do not exist.");
+            throw new IOException("Twig source's directory does not exist.");
         }
 
         return $dir;

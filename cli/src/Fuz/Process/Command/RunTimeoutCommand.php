@@ -33,6 +33,7 @@ class RunTimeoutCommand extends BaseCommand
     {
         $this
            ->initArguments($input)
+           ->initErrorHandler()
            ->initProcess()
            ->runProcess()
         ;
@@ -44,6 +45,18 @@ class RunTimeoutCommand extends BaseCommand
     {
         $this->environmentId = $input->getArgument('environment-id');
         $this->timeout = $input->getArgument('timeout');
+        return $this;
+    }
+
+    protected function initErrorHandler()
+    {
+        register_shutdown_function(function()
+        {
+            if ((!is_null($err = error_get_last())) && (!in_array($err['type'], array (E_NOTICE, E_WARNING))))
+            {
+               $this->saveError(Error::E_UNEXPECTED, $err);
+            }
+        });
         return $this;
     }
 
@@ -92,7 +105,7 @@ class RunTimeoutCommand extends BaseCommand
         $agent = $this
            ->get('fiddle_agent')
            ->setEnvironmentId($this->environmentId)
-           ->addError($errno, array ('Exception' => $e))
+           ->addError($errno, $e)
         ;
 
         $this->get('environment_manager')->prepareEnvironment($agent);

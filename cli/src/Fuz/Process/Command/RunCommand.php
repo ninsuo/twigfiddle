@@ -49,7 +49,7 @@ class RunCommand extends BaseCommand
         }
         catch (\Exception $ex)
         {
-            $this->agent->addError(Error::E_UNEXPECTED, array ('Exception' => $ex));
+            $this->agent->addError(Error::E_UNEXPECTED, $ex);
         }
         $this->finish();
         $this->logger->info("Ended execution.");
@@ -62,7 +62,7 @@ class RunCommand extends BaseCommand
         {
             if ((!is_null($err = error_get_last())) && (!in_array($err['type'], array (E_NOTICE, E_WARNING))))
             {
-                $this->agent->addError(Error::E_UNEXPECTED, array ('Error' => $err));
+                $this->agent->addError(Error::E_UNEXPECTED, $err);
                 $this->get('debug_manager')->backupIfDebugRequired($this->agent);
             }
         });

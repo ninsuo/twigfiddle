@@ -41,12 +41,12 @@ class ContextManager extends BaseService
         }
         catch (\LogicException $ex)
         {
-            $agent->addError(Error::E_UNEXPECTED, array ('Exception' => $ex));
+            $agent->addError(Error::E_UNEXPECTED, $ex);
             throw new StopExecutionException();
         }
         catch (\Exception $ex)
         {
-            $agent->addError(Error::E_INVALID_CONTEXT_SYNTAX, array ('Exception' => $ex));
+            $agent->addError(Error::E_INVALID_CONTEXT_SYNTAX, $ex);
             throw new StopExecutionException();
         }
 

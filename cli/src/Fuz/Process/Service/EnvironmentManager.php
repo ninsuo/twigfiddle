@@ -91,7 +91,7 @@ class EnvironmentManager extends BaseService
         {
             throw new \LogicException("The fiddle's environment does not seem to be ready.");
         }
-        return $dir;;
+        return $dir;
     }
 
 }
