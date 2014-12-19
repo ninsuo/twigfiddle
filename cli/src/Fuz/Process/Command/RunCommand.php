@@ -23,10 +23,10 @@ class RunCommand extends BaseCommand
         $this
            ->setName("twigfiddle:run")
            ->setDescription("Executes a twigfiddle (from already prepared environment)")
-           ->addOption('debug', 'd', InputOption::VALUE_NONE,
-              "If the debug option is set, you'll run an environment located in the debug directory.")
            ->addArgument('environment-id', InputArgument::REQUIRED,
               "Environment where the twigfiddle is stored and will be executed")
+           ->addOption('debug', 'd', InputOption::VALUE_NONE,
+              "If the debug option is set, you'll run an environment located in the debug directory.")
         ;
     }
 
@@ -63,7 +63,7 @@ class RunCommand extends BaseCommand
             if ((!is_null($err = error_get_last())) && (!in_array($err['type'], array (E_NOTICE, E_WARNING))))
             {
                 $this->agent->addError(Error::E_UNEXPECTED, array ('Error' => $err));
-                $this->container->get('debug_manager')->backupIfDebugRequired($this->agent);
+                $this->get('debug_manager')->backupIfDebugRequired($this->agent);
             }
         });
         return $this;
@@ -78,7 +78,7 @@ class RunCommand extends BaseCommand
 
     public function initAgent()
     {
-        $this->agent = $this->container->get('fiddle_agent');
+        $this->agent = $this->get('fiddle_agent');
         $this->agent
            ->setEnvironmentId($this->environmentId)
            ->setIsDebug($this->isDebug)
@@ -104,20 +104,20 @@ class RunCommand extends BaseCommand
 
     protected function process()
     {
-        $this->container->get('environment_manager')->prepareEnvironment($this->agent);
-        $this->container->get('shared_memory_manager')->recoverFiddle($this->agent);
-        $this->container->get('engine_manager')->loadTwigEngine($this->agent);
-        $this->container->get('context_manager')->extractContext($this->agent);
-        $this->container->get('template_manager')->prepareTemplates($this->agent);
-        $this->container->get('execute_manager')->executeFiddle($this->agent);
-        $this->container->get('compiled_manager')->extractCompiledFiles($this->agent);
+        $this->get('environment_manager')->prepareEnvironment($this->agent);
+        $this->get('shared_memory_manager')->recoverFiddle($this->agent);
+        $this->get('engine_manager')->loadTwigEngine($this->agent);
+        $this->get('context_manager')->extractContext($this->agent);
+        $this->get('template_manager')->prepareTemplates($this->agent);
+        $this->get('execute_manager')->executeFiddle($this->agent);
+        $this->get('compiled_manager')->extractCompiledFiles($this->agent);
         return $this;
     }
 
     protected function finish()
     {
-        $this->container->get('shared_memory_manager')->saveResults($this->agent);
-        $this->container->get('debug_manager')->backupIfDebugRequired($this->agent);
+        $this->get('shared_memory_manager')->saveResults($this->agent);
+        $this->get('debug_manager')->backupIfDebugRequired($this->agent);
         return $this;
     }
 

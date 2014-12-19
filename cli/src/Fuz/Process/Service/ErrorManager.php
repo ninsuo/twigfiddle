@@ -23,6 +23,13 @@ class ErrorManager extends BaseService
                     'public' => false,
                     'debug' => true,
             ),
+            Error::E_TIMEOUT => array (
+                    'group' => Error::G_GENERAL,
+                    'message' => "Maximum execution timeout was reached.",
+                    'logger' => 'info',
+                    'public' => true,
+                    'debug' => false,
+            ),
             Error::E_INVALID_ENVIRONMENT_ID => array (
                     'group' => Error::G_ENVIRONMENT,
                     'message' => "The given environment ID does not match with the expected format.",

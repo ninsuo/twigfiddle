@@ -24,4 +24,14 @@ class BaseCommand extends Command implements ContainerAwareInterface, LoggerAwar
         $this->logger = $logger;
     }
 
+    public function get($id)
+    {
+        return $this->container->get($id);
+    }
+
+    public function getParameter($name)
+    {
+        return $this->container->getParameter($name);
+    }
+
 }

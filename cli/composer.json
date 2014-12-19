@@ -3,6 +3,7 @@
         "monolog/monolog": "~1.11.0",
         "symfony/dependency-injection": "~2.5",
         "symfony/console": "~2.5",
+        "symfony/process": "~2.5",
         "symfony/config": "~2.5",
         "symfony/yaml": "~2.5",
         "symfony/filesystem": "~2.5",
