@@ -43,7 +43,7 @@ class RunFiddle
            ->createSharedObject($fiddle)
            ->execute()
            ->fetchResult($result)
-           //->clearEnvironment()
+           ->clearEnvironment()
         ;
 
         return $result;
