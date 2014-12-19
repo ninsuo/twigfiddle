@@ -178,14 +178,12 @@ $(document).ready(function() {
                     cm.replaceSelection(spaces, 'end');
                 }
             }
-        }).on('change', function(cm) {
-            $('#' + id).html(cm.getValue());
         });
     };
 
-    var contextEditor = null;
-    $('.codemirror-context').each(function() {
-        contextEditor = initCodeMirrorForContext($(this).attr('id'));
+    var contextEditor = initCodeMirrorForContext($('.codemirror-context').attr('id'));
+    contextEditor.on('change', function(cm) {
+        $('.codemirror-context').html(cm.getValue());
     });
 
     {#
