@@ -96,8 +96,6 @@ class SharedMemoryManager extends BaseService
         $result->setCompiled($agent->getCompiled());
         $result->setErrors($agent->getErrors());
 
-        $this->logger->debug(serialize($result));
-
         $sharedMemory->result = $result;
         $sharedMemory->finish_tm = microtime(true);
 

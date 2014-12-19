@@ -47,6 +47,14 @@ class ExecuteManager extends BaseService
             $rendered = $engine->render($sourceDirectory, $cacheDirectory, $mainTemplate, $context);
             $this->logger->debug("Fiddle's rendered result: {$rendered}");
         }
+
+        /*
+         *
+     * @throws Twig_Error_Loader  When the template cannot be found
+     * @throws Twig_Error_Syntax  When an error occurred during compilation
+     * @throws Twig_Error_Runtime When an error occurred during rendering
+         */
+
         catch (\Exception $ex)
         {
             $agent->addError(Error::E_EXECUTION_FAILURE, array ("Exception" => $ex));
