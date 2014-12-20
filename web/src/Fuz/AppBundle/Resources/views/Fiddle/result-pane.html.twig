@@ -1,3 +1,32 @@
-{# FuzAppBundle:Fiddle:result-pane.html.twig #}
+{# FuzAppBundle:Fiddle:data-pane.html.twig #}
 
-{{ dump(result) }}
+{{ dump(data) }}
+
+{# Errors #}
+
+{% if data.result.errors %}
+
+{% endif %}
+
+{# Result #}
+
+{% if data.result.rendered %}
+
+{% endif %}
+
+{# Compiled files #}
+{% if data.result.compiled %}
+
+{% endif %}
+
+
+{# Duration #}
+{% if data.duration %}
+
+<div class="row">
+
+
+
+</div>
+
+{% endif %}

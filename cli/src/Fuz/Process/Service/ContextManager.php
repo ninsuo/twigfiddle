@@ -29,6 +29,12 @@ class ContextManager extends BaseService
         $content = $fiddle->getContext()->getContent();
         $format = $fiddle->getContext()->getFormat();
 
+        if (strlen(str_replace(array (' ', "\n", "\r", "\t"), '', $content)) == 0)
+        {
+            $this->logger->debug("No context to extract.");
+            return array ();
+        }
+
         $this->logger->debug("Extracting Twig context from format: {$format}.");
         try
         {

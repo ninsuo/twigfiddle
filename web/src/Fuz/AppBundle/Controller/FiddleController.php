@@ -62,7 +62,7 @@ class FiddleController extends BaseController
 
             $response['result'] = $this
                ->get('templating')
-               ->render('FuzAppBundle:Fiddle:result-pane.html.twig', array ('result' => $result))
+               ->render('FuzAppBundle:Fiddle:result-pane.html.twig', array ('data' => $result))
             ;
         }
         else
