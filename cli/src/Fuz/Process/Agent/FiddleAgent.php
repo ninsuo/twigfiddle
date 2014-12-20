@@ -224,7 +224,7 @@ class FiddleAgent
         return $this->sourceDirectory;
     }
 
-    public function setContext(array $context)
+    public function setContext(array $context = null)
     {
         $this->context = $context;
         return $this;

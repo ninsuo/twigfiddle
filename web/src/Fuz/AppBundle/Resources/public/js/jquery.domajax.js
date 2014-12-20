@@ -403,6 +403,8 @@
 
                     responseCopy = response;
 
+                    processRevertReplace(context, settings, elem);
+
                     if (response) {
                         responseIsEmpty = false;
                         if (processPriorityEvents(settings, elem, 'not-empty', response, textStatus, jqXHR) === false) {
@@ -419,8 +421,6 @@
                     if (processPriorityEvents(settings, elem, 'success', response, textStatus, jqXHR) === false) {
                         return true;
                     }
-
-                    processRevertReplace(context, settings, elem);
 
                     // --- data-output-json
                     if (settings['output-json'] !== null) {

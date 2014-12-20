@@ -4,6 +4,7 @@ parameters:
     app.process_configuration.class: Fuz\AppBundle\Service\ProcessConfiguration
     app.form.fiddle.class: Fuz\AppBundle\Form\FiddleType
     app.run_fiddle.class: Fuz\AppBundle\Service\RunFiddle
+    app.twig.debug_extension.class: Fuz\AppBundle\Twig\Extension\DebugExtension
 
 services:
 
@@ -31,3 +32,9 @@ services:
          arguments: [@logger, @filesystem, @app.process_configuration, %process%]
          tags:
              - { name: monolog.logger, channel: run_fiddle }
+
+    app.twig.debug_extension:
+         class: %app.twig.debug_extension.class%
+         arguments: []
+         tags:
+             - { name: twig.extension }
