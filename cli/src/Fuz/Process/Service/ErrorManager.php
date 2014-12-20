@@ -164,8 +164,8 @@ class ErrorManager extends BaseService
         {
             $context = array (
                     'type' => get_class($context),
-                    'at' => $context->getFile() . ':' . $context->getLine(),
                     'message' => $context->getMessage(),
+                    'at' => $context->getFile() . ':' . $context->getLine(),
             );
         }
 
