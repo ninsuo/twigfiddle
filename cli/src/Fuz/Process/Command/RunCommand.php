@@ -13,9 +13,10 @@ use Fuz\Process\Exception\StopExecutionException;
 class RunCommand extends BaseCommand
 {
 
-    protected $agent;
     protected $environmentId;
     protected $isDebug;
+    protected $agent;
+    protected $memory;
 
     protected function configure()
     {
@@ -56,20 +57,23 @@ class RunCommand extends BaseCommand
         $output->write('');
     }
 
-    protected function initErrorHandler()
+    public function initErrorHandler()
     {
+        // This storage is freed on error (case of allowed memory exhausted)
+        $this->memory = str_repeat('*', 1024 * 1024);
         register_shutdown_function(function()
         {
+            $this->memory = null;
             if ((!is_null($err = error_get_last())) && (!in_array($err['type'], array (E_NOTICE, E_WARNING))))
             {
                 $this->agent->addError(Error::E_UNEXPECTED, $err);
-                $this->get('debug_manager')->backupIfDebugRequired($this->agent);
+                $this->finish();
             }
         });
         return $this;
     }
 
-    protected function initArguments(InputInterface $input)
+    public function initArguments(InputInterface $input)
     {
         $this->environmentId = $input->getArgument('environment-id');
         $this->isDebug = $input->getOption('debug');
@@ -86,7 +90,7 @@ class RunCommand extends BaseCommand
         return $this;
     }
 
-    protected function initProcessor()
+    public function initProcessor()
     {
         $envId = $this->environmentId;
         $isDebug = $this->isDebug;
@@ -102,7 +106,7 @@ class RunCommand extends BaseCommand
         return $this;
     }
 
-    protected function process()
+    public function process()
     {
         $this->get('environment_manager')->prepareEnvironment($this->agent);
         $this->get('shared_memory_manager')->recoverFiddle($this->agent);
@@ -114,7 +118,7 @@ class RunCommand extends BaseCommand
         return $this;
     }
 
-    protected function finish()
+    public function finish()
     {
         $this->get('shared_memory_manager')->saveResults($this->agent);
         $this->get('debug_manager')->backupIfDebugRequired($this->agent);

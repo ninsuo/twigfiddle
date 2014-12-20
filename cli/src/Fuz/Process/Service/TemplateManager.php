@@ -79,7 +79,7 @@ class TemplateManager extends BaseService
             $filename = $template->getFilename();
             if (!preg_match("/{$this->templatesConfiguration['validation']}/", $filename))
             {
-                $agent->addError(Error::E_INVALID_TEMPLATE_NAME, array ('Name' => $filename));
+                $agent->addError(Error::E_INVALID_TEMPLATE_NAME, array ('name' => $filename));
                 throw new StopExecutionException();
             }
 
@@ -87,7 +87,7 @@ class TemplateManager extends BaseService
             $this->logger->debug("Writing template: {$file}.");
             if (@file_put_contents($file, $template->getContent()) === false)
             {
-                $agent->addError(Error::E_CANNOT_WRITE_TEMPLATE, array ('File' => $file));
+                $agent->addError(Error::E_CANNOT_WRITE_TEMPLATE, array ('file' => $file));
                 throw new StopExecutionException();
             }
             $files[] = $file;

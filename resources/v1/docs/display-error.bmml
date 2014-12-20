@@ -1,0 +1,35 @@
+<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="995" measuredH="333" mockupW="856" mockupH="306">
+  <controls>
+    <control controlID="1" controlTypeID="com.balsamiq.mockups::FieldSet" x="139" y="27" w="856" h="306" measuredW="200" measuredH="170" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="2" controlTypeID="com.balsamiq.mockups::Icon" x="154" y="49" w="-1" h="-1" measuredW="48" measuredH="48" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>FlagIcon%7Clarge</icon>
+      </controlProperties>
+    </control>
+    <control controlID="3" controlTypeID="com.balsamiq.mockups::Label" x="774" y="276" w="212" h="21" measuredW="212" measuredH="21" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Execution/TWIG_SYNTAX_ERROR</text>
+      </controlProperties>
+    </control>
+    <control controlID="4" controlTypeID="com.balsamiq.mockups::Title" x="217" y="55" w="754" h="-1" measuredW="567" measuredH="37" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>28</size>
+        <text>The%20given%20Twig%20code%20contains%20syntax%20error%28s%29.</text>
+      </controlProperties>
+    </control>
+    <control controlID="5" controlTypeID="com.balsamiq.mockups::DataGrid" x="154" y="121" w="817" h="128" measuredW="758" measuredH="113" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Type%2C%20Twig_Error_Syntax%0ACode%2C%200%0AAt%2C%20/Users/alain/Data/developpement/twigfiddle.com/cli/twig/uncompressed/Twig-1.16.2/lib/Twig/ExpressionParser.php%3A553%0AMessage%2C%20The%20function%20%22test%22%20does%20not%20exist%20in%20%22main.twig%22%20at%20line%201</text>
+      </controlProperties>
+    </control>
+    <control controlID="6" controlTypeID="com.balsamiq.mockups::Label" x="397" y="297" w="-1" h="-1" measuredW="589" measuredH="21" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>/Users/alain/Data/developpement/twigfiddle.com/cli/src/Fuz/Process/Service/ExecuteManager.php%3A98</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>

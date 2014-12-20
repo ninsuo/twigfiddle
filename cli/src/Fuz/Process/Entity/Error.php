@@ -48,7 +48,6 @@ class Error
     protected $group;
     protected $message;
     protected $context;
-    protected $public = true;
     protected $debug = false;
     protected $caller;
 
@@ -93,17 +92,6 @@ class Error
     public function setContext(array $context)
     {
         $this->context = $context;
-        return $this;
-    }
-
-    public function isPublic()
-    {
-        return $this->isPublic;
-    }
-
-    public function setIsPublic($isPublic)
-    {
-        $this->isPublic = $isPublic;
         return $this;
     }
 

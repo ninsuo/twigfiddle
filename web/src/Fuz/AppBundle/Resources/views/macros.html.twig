@@ -28,19 +28,65 @@
 {% endmacro %}
 
 {% macro form_general_errors(form) %}
-{% spaceless %}
-    {% if form.vars.errors|length > 0 %}
-        {% for error in form.vars.errors %}
-            <div class="error">{{ error.message }}</div>
-        {% endfor %}
-    {% endif %}
-{% endspaceless %}
+    {%- if form.vars.errors|length > 0 -%}
+        {%- for error in form.vars.errors -%}
+            <div class="error">{{- error.message -}}</div>
+        {%- endfor -%}
+    {%- endif -%}
 {% endmacro %}
 
 {% macro form_specific_errors(field) %}
     {% if field.vars.errors|length > 0 %}
         {%- for error in field.vars.errors -%}
-            <div class="control-label text-danger">{{ error.message }}</div>
+        <div class="control-label text-danger">{{ error.message }}</div>
         {%- endfor -%}
     {% endif %}
+{% endmacro %}
+
+{% macro box(color, title, message) %}
+
+    {%
+        set colors = {
+            'black': {
+                'img': asset('bundles/fuzapp/img/flags/black.gif'),
+                'background': '#DDDDDD',
+                'color': '#000000',
+            },
+            'red': {
+                'img': asset('bundles/fuzapp/img/flags/red.gif'),
+                'background': '#FFDDDD',
+                'color': '#FF0000',
+            },
+            'yellow': {
+                'img': asset('bundles/fuzapp/img/flags/yellow.gif'),
+                'background': '#FFFFDD',
+                'color': '#A76726',
+            },
+            'green': {
+                'img': asset('bundles/fuzapp/img/flags/green.gif'),
+                'background': '#DDFFDD',
+                'color': '#006600',
+            },
+            'blue': {
+                'img': asset('bundles/fuzapp/img/flags/blue.gif'),
+                'background': '#DDDDFF',
+                'color': '#000066',
+            },
+        }
+    %}
+
+    {% set config = colors[color]|default(colors['black']) %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box-style" style="background-color:{{ config.background }};color:{{ config.color }};border:1px solid {{ config.color }};">
+                <div class="text-center">
+                    <img src="{{ config.img }}" alt="{{ color|title }} Flag" class="flag" />
+                    <p><strong>{{ title }}</strong></p>
+                    <p>{{ message }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endmacro %}

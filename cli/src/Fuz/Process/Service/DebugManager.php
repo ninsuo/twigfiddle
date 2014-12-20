@@ -56,6 +56,7 @@ class DebugManager extends BaseService
         $directory = $this->debugConfiguration['directory'];
         $timestamp = strtotime("-{$this->debugConfiguration['expiry']} hours");
         $elements = $this->fileSystem->getFilesAndDirectoriesOlderThan($directory, $timestamp);
+        unset($elements[array_search('.gitkeep', $elements)]);
         $this->fileSystem->remove($elements);
         $this->logger->debug(sprintf("Cleaned expired debug environments: %d environments removed.", count($elements)));
     }

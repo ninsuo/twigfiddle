@@ -7,6 +7,7 @@
 3. MARGIN
 4. RESPONSIVE FIX
 5. LOGIN
+6. FIDDLE
 */
 
 /******************************************************/
@@ -74,10 +75,6 @@ img {
     padding:20px 0 20px 0;
     background:url(../img/background/bg_t_11.png) repeat;
 }
-.result {
-    padding:10px 0 20px 0;
-    background:url(../img/background/bg_t_11.png) repeat;
-}
 #footernav {
     padding:10px 0 20px 0;
 }
@@ -112,6 +109,12 @@ img {
 }
 .box-style:empty {
     display:none;
+}
+
+.flag {
+    width: 50px;
+    height: 40px;
+    margin: 10px;
 }
 /******************************************************/
 /********************* MARGIN *************************/
@@ -185,4 +188,11 @@ img {
 
 #login div.oauth:hover {
     border: 1px solid #85c128;
+}
+/******************************************************/
+/************** FIDDLE ********************/
+/******************************************************/
+.error-box {
+    background-color: #eee;
+    color: #555;
 }

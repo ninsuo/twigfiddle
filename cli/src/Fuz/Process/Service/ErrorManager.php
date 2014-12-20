@@ -13,161 +13,138 @@ class ErrorManager extends BaseService
                     'group' => Error::G_GENERAL,
                     'message' => "An unknwon error occured.",
                     'logger' => 'error',
-                    'public' => false,
                     'debug' => true,
             ),
             Error::E_UNEXPECTED => array (
                     'group' => Error::G_GENERAL,
                     'message' => "An unexpected error occured.",
                     'logger' => 'error',
-                    'public' => false,
                     'debug' => true,
             ),
             Error::E_TIMEOUT => array (
                     'group' => Error::G_GENERAL,
                     'message' => "Maximum execution timeout was reached.",
                     'logger' => 'info',
-                    'public' => true,
                     'debug' => false,
             ),
             Error::E_INVALID_ENVIRONMENT_ID => array (
                     'group' => Error::G_ENVIRONMENT,
                     'message' => "The given environment ID does not match with the expected format.",
                     'logger' => 'warning',
-                    'public' => false,
                     'debug' => false,
             ),
             Error::E_UNEXISTING_ENVIRONMENT_ID => array (
                     'group' => Error::G_ENVIRONMENT,
                     'message' => "The given environment ID does not have an associated directory.",
                     'logger' => 'warning',
-                    'public' => false,
                     'debug' => false,
             ),
             Error::E_UNEXISTING_SHARED_MEMORY => array (
                     'group' => Error::G_ENVIRONMENT,
                     'message' => "The envrionment's shared memory does not exist.",
                     'logger' => 'warning',
-                    'public' => false,
                     'debug' => false,
             ),
             Error::E_UNREADABLE_SHARED_MEMORY => array (
                     'group' => Error::G_ENVIRONMENT,
                     'message' => "The envrionment's shared memory is not readable.",
                     'logger' => 'error',
-                    'public' => false,
                     'debug' => false,
             ),
             Error::E_FIDDLE_ALREADY_RUN => array (
                     'group' => Error::G_ENVIRONMENT,
                     'message' => "This fiddle has already been started.",
                     'logger' => 'info',
-                    'public' => true,
                     'debug' => false,
             ),
             Error::E_FIDDLE_NOT_STORED => array (
                     'group' => Error::G_ENVIRONMENT,
                     'message' => "Fiddle not found in the shared object.",
                     'logger' => 'error',
-                    'public' => false,
                     'debug' => false,
             ),
             Error::E_UNKNOWN_CONTEXT_FORMAT => array (
                     'group' => Error::G_CONTEXT,
                     'message' => "The given context format is not supported.",
                     'logger' => 'error',
-                    'public' => true,
                     'debug' => true,
             ),
             Error::E_INVALID_CONTEXT_SYNTAX => array (
                     'group' => Error::G_CONTEXT,
                     'message' => "Unable to convert the given twig context to an array.",
                     'logger' => 'info',
-                    'public' => true,
                     'debug' => false,
             ),
             Error::E_NO_TEMPLATE => array (
                     'group' => Error::G_TEMPLATE,
                     'message' => "This fiddle does not contain any template.",
                     'logger' => 'warning',
-                    'public' => true,
                     'debug' => false,
             ),
             Error::E_NO_MAIN_TEMPLATE => array (
                     'group' => Error::G_TEMPLATE,
                     'message' => "This fiddle does not have a main template.",
                     'logger' => 'warning',
-                    'public' => true,
                     'debug' => false,
             ),
             Error::E_SEVERAL_MAIN_TEMPLATES => array (
                     'group' => Error::G_TEMPLATE,
                     'message' => "This fiddle has several main templates.",
                     'logger' => 'warning',
-                    'public' => true,
                     'debug' => false,
             ),
             Error::E_INVALID_TEMPLATE_NAME => array (
                     'group' => Error::G_TEMPLATE,
                     'message' => "Invalid template name.",
                     'logger' => 'warning',
-                    'public' => true,
                     'debug' => false,
             ),
             Error::E_CANNOT_WRITE_TEMPLATE => array (
                     'group' => Error::G_TEMPLATE,
                     'message' => "Unable to write template.",
                     'logger' => 'error',
-                    'public' => false,
                     'debug' => true,
             ),
             Error::E_ENGINE_NOT_FOUND => array (
                     'group' => Error::G_EXECUTION,
                     'message' => "The Twig version you requested is not implemented.",
                     'logger' => 'warning',
-                    'public' => true,
                     'debug' => false,
             ),
             Error::E_EXECUTION_FAILURE => array (
                     'group' => Error::G_EXECUTION,
                     'message' => "The fiddle execution failed.",
                     'logger' => 'info',
-                    'public' => true,
                     'debug' => false,
             ),
             Error::E_TWIG_LOADER_ERROR => array (
                     'group' => Error::G_EXECUTION,
                     'message' => "The Twig Loader thrown an exception.",
                     'logger' => 'info',
-                    'public' => true,
                     'debug' => false,
             ),
             Error::E_TWIG_SYNTAX_ERROR => array (
                     'group' => Error::G_EXECUTION,
                     'message' => "The given Twig code contains syntax error(s).",
                     'logger' => 'info',
-                    'public' => true,
                     'debug' => false,
             ),
             Error::E_TWIG_RUNTIME_ERROR => array (
                     'group' => Error::G_EXECUTION,
                     'message' => "A Twig's runtime exception has been trown.",
                     'logger' => 'info',
-                    'public' => true,
                     'debug' => false,
             ),
             Error::E_UNKNOWN_COMPILED_FILE => array (
                     'group' => Error::G_EXECUTION,
                     'message' => "Can't get template name from a compiled file.",
                     'logger' => 'error',
-                    'public' => true,
                     'debug' => true,
             ),
             Error::E_UNEXPECTED_COMPILED_FILE => array (
                     'group' => Error::G_EXECUTION,
                     'message' => "Got an unexpected template name.",
                     'logger' => 'error',
-                    'public' => true,
                     'debug' => true,
             ),
     );
@@ -186,10 +163,9 @@ class ErrorManager extends BaseService
         if ((is_object($context) && ($context instanceof \Exception)))
         {
             $context = array (
-                    'Type' => get_class($context),
-                    'Code' => $context->getCode(),
-                    'At' => $context->getFile() . ':' . $context->getLine(),
-                    'Message' => $context->getMessage(),
+                    'type' => get_class($context),
+                    'at' => $context->getFile() . ':' . $context->getLine(),
+                    'message' => $context->getMessage(),
             );
         }
 
@@ -203,7 +179,6 @@ class ErrorManager extends BaseService
         $error->setGroup($details['group']);
         $error->setMessage($details['message']);
         $error->setContext($context);
-        $error->setIsPublic($details['public']);
         $error->setIsDebug($details['debug']);
         $error->setCaller($caller);
 

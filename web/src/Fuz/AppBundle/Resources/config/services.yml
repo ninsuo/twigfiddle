@@ -5,6 +5,7 @@ parameters:
     app.form.fiddle.class: Fuz\AppBundle\Form\FiddleType
     app.run_fiddle.class: Fuz\AppBundle\Service\RunFiddle
     app.twig.debug_extension.class: Fuz\AppBundle\Twig\Extension\DebugExtension
+    app.twig.safety_extension.class: Fuz\AppBundle\Twig\Extension\SafetyExtension
 
 services:
 
@@ -36,5 +37,11 @@ services:
     app.twig.debug_extension:
          class: %app.twig.debug_extension.class%
          arguments: []
+         tags:
+             - { name: twig.extension }
+
+    app.twig.safety_extension:
+         class: %app.twig.safety_extension.class%
+         arguments: [%kernel.root_dir%]
          tags:
              - { name: twig.extension }

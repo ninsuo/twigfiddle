@@ -38,7 +38,7 @@ class EngineManager extends BaseService
         $engine = $this->findRightEngine($version);
         if (is_null($engine))
         {
-            $agent->addError(Error::E_ENGINE_NOT_FOUND, array ('Version' => $version));
+            $agent->addError(Error::E_ENGINE_NOT_FOUND, array ('version' => $version));
             throw new StopExecutionException();
         }
 

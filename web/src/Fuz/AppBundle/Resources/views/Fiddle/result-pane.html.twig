@@ -1,32 +1,50 @@
 {# FuzAppBundle:Fiddle:data-pane.html.twig #}
 
+{% import "FuzAppBundle::macros.html.twig" as macros %}
+
+{% if data.result == null %}
+
+    {# Technical error #}
+    {{ macros.box('black', 'A fatal error occured', 'The response do not contain anything to display, even errors.') }}
+
+{% else %}
+
+    {# Functional errors #}
+    {% if data.result.errors %}
+
+        {% for error in data.result.errors %}
+            {{ include("FuzAppBundle:Fiddle:result-error.html.twig") }}
+        {% endfor %}
+
+    {% endif %}
+
+    {# Result #}
+
+    {% if data.result.rendered %}
+
+    {% endif %}
+
+    {# Compiled files #}
+    {% if data.result.compiled %}
+
+    {% endif %}
+
+    {# Duration #}
+    {% if data.duration %}
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon">Duration</div>
+                        <p class="form-control text-right">{{ data.duration }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {% endif %}
+
+{% endif %}
+
 {{ dump(data) }}
-
-{# Errors #}
-
-{% if data.result.errors %}
-
-{% endif %}
-
-{# Result #}
-
-{% if data.result.rendered %}
-
-{% endif %}
-
-{# Compiled files #}
-{% if data.result.compiled %}
-
-{% endif %}
-
-
-{# Duration #}
-{% if data.duration %}
-
-<div class="row">
-
-
-
-</div>
-
-{% endif %}

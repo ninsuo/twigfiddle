@@ -41,12 +41,12 @@ class CompiledManager extends BaseService
 
             if (is_null($template))
             {
-                $agent->addError(Error::E_UNKNOWN_COMPILED_FILE, array ('File' => $compiledFile));
+                $agent->addError(Error::E_UNKNOWN_COMPILED_FILE, array ('file' => $compiledFile));
             }
 
             if (!in_array($template, array_map('basename', $agent->getTemplates())))
             {
-                $agent->addError(Error::E_UNEXPECTED_COMPILED_FILE, array ('File' => $compiledFile));
+                $agent->addError(Error::E_UNEXPECTED_COMPILED_FILE, array ('file' => $compiledFile));
             }
 
             $compiled[$template] = $content;

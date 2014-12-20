@@ -1,0 +1,64 @@
+{# FuzAppBundle:Fiddle:data-pane.html.twig #}
+
+{% set GENERAL = constant('Fuz\\Process\\Entity\\Error::G_GENERAL') %}
+{% set ENVIRONMENT = constant('Fuz\\Process\\Entity\\Error::G_ENVIRONMENT') %}
+{% set CONTEXT = constant('Fuz\\Process\\Entity\\Error::G_CONTEXT') %}
+{% set TEMPLATE = constant('Fuz\\Process\\Entity\\Error::G_TEMPLATE') %}
+{% set EXECUTION = constant('Fuz\\Process\\Entity\\Error::G_EXECUTION') %}
+
+{% if error.group == GENERAL %}
+    {% set color = 'black' %}
+{% elseif error.group == ENVIRONMENT %}
+    {% set color = 'black' %}
+{% elseif error.group == CONTEXT %}
+    {% set color = 'yellow' %}
+{% elseif error.group == TEMPLATE %}
+    {% set color = 'blue' %}
+{% elseif error.group == EXECUTION %}
+    {% set color = 'red' %}
+{% else %}
+    {% set color = 'black' %}
+{% endif %}
+
+<div class="row">
+
+    {# Flag #}
+    <div class="col-md-2 col-sm-2 col-xs-2">
+        <img src="{{ asset('bundles/fuzapp/img/flags/' ~ color ~ '.gif') }}" alt="{{ color|title }} Flag" class="flag" />
+    </div>
+
+    {# Title #}
+    <div class="col-md-10 col-sm-10 col-xs-10">
+        <div class="text-center lead">
+            {{ error.message }}
+        </div>
+    </div>
+
+    {# Context table #}
+    {% if error.context|length %}
+
+        <table class="table table-striped">
+            {% set count = 1 %}
+            {% for key, value in error.context %}
+                <tr>
+                    <td>#{{ count }}</td>
+                    <td>{{ key|title }}</td>
+                    <td>{{ value|hide_project_path }}</td>
+                </tr>
+                {% set count = count + 1 %}
+            {% endfor %}
+        </table>
+
+    {% endif %}
+
+    {# Exception pushed by... #}
+    <div class="col-md-12 error-box">
+        <p class="text-right small">{{ error.group|title ~ '/' ~ error.no }}</p>
+        <p class="text-right small">{{ error.caller|hide_project_path }}</p>
+    </div>
+
+</div>
+
+<div class="clear">&nbsp;</div>
+
+

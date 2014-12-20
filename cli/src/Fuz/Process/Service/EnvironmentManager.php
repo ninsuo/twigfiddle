@@ -42,6 +42,7 @@ class EnvironmentManager extends BaseService
         $directory = $this->environmentConfiguration['directory'];
         $timestamp = strtotime("-{$this->environmentConfiguration['expiry']} hours");
         $elements = $this->fileSystem->getFilesAndDirectoriesOlderThan($directory, $timestamp);
+        unset($elements[array_search('.gitkeep', $elements)]);
         $this->fileSystem->remove($elements);
         $this->logger->debug(sprintf("Cleaned expired environments: %d environments removed.", count($elements)));
         return $this;
@@ -52,7 +53,7 @@ class EnvironmentManager extends BaseService
         $env_id = $agent->getEnvironmentId();
         if (!preg_match("/{$this->environmentConfiguration['validation']}/", $env_id))
         {
-            $agent->addError(Error::E_INVALID_ENVIRONMENT_ID, array ('Environment ID' => $env_id));
+            $agent->addError(Error::E_INVALID_ENVIRONMENT_ID, array ('environment id' => $env_id));
             throw new StopExecutionException();
         }
         return $this;
@@ -74,7 +75,7 @@ class EnvironmentManager extends BaseService
 
         if (!is_dir($realPath))
         {
-            $agent->addError(Error::E_UNEXISTING_ENVIRONMENT_ID, array ('Environment ID' => $env_id));
+            $agent->addError(Error::E_UNEXISTING_ENVIRONMENT_ID, array ('environment id' => $env_id));
             throw new StopExecutionException();
         }
 

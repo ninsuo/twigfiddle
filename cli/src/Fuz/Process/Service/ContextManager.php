@@ -32,7 +32,8 @@ class ContextManager extends BaseService
         if (strlen(str_replace(array (' ', "\n", "\r", "\t"), '', $content)) == 0)
         {
             $this->logger->debug("No context to extract.");
-            return array ();
+            $agent->setContext(array ());
+            return $this;
         }
 
         $this->logger->debug("Extracting Twig context from format: {$format}.");
@@ -42,7 +43,7 @@ class ContextManager extends BaseService
         }
         catch (\InvalidArgumentException $ex)
         {
-            $agent->addError(Error::E_UNKNOWN_CONTEXT_FORMAT, array ('Format' => $format));
+            $agent->addError(Error::E_UNKNOWN_CONTEXT_FORMAT, array ('format' => $format));
             throw new StopExecutionException();
         }
         catch (\LogicException $ex)
