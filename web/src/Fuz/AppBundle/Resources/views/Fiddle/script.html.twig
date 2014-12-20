@@ -196,27 +196,35 @@ $(document).ready(function() {
 
 });
 
+{#
+ #  Function called before "Run" button is going to be proceeded
+ #  Used in FuzAppBundle:Fiddle:index.html.twig
+ #}
+function beforeRunFiddle(elem) {
+    $('.error-container').html('');
+}
 
-    {#
-     #  Ajax response handler used by the "Run" button
-     #  Used in FuzAppBundle:Fiddle:index.html.twig
-     #}
-    function processRunFiddleResponse(elem, response) {
+{#
+ #  Ajax response handler used by the "Run" button
+ #  Used in FuzAppBundle:Fiddle:index.html.twig
+ #}
+function processRunFiddleResponse(elem, response) {
+    if (undefined !== response.errors) {
+        $.symfony2.dispatchErrors(response.errors);
+    }
+    if (undefined !== response.result) {
+        $('#result-pane').html(response.result);
+    }
+    return true;
+};
 
-    $('#result').html(response);
+{#
+ #  Ajax error handler
+ #  Used in FuzAppBundle:Fiddle:index.html.twig
+ #}
+function handleAjaxErrors(elem, errorThrown) {
+    $('#general-errors').html("We're sorry, but an error occured...");
+};
 
-//        $.symfony2.dispatchErrors(response.errors);
-
-    };
-
-    {#
-     #  Ajax error handler
-     #  Used in FuzAppBundle:Fiddle:index.html.twig
-     #}
-    function handleAjaxErrors(elem, errorThrown) {
-
-        // todo
-
-    };
 
 </script>

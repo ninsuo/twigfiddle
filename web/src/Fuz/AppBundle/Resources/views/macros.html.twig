@@ -28,16 +28,13 @@
 {% endmacro %}
 
 {% macro form_general_errors(form) %}
+{% spaceless %}
     {% if form.vars.errors|length > 0 %}
-        <div class="row" id="errors">
-            <div class="col-md-12 alert alert-danger text-center">
-                {% for error in form.vars.errors %}
-                    <div class="error">{{ error.message }}</div>
-                {% endfor %}
-            </div>
-            <div>&nbsp;</div>
-        </div>
+        {% for error in form.vars.errors %}
+            <div class="error">{{ error.message }}</div>
+        {% endfor %}
     {% endif %}
+{% endspaceless %}
 {% endmacro %}
 
 {% macro form_specific_errors(field) %}

@@ -47,24 +47,28 @@ class FiddleController extends BaseController
                 'revision' => $revision,
         );
 
-        $repository = $this->getDoctrine()
-           ->getRepository('FuzAppBundle:Fiddle');
+        $data = $this
+           ->getDoctrine()
+           ->getRepository('FuzAppBundle:Fiddle')
+           ->getFiddle($hash, $revision, $this->getUser())
+        ;
 
-        $data = $repository->getFiddle($hash, $revision, $this->getUser());
         $form = $this->createForm('FiddleType', $data);
         $form->handleRequest($request);
 
         if ($form->isValid())
         {
-            $response['result'] = $this->get('app.run_fiddle')->run($data);
+            $result = $this->get('app.run_fiddle')->run($data);
+
+            $response['result'] = $this
+               ->get('templating')
+               ->render('FuzAppBundle:Fiddle:result-pane.html.twig', array ('result' => $result))
+            ;
         }
         else
         {
             $response['errors'] = $this->getErrorMessagesAjaxFormat($form);
         }
-
-        $this->dump($response);
-        die();
 
         return new JsonResponse($response);
     }
@@ -90,10 +94,12 @@ class FiddleController extends BaseController
      */
     public function indexAction($hash, $revision)
     {
-        $repository = $this->getDoctrine()
-           ->getRepository('FuzAppBundle:Fiddle');
+        $data = $this
+           ->getDoctrine()
+           ->getRepository('FuzAppBundle:Fiddle')
+           ->getFiddle($hash, $revision, $this->getUser())
+        ;
 
-        $data = $repository->getFiddle($hash, $revision, $this->getUser());
         $form = $this->createForm('FiddleType', $data);
 
         return array (

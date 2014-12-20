@@ -23,21 +23,27 @@
     class="btn btn-primary domajax click"
     data-endpoint="{{ path('run_fiddle', {'hash': hash, 'revision': revision}) }}"
     data-input="#page-container"
+    data-callback-before="beforeRunFiddle"
     data-callback-success="processRunFiddleResponse"
     data-callback-failure="handleAjaxErrors"
     data-lock="#actions"
-    data-replace="#results"
+    data-replace="#result-pane"
     data-replace-by="#wait"
 ><span class="glyphicon glyphicon glyphicon-play hidden-md hidden-sm hidden-xs"></span> Run</button>
 
 <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon glyphicon-floppy-disk hidden-md hidden-sm hidden-xs"></span> Save</button>
 
-<button type="button" class="btn btn-primary"><span class="glyphicon glyphicon glyphicon-floppy-disk hidden-md hidden-sm hidden-xs"></span> Share</button>
+<button type="button" class="btn btn-primary"><span class="glyphicon glyphicon glyphicon-share-alt hidden-md hidden-sm hidden-xs"></span> Share</button>
 {% endblock %}
 
 {% block content %}
 
-<div class="error-container" id="general-errors">{{ macros.form_general_errors(form) }}</div>
+{# General errors #}
+<div class="row">
+    <div class="col-md-12">
+        <div id="general-errors" class="error-container control-label box-style text-center bg-danger alert alert-danger">{{ macros.form_general_errors(form) }}</div>
+    </div>
+</div>
 
 {# Revision browser, title, tags #}
 <div class="row">
@@ -76,7 +82,10 @@
             {{ include('FuzAppBundle:Fiddle:context-pane.html.twig') }}
         </div>
 
-        <div id="result"></div>
+        <div class="clearfix">&nbsp;</div>
+
+        <div id="result-pane"></div>
+
 
         {#
         <div class="clearfix">&nbsp;</div>
