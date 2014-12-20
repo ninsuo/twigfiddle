@@ -75,7 +75,16 @@ class ExecuteManager extends BaseService
         return $cacheDirectory;
     }
 
-    protected function treatError(FiddleAgent $agent, $ex)
+    /**
+     * We cannot catch all kind of exceptions using a normal way
+     * as old Twig versions do not distinguish Twig errors and
+     * just thrown \Twig_Error.
+     *
+     * @param FiddleAgent $agent
+     * @param \Exception $ex
+     * @return \Fuz\Process\Service\ExecuteManager
+     */
+    protected function treatError(FiddleAgent $agent, \Exception $ex)
     {
         $no = null;
 

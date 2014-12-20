@@ -88,3 +88,5 @@ fuz_app:
             - %twigfiddle_process_root_dir%/config/services.yml
         command: /usr/bin/php %twigfiddle_process_root_dir%/run-%kernel.environment%.php twigfiddle:run:timeout <env_id> %twigfiddle_process_timeout%
         apc_cache_key: twigfiddle.process
+        github_repository_root: %github_repository_root%
+

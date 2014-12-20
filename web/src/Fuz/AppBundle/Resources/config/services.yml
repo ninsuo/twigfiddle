@@ -6,6 +6,7 @@ parameters:
     app.run_fiddle.class: Fuz\AppBundle\Service\RunFiddle
     app.twig.debug_extension.class: Fuz\AppBundle\Twig\Extension\DebugExtension
     app.twig.safety_extension.class: Fuz\AppBundle\Twig\Extension\SafetyExtension
+    app.twig.github_extension.class: Fuz\AppBundle\Twig\Extension\GitHubExtension
 
 services:
 
@@ -43,5 +44,11 @@ services:
     app.twig.safety_extension:
          class: %app.twig.safety_extension.class%
          arguments: [%kernel.root_dir%]
+         tags:
+             - { name: twig.extension }
+
+    app.twig.github_extension:
+         class: %app.twig.github_extension.class%
+         arguments: [%github_repository_root%]
          tags:
              - { name: twig.extension }
