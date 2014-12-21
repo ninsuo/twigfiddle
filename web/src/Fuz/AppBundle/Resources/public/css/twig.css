@@ -193,7 +193,7 @@ img {
 /******************************************************/
 /************** FIDDLE ********************/
 /******************************************************/
-.error-box {
+.result-box {
     background-color: #eee;
     color: #555;
     padding: 15px;
@@ -203,10 +203,11 @@ img {
     height: 40px;
     margin: 10px;
 }
-.error-box .flag {
+.result-box .flag {
     position:relative;
     top:-10px;
 }
 pre.compiled-code {
     padding: 10px !important;
+    
 }

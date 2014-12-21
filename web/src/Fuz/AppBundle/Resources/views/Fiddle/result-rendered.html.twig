@@ -1,0 +1,18 @@
+{# FuzAppBundle:Fiddle:result-rendered.html.twig #}
+
+{% set templates = data.result.compiled|keys %}
+
+<div class="result-box">
+
+    <div class="form-group">
+        <div class="input-group">
+            <div class="input-group-addon">Rendered</div>
+            <p class="form-control">{{ templates[0] }}</p>
+        </div>
+    </div>
+
+    <pre>{{ data.result.rendered }}</pre>
+
+</div>
+
+<div class="clear">&nbsp;</div>

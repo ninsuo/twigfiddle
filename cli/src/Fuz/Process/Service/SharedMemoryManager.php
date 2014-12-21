@@ -94,6 +94,7 @@ class SharedMemoryManager extends BaseService
         $this->logger->debug("Storing Fiddle's results in shared memory.");
 
         $result = new Result();
+        $result->setContext($agent->getContext());
         $result->setRendered($agent->getRendered());
         $result->setCompiled($agent->getCompiled());
         $result->setErrors($agent->getErrors());

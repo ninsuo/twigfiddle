@@ -15,9 +15,13 @@
     {% endif %}
 
     {# Result #}
-
     {% if data.result.rendered %}
+        {{ include("FuzAppBundle:Fiddle:result-rendered.html.twig") }}
+    {% endif %}
 
+    {# Context #}
+    {% if data.result.context %}
+        {{ include("FuzAppBundle:Fiddle:result-context.html.twig") }}
     {% endif %}
 
     {# Compiled files #}
@@ -27,20 +31,7 @@
 
     {# Duration #}
     {% if data.duration %}
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <div class="input-group">
-                        <div class="input-group-addon">Duration</div>
-                        <p class="form-control text-right">{{ data.duration }}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        {{ include("FuzAppBundle:Fiddle:result-compiled.html.twig") }}
     {% endif %}
 
 {% endif %}
-
-{{ dump(data) }}

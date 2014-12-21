@@ -5,9 +5,21 @@ namespace Fuz\Process\Entity;
 class Result
 {
 
+    protected $context;
     protected $rendered;
     protected $compiled;
     protected $errors;
+
+    public function setContext(array $context)
+    {
+        $this->context = $context;
+        return $this;
+    }
+
+    public function getContext()
+    {
+        return $this->context;
+    }
 
     public function setRendered($rendered)
     {
