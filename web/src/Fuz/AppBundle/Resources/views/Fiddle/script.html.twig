@@ -235,10 +235,9 @@ function handleAjaxErrors(elem, errorThrown) {
 function changeCompiledCode() {
     $('.compiled-code').addClass('hide');
     var id = $( "#compiled-switcher option:selected" ).val();
-    alert(id);
     $('#compiled-' + id).removeClass('hide');
 }
-$('#compiled-switcher').change(function() {
+$('body').on('change', '#compiled-switcher', function() {
     changeCompiledCode();
 });
 

@@ -53,7 +53,17 @@ class CompiledManager extends BaseService
             $this->logger->debug("Extracted {$template} from {$compiledFile}");
         }
 
-        $agent->setCompiled($compiled);
+        $orderedCompiled = array();
+        foreach ($agent->getTemplates() as $templatePath)
+        {
+            $template = basename($templatePath);
+            if (array_key_exists($template, $compiled))
+            {
+                $orderedCompiled[$template] = $compiled[$template];
+            }
+        }
+
+        $agent->setCompiled($orderedCompiled);
         return $this;
     }
 

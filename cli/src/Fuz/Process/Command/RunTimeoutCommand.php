@@ -100,7 +100,7 @@ class RunTimeoutCommand extends BaseCommand
         return $this;
     }
 
-    public function saveError($errno, \Exception $e)
+    public function saveError($errno, $e)
     {
         $agent = $this
            ->get('fiddle_agent')

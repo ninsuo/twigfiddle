@@ -43,7 +43,7 @@ class RunFiddle
            ->createSharedObject($fiddle)
            ->execute()
            ->fetchResult($result)
-           ->clearEnvironment()
+           //->clearEnvironment()
         ;
 
         return $result;
@@ -96,6 +96,8 @@ class RunFiddle
         $builder = new ProcessBuilder(explode(' ', $command));
 
         $this->process = $builder->getProcess();
+        $commandLine = $this->process->getCommandLine();
+        $this->logger->info("Execute fiddle {$this->envId}: {$commandLine}");
 
         $this->process
            ->disableOutput()
