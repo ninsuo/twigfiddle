@@ -1,4 +1,4 @@
-{# FuzAppBundle:Fiddle:data-pane.html.twig #}
+{# FuzAppBundle:Fiddle:result-pane.html.twig #}
 
 {% import "FuzAppBundle::macros.html.twig" as macros %}
 
@@ -11,11 +11,7 @@
 
     {# Functional errors #}
     {% if data.result.errors %}
-
-        {% for error in data.result.errors %}
-            {{ include("FuzAppBundle:Fiddle:result-error.html.twig") }}
-        {% endfor %}
-
+        {{ include("FuzAppBundle:Fiddle:result-error.html.twig") }}
     {% endif %}
 
     {# Result #}
@@ -26,7 +22,7 @@
 
     {# Compiled files #}
     {% if data.result.compiled %}
-
+        {{ include("FuzAppBundle:Fiddle:result-compiled.html.twig") }}
     {% endif %}
 
     {# Duration #}

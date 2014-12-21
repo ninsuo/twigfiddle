@@ -1,0 +1,24 @@
+{# FuzAppBundle:Fiddle:result-compiled.html.twig #}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-addon">Compiled</div>
+                <select id="compiled-switcher" class="form-control">
+                    {% for filename, code in data.result.compiled %}
+                        <option value="{{ filename | sha1 }}">{{ filename }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        {% for filename, code in data.result.compiled %}
+            <pre id="compiled-{{ filename | sha1 }}" class="prettyprint compiled-code">{{ code }}</pre>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="clear">&nbsp;</div>
+

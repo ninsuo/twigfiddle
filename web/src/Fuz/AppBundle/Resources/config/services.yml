@@ -7,6 +7,7 @@ parameters:
     app.twig.debug_extension.class: Fuz\AppBundle\Twig\Extension\DebugExtension
     app.twig.safety_extension.class: Fuz\AppBundle\Twig\Extension\SafetyExtension
     app.twig.github_extension.class: Fuz\AppBundle\Twig\Extension\GitHubExtension
+    app.twig.hash_extension.class: Fuz\AppBundle\Twig\Extension\HashExtension
 
 services:
 
@@ -50,5 +51,11 @@ services:
     app.twig.github_extension:
          class: %app.twig.github_extension.class%
          arguments: [%github_repository_root%]
+         tags:
+             - { name: twig.extension }
+
+    app.twig.hash_extension:
+         class: %app.twig.hash_extension.class%
+         arguments: []
          tags:
              - { name: twig.extension }

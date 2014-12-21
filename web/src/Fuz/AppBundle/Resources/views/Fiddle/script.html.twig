@@ -214,6 +214,8 @@ function processRunFiddleResponse(elem, response) {
     }
     if (undefined !== response.result) {
         $('#result-pane').html(response.result);
+        prettyPrint();
+        changeCompiledCode();
     }
     return true;
 };
@@ -225,5 +227,19 @@ function processRunFiddleResponse(elem, response) {
 function handleAjaxErrors(elem, errorThrown) {
     $('#general-errors').html("We're sorry, but an error occured...");
 };
+
+{#
+ #  Compiled code switcher
+ #  Used in FuzAppBundle:Fiddle:result-compiled.html.twig
+ #}
+function changeCompiledCode() {
+    $('.compiled-code').addClass('hide');
+    var id = $( "#compiled-switcher option:selected" ).val();
+    alert(id);
+    $('#compiled-' + id).removeClass('hide');
+}
+$('#compiled-switcher').change(function() {
+    changeCompiledCode();
+});
 
 </script>

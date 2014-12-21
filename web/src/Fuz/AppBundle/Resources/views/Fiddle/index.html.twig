@@ -3,6 +3,7 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{{ asset('bundles/fuzapp/codemirror-4.8/lib/codemirror.css') }}" />
+<link rel="stylesheet" href="{{ asset('bundles/fuzapp/google-code-prettify/prettify.css') }}">
 {% endblock %}
 
 {% block header_left %}
@@ -133,6 +134,9 @@
 {% block extra_js %}
 <script type="text/javascript" src="{{ asset('bundles/fuzapp/js/jquery.symfony2.js') }}"></script>
 <script type="text/javascript" src="{{ asset('bundles/fuzapp/js/jquery.domajax.js') }}"></script>
+
+<script type="text/javascript" src="{{ asset('bundles/fuzapp/google-code-prettify/prettify.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fuzapp/google-code-prettify/run_prettify.js') }}"></script>
 
 <script type="text/javascript" src="{{ asset('bundles/fuzapp/codemirror-4.8/lib/codemirror.js') }}"></script>
 <script type="text/javascript" src="{{ asset('bundles/fuzapp/codemirror-4.8/mode/jinja2/jinja2.js') }}"></script>

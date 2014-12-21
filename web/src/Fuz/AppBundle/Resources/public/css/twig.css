@@ -207,3 +207,6 @@ img {
     position:relative;
     top:-10px;
 }
+pre.compiled-code {
+    padding: 10px !important;
+}
