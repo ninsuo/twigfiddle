@@ -1,0 +1,24 @@
+<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="1136" measuredH="499" mockupW="910" mockupH="471">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::FieldSet" x="226" y="28" w="910" h="471" measuredW="200" measuredH="170" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="5" controlTypeID="com.balsamiq.mockups::TextArea" x="241" y="85" w="880" h="390" measuredW="200" measuredH="140" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>%3C%3Fphp%0A%20%0A/*%20main.twig%20*/%0Aclass%20__TwigTemplate_b937e997faac806762801a86d9f405141fe676b531c9a6a7314b87065ce3f892%20extends%20Twig_Template%0A%7B%0A%20%20%20%20public%20function%20__construct%28Twig_Environment%20%24env%29%0A%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20parent%3A%3A__construct%28%24env%29%3B%0A%20%0A%20%20%20%20%20%20%20%20%24this-%3Eparent%20%3D%20false%3B%0A%20%0A%20%20%20%20%20%20%20%20%24this-%3Eblocks%20%3D%20array%28%0A%20%20%20%20%20%20%20%20%29%3B%0A%20%20%20%20%7D%0A%20%0A%20%20%20%20protected%20function%20doDisplay%28array%20%24context%2C%20array%20%24blocks%20%3D%20array%28%29%29%0A%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20//%20line%201%0A%20%20%20%20%20%20%20%20echo%20%22Hello%2C%20%22%3B%0A%20%20%20%20%20%20%20%20echo%20twig_escape_filter%28%24this-%3Eenv%2C%20%28isset%28%24context%5B%22name%22%5D%29%20%3F%20%24context%5B%22name%22%5D%20%3A%20null%29%2C%20%22html%22%2C%20null%2C%20true%29%3B%0A%20%20%20%20%7D%0A%20%0A%20%20%20%20public%20function%20getTemplateName%28%29%0A%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20return%20%22main.twig%22%3B%0A%20%20%20%20%7D%0A%20%0A%20%20%20%20public%20function%20isTraitable%28%29%0A%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20return%20false%3B%0A%20%20%20%20%7D%0A%20%0A%20%20%20%20public%20function%20getDebugInfo%28%29%0A%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20return%20array%20%28%20%2019%20%3D%3E%201%2C%29%3B%0A%20%20%20%20%7D%0A%7D</text>
+      </controlProperties>
+    </control>
+    <control controlID="6" controlTypeID="com.balsamiq.mockups::TextInput" x="241" y="51" w="-1" h="-1" measuredW="66" measuredH="27" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Compiled</text>
+      </controlProperties>
+    </control>
+    <control controlID="7" controlTypeID="com.balsamiq.mockups::TextInput" x="313" y="51" w="808" h="-1" measuredW="65" measuredH="27" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>main.twig</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>
