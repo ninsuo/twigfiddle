@@ -47,6 +47,12 @@ class FiddleRepository extends EntityRepository
                 $fiddle = new Fiddle();
                 $fiddle->setHash($hash);
             }
+            else
+            {
+                $fiddle->setVisitsCount($fiddle->getVisitsCount() + 1);
+                $this->_em->persist($fiddle);
+                $this->_em->flush();
+            }
         }
         else
         {

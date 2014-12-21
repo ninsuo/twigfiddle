@@ -198,10 +198,12 @@ img {
     color: #555;
     padding: 15px;
 }
-.error-box .flag {
+.flag {
     width: 50px;
     height: 40px;
     margin: 10px;
+}
+.error-box .flag {
     position:relative;
     top:-10px;
 }

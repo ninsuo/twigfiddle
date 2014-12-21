@@ -435,6 +435,7 @@ class Fiddle
         {
             $template->setFiddle($this);
         }
+        $this->context->setFiddle($this);
     }
 
     /**
@@ -443,7 +444,6 @@ class Fiddle
     public function onPreUpdate()
     {
         $this->setUpdateTm(new \DateTime());
-        $this->setVisitsCount($this->visitsCount + 1);
         foreach ($this->templates as $template)
         {
             $template->setFiddle($this);
