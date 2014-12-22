@@ -2,17 +2,23 @@
 
 {% set templates = data.result.compiled|keys %}
 
-<div class="result-box">
+<div class="form-group result-box result-container">
+    <div class="row">
+        <div class="col-md-12">
 
-    <div class="form-group">
-        <div class="input-group">
-            <div class="input-group-addon">Rendered</div>
-            <p class="form-control">{{ templates[0] }}</p>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon"><img src="{{ asset('bundles/fuzapp/img/flags/green.gif') }}" alt="Green Flag" class="flag"/>Rendered</div>
+                    <p class="form-control">{{ templates[0] }}</p>
+                </div>
+            </div>
+
+             <pre id="result-rendered">{{ data.result.rendered }}</pre>
+
+              <button id="select-result-rendered" class="btn btn-default btn-sm btn-twigfiddle select-text" data-selector="#result-rendered">
+                    <span class="glyphicon glyphicon-flash"></span> Select result
+              </button>
+
         </div>
     </div>
-
-    <pre>{{ data.result.rendered }}</pre>
-
 </div>
-
-<div class="clear">&nbsp;</div>

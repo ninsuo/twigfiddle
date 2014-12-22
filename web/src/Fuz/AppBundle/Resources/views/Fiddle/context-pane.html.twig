@@ -1,28 +1,32 @@
 {# FuzAppBundle:Fiddle:context-pane.html.twig #}
-<div class="row">
-    <div class="col-md-12">
-        <div class="form-group">
-            <div class="input-group">
-                <div class="input-group-addon">Format</div>
-                {{
-                    form_widget(form.context.format, {
-                        'attr': {
-                            'class': 'switcher-context-format',
-                            'data-content-id': form.context.content.vars.id,
-                        }
-                    })
-                }}
+<div class="form-group">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon">Format</div>
+                    {{
+                        form_widget(form.context.format, {
+                            'attr': {
+                                'class': 'switcher-context-format',
+                                'data-content-id': form.context.content.vars.id,
+                            }
+                        })
+                    }}
+                </div>
+                <div class="error-container" id="errors-{{ form.context.format.vars.id }}">{{ form_errors(form.context.format) }}</div>
             </div>
-            <div class="error-container" id="errors-{{ form.context.format.vars.id }}">{{ form_errors(form.context.format) }}</div>
+            {{
+                form_widget(form.context.content, {
+                    'attr': {
+                        'class': 'codemirror-context',
+                        'data-format-id': form.context.format.vars.id,
+                        'placeholder': 'Type your context here...',
+                    }
+                })
+            }}
+            <div class="error-container" id="errors-{{ form.context.content.vars.id }}">{{ form_errors(form.context.content) }}</div>
         </div>
-        {{
-            form_widget(form.context.content, {
-                'attr': {
-                    'class': 'codemirror-context',
-                    'data-format-id': form.context.format.vars.id,
-                }
-            })
-        }}
-        <div class="error-container" id="errors-{{ form.context.content.vars.id }}">{{ form_errors(form.context.content) }}</div>
     </div>
 </div>
+<div id="result-context"></div>

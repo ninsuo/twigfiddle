@@ -145,6 +145,16 @@ img {
     padding:10px;
     border-bottom:1px solid #f5f5f5;
 }
+.btn-tf-dark{
+    color:#fff;
+    background-color:#5e5051;
+    border-color:#000000;
+}
+.btn-tf-green{
+    color:#fff;
+    background-color:#76a728;
+    border-color:#000000;
+}
 /******************************************************/
 /***************** RESPONSIVE FIX *********************/
 /******************************************************/
@@ -199,15 +209,19 @@ img {
     padding: 15px;
 }
 .flag {
-    width: 50px;
-    height: 40px;
-    margin: 10px;
-}
-.result-box .flag {
-    position:relative;
-    top:-10px;
+    width: 20px;
+    height: 16px;
+    position: relative;
+    top:-2px;
+    margin-right: 5px;
+    margin-left: -4px;
 }
 pre.compiled-code {
     padding: 10px !important;
-    
+}
+.CodeMirror pre.CodeMirror-placeholder {
+    color: #999;
+}
+#select-result-rendered {
+    margin-top: 5px;
 }

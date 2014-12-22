@@ -84,14 +84,14 @@ class FiddleAgent
     /**
      * Fiddle's context converted to array
      *
-     * @var mixed[]|null
+     * @var array[mixed]
      */
-    protected $context = null;
+    protected $context = array();
 
     /**
      * List templates full paths
      *
-     * @var string[]|null
+     * @var array[string]|null
      */
     protected $templates = null;
 
@@ -105,7 +105,7 @@ class FiddleAgent
     /**
      * Compiled templates
      *
-     * @var array[]
+     * @var array[string]
      */
     protected $compiled = array ();
 

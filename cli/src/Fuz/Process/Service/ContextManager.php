@@ -32,7 +32,6 @@ class ContextManager extends BaseService
         if (strlen(str_replace(array (' ', "\n", "\r", "\t"), '', $content)) == 0)
         {
             $this->logger->debug("No context to extract.");
-            $agent->setContext(array ());
             return $this;
         }
 

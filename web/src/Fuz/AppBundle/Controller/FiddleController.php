@@ -64,6 +64,14 @@ class FiddleController extends BaseController
                ->get('templating')
                ->render('FuzAppBundle:Fiddle:result-pane.html.twig', array ('data' => $result))
             ;
+
+            if ($result->getResult() && $result->getResult()->getContext())
+            {
+                $response['context'] = $this
+                   ->get('templating')
+                   ->render('FuzAppBundle:Fiddle:result-context.html.twig', array ('data' => $result))
+                ;
+            }
         }
         else
         {

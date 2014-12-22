@@ -22,44 +22,45 @@
         {% set color = 'black' %}
     {% endif %}
 
-    <div class="result-box">
+    <div class="form-group result-box result-container">
+        <div class="row">
+            <div class="col-md-12">
 
-        {# Flag #}
-        <div class="pull-left">
-            <img src="{{ asset('bundles/fuzapp/img/flags/' ~ color ~ '.gif') }}" alt="{{ color|title }} Flag" class="flag" />
+                {# Error #}
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon"><img src="{{ asset('bundles/fuzapp/img/flags/' ~ color ~ '.gif') }}" alt="{{ color|title }} Flag" class="flag"/>Failed</div>
+                        <p class="form-control">{{ error.message }}</p>
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+
+                {# Context #}
+                {% if error.context|length %}
+
+                    <table class="table table-striped table-bordered">
+                        {% set count = 1 %}
+                        {% for key, value in error.context %}
+                            <tr>
+                                <td>#{{ count }}</td>
+                                <td>{{ key|title }}</td>
+                                <td>{{ value|hide_project_path }}</td>
+                            </tr>
+                            {% set count = count + 1 %}
+                        {% endfor %}
+                    </table>
+
+                {% endif %}
+
+                {# Exception pushed by... #}
+                <p class="text-right small">{{ error.group|title ~ '/' ~ error.no }}</p>
+                <p class="text-right small">
+                    <a class="dark" href="{{ error.caller|hide_project_path|github_repository_link }}" alt="See source code" target="_blank">{{ error.caller|hide_project_path }}</a>
+                </p>
+
+            </div>
         </div>
-
-        {# Title #}
-        <div class="text-center lead">
-            {{ error.message }}
-        </div>
-
-        <div class="clearfix"></div>
-
-        {# Context table #}
-        {% if error.context|length %}
-
-            <table class="table table-striped table-bordered">
-                {% set count = 1 %}
-                {% for key, value in error.context %}
-                    <tr>
-                        <td>#{{ count }}</td>
-                        <td>{{ key|title }}</td>
-                        <td>{{ value|hide_project_path }}</td>
-                    </tr>
-                    {% set count = count + 1 %}
-                {% endfor %}
-            </table>
-
-        {% endif %}
-
-        {# Exception pushed by... #}
-        <p class="text-right small">{{ error.group|title ~ '/' ~ error.no }}</p>
-        <p class="text-right small">
-            <a class="dark" href="{{ error.caller|hide_project_path|github_repository_link }}" alt="See source code" target="_blank">{{ error.caller|hide_project_path }}</a>
-        </p>
     </div>
-
-    <div class="clear">&nbsp;</div>
 
 {% endfor %}

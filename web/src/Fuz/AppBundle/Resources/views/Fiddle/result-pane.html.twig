@@ -19,11 +19,6 @@
         {{ include("FuzAppBundle:Fiddle:result-rendered.html.twig") }}
     {% endif %}
 
-    {# Context #}
-    {% if data.result.context %}
-        {{ include("FuzAppBundle:Fiddle:result-context.html.twig") }}
-    {% endif %}
-
     {# Compiled files #}
     {% if data.result.compiled %}
         {{ include("FuzAppBundle:Fiddle:result-compiled.html.twig") }}
@@ -31,7 +26,7 @@
 
     {# Duration #}
     {% if data.duration %}
-        {{ include("FuzAppBundle:Fiddle:result-compiled.html.twig") }}
+        {{ include("FuzAppBundle:Fiddle:result-duration.html.twig") }}
     {% endif %}
 
 {% endif %}

@@ -19,12 +19,12 @@
             </div>
             <div class="col-md-3 col-sm-3  col-xs-3 text-center">
                <button class="btn {% if form.isMain.vars.data %}btn-primary{% else %}btn-default{% endif %} btn-sm btn-twigfiddle main-template hide" data-id="{{ form.content.vars.id }}" type="button">
-                   <span class="glyphicon glyphicon {% if form.isMain.vars.data %}glyphicon-check{% else %}glyphicon-unchecked{% endif %}"></span> Set as main template
+                   <span class="glyphicon {% if form.isMain.vars.data %}glyphicon-check{% else %}glyphicon-unchecked{% endif %}"></span> Set as main template
                </button>
             </div>
             <div class="col-md-2 col-sm-2  col-xs-2 text-right">
                 <button class="btn btn-default btn-sm btn-twigfiddle delete-template hide" data-id="{{ form.content.vars.id }}" type="button">
-                    <span class="glyphicon glyphicon glyphicon-trash"></span>
+                    <span class="glyphicon glyphicon-trash"></span>
                 </button>
             </div>
         </div>
@@ -35,6 +35,7 @@
             form_widget(form.content, {
                 'attr': {
                     'class': 'codemirror-template',
+                    'placeholder': 'Type your Twig template here...',
                 },
             })
          }}
