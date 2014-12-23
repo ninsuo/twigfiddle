@@ -17,48 +17,57 @@ class FiddleRepository extends EntityRepository
 
     public function getFiddle($hash, $revision, User $user = null)
     {
-        if (!is_null($hash))
+        if (is_null($hash))
         {
-            $query = $this->_em->createQuery("
-                SELECT f
-                FROM Fuz\AppBundle\Entity\Fiddle f
-                WHERE f.hash = :hash
-                AND f.revision = :revision
-                AND (
-                    f.visibility <> :private
-                    OR f.user = :user
-                )
-            ");
-
-            $params = array (
-                    'hash' => $hash,
-                    'revision' => $revision <= 0 ?: $revision,
-                    'private' => Fiddle::VISIBILITY_PRIVATE,
-                    'user' => $user ? $user->getId() : -1,
-            );
-
-            $fiddle = $query
-               ->setParameters($params)
-               ->getOneOrNullResult()
-            ;
-
-            if (is_null($fiddle))
-            {
-                $fiddle = new Fiddle();
-                $fiddle->setHash($hash);
-            }
-            else
-            {
-                $fiddle->setVisitsCount($fiddle->getVisitsCount() + 1);
-                $this->_em->persist($fiddle);
-                $this->_em->flush();
-            }
+            return $this->getEmptyFiddle();
         }
-        else
-        {
-            $fiddle = new Fiddle();
-        }
+
+        $query = $this->_em->createQuery("
+            SELECT f
+            FROM Fuz\AppBundle\Entity\Fiddle f
+            WHERE f.hash = :hash
+            AND f.revision = :revision
+            AND (
+                f.visibility <> :private
+                OR f.user = :user
+            )
+        ");
+
+        $params = array (
+                'hash' => $hash,
+                'revision' => $revision <= 0 ? : $revision,
+                'private' => Fiddle::VISIBILITY_PRIVATE,
+                'user' => $user ? $user->getId() : -1,
+        );
+
+        $fiddle = $query
+           ->setParameters($params)
+           ->getOneOrNullResult()
+        ;
+
+        return $fiddle ? : $this->getEmptyFiddle($hash);
+    }
+
+    public function getEmptyFiddle($hash = null)
+    {
+        $fiddle = new Fiddle();
+        $fiddle->setHash($hash);
         return $fiddle;
+    }
+
+    public function incrementVisitCount(Fiddle $fiddle)
+    {
+        if ($fiddle->getId())
+        {
+            $fiddle->setVisitsCount($fiddle->getVisitsCount() + 1);
+            $this->_em->persist($fiddle);
+            $this->_em->flush();
+        }
+    }
+
+    public function saveFiddle(Fiddle $fiddle, User $user = null)
+    {
+        //
     }
 
 }

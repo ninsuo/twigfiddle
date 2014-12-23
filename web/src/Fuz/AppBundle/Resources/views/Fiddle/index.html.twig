@@ -1,4 +1,6 @@
 {# FuzAppBundle:Fiddle:index.html.twig #}
+{# Rendered by: FuzAppBundle:Fiddle:index #}
+
 {% extends 'FuzAppBundle::base.html.twig' %}
 
 {% block extra_css %}
@@ -18,23 +20,10 @@
 
 {% block header_middle %}
 
- {# Run button #}
-<button
-    type="button"
-    class="btn btn-primary domajax click"
-    data-endpoint="{{ path('run_fiddle', {'hash': hash, 'revision': revision}) }}"
-    data-input="#page-container"
-    data-callback-before="beforeRunFiddle"
-    data-callback-success="processRunFiddleResponse"
-    data-callback-failure="handleAjaxErrors"
-    data-lock="#actions"
-    data-replace="#result-pane"
-    data-replace-by="#wait"
-><span class="glyphicon glyphicon glyphicon-play hidden-md hidden-sm hidden-xs"></span> Run</button>
+<div id="actions">
+    {{ include('FuzAppBundle:Fiddle:actions.html.twig') }}
+</div>
 
-<button type="button" class="btn btn-primary"><span class="glyphicon glyphicon glyphicon-floppy-disk hidden-md hidden-sm hidden-xs"></span> Save</button>
-
-<button type="button" class="btn btn-primary"><span class="glyphicon glyphicon glyphicon-share-alt hidden-md hidden-sm hidden-xs"></span> Share</button>
 {% endblock %}
 
 {% block content %}
@@ -48,14 +37,15 @@
 
 {# Revision browser, title, tags #}
 <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-3 col-sm-6 col-xs-12 revision">
         <select class="form-control input-sm">
             <option>Revision 2014-03-01 20.53</option>
             <option>Revision 2014-02-05 10.20</option>
         </select>
     </div>
-    <div class="col-md-4 title"><strong>TITLE</strong> : This is my title</div>
-    <div class="col-md-5 tags"><strong>TAGS</strong> : word, word, word, word </div>
+    <div class="col-md-3 col-sm-6 col-xs-12 saveas"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon glyphicon-floppy-disk hidden-md hidden-sm hidden-xs"></span> Create new revision</button></div>
+    <div class="colcol-md-3 col-sm-6 col-xs-12 title"><strong>TITLE</strong> : This is my title</div>
+    <div class="col-md-3 col-sm-6 col-xs-12 tags"><strong>TAGS</strong> : word, word, word, word </div>
 </div>
 
 <div class="clear">&nbsp</div>
@@ -84,40 +74,6 @@
         </div>
 
         <div id="result-pane"></div>
-
-        {#
-        <div class="clearfix">&nbsp;</div>
-
-        <!-- Start Result Bloc -->
-        <div class="row">
-            <div class="col-md-6 col-sm-6 col-xs-6">
-                <div class="form-group">
-                    <div class="input-group">
-                        <div class="input-group-addon">Format</div>
-                        <select class="form-control input-sm">
-                            <option>Plained Text</option>
-                            <option>...</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-sm-6 col-xs-6">
-                <div class="form-group">
-                    <div class="input-group">
-                        <div class="input-group-addon">Generated File(s)</div>
-                        <select class="form-control input-sm">
-                            <option>file.php</option>
-                            <option>...</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-12">
-                <textarea class="form-control" rows="16" placeholder="RESULT"></textarea>
-            </div>
-        </div>
-        <!-- End Result Bloc -->
-        #}
 
     </div>
     {# End Right Side #}
