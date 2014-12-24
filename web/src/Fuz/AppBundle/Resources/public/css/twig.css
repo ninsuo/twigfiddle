@@ -148,7 +148,6 @@ img {
 .btn-tf-dark {
     color:#fff;
     background-color:#5e5051;
-    border-color:#000000;
 }
 .btn-tf-dark:hover {
     color: #fff;
@@ -157,7 +156,6 @@ img {
 .btn-tf-green{
     color:#fff;
     background-color:#76a728;
-    border-color:#000000;
 }
 .btn-tf-green:hover {
     color: #fff;

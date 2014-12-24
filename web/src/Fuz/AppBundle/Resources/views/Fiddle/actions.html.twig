@@ -16,7 +16,17 @@
 ><span class="glyphicon glyphicon glyphicon-play hidden-md hidden-sm hidden-xs"></span> Run</button>
 
 {# Save button #}
-<button type="button" class="btn btn-primary" {% if canSave == false %}disabled{% endif %}><span class="glyphicon glyphicon glyphicon-floppy-disk hidden-md hidden-sm hidden-xs"></span> Save</button>
+<button
+    type="button"
+    class="btn btn-primary domajax click"
+    data-endpoint="{{ path('save_fiddle', {'hash': hash, 'revision': revision}) }}"
+    data-input="#page-container"
+
+
+    data-callback-failure="handleAjaxErrors"
+    data-lock="#actions"
+    {% if canSave == false %}disabled{% endif %}
+ ><span class="glyphicon glyphicon glyphicon-floppy-disk hidden-md hidden-sm hidden-xs"></span> Save</button>
 
 {# Share button #}
 <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon glyphicon-share-alt hidden-md hidden-sm hidden-xs"></span> Share</button>

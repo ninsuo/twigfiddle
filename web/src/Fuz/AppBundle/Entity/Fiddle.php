@@ -58,7 +58,7 @@ class Fiddle
     /**
      * @var FiddleContext
      *
-     * @ORM\OneToOne(targetEntity="FiddleContext", mappedBy="fiddle")
+     * @ORM\OneToOne(targetEntity="FiddleContext", mappedBy="fiddle", cascade={"persist"})
      * @Assert\Type(type="Fuz\AppBundle\Entity\FiddleContext")
      * @Assert\Valid()
      */
@@ -69,7 +69,7 @@ class Fiddle
      *
      * fiddle.max_templates
      *
-     * @ORM\OneToMany(targetEntity="FiddleTemplate", mappedBy="fiddle")
+     * @ORM\OneToMany(targetEntity="FiddleTemplate", mappedBy="fiddle", cascade={"persist"})
      * @ORM\OrderBy({"isMain" = "DESC"})
      * @Assert\Count(min = 1, minMessage = "You need at least 1 template.")
      * @Assert\Count(max = 10, maxMessage = "You can't create more than 15 templates.")

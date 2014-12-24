@@ -21,14 +21,18 @@ class FiddleController extends BaseController
      *      "/run/{hash}/{revision}",
      *      name = "run_fiddle",
      *      requirements = {
-     *          "hash" = "^[a-zA-Z0-9]{1,16}$",
+     *          "hash" = "^[a-zA-Z0-9-]{1,16}$",
      *          "version" = "^\d+$"
      *      },
      *      defaults = {
      *          "hash" = null,
-     *          "revision" = 1
+     *          "revision" = 0
      *      }
      * )
+     * @param Request $request
+     * @param string|null $hash
+     * @param int $revision
+     * @return JsonResponse
      */
     public function runAction(Request $request, $hash, $revision)
     {
@@ -63,33 +67,42 @@ class FiddleController extends BaseController
      *      "/save/{hash}/{revision}",
      *      name = "save_fiddle",
      *      requirements = {
-     *          "hash" = "^[a-zA-Z0-9]{1,16}$",
+     *          "hash" = "^[a-zA-Z0-9-]{1,16}$",
      *          "version" = "^\d+$"
      *      },
      *      defaults = {
      *          "hash" = null,
-     *          "revision" = 1
+     *          "revision" = 0
      *      }
      * )
+     * @param Request $request
+     * @param string|null $hash
+     * @param int $revision
+     * @return JsonResponse
      */
     public function saveAction(Request $request, $hash, $revision)
     {
         return $this->validateAjaxFiddle($request, $hash, $revision,
-              function (Fiddle $data)
+              function (Fiddle $data) use ($hash, $revision)
            {
-               if (!$this->canSave($data))
+               if (is_null($data->getId()) || !$this->canSave($data))
                {
-                   return $this->forward('FuzAppBundle:Fiddle:saveAsNewRevision',
-                         array (
-                              'hash' => $data->getHash(),
-                              'revision' => $data->getRevision(),
-                   ));
+                   $revision = 0;
+               }
+
+               if ($data->getId())
+               {
+                   $hash = $data->getHash();
+               }
+
+               if (!$this->validateHash($hash))
+               {
+                   $hash = null;
                }
 
                $id = $this
-                  ->getDoctrine()
-                  ->getRepository('FuzAppBundle:Fiddle')
-                  ->saveFiddle($data, $this->getUser())
+                  ->get('app.helper.fiddle_helper')
+                  ->save($hash, $revision, $data)
                ;
 
                $this->saveFiddleToSession($id);
@@ -97,47 +110,24 @@ class FiddleController extends BaseController
     }
 
     /**
-     * Saves a fiddle as a new revision
-     *
-     * @Route(
-     *      "/save-as-new-revision/{hash}/{revision}",
-     *      name = "save_fiddle_as_new_revision",
-     *      requirements = {
-     *          "hash" = "^[a-zA-Z0-9]{1,16}$",
-     *          "version" = "^\d+$"
-     *      },
-     *      defaults = {
-     *          "hash" = null,
-     *          "revision" = 1
-     *      }
-     * )
-     */
-    public function saveAsNewRevisionAction(Request $request, $hash, $revision)
-    {
-        return $this->validateAjaxFiddle($request, $hash, $revision, function (Fiddle $data)
-           {
-
-           });
-    }
-
-    /**
-     * Fiddle's loader
-     *
      * Displays twigfiddle's editor
      *
      * @Route(
      *      "/{hash}/{revision}",
      *      name = "fiddle",
      *      requirements = {
-     *          "hash" = "^[a-zA-Z0-9]{1,16}$",
+     *          "hash" = "^[a-zA-Z0-9-]{1,16}$",
      *          "version" = "^\d+$"
      *      },
      *      defaults = {
      *          "hash" = null,
-     *          "revision" = 1
+     *          "revision" = 0
      *      }
      * )
      * @Template()
+     * @param string|null $hash
+     * @param int $revision
+     * @return array
      */
     public function indexAction($hash, $revision)
     {
@@ -160,7 +150,17 @@ class FiddleController extends BaseController
         );
     }
 
-    protected function validateAjaxFiddle(Request $request, $hash, $revision, $callable)
+    /**
+     * Validates fiddle's form and if valid, performs a callback
+     *
+     * @param Request $request
+     * @param string|null $hash
+     * @param int $revision
+     * @param callable $onValid
+     * @return RedirectResponse|JsonResponse
+     * @return JsonResponse
+     */
+    protected function validateAjaxFiddle(Request $request, $hash, $revision, $onValid)
     {
         $response = array (
                 'hash' => $hash,
@@ -183,7 +183,11 @@ class FiddleController extends BaseController
 
         if ($form->isValid())
         {
-            $response = array_merge($response, $callable($data));
+            $result = $onValid($data);
+            if (is_array($result))
+            {
+                $response = array_merge($response, $result);
+            }
         }
         else
         {
@@ -193,6 +197,12 @@ class FiddleController extends BaseController
         return new JsonResponse($response);
     }
 
+    /**
+     * Checks whether user can save current fiddle's revision.
+     *
+     * @param Fiddle $fiddle
+     * @return bool
+     */
     protected function canSave(Fiddle $fiddle)
     {
         if (is_null($fiddle->getId()))
@@ -214,8 +224,57 @@ class FiddleController extends BaseController
         return false;
     }
 
+    /**
+     * Checks whether a hash can be used to reference a fiddle
+     *
+     * @param string|null $hash
+     * @return bool
+     */
+    protected function validateHash($hash)
+    {
+        if (is_null($hash))
+        {
+            return false;
+        }
+
+        if (!preg_match('/^[a-zA-Z0-9-]{1,16}$/', $hash))
+        {
+            return false;
+        }
+
+        $routes = $this->get('router')->getRouteCollection();
+        $reserved = array ();
+        foreach ($routes->getIterator() as $route)
+        {
+            $path = substr($route->getPath(), 1);
+            if (false !== strpos($path, '/'))
+            {
+                $path = substr($path, 0, strpos($path, '/'));
+            }
+            if (!in_array($path, $reserved))
+            {
+                $reserved[] = $path;
+            }
+        }
+        if (in_array($hash, $reserved))
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Used to let unregistered users update fiddle's revisions they own.
+     *
+     * @param int $id
+     */
     protected function saveFiddleToSession($id)
     {
+        if (!is_null($this->getUser()))
+        {
+            return;
+        }
         $session = $this->get('session');
         if (!$session->has('recent-fiddles'))
         {
@@ -223,7 +282,9 @@ class FiddleController extends BaseController
         }
         else
         {
-            $session->set('recent-fiddles', array_merge($session->get('recent-fiddles'), array ($id)));
+            $web = $this->container->getParameter('web');
+            $list = array_merge($session->get('recent-fiddles'), array ($id));
+            $session->set('recent-fiddles', array_slice($list, 0, $web['max_fiddles_in_session']));
         }
     }
 

@@ -28,10 +28,10 @@ fuz_app_browse:
     type:     annotation
     prefix:   /browse
 
-fuz_app_about:
-    resource: "@FuzAppBundle/Controller/AboutController.php"
+fuz_app_article:
+    resource: "@FuzAppBundle/Controller/ArticleController.php"
     type:     annotation
-    prefix:   /
+    prefix:   /article
 
 fuz_app_fiddle:
     resource: "@FuzAppBundle/Controller/FiddleController.php"

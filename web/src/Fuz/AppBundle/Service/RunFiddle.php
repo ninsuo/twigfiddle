@@ -18,6 +18,7 @@ class RunFiddle
 
     protected $logger;
     protected $filesystem;
+    protected $utilities;
     protected $localConfig;
     protected $remoteConfig;
     protected $envId;
@@ -26,10 +27,11 @@ class RunFiddle
     protected $process;
 
     public function __construct(LoggerInterface $logger, Filesystem $filesystem,
-       ProcessConfiguration $processConfiguration, array $localConfig)
+       Utilities $utilities, ProcessConfiguration $processConfiguration, array $localConfig)
     {
         $this->logger = $logger;
         $this->filesystem = $filesystem;
+        $this->utilities = $utilities;
         $this->localConfig = $localConfig;
         $this->remoteConfig = $processConfiguration->getProcessConfig();
     }
@@ -43,7 +45,7 @@ class RunFiddle
            ->createSharedObject($fiddle)
            ->execute()
            ->fetchResult($result)
-           //->clearEnvironment()
+           ->clearEnvironment()
         ;
 
         return $result;
@@ -58,17 +60,9 @@ class RunFiddle
         {
             throw new IOException("Environment directory {$envRoot} does not exist.");
         }
-
-        $letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890";
-        mt_srand(base_convert(uniqid(), 16, 10));
-        $base = strlen($letters);
         do
         {
-            $env = '';
-            for ($i = 0; ($i < self::ENV_NAME_LENGTH); $i++)
-            {
-                $env .= $letters[mt_rand(0, $base - 1)];
-            }
+            $env = $this->utilities->randomString(self::ENV_NAME_LENGTH);
         }
         while (is_dir("{$envRoot}/{$env}"));
 

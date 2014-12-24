@@ -6,14 +6,14 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Fuz\AppBundle\Base\BaseController;
 
-class AboutController extends BaseController
+class ArticleController extends BaseController
 {
 
     /**
      * @Route("/about", name="about")
      * @Template()
      */
-    public function indexAction()
+    public function aboutAction()
     {
         return array ();
     }

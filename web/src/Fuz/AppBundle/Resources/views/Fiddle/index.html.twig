@@ -36,15 +36,16 @@
 </div>
 
 {# Revision browser, title, tags #}
+{# if data.id is empty, should put col-md-6 on title/tags and make the rev part invisible #}
 <div class="row">
     <div class="col-md-3 col-sm-6 col-xs-12 revision">
-        <select class="form-control input-sm">
+        <select class="form-control input-sm" {% if data.id == null %}disabled{% endif %}>
             <option>Revision 2014-03-01 20.53</option>
             <option>Revision 2014-02-05 10.20</option>
         </select>
     </div>
-    <div class="col-md-3 col-sm-6 col-xs-12 saveas"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon glyphicon-floppy-disk hidden-md hidden-sm hidden-xs"></span> Create new revision</button></div>
-    <div class="colcol-md-3 col-sm-6 col-xs-12 title"><strong>TITLE</strong> : This is my title</div>
+    <div class="col-md-3 col-sm-6 col-xs-12 saveas"><button type="button" class="btn btn-primary" {% if data.id == null %}disabled{% endif %}><span class="glyphicon glyphicon glyphicon-floppy-disk hidden-md hidden-sm hidden-xs"></span> Create new revision</button></div>
+    <div class="col-md-3 col-sm-6 col-xs-12 title"><strong>TITLE</strong> : This is my title</div>
     <div class="col-md-3 col-sm-6 col-xs-12 tags"><strong>TAGS</strong> : word, word, word, word </div>
 </div>
 

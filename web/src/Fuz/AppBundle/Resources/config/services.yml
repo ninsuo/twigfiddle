@@ -1,13 +1,19 @@
 parameters:
     app.oauth_user_provider.class: Fuz\AppBundle\Model\OAuthUserProvider
     hwi_oauth.account.connector: Fuz\AppBundle\Connect\AccountConnect
-    app.process_configuration.class: Fuz\AppBundle\Service\ProcessConfiguration
+
     app.form.fiddle.class: Fuz\AppBundle\Form\FiddleType
-    app.run_fiddle.class: Fuz\AppBundle\Service\RunFiddle
+
     app.twig.debug_extension.class: Fuz\AppBundle\Twig\Extension\DebugExtension
     app.twig.safety_extension.class: Fuz\AppBundle\Twig\Extension\SafetyExtension
     app.twig.github_extension.class: Fuz\AppBundle\Twig\Extension\GitHubExtension
     app.twig.hash_extension.class: Fuz\AppBundle\Twig\Extension\HashExtension
+
+    app.utilities.class: Fuz\AppBundle\Service\Utilities
+    app.process_configuration.class: Fuz\AppBundle\Service\ProcessConfiguration
+    app.run_fiddle.class: Fuz\AppBundle\Service\RunFiddle
+
+    app.helper.fiddle_helper.class: Fuz\AppBundle\Helper\FiddleHelper
 
 services:
 
@@ -18,23 +24,11 @@ services:
     hwi_oauth.account.connector:
         class: %hwi_oauth.account.connector%
 
-    app.process_configuration:
-        class: %app.process_configuration.class%
-        arguments: [@logger, %process%, %kernel.environment%]
-        tags:
-            - { name: monolog.logger, channel: process_configuration }
-
     app.form.fiddle:
          class: %app.form.fiddle.class%
          arguments: [@app.process_configuration]
          tags:
             - { name: form.type, alias: FiddleType }
-
-    app.run_fiddle:
-         class: %app.run_fiddle.class%
-         arguments: [@logger, @filesystem, @app.process_configuration, %process%]
-         tags:
-             - { name: monolog.logger, channel: run_fiddle }
 
     app.twig.debug_extension:
          class: %app.twig.debug_extension.class%
@@ -59,3 +53,27 @@ services:
          arguments: []
          tags:
              - { name: twig.extension }
+
+    app.utilities:
+         class: %app.utilities.class%
+         arguments: [@logger]
+         tags:
+             - { name: monolog.logger, channel: service.utilities }
+
+    app.process_configuration:
+        class: %app.process_configuration.class%
+        arguments: [@logger, %process%, %kernel.environment%]
+        tags:
+            - { name: monolog.logger, channel: service.process_configuration }
+
+    app.run_fiddle:
+         class: %app.run_fiddle.class%
+         arguments: [@logger, @filesystem, @app.utilities, @app.process_configuration, %process%]
+         tags:
+             - { name: monolog.logger, channel: service.run_fiddle }
+
+    app.helper.fiddle_helper:
+         class: %app.helper.fiddle_helper.class%
+         arguments: [@logger, @app.utilities, @doctrine.orm.entity_manager, %web%]
+         tags:
+             - { name: monolog.logger, channel: helper.fiddle }

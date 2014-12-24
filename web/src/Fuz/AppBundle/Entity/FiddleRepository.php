@@ -15,6 +15,14 @@ use Fuz\AppBundle\Entity\Fiddle;
 class FiddleRepository extends EntityRepository
 {
 
+    public function getEmptyFiddle($hash = null)
+    {
+        $fiddle = new Fiddle();
+        $fiddle->setHash($hash);
+        $fiddle->setRevision(0);
+        return $fiddle;
+    }
+
     public function getFiddle($hash, $revision, User $user = null)
     {
         if (is_null($hash))
@@ -48,13 +56,6 @@ class FiddleRepository extends EntityRepository
         return $fiddle ? : $this->getEmptyFiddle($hash);
     }
 
-    public function getEmptyFiddle($hash = null)
-    {
-        $fiddle = new Fiddle();
-        $fiddle->setHash($hash);
-        return $fiddle;
-    }
-
     public function incrementVisitCount(Fiddle $fiddle)
     {
         if ($fiddle->getId())
@@ -65,9 +66,24 @@ class FiddleRepository extends EntityRepository
         }
     }
 
-    public function saveFiddle(Fiddle $fiddle, User $user = null)
+    public function hashExists($hash)
     {
-        //
+        $query = $this->_em->createQuery("
+            SELECT COUNT(f.id)
+            FROM Fuz\AppBundle\Entity\Fiddle f
+            WHERE f.hash = :hash
+        ");
+
+        $params = array (
+                'hash' => $hash,
+        );
+
+        $count = $query
+           ->setParameters($params)
+           ->getSingleScalarResult()
+        ;
+
+        return $count > 0;
     }
 
 }
