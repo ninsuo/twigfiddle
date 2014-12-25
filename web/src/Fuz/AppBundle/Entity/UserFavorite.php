@@ -47,7 +47,7 @@ class UserFavorite
     /**
      * @var ArrayCollection[UserFavoriteTag]
      *
-     * @ORM\OneToMany(targetEntity="UserFavoriteTag", mappedBy="userFavorite")
+     * @ORM\OneToMany(targetEntity="UserFavoriteTag", mappedBy="userFavorite", orphanRemoval=true)
      */
     protected $tags;
 

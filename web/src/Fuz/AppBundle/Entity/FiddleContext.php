@@ -40,10 +40,10 @@ class FiddleContext
     /**
      * @var string
      *
-     * @ORM\Column(name="content", type="text")
+     * @ORM\Column(name="content", type="text", nullable=true)
      * @Assert\Length(max = 8192)
      */
-    protected $content = '';
+    protected $content;
 
     /**
      * Set fiddle

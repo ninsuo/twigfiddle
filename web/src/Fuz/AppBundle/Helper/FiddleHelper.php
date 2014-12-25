@@ -29,29 +29,34 @@ class FiddleHelper
         {
             $this->em->transactional(function($em) use ($fiddle)
             {
-                $this->registerEmptyHash($em, $fiddle);
+                $this->createRandomHash($em, $fiddle);
             });
         }
 
-
-
-
-
-
+        return $fiddle->getId();
     }
 
-    public function registerEmptyHash(EntityManager $em, Fiddle $fiddle)
+    public function createRandomHash(EntityManager $em, Fiddle $fiddle)
     {
         $repository = $em->getRepository('FuzAppBundle:Fiddle');
+
+        $this->logger->debug("Need to create a new hash.");
+
         do
         {
             $hash = $this->utilities->randomString($this->webConfig['default_fiddle_hash_size']);
+            $this->logger->debug("Testing hash: {$hash}");
         }
         while ($repository->hashExists($hash));
+
+        $this->logger->debug("Hash is empty: {$hash}.");
+
         $fiddle->setHash($hash);
         $fiddle->setRevision(1);
         $this->em->persist($fiddle);
         $this->em->flush();
+
+        return $this;
     }
 
 }

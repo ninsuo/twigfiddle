@@ -28,8 +28,8 @@ class Fiddle
      * @var integer
      *
      * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Id
      */
     protected $id;
 
@@ -58,7 +58,7 @@ class Fiddle
     /**
      * @var FiddleContext
      *
-     * @ORM\OneToOne(targetEntity="FiddleContext", mappedBy="fiddle", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="FiddleContext", mappedBy="fiddle", cascade={"all"})
      * @Assert\Type(type="Fuz\AppBundle\Entity\FiddleContext")
      * @Assert\Valid()
      */
@@ -69,7 +69,7 @@ class Fiddle
      *
      * fiddle.max_templates
      *
-     * @ORM\OneToMany(targetEntity="FiddleTemplate", mappedBy="fiddle", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="FiddleTemplate", mappedBy="fiddle", cascade={"all"}, orphanRemoval=true)
      * @ORM\OrderBy({"isMain" = "DESC"})
      * @Assert\Count(min = 1, minMessage = "You need at least 1 template.")
      * @Assert\Count(max = 10, maxMessage = "You can't create more than 15 templates.")
@@ -105,7 +105,7 @@ class Fiddle
      *
      * fiddle.max_tags
      *
-     * @ORM\OneToMany(targetEntity="FiddleTag", mappedBy="fiddle")
+     * @ORM\OneToMany(targetEntity="FiddleTag", mappedBy="fiddle", cascade={"all"}, orphanRemoval=true)
      * @Assert\Count(max = 5, maxMessage = "You can't set more than 5 tags.")
      */
     protected $tags;
@@ -129,7 +129,7 @@ class Fiddle
      *
      * @ORM\Column(name="visits_count", type="integer")
      */
-    protected $visitsCount;
+    protected $visitsCount = 0;
 
     public function __construct()
     {
@@ -220,10 +220,10 @@ class Fiddle
     /**
      * Set context
      *
-     * @param FiddleTag $context
+     * @param FiddleContext|null $context
      * @return Fiddle
      */
-    public function setContext(FiddleContext $context)
+    public function setContext(FiddleContext $context = null)
     {
         $this->context = $context;
 
@@ -233,7 +233,7 @@ class Fiddle
     /**
      * Get context
      *
-     * @return FiddleContext
+     * @return FiddleContext|null
      */
     public function getContext()
     {
@@ -243,7 +243,7 @@ class Fiddle
     /**
      * Set templates
      *
-     * @param  ArrayCollection[FiddleTemplate] $templates
+     * @param ArrayCollection[FiddleTemplate] $templates
      * @return Fiddle
      */
     public function setTemplates(ArrayCollection $templates)
@@ -431,11 +431,6 @@ class Fiddle
     {
         $this->setCreationTm(new \DateTime());
         $this->setUpdateTm(new \DateTime());
-        foreach ($this->templates as $template)
-        {
-            $template->setFiddle($this);
-        }
-        $this->context->setFiddle($this);
     }
 
     /**
@@ -444,10 +439,6 @@ class Fiddle
     public function onPreUpdate()
     {
         $this->setUpdateTm(new \DateTime());
-        foreach ($this->templates as $template)
-        {
-            $template->setFiddle($this);
-        }
     }
 
     /**

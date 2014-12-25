@@ -265,7 +265,7 @@ class FiddleController extends BaseController
     }
 
     /**
-     * Used to let unregistered users update fiddle's revisions they own.
+     * Used to let unregistered users update recent fiddle's revisions they own.
      *
      * @param int $id
      */
