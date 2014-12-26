@@ -53,7 +53,7 @@ class FiddleHelper
             });
         }
 
-        return $fiddle->getId();
+        return $fiddle;
     }
 
     public function createRandomHash(Fiddle $fiddle, User $user = null)

@@ -85,6 +85,8 @@ class FiddleController extends BaseController
         return $this->validateAjaxFiddle($request, $hash, $revision,
               function (Fiddle $data) use ($hash, $revision)
            {
+               $originalId = $data->getId();
+
                if (is_null($data->getId()) || !$this->canSave($data))
                {
                    $revision = 0;
@@ -100,12 +102,20 @@ class FiddleController extends BaseController
                    $hash = null;
                }
 
-               $id = $this
+               $saved = $this
                   ->get('app.helper.fiddle_helper')
                   ->save($hash, $revision, $data, $this->getUser())
                ;
 
-               $this->saveFiddleToSession($id);
+               $this->saveFiddleToSession($saved->getId());
+
+               if ($originalId !== $saved->getId())
+               {
+                   $url = $this->generateUrl('fiddle',
+                      array ('hash' => $saved->getHash(), 'revision' => $saved->getRevision()));
+
+                   return array ('relocate' => $url);
+               }
            });
     }
 

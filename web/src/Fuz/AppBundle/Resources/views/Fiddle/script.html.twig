@@ -195,6 +195,13 @@ $(document).ready(function() {
         contextEditor.setOption("mode", convertContextModeToCodeMirrorMode($(this).data('content-id')));
     });
 
+    {#
+     #  Automatic run at startup if a saved fiddle was loaded
+     #}
+    {% if data.id %}
+        $('#run').domAjax();
+    {% endif %}
+
 });
 
 {#
@@ -221,6 +228,22 @@ function processRunFiddleResponse(elem, response) {
     }
     if (undefined !== response.context) {
         $('#result-context').html(response.context);
+    }
+    return true;
+};
+
+{#
+ #  Ajax response handler used by the "Save" and the
+ #  "Save as new revision" buttons.
+ #  Used in FuzAppBundle:Fiddle:actions.html.twig
+ #  Used in FuzAppBundle:Fiddle:index.html.twig
+ #}
+function processSaveFiddleResponse(elem, response) {
+    if (undefined !== response.errors) {
+        $.symfony2.dispatchErrors(response.errors);
+    }
+    if (undefined !== response.relocate) {
+        window.location = response.relocate;
     }
     return true;
 };

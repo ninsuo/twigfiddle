@@ -7,6 +7,7 @@
         "symfony/config": "~2.5",
         "symfony/yaml": "~2.5",
         "symfony/filesystem": "~2.5",
+        "symfony/security": "~2.5",
         "ninsuo/php-shared-memory": "dev-master",
         "doctrine/orm": "~2.2,>=2.2.3"
     },

@@ -1,5 +1,5 @@
 /*
- * jquery.domajax.js v2.0.2
+ * jquery.domajax.js v2.0.3
  * http://www.domajax.com
  *
  * Copyright (c) 2012-2014 alain tiemblo <ninsuo at gmail dot com>
@@ -544,8 +544,10 @@
         }
         $.each(lockList, function (index, selector) {
             $(selector).attr('disabled', 'disabled');
+            if ((event === 'before') && (settings['lock-before'] === settings['unlock-complete'])) {
+               $(selector).data('locked', true);
+            }
         });
-        settings[option] = lockList;
 
         // --- data-unlock[-event]
         var option = 'unlock-' + event;
@@ -556,9 +558,15 @@
             });
         }
         $.each(unlockList, function (index, selector) {
-            $(selector).removeAttr('disabled');
+            if ((event === 'complete') && (settings['lock-before'] === settings['unlock-complete'])) {
+                if ($(selector).data('locked')) {
+                    $(selector).removeAttr('disabled');
+                    $(selector).removeData('locked');
+                }
+            } else {
+                $(selector).removeAttr('disabled');
+            }
         });
-        settings[option] = unlockList;
 
         // --- data-highlight[-event]
         var option = 'highlight-' + event;
