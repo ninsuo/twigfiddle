@@ -86,4 +86,24 @@ class FiddleRepository extends EntityRepository
         return $count > 0;
     }
 
+    public function getNextRevisionNumber($hash)
+    {
+        $query = $this->_em->createQuery("
+            SELECT MAX(f.revision)
+            FROM Fuz\AppBundle\Entity\Fiddle f
+            WHERE f.hash = :hash
+        ");
+
+        $params = array (
+                'hash' => $hash,
+        );
+
+        $max = $query
+           ->setParameters($params)
+           ->getSingleScalarResult()
+        ;
+
+        return $max + 1;
+    }
+
 }

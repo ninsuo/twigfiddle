@@ -136,6 +136,7 @@ class Fiddle
         $this->context = new FiddleContext();
         $this->templates = new ArrayCollection();
         $this->templates->add(new FiddleTemplate());
+        $this->tags = new ArrayCollection();
     }
 
     /**
@@ -482,6 +483,34 @@ class Fiddle
             $context->buildViolation('You should choose a valid visibility.')
                ->atPath('visibility')
                ->addViolation();
+        }
+    }
+
+    public function __clone()
+    {
+        if ($this->context)
+        {
+            $this->context = clone $this->context;
+        }
+
+        if ($this->templates)
+        {
+            $templates = $this->templates;
+            $this->templates = new ArrayCollection();
+            foreach ($templates as $template)
+            {
+                $this->templates->add(clone $template);
+            }
+        }
+
+        if ($this->tags)
+        {
+           $tags = $this->tags;
+            $this->tags = new ArrayCollection();
+            foreach ($tags as $tag)
+            {
+                $this->tags->add(clone $tag);
+            }
         }
     }
 

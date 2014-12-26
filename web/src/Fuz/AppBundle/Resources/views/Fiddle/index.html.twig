@@ -44,7 +44,19 @@
             <option>Revision 2014-02-05 10.20</option>
         </select>
     </div>
-    <div class="col-md-3 col-sm-6 col-xs-12 saveas"><button type="button" class="btn btn-primary" {% if data.id == null %}disabled{% endif %}><span class="glyphicon glyphicon glyphicon-floppy-disk hidden-md hidden-sm hidden-xs"></span> Create new revision</button></div>
+    <div class="col-md-3 col-sm-6 col-xs-12 saveas">
+        <button
+            type="button"
+            class="btn btn-primary domajax click"
+            data-endpoint="{{ path('save_fiddle', {'hash': hash}) }}"
+            data-input="#page-container"
+            data-callback-failure="handleAjaxErrors"
+            data-lock="#actions"
+            {% if data.id == null %}disabled{% endif %}
+         >
+            <span class="glyphicon glyphicon glyphicon-floppy-disk hidden-md hidden-sm hidden-xs"></span> Create new revision
+        </button>
+    </div>
     <div class="col-md-3 col-sm-6 col-xs-12 title"><strong>TITLE</strong> : This is my title</div>
     <div class="col-md-3 col-sm-6 col-xs-12 tags"><strong>TAGS</strong> : word, word, word, word </div>
 </div>

@@ -12,6 +12,7 @@ class FiddleSubscriber implements EventSubscriber
 
     protected $context;
     protected $templates;
+    protected $tags;
 
     public function getSubscribedEvents()
     {
@@ -23,32 +24,40 @@ class FiddleSubscriber implements EventSubscriber
 
     public function prePersist(LifecycleEventArgs $args)
     {
-        $entity = $args->getEntity();
-        if ($entity instanceof Fiddle)
+        $object = $args->getObject();
+        if ($object instanceof Fiddle)
         {
-            $this->context = $entity->getContext();
-            $entity->setContext(null);
-            $this->templates = $entity->getTemplates();
-            $entity->setTemplates(new ArrayCollection());
+            $this->context = $object->getContext();
+            $object->setContext(null);
+            $this->templates = $object->getTemplates();
+            $object->setTemplates(new ArrayCollection());
+            $this->tags = $object->getTags();
+            $object->setTags(new ArrayCollection());
         }
     }
 
     public function postPersist(LifecycleEventArgs $args)
     {
-        $em = $args->getEntityManager();
-        $entity = $args->getEntity();
-        if ($entity instanceof Fiddle)
+        $om = $args->getObjectManager();
+        $object = $args->getObject();
+        if ($object instanceof Fiddle)
         {
-            $this->context->setFiddle($entity);
-            $em->persist($this->context);
+            $this->context->setFiddle($object);
+            $om->persist($this->context);
 
             foreach ($this->templates as $template)
             {
-                $template->setFiddle($entity);
-                $em->persist($template);
+                $template->setFiddle($object);
+                $om->persist($template);
             }
 
-            $em->flush();
+            foreach ($this->tags as $tag)
+            {
+                $tag->setFiddle($object);
+                $om->persist($tag);
+            }
+
+            $om->flush();
         }
     }
 

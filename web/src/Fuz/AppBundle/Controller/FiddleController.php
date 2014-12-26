@@ -18,7 +18,7 @@ class FiddleController extends BaseController
      * Runs a fiddle
      *
      * @Route(
-     *      "/run/{hash}/{revision}",
+     *      "/run/{revision}/{hash}",
      *      name = "run_fiddle",
      *      requirements = {
      *          "hash" = "^[a-zA-Z0-9-]{1,16}$",
@@ -26,7 +26,7 @@ class FiddleController extends BaseController
      *      },
      *      defaults = {
      *          "hash" = null,
-     *          "revision" = 0
+     *          "revision" = 1
      *      }
      * )
      * @param Request $request
@@ -64,11 +64,11 @@ class FiddleController extends BaseController
      * Saves a fiddle
      *
      * @Route(
-     *      "/save/{hash}/{revision}",
+     *      "/save/{revision}/{hash}",
      *      name = "save_fiddle",
      *      requirements = {
      *          "hash" = "^[a-zA-Z0-9-]{1,16}$",
-     *          "version" = "^\d+$"
+     *          "revision" = "^\d+$"
      *      },
      *      defaults = {
      *          "hash" = null,
@@ -102,7 +102,7 @@ class FiddleController extends BaseController
 
                $id = $this
                   ->get('app.helper.fiddle_helper')
-                  ->save($hash, $revision, $data)
+                  ->save($hash, $revision, $data, $this->getUser())
                ;
 
                $this->saveFiddleToSession($id);
@@ -117,11 +117,11 @@ class FiddleController extends BaseController
      *      name = "fiddle",
      *      requirements = {
      *          "hash" = "^[a-zA-Z0-9-]{1,16}$",
-     *          "version" = "^\d+$"
+     *          "revision" = "^\d+$"
      *      },
      *      defaults = {
      *          "hash" = null,
-     *          "revision" = 0
+     *          "revision" = 1
      *      }
      * )
      * @Template()
