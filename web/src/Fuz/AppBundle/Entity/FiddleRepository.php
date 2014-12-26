@@ -106,4 +106,23 @@ class FiddleRepository extends EntityRepository
         return $max + 1;
     }
 
+    public function setOwner(User $user, array $fiddleIds)
+    {
+        $query = $this->_em->createQuery("
+            UPDATE Fuz\AppBundle\Entity\Fiddle f
+            SET f.user = :user
+            WHERE f.id IN (:fiddle_ids)
+        ");
+
+        $params = array (
+                'user' => $user->getId(),
+                'fiddle_ids' => $fiddleIds,
+        );
+
+        $query
+           ->setParameters($params)
+           ->execute()
+        ;
+    }
+
 }

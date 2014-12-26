@@ -56,7 +56,13 @@ class OAuthUserProvider extends BaseUserProvider
             $this->em->flush();
         }
 
-        $json = json_encode(array($resourceOwner, $resourceOwnerId));
+        if ($this->session->has('recent-fiddles'))
+        {
+            $this->em->getRepository('FuzAppBundle:Fiddle')->setOwner($user, $this->session->get('recent-fiddles'));
+            $this->session->remove('recent-fiddles');
+        }
+
+        $json = json_encode(array ($resourceOwner, $resourceOwnerId));
         $this->session->set('user', $json);
         return $this->loadUserByUsername($json);
     }
