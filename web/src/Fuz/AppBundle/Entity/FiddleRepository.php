@@ -125,4 +125,36 @@ class FiddleRepository extends EntityRepository
         ;
     }
 
+    public function getRevisionList(Fiddle $fiddle, User $user = null)
+    {
+        if (is_null($fiddle->getId()))
+        {
+            return array();
+        }
+
+        $query = $this->_em->createQuery("
+            SELECT f.revision, f.creationTm
+            FROM Fuz\AppBundle\Entity\Fiddle f
+            WHERE f.hash = :hash
+            AND (
+                f.visibility <> :private
+                OR f.user = :user
+            )
+            ORDER BY f.revision ASC
+        ");
+
+        $params = array (
+                'hash' => $fiddle->getHash(),
+                'private' => Fiddle::VISIBILITY_PRIVATE,
+                'user' => $user ? $user->getId() : -1,
+        );
+
+        $revisions = $query
+           ->setParameters($params)
+           ->getArrayResult()
+        ;
+
+        return $revisions;
+    }
+
 }

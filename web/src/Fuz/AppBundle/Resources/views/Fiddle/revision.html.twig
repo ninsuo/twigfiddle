@@ -1,0 +1,22 @@
+{# FuzAppBundle:Fiddle:revision.html.twig #}
+<div class="col-md-3 col-sm-6 col-xs-12 revision">
+    <select id="revision-browser" class="form-control input-sm" {% if data.id == null %}disabled{% endif %}>
+        {% for rev in revisionBrowser %}
+            <option {% if rev.revision == data.revision %}selected{% endif %} value="{{ path('fiddle', {'hash': data.hash, 'revision': rev.revision}) }}">Revision {{ rev.revision }} - {{ rev.creationTm|date }}</option>
+        {% endfor %}
+    </select>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-12 saveas">
+    <button
+        type="button"
+        class="btn btn-primary domajax click"
+        data-endpoint="{{ path('save_fiddle', {'hash': hash}) }}"
+        data-input="#page-container"
+        data-callback-success="processSaveFiddleResponse"
+        data-callback-failure="handleAjaxErrors"
+        data-lock="#actions"
+        {% if data.id == null %}disabled{% endif %}
+        >
+        <span class="glyphicon glyphicon glyphicon-floppy-disk hidden-md hidden-sm hidden-xs"></span> Create new revision
+    </button>
+</div>

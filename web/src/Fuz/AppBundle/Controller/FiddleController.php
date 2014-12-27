@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Fuz\AppBundle\Base\BaseController;
 use Fuz\AppBundle\Entity\Fiddle;
@@ -29,6 +30,7 @@ class FiddleController extends BaseController
      *          "revision" = 1
      *      }
      * )
+     * @Method({"POST"})
      * @param Request $request
      * @param string|null $hash
      * @param int $revision
@@ -75,6 +77,7 @@ class FiddleController extends BaseController
      *          "revision" = 0
      *      }
      * )
+     * @Method({"POST"})
      * @param Request $request
      * @param string|null $hash
      * @param int $revision
@@ -134,6 +137,7 @@ class FiddleController extends BaseController
      *          "revision" = 1
      *      }
      * )
+     * @Method({"GET"})
      * @Template()
      * @param string|null $hash
      * @param int $revision
@@ -146,7 +150,8 @@ class FiddleController extends BaseController
            ->getRepository('FuzAppBundle:Fiddle')
         ;
 
-        $data = $repo->getFiddle($hash, $revision, $this->getUser());
+        $user = $this->getUser();
+        $data = $repo->getFiddle($hash, $revision, $user);
         $repo->incrementVisitCount($data);
 
         $form = $this->createForm('FiddleType', $data);
@@ -157,6 +162,7 @@ class FiddleController extends BaseController
                 'hash' => $hash,
                 'revision' => $revision,
                 'canSave' => $this->canSave($data),
+                'revisionBrowser' => $repo->getRevisionList($data, $user),
         );
     }
 

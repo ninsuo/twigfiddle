@@ -91,5 +91,4 @@ fuz_app:
     web:
         github_repository_root: %github_repository_root%
         max_fiddles_in_session: 100
-        default_fiddle_hash_size: 5
- 
+        default_fiddle_hash_size: 6

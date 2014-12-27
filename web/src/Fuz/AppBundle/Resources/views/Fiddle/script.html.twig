@@ -286,4 +286,12 @@ $('body').on('click', '#result-context-toggle', function(e) {
     }
 });
 
+{#
+ #  Toggle used to display / hide the resulting context in PHP
+ #  Used in FuzAppBundle:Fiddle:result-context.html.twig
+ #}
+$('body').on('change', '#revision-browser', function(e) {
+    window.location = $(this).val();
+});
+
 </script>
