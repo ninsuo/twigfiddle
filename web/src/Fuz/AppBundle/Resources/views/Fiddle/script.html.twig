@@ -191,9 +191,17 @@ $(document).ready(function() {
      #  Context Syntax Highlighting Switcher
      #  Used in FuzAppBundle:Fiddle:context-pane.html.twig
      #}
-    $('body').on('change', '.switcher-context-format', function () {
+    $('body').on('change', '.switcher-context-format', function() {
         contextEditor.setOption("mode", convertContextModeToCodeMirrorMode($(this).data('content-id')));
     });
+
+    {#
+     #  Share link automatic selection
+     #  Used in FuzAppBundle:Fiddle:actions.html.twig
+     #}
+     $('#share-modal').on('shown.bs.modal', function() {
+        $('#select-share-link').click();
+     });
 
     {#
      #  Automatic run at startup if a saved fiddle was loaded

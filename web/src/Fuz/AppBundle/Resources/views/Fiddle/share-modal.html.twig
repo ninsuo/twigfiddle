@@ -1,0 +1,22 @@
+{# FuzAppBundle:Fiddle:share-modal.html.twig #}
+{# Included by: FuzAppBundle:Fiddle:actions.html.twig #}
+
+{% set body %}
+
+    <div class="text-left">
+
+        <p>You can share this fiddle using the following link:</p>
+
+        <pre id="share-link">{{ url('fiddle', {'hash': data.hash, 'revision': data.revision}) }}</pre>
+
+        <p>
+            <button id="select-share-link" class="btn btn-default btn-sm btn-twigfiddle select-text" data-selector="#share-link">
+                <span class="glyphicon glyphicon-flash"></span> Select link
+            </button>
+        </p>
+
+    </div>
+
+{% endset %}
+
+{{ macros.modal('share-modal', 'Share', body) }}
