@@ -81,6 +81,6 @@ services:
 
     app.save_fiddle:
          class: %app.save_fiddle.class%
-         arguments: [@logger, @app.utilities, @app.helper.doctrine_helper, @doctrine.orm.entity_manager, %web%]
+         arguments: [@logger, @app.utilities, @app.helper.doctrine_helper, @doctrine.orm.entity_manager, @session, @router, %web%]
          tags:
              - { name: monolog.logger, channel: helper.fiddle }

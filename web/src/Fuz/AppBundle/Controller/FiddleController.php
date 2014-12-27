@@ -88,9 +88,10 @@ class FiddleController extends BaseController
         return $this->validateAjaxFiddle($request, $hash, $revision,
               function (Fiddle $data) use ($hash, $revision)
            {
-               $originalId = $data->getId();
+               $saveService = $this->get('app.save_fiddle');
+               $user = $this->getUser();
 
-               if (is_null($data->getId()) || !$this->canSave($data))
+               if (is_null($data->getId()) || !$saveService->canSave($data, $user))
                {
                    $revision = 0;
                }
@@ -100,17 +101,15 @@ class FiddleController extends BaseController
                    $hash = $data->getHash();
                }
 
-               if (!$this->validateHash($hash))
+               if (!$saveService->validateHash($hash))
                {
                    $hash = null;
                }
 
-               $saved = $this
-                  ->get('app.save_fiddle')
-                  ->save($hash, $revision, $data, $this->getUser())
-               ;
+               $originalId = $data->getId();
 
-               $this->saveFiddleToSession($saved->getId());
+               $saved = $saveService->save($hash, $revision, $data, $user);
+               $saveService->saveFiddleToSession($saved->getId(), $user);
 
                if ($originalId !== $saved->getId())
                {
@@ -161,7 +160,7 @@ class FiddleController extends BaseController
                 'data' => $data,
                 'hash' => $hash,
                 'revision' => $revision,
-                'canSave' => $this->canSave($data),
+                'canSave' => $this->get('app.save_fiddle')->canSave($data, $user),
                 'revisionBrowser' => $repo->getRevisionList($data, $user),
         );
     }
@@ -211,97 +210,6 @@ class FiddleController extends BaseController
         }
 
         return new JsonResponse($response);
-    }
-
-    /**
-     * Checks whether user can save current fiddle's revision.
-     *
-     * @param Fiddle $fiddle
-     * @return bool
-     */
-    protected function canSave(Fiddle $fiddle)
-    {
-        if (is_null($fiddle->getId()))
-        {
-            return true;
-        }
-
-        if ($fiddle->getUser() && $this->getUser() && $fiddle->getUser()->isEqualTo($this->getUser()))
-        {
-            return true;
-        }
-
-        $session = $this->get('session');
-        if ($session->has('recent-fiddles') && in_array($fiddle->getId(), $session->get('recent-fiddles')))
-        {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Checks whether a hash can be used to reference a fiddle
-     *
-     * @param string|null $hash
-     * @return bool
-     */
-    protected function validateHash($hash)
-    {
-        if (is_null($hash))
-        {
-            return false;
-        }
-
-        if (!preg_match('/^[a-zA-Z0-9-]{1,16}$/', $hash))
-        {
-            return false;
-        }
-
-        $routes = $this->get('router')->getRouteCollection();
-        $reserved = array ();
-        foreach ($routes->getIterator() as $route)
-        {
-            $path = substr($route->getPath(), 1);
-            if (false !== strpos($path, '/'))
-            {
-                $path = substr($path, 0, strpos($path, '/'));
-            }
-            if (!in_array($path, $reserved))
-            {
-                $reserved[] = $path;
-            }
-        }
-        if (in_array($hash, $reserved))
-        {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * Used to let unregistered users update recent fiddle's revisions they own.
-     *
-     * @param int $id
-     */
-    protected function saveFiddleToSession($id)
-    {
-        if (!is_null($this->getUser()))
-        {
-            return;
-        }
-        $session = $this->get('session');
-        if (!$session->has('recent-fiddles'))
-        {
-            $session->set('recent-fiddles', array ($id));
-        }
-        else
-        {
-            $web = $this->container->getParameter('web');
-            $list = array_merge($session->get('recent-fiddles'), array ($id));
-            $session->set('recent-fiddles', array_slice($list, 0, $web['max_fiddles_in_session']));
-        }
     }
 
 }
