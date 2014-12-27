@@ -106,7 +106,7 @@ class FiddleController extends BaseController
                }
 
                $saved = $this
-                  ->get('app.helper.fiddle_helper')
+                  ->get('app.save_fiddle')
                   ->save($hash, $revision, $data, $this->getUser())
                ;
 

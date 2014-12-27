@@ -6,12 +6,12 @@ parameters:
     app.twig.safety_extension.class: Fuz\AppBundle\Twig\Extension\SafetyExtension
     app.twig.github_extension.class: Fuz\AppBundle\Twig\Extension\GitHubExtension
     app.twig.hash_extension.class: Fuz\AppBundle\Twig\Extension\HashExtension
-    app.helper.fiddle_helper.class: Fuz\AppBundle\Helper\FiddleHelper
     app.helper.doctrine_helper.class: Fuz\AppBundle\Helper\DoctrineHelper
     app.subscriber.fiddle.class: Fuz\AppBundle\EventListener\FiddleSubscriber
     app.utilities.class: Fuz\AppBundle\Service\Utilities
     app.process_configuration.class: Fuz\AppBundle\Service\ProcessConfiguration
     app.run_fiddle.class: Fuz\AppBundle\Service\RunFiddle
+    app.save_fiddle.class: Fuz\AppBundle\Service\SaveFiddle
 
 services:
 
@@ -52,12 +52,6 @@ services:
          tags:
              - { name: twig.extension }
 
-    app.helper.fiddle_helper:
-         class: %app.helper.fiddle_helper.class%
-         arguments: [@logger, @app.utilities, @app.helper.doctrine_helper, @doctrine.orm.entity_manager, %web%]
-         tags:
-             - { name: monolog.logger, channel: helper.fiddle }
-
     app.helper.doctrine_helper:
          class: %app.helper.doctrine_helper.class%
          arguments: [@doctrine.orm.entity_manager]
@@ -84,3 +78,9 @@ services:
          arguments: [@logger, @filesystem, @app.utilities, @app.process_configuration, %process%]
          tags:
              - { name: monolog.logger, channel: service.run_fiddle }
+
+    app.save_fiddle:
+         class: %app.save_fiddle.class%
+         arguments: [@logger, @app.utilities, @app.helper.doctrine_helper, @doctrine.orm.entity_manager, %web%]
+         tags:
+             - { name: monolog.logger, channel: helper.fiddle }

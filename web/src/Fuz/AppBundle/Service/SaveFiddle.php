@@ -1,14 +1,14 @@
 <?php
 
-namespace Fuz\AppBundle\Helper;
+namespace Fuz\AppBundle\Service;
 
 use Psr\Log\LoggerInterface;
 use Doctrine\ORM\EntityManager;
-use Fuz\AppBundle\Service\Utilities;
+use Fuz\AppBundle\Helper\DoctrineHelper;
 use Fuz\AppBundle\Entity\Fiddle;
 use Fuz\AppBundle\Entity\User;
 
-class FiddleHelper
+class SaveFiddle
 {
 
     protected $logger;

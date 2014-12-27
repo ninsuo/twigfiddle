@@ -4,6 +4,7 @@
 {% extends 'FuzAppBundle::base.html.twig' %}
 
 {% block extra_css %}
+<link rel="stylesheet" href="{{ asset('bundles/fuzapp/jquery-ui-1.11.2/jquery-ui.min.css') }}" />
 <link rel="stylesheet" href="{{ asset('bundles/fuzapp/codemirror-4.8/lib/codemirror.css') }}" />
 <link rel="stylesheet" href="{{ asset('bundles/fuzapp/google-code-prettify/prettify.css') }}">
 {% endblock %}
@@ -83,6 +84,8 @@
 {% endblock %}
 
 {% block extra_js %}
+<script type="text/javascript" src="{{ asset('bundles/fuzapp/jquery-ui-1.11.2/jquery-ui.min.js') }}"></script>
+
 <script type="text/javascript" src="{{ asset('bundles/fuzapp/js/jquery.symfony2.js') }}"></script>
 <script type="text/javascript" src="{{ asset('bundles/fuzapp/js/jquery.domajax.js') }}"></script>
 <script type="text/javascript" src="{{ asset('bundles/fuzapp/js/jquery.selecttext.js') }}"></script>
