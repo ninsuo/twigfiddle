@@ -30,8 +30,12 @@ $(document).ready(function() {
                 break ;
             }
         }
-        $('.delete-template').removeClass('hide');
-        $('.main-template').removeClass('hide');
+        $('.filename-template-div')
+                .removeClass('col-md-12 col-sm-12')
+                .addClass('col-md-7 col-sm-7')
+        ;
+        $('.main-template-div').removeClass('hide');
+        $('.delete-template-div').removeClass('hide');
     });
 
     {#
@@ -58,14 +62,22 @@ $(document).ready(function() {
        $(id).remove();
        $('#add-template').removeClass('hide');
        if ($('.template').length === 1) {
-           $('.delete-template').addClass('hide');
-           $('.main-template').addClass('hide');
+           $('.filename-template-div')
+                   .removeClass('col-md-7 col-sm-7')
+                   .addClass('col-md-12 col-sm-12')
+           ;
+           $('.main-template-div').addClass('hide');
+           $('.delete-template-div').addClass('hide');
        }
     });
 
     if ($('.template').length > 1) {
-        $('.delete-template').removeClass('hide');
-        $('.main-template').removeClass('hide');
+        $('.filename-template-div')
+                .removeClass('col-md-12 col-sm-12')
+                .addClass('col-md-7 col-sm-7')
+        ;
+        $('.main-template-div').removeClass('hide');
+        $('.delete-template-div').removeClass('hide');
     }
 
     {#
