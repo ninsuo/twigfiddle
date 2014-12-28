@@ -486,6 +486,18 @@ class Fiddle
         }
     }
 
+    public function spreadFiddle()
+    {
+        foreach ($this->templates as $template)
+        {
+            $template->setFiddle($this);
+        }
+        foreach ($this->tags as $tag)
+        {
+            $tag->setFiddle($this);
+        }
+    }
+
     public function __clone()
     {
         if ($this->context)

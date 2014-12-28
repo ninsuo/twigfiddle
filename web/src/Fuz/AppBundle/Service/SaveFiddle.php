@@ -134,7 +134,8 @@ class SaveFiddle
         }
         else if ($revision > 0)
         {
-            $this->em->merge($fiddle);
+            $fiddle->spreadFiddle();
+            $this->em->persist($fiddle);
             $this->em->flush();
         }
         else
