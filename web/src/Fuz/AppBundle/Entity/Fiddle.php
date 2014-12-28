@@ -242,15 +242,39 @@ class Fiddle
     }
 
     /**
-     * Set templates
+     * Add template
      *
-     * @param ArrayCollection[FiddleTemplate] $templates
+     * @param FiddleTemplate $template
      * @return Fiddle
      */
-    public function setTemplates(ArrayCollection $templates)
+    public function addTemplate(FiddleTemplate $template)
     {
-        $this->templates = $templates;
+        $template->setFiddle($this);
+        $this->templates->add($template);
 
+        return $this;
+    }
+
+    /**
+     * Remove template
+     *
+     * @param FiddleTemplate $template
+     * @return Fiddle
+     */
+    public function removeTemplate(FiddleTemplate $template)
+    {
+        $this->templates->removeElement($template);
+        return $this;
+    }
+
+    /**
+     * Clear templates
+     *
+     * @return Fiddle
+     */
+    public function clearTemplates()
+    {
+        $this->templates->clear();
         return $this;
     }
 
@@ -334,15 +358,39 @@ class Fiddle
     }
 
     /**
-     * Set tags
+     * Add tag
      *
-     * @param ArrayCollection[FiddleTag] $tags
+     * @param FiddleTag $tag
      * @return Fiddle
      */
-    public function setTags(ArrayCollection $tags)
+    public function addTag(FiddleTag $tag)
     {
-        $this->tags = $tags;
+        $tag->setFiddle($this);
+        $this->tags->add($tag);
 
+        return $this;
+    }
+
+    /**
+     * Remove tag
+     *
+     * @param FiddleTag $tag
+     * @return Fiddle
+     */
+    public function removeTag(FiddleTag $tag)
+    {
+        $this->tags->removeElement($tag);
+        return $this;
+    }
+
+    /**
+     * Clear tags
+     *
+     * @return Fiddle
+     */
+    public function clearTags()
+    {
+        $this->tags->clear();
         return $this;
     }
 
@@ -486,18 +534,6 @@ class Fiddle
         }
     }
 
-    public function spreadFiddle()
-    {
-        foreach ($this->templates as $template)
-        {
-            $template->setFiddle($this);
-        }
-        foreach ($this->tags as $tag)
-        {
-            $tag->setFiddle($this);
-        }
-    }
-
     public function __clone()
     {
         if ($this->context)
@@ -517,7 +553,7 @@ class Fiddle
 
         if ($this->tags)
         {
-           $tags = $this->tags;
+            $tags = $this->tags;
             $this->tags = new ArrayCollection();
             foreach ($tags as $tag)
             {

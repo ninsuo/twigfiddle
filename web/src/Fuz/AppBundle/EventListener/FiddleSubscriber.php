@@ -30,9 +30,9 @@ class FiddleSubscriber implements EventSubscriber
             $this->context = $object->getContext();
             $object->setContext(null);
             $this->templates = $object->getTemplates();
-            $object->setTemplates(new ArrayCollection());
+            $object->clearTemplates();
             $this->tags = $object->getTags();
-            $object->setTags(new ArrayCollection());
+            $object->clearTags();
         }
     }
 
@@ -49,12 +49,14 @@ class FiddleSubscriber implements EventSubscriber
             {
                 $template->setFiddle($object);
                 $om->persist($template);
+                $object->addTemplate($template);
             }
 
             foreach ($this->tags as $tag)
             {
                 $tag->setFiddle($object);
                 $om->persist($tag);
+                $object->addTag($tag);
             }
 
             $om->flush();

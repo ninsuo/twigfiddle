@@ -32,6 +32,7 @@ class FiddleType extends AbstractType
                    'allow_delete' => true,
                    'prototype' => true,
                    'error_bubbling' => false,
+                   'by_reference' => false,
                    'required' => false,
            ))
            ->add('context', new FiddleContextType(), array(
