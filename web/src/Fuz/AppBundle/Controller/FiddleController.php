@@ -91,7 +91,7 @@ class FiddleController extends BaseController
                $saveService = $this->get('app.save_fiddle');
                $user = $this->getUser();
 
-               if (is_null($data->getId()) || !$saveService->canSave($data, $user))
+               if (is_null($data->getId()) || !$saveService->ownsFiddle($data, $user))
                {
                    $revision = 0;
                }
@@ -160,7 +160,7 @@ class FiddleController extends BaseController
                 'data' => $data,
                 'hash' => $hash,
                 'revision' => $revision,
-                'canSave' => $this->get('app.save_fiddle')->canSave($data, $user),
+                'canSave' => $this->get('app.save_fiddle')->canClickSave($data, $user),
                 'revisionBrowser' => $repo->getRevisionList($data, $user),
         );
     }

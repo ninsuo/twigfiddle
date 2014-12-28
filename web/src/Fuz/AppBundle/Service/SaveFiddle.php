@@ -13,7 +13,7 @@ use Fuz\AppBundle\Entity\User;
 class SaveFiddle
 {
 
-    // This pattern should be the same in FuzAppBundle:Fiddle's routing
+    /* This pattern should be the same in FuzAppBundle:Fiddle's routing */
     const HASH_PATTERN = '/^[a-zA-Z0-9-]{1,16}$/';
 
     protected $logger;
@@ -37,19 +37,37 @@ class SaveFiddle
     }
 
     /**
-     * Checks whether user can save current fiddle's revision.
+     * Checks whether user can use the save button, to save
+     * current fiddle's instance or the fav form.
      *
      * @param Fiddle $fiddle
      * @param User $user
      * @return bool
      */
-    public function canSave(Fiddle $fiddle, User $user = null)
+    public function canClickSave(Fiddle $fiddle, User $user = null)
     {
         if (is_null($fiddle->getId()))
         {
             return true;
         }
 
+        if ($this->ownsFiddle($fiddle, $user))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks whether user owns current fiddle's revision.
+     *
+     * @param Fiddle $fiddle
+     * @param User $user
+     * @return bool
+     */
+    public function ownsFiddle(Fiddle $fiddle, User $user = null)
+    {
         if ($fiddle->getUser() && $user && $fiddle->getUser()->isEqualTo($user))
         {
             return true;
