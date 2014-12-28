@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="{{ asset('bundles/fuzapp/jquery-ui-1.11.2/jquery-ui.min.css') }}" />
 <link rel="stylesheet" href="{{ asset('bundles/fuzapp/codemirror-4.8/lib/codemirror.css') }}" />
 <link rel="stylesheet" href="{{ asset('bundles/fuzapp/google-code-prettify/prettify.css') }}">
+<link rel="stylesheet" href="{{ asset('bundles/fuzapp/jquery-tagsinput/jquery.tagsinput.css') }}">
 {% endblock %}
 
 {% block header_left %}
@@ -37,13 +38,32 @@
 </div>
 
 {# Revision browser, title, tags #}
-{# if data.id is empty, should put col-md-6 on title/tags and make the rev part invisible #}
 <div class="row">
     {% if data.id %}
         {{ include('FuzAppBundle:Fiddle:revision.html.twig') }}
     {% endif %}
-    <div class="{% if data.id %}col-md-3 col-sm-6 col-xs-12{% else %}col-md-6 col-sm-12 col-xs-12{% endif %} title"><strong>TITLE</strong> : This is my title</div>
-    <div class="{% if data.id %}col-md-3 col-sm-6 col-xs-12{% else %}col-md-6 col-sm-12 col-xs-12{% endif %} tags"><strong>TAGS</strong> : word, word, word, word </div>
+    <div class="{% if data.id %}col-md-3 col-sm-6 col-xs-12{% else %}col-md-6 col-sm-12 col-xs-12{% endif %} title">
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-addon">Title</div>
+                {{ form_widget(form.title) }}
+            </div>
+        </div>
+    </div>
+    <div class="{% if data.id %}col-md-3 col-sm-6 col-xs-12{% else %}col-md-6 col-sm-12 col-xs-12{% endif %} tags">
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-addon">Tags</div>
+                {{
+                    form_widget(form.tags, {
+                        'attr': {
+                            'class': 'tags-input',
+                        },
+                    })
+                }}
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="clear">&nbsp</div>
@@ -92,6 +112,8 @@
 
 <script type="text/javascript" src="{{ asset('bundles/fuzapp/google-code-prettify/prettify.js') }}"></script>
 <script type="text/javascript" src="{{ asset('bundles/fuzapp/google-code-prettify/run_prettify.js') }}"></script>
+
+<script type="text/javascript" src="{{ asset('bundles/fuzapp/jquery-tagsinput/jquery.tagsinput.min.js') }}"></script>
 
 <script type="text/javascript" src="{{ asset('bundles/fuzapp/codemirror-4.8/lib/codemirror.js') }}"></script>
 <script type="text/javascript" src="{{ asset('bundles/fuzapp/codemirror-4.8/mode/jinja2/jinja2.js') }}"></script>

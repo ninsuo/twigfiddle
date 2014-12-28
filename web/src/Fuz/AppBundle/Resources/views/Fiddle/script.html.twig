@@ -216,6 +216,25 @@ $(document).ready(function() {
      });
 
     {#
+     #  Make tags having a tag layout
+     #  Used in FuzAppBundle:Fiddle:index.html.twig
+     #}
+    $('.tags-input').each(function() {
+        var that = $(this);
+        that.tagsInput({
+            'width': (that.width() + 26) + 'px',
+            'height': '34px',
+            'placeholderColor' : '#999',
+            'onAddTag': function () {
+                var tags = that.val().split(',');
+                if (tags.length > 5 {# fiddle.max_tags #} ) {
+                    that.importTags(tags.slice(0, 5 {# fiddle.max_tags #} ).join(','));
+                }
+            }
+        });
+    });
+
+    {#
      #  Automatic run at startup if a saved fiddle was loaded
      #}
     {% if data.id %}

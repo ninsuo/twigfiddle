@@ -38,6 +38,13 @@ class FiddleType extends AbstractType
            ->add('context', new FiddleContextType(), array(
                    'required' => false,
            ))
+           ->add('title', 'text', array(
+                   'required' => false,
+           ))
+           ->add('tags', 'text', array(
+                   'mapped' => false,
+                   'required' => false,
+           ))
         ;
     }
 

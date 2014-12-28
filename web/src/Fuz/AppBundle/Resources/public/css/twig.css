@@ -233,3 +233,7 @@ pre.compiled-code {
 #select-result-rendered {
     margin-top: 5px;
 }
+div.tagsinput span.tag {
+    padding: 2px 3px;
+    margin-top: 2px;
+}

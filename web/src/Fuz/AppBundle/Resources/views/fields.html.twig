@@ -38,7 +38,7 @@
 
 {% block form_widget_simple -%}
     {% set type = type|default('text') -%}
-    <input class="form-control" type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+    <input class="form-control {% if attr.class|default(null) != null %}{{ attr.class }}{% set attr = attr|merge({'class': false}) %}{% endif %}" type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
 {%- endblock form_widget_simple %}
 
 {% block textarea_widget -%}

@@ -274,7 +274,7 @@ class Fiddle
      */
     public function clearTemplates()
     {
-        $this->templates->clear();
+        $this->templates = new ArrayCollection();
         return $this;
     }
 
@@ -390,7 +390,7 @@ class Fiddle
      */
     public function clearTags()
     {
-        $this->tags->clear();
+        $this->tags = new ArrayCollection();
         return $this;
     }
 
