@@ -46,7 +46,13 @@
         <div class="form-group">
             <div class="input-group">
                 <div class="input-group-addon">Title</div>
-                {{ form_widget(form.title) }}
+                {{
+                    form_widget(form.title, {
+                        'attr': {
+                            'placeholder': 'Optional title, related URL, ...',
+                        },
+                    })
+                }}
             </div>
         </div>
     </div>

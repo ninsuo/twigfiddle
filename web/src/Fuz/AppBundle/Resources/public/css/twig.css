@@ -234,6 +234,6 @@ pre.compiled-code {
     margin-top: 5px;
 }
 div.tagsinput span.tag {
-    padding: 2px 3px;
-    margin-top: 2px;
+    padding: 2px 5px;
+    margin-top: -1px;
 }
