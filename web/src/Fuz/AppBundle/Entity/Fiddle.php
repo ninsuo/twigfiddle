@@ -366,8 +366,6 @@ class Fiddle
      */
     public function setTags(ArrayCollection $tags)
     {
-        file_put_contents("/tmp/test.txt", "ok 1\n", FILE_APPEND);
-
         foreach ($tags as $tag)
         {
             $tag->setFiddle($this);
