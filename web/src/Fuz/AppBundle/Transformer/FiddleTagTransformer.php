@@ -56,6 +56,11 @@ class FiddleTagTransformer implements DataTransformerInterface
 
         foreach ($toAdd as $tag)
         {
+            $tag = trim($tag, " \n\r\t");
+            if (strlen($tag) == 0)
+            {
+                continue ;
+            }
             $fiddleTag = new FiddleTag();
             $fiddleTag->setFiddle($this->fiddle);
             $fiddleTag->setTag($tag);
