@@ -44,16 +44,23 @@
                         {# Login / Logout #}
                         {% if is_granted('ROLE_USER') %}
                             <a href="{{ path('logout') }}" class="btn btn-tf-green">
-                                <span class="glyphicon glyphicon glyphicon-remove-circle hidden-md hidden-sm hidden-xs"></span>
+                                <span class="glyphicon glyphicon glyphicon-log-out hidden-md hidden-sm hidden-xs"></span>
                                 Logout
-                                <img id="logout-image" src="{{ asset('bundles/fuzapp/img/oauth/' ~ app.user.resourceOwner ~ '-small.png') }}" alt=""/>
-                                {{ app.user.username }}
                             </a>
                         {% else %}
-                            <a href="#" class="btn btn-tf-green" data-toggle="modal" data-target="#login-modal"><span class="glyphicon glyphicon glyphicon-lock hidden-md hidden-sm hidden-xs"></span> Login</a>
+                            <a href="#" class="btn btn-tf-green" data-toggle="modal" data-target="#login-modal">
+                                <span class="glyphicon glyphicon glyphicon-log-in hidden-md hidden-sm hidden-xs"></span>
+                                Login
+                            </a>
                             {{ include('FuzAppBundle:Login:modal.html.twig') }}
                         {% endif %}
 
+                        {#
+            <div class="col-md-12 col-sm-12 col-xs-12 user-menu text-right">
+                Logged as <img id="logout-image" src="{{ asset('bundles/fuzapp/img/oauth/' ~ app.user.resourceOwner ~ '-small.png') }}" alt=""/>
+                {{ app.user.username }}
+            </div>
+                        #}
                     {% endblock %}
                 </div>
             </div>
