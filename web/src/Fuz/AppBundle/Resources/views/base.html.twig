@@ -8,12 +8,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="twigfiddle.com provides a small development environment to develop, run, store and access Twig code online.">
         <meta name="author" content="Alain Tiemblo">
-        <title>{% block title %}Twig Fiddle{% endblock %}</title>
+        <title>{% block title %}twigfiddle.com{% endblock %}</title>
+        <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
 
-        {# Bootstrap core CSS #}
-        <link href="{{ asset('bundles/fuzapp/css/bootstrap.css') }}" rel="stylesheet">
+        {# CSS #}
+        <link rel="stylesheet" href="{{ asset('bundles/fuzapp/css/bootstrap.css') }}">
         {% block extra_css %}{% endblock %}
-        <link href="{{ asset('bundles/fuzapp/css/twig.css') }}" rel="stylesheet">
+        <link rel="stylesheet" href="{{ asset('bundles/fuzapp/css/twig.css') }}">
 
     </head>
 
@@ -106,7 +107,7 @@
             </div>
         </div>
 
-        {# Bootstrap core JS #}
+        {# JS #}
         <script src="{{ asset('bundles/fuzapp/js/jquery-2.1.1.min.js') }}"></script>
         <script src="{{ asset('bundles/fuzapp/js/bootstrap.min.js') }}"></script>
         {% block extra_js %}{% endblock %}

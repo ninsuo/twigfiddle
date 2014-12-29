@@ -3,6 +3,18 @@
 
 {% extends 'FuzAppBundle::base.html.twig' %}
 
+{% block title %}
+{% spaceless %}
+    {% if data.id == null %}
+        twigfiddle.com - Create a new fiddle
+    {% elseif data.title == null %}
+        twigfiddle.com - Fiddle {{ data.hash }} v{{ data.revision }} - Created on {{ data.creationTm|date }}
+    {% else %}
+        twigfiddle.com - {{ data.title }}
+    {% endif %}
+{% endspaceless %}
+{% endblock %}
+
 {% block extra_css %}
 <link rel="stylesheet" href="{{ asset('bundles/fuzapp/jquery-ui-1.11.2/jquery-ui.min.css') }}" />
 <link rel="stylesheet" href="{{ asset('bundles/fuzapp/codemirror-4.8/lib/codemirror.css') }}" />
