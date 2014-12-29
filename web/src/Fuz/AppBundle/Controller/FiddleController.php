@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Fuz\AppBundle\Base\BaseController;
 use Fuz\AppBundle\Entity\Fiddle;
+use Fuz\AppBundle\Entity\FiddleTag;
 
 class FiddleController extends BaseController
 {
@@ -193,7 +194,9 @@ class FiddleController extends BaseController
            ->getFiddle($hash, $revision, $this->getUser())
         ;
 
-        $form = $this->createForm('FiddleType', $data);
+        $form = $this->createForm('FiddleType', $data, array (
+                'data_object' => $data,
+        ));
         $form->handleRequest($request);
 
         if ($form->isValid())

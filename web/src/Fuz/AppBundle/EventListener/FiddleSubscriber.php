@@ -32,7 +32,7 @@ class FiddleSubscriber implements EventSubscriber
             $this->templates = $object->getTemplates();
             $object->clearTemplates();
             $this->tags = $object->getTags();
-            $object->clearTags();
+            $object->setTags(new ArrayCollection());
         }
     }
 
@@ -56,8 +56,8 @@ class FiddleSubscriber implements EventSubscriber
             {
                 $tag->setFiddle($object);
                 $om->persist($tag);
-                $object->addTag($tag);
             }
+            $object->setTags($this->tags);
 
             $om->flush();
         }

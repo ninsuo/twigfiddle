@@ -101,12 +101,13 @@ class Fiddle
     protected $visibility = self::VISIBILITY_PUBLIC;
 
     /**
-     * @var ArrayCollection[UserTag]
+     * @var ArrayCollection[FiddleTag]
      *
      * fiddle.max_tags
      *
      * @ORM\OneToMany(targetEntity="FiddleTag", mappedBy="fiddle", cascade={"all"}, orphanRemoval=true)
      * @Assert\Count(max = 5, maxMessage = "You can't set more than 5 tags.")
+     * @Assert\Valid()
      */
     protected $tags;
 
@@ -358,39 +359,22 @@ class Fiddle
     }
 
     /**
-     * Add tag
+     * Set tags
      *
-     * @param FiddleTag $tag
+     * @param ArrayCollection[FiddleTag]
      * @return Fiddle
      */
-    public function addTag(FiddleTag $tag)
+    public function setTags(ArrayCollection $tags)
     {
-        $tag->setFiddle($this);
-        $this->tags->add($tag);
+        file_put_contents("/tmp/test.txt", "ok 1\n", FILE_APPEND);
 
-        return $this;
-    }
+        foreach ($tags as $tag)
+        {
+            $tag->setFiddle($this);
+        }
 
-    /**
-     * Remove tag
-     *
-     * @param FiddleTag $tag
-     * @return Fiddle
-     */
-    public function removeTag(FiddleTag $tag)
-    {
-        $this->tags->removeElement($tag);
-        return $this;
-    }
+        $this->tags = $tags;
 
-    /**
-     * Clear tags
-     *
-     * @return Fiddle
-     */
-    public function clearTags()
-    {
-        $this->tags = new ArrayCollection();
         return $this;
     }
 

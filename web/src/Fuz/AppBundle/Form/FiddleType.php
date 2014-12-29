@@ -6,6 +6,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Fuz\AppBundle\Service\ProcessConfiguration;
+use Fuz\AppBundle\Transformer\FiddleTagTransformer;
 
 class FiddleType extends AbstractType
 {
@@ -21,6 +22,8 @@ class FiddleType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $transformer = new FiddleTagTransformer($options['data_object']);
+
         $builder
            ->add('twigVersion', 'choice', array(
                    'choices' => array_combine($this->twigVersions, $this->twigVersions),
@@ -41,16 +44,21 @@ class FiddleType extends AbstractType
            ->add('title', 'text', array(
                    'required' => false,
            ))
-           ->add('tags', 'text', array(
-                   'mapped' => false,
-                   'required' => false,
-           ))
+
+           ->add(
+                    $builder
+                        ->create('tags', 'text', array(
+                                'required' => false,
+                        ))
+                        ->addModelTransformer($transformer)
+           )
         ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array (
+                'data_object' => null,
                 'data_class' => 'Fuz\AppBundle\Entity\Fiddle',
         ));
     }
