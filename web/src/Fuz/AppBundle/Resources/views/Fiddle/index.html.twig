@@ -38,7 +38,10 @@
 </div>
 
 {# Revision browser, title, tags #}
-<div class="row">
+<div class="row {% if data.id == null %}hide{% endif %}">
+
+    <div class="clear">&nbsp</div>
+
     {% if data.id %}
         {{ include('FuzAppBundle:Fiddle:revision.html.twig') }}
     {% endif %}
@@ -70,9 +73,10 @@
             </div>
         </div>
     </div>
-</div>
 
-<div class="clear">&nbsp</div>
+    <div class="clear">&nbsp</div>
+
+</div>
 
 {# Panes #}
 <div class="row" id="content">
