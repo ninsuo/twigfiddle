@@ -46,6 +46,7 @@ $(document).ready(function() {
        if ($('.template').length === 1) {
            return ;
        }
+
        var id = '#row-' + $(this).data('id');
        if ($(id).find(':checkbox').prop('checked')) {
            var first = $('.template').not(id).first();
@@ -59,8 +60,10 @@ $(document).ready(function() {
                    .addClass('glyphicon-check')
            ;
        }
+
        $(id).remove();
        $('#add-template').removeClass('hide');
+
        if ($('.template').length === 1) {
            $('.filename-template-div')
                    .removeClass('col-md-7 col-sm-7')
@@ -69,7 +72,8 @@ $(document).ready(function() {
            $('.main-template-div').addClass('hide');
            $('.delete-template-div').addClass('hide');
        }
-    });
+
+    }); // $.on
 
     if ($('.template').length > 1) {
         $('.filename-template-div')
@@ -109,8 +113,8 @@ $(document).ready(function() {
                         .addClass('glyphicon-unchecked')
                 ;
             }
-        });
-    });
+        }); // $.each
+    }); // $.on
 
     {#
      #  Template Syntax Highlighting Loader
@@ -216,7 +220,7 @@ $(document).ready(function() {
      });
 
     {#
-     #  Make tags having a tag layout
+     #  Make tags having a tag layout and URLs
      #  Used in FuzAppBundle:Fiddle:index.html.twig
      #}
     $('.tags-input').each(function() {
@@ -226,13 +230,49 @@ $(document).ready(function() {
             'height': '34px',
             'defaultText': 'New tag...',
             'placeholderColor' : '#999',
-            'onAddTag': function () {
+            'onAddTag': function (tag) {
                 var tags = that.val().split(',');
                 if (tags.length > 5 {# fiddle.max_tags #} ) {
                     that.importTags(tags.slice(0, 5 {# fiddle.max_tags #} ).join(','));
+                } else {
+                    createClickableTags(tag);
                 }
             }
         });
+    });
+    createClickableTags();
+
+    {#
+     #  Compiled code switcher
+     #  Used in FuzAppBundle:Fiddle:result-compiled.html.twig
+     #}
+    $('body').on('change', '#compiled-switcher', function() {
+        changeCompiledCode();
+    });
+
+    {#
+     #  Toggle used to display / hide the resulting context in PHP
+     #  Used in FuzAppBundle:Fiddle:result-context.html.twig
+     #}
+    $('body').on('click', '#result-context-toggle', function(e) {
+        e.preventDefault();
+        var link = $(this);
+        var context = $('#result-context-php');
+        if (context.is(':visible')) {
+            link.html('Display context in PHP');
+            context.addClass('hide');
+        } else {
+            link.html('Hide context in PHP');
+            context.removeClass('hide');
+        }
+    });
+
+    {#
+     #  Fiddle's revisions switcher
+     #  Used in FuzAppBundle:Fiddle:revision.html.twig
+     #}
+    $('body').on('change', '#revision-browser', function(e) {
+        window.location = $(this).val();
     });
 
     {#
@@ -261,14 +301,17 @@ function processRunFiddleResponse(elem, response) {
     if (undefined !== response.errors) {
         $.symfony2.dispatchErrors(response.errors);
     }
+
     if (undefined !== response.result) {
         $('#result-pane').html(response.result);
         prettyPrint();
         changeCompiledCode();
     }
+
     if (undefined !== response.context) {
         $('#result-context').html(response.context);
     }
+
     return true;
 };
 
@@ -282,9 +325,11 @@ function processSaveFiddleResponse(elem, response) {
     if (undefined !== response.errors) {
         $.symfony2.dispatchErrors(response.errors);
     }
+
     if (undefined !== response.relocate) {
         window.location = response.relocate;
     }
+
     return true;
 };
 
@@ -305,33 +350,34 @@ function changeCompiledCode() {
     var id = $( "#compiled-switcher option:selected" ).val();
     $('#compiled-' + id).removeClass('hide');
 }
-$('body').on('change', '#compiled-switcher', function() {
-    changeCompiledCode();
-});
 
 {#
- #  Toggle used to display / hide the resulting context in PHP
- #  Used in FuzAppBundle:Fiddle:result-context.html.twig
+ #  Transform tags to fiddle browser's links
+ #  Used in FuzAppBundle:Fiddle:index.html.twig
  #}
-$('body').on('click', '#result-context-toggle', function(e) {
-    e.preventDefault();
-    var link = $(this);
-    var context = $('#result-context-php');
-    if (context.is(':visible')) {
-        link.html('Display context in PHP');
-        context.addClass('hide');
-    } else {
-        link.html('Hide context in PHP');
-        context.removeClass('hide');
+function createClickableTags(tag) {
+    var inputTag, escTag = null;
+
+    if (undefined !== tag) {
+        inputTag = tag.replace(/&/g, '&amp;').replace(/\s/g,' ').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        escTag = $.symfony2.escape(tag);
     }
-});
 
-{#
- #  Toggle used to display / hide the resulting context in PHP
- #  Used in FuzAppBundle:Fiddle:result-context.html.twig
- #}
-$('body').on('change', '#revision-browser', function(e) {
-    window.location = $(this).val();
-});
+    var selector = $('#{{ form.tags.vars.id }}_tagsinput span.tag span');
+    $(selector).each(function() {
+
+        var that = $(this);
+        var current = that.html().replace(/&nbsp;&nbsp;/g, '');
+
+        if (undefined === tag) {
+            escTag = $.symfony2.escape(current);
+        }
+
+        if ((undefined === tag) || (current === inputTag)) {
+            that.html('<a href="{{ path('browse') }}/' + escTag + '">' + escTag + '</a>&nbsp;&nbsp;');
+        }
+
+    }); // $.each
+}
 
 </script>
