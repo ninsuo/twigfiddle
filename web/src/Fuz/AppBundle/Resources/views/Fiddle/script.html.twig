@@ -276,6 +276,15 @@ $(document).ready(function() {
     });
 
     {#
+     #  Fired when choosing another Fiddle's visibility
+     #  Used in FuzAppBundle:Fiddle:visibility.html.twig
+     #}
+    $('.visibility-selection').click(function() {
+        $("#{{ form.visibility.vars.id }}").val($(this).data('value'));
+        displayRightVisibilityButton();
+    });
+
+    {#
      #  Automatic run at startup if a saved fiddle was loaded
      #}
     {% if data.id %}
@@ -378,6 +387,23 @@ function createClickableTags(tag) {
         }
 
     }); // $.each
+}
+
+{#
+ #  Displaying the right Fiddle's visibility
+ #  Used in FuzAppBundle:Fiddle:visibility.html.twig
+ #}
+function displayRightVisibilityButton()
+{
+    var current = $("#{{ form.visibility.vars.id }}").val();
+    $('.visibility-open-modal').each(function() {
+        var that = $(this);
+        if (that.data('value') == current) {
+            that.removeClass('hide');
+        } else {
+            that.addClass('hide');
+        }
+    });
 }
 
 </script>

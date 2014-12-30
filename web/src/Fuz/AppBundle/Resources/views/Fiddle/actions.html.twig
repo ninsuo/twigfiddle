@@ -31,5 +31,5 @@
  ><span class="glyphicon glyphicon glyphicon-floppy-disk hidden-md hidden-sm hidden-xs"></span> Save</button>
 
 {# Share button #}
-<button id="share" type="button" class="btn btn-primary" data-toggle="modal" data-target="#share-modal" {% if data.id == null %}disabled{% endif %}><span class="glyphicon glyphicon glyphicon-share-alt hidden-md hidden-sm hidden-xs"></span> Share</button>
+<button id="share" type="button" class="btn btn-primary" {% if data.id == null %}disabled{% else %}data-toggle="modal" data-target="#share-modal"{% endif %}><span class="glyphicon glyphicon glyphicon-share-alt hidden-md hidden-sm hidden-xs"></span> Share</button>
 {% if data.id %}{{ include('FuzAppBundle:Fiddle:share-modal.html.twig') }}{% endif %}

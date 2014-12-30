@@ -15,11 +15,15 @@ use Fuz\AppBundle\Entity\Fiddle;
 class FiddleRepository extends EntityRepository
 {
 
-    public function getEmptyFiddle($hash = null)
+    public function getEmptyFiddle(User $user = null, $hash = null)
     {
         $fiddle = new Fiddle();
         $fiddle->setHash($hash);
         $fiddle->setRevision(0);
+        if ($user)
+        {
+            $fiddle->setUser($user);
+        }
         return $fiddle;
     }
 
@@ -27,7 +31,7 @@ class FiddleRepository extends EntityRepository
     {
         if (is_null($hash))
         {
-            return $this->getEmptyFiddle();
+            return $this->getEmptyFiddle($user);
         }
 
         $query = $this->_em->createQuery("
@@ -53,7 +57,7 @@ class FiddleRepository extends EntityRepository
            ->getOneOrNullResult()
         ;
 
-        return $fiddle ? : $this->getEmptyFiddle($hash);
+        return $fiddle ? : $this->getEmptyFiddle($user, $hash);
     }
 
     public function incrementVisitCount(Fiddle $fiddle)

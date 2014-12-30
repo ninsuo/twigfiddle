@@ -1,7 +1,16 @@
 {# FuzAppBundle::macros.html.twig #}
 {# Imported by: FuzAppBundle::base.html.twig #}
 
-{% macro modal(id, title, body, ok_endpoint, options) %}
+{% macro modal(id, title, body, options) %}
+
+    {%
+        set defaults = {
+            'ok-endpoint': null,
+            'ok-options': null,
+        }
+    %}
+    {% set options = defaults|merge(options|default({})) %}
+
     <div class="modal fade" id="{{ id }}" tabindex="-1" role="dialog" aria-labelledby="{{ id }}" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -14,12 +23,12 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    {% if ok_endpoint %}
+                    {% if options['ok-endpoint'] %}
                         <button
                             type="button"
-                            data-endpoint="{{ ok_endpoint }}"
+                            data-endpoint="{{ options['ok-endpoint'] }}"
                             data-input="#{{ id }}"
-                            {% if options %}{{ options }}{% endif %}
+                            {% if options['ok-options'] %}{{ options['ok-options'] }}{% endif %}
                             class="btn btn-primary domajax click">OK</button>
                     {% endif %}
                 </div>
@@ -90,4 +99,15 @@
         </div>
     </div>
 
+{% endmacro %}
+
+{% macro me() %}
+    {% spaceless %}
+        {% if is_granted('ROLE_USER') %}
+            <img class="user-image" src="{{ asset('bundles/fuzapp/img/oauth/' ~ app.user.resourceOwner ~ '-small.png') }}" alt=""/>
+            {{ app.user.username }}
+        {% else %}
+            Guest
+        {% endif %}
+    {% endspaceless %}
 {% endmacro %}

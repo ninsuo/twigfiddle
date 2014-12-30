@@ -127,9 +127,9 @@ class SaveFiddle
         if (is_null($hash))
         {
             $fiddle = $this->doctrineHelper->lock($fiddle, DoctrineHelper::LOCK_READ,
-               function () use ($fiddle, $user)
+               function () use ($fiddle)
             {
-                return $this->createRandomHash($fiddle, $user);
+                return $this->createRandomHash($fiddle);
             });
         }
         else if ($revision > 0)
@@ -149,7 +149,7 @@ class SaveFiddle
         return $fiddle;
     }
 
-    protected function createRandomHash(Fiddle $fiddle, User $user = null)
+    protected function createRandomHash(Fiddle $fiddle)
     {
         $repository = $this->em->getRepository('FuzAppBundle:Fiddle');
 
@@ -166,11 +166,6 @@ class SaveFiddle
 
         $fiddle->setHash($hash);
         $fiddle->setRevision(1);
-
-        if ($user)
-        {
-            $fiddle->setUser($user);
-        }
 
         $this->em->persist($fiddle);
         $this->em->flush();

@@ -103,7 +103,7 @@ img {
 .btn-twigfiddle {
     height: 34px;
 }
-#logout-image {
+.user-image {
     margin-left:3px;
     margin-right:3px;
     padding-bottom:3px;
@@ -162,6 +162,9 @@ img {
 .btn-tf-green:hover {
     color: #fff;
     background-color:#548506;
+}
+.green {
+    color: #76a728;
 }
 /******************************************************/
 /***************** RESPONSIVE FIX *********************/

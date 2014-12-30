@@ -1,0 +1,103 @@
+{# FuzAppBundle:Fiddle:visibility.html.twig #}
+{# Included by: FuzAppBundle:Fiddle:index.html.twig #}
+
+<div class="hide">
+    {{ form_widget(form.visibility) }}
+</div>
+
+{% if is_granted('ROLE_USER') %}
+
+    {% set public = constant('Fuz\\AppBundle\\Entity\\Fiddle::VISIBILITY_PUBLIC') %}
+    {% set unlisted = constant('Fuz\\AppBundle\\Entity\\Fiddle::VISIBILITY_UNLISTED') %}
+    {% set private = constant('Fuz\\AppBundle\\Entity\\Fiddle::VISIBILITY_PRIVATE') %}
+
+    {%
+        set visibilities = {
+            (public): {
+                'value': public,
+                'label': 'Public',
+                'color': 'btn-success',
+                'glyphicon': 'glyphicon-eye-open',
+            },
+            (unlisted): {
+                'value': unlisted,
+                'label': 'Unlisted',
+                'color': 'btn-warning',
+                'glyphicon': 'glyphicon-eye-close',
+            },
+            (private): {
+                'value': private,
+                'label': 'Private',
+                'color': 'btn-danger',
+                'glyphicon': 'glyphicon-lock',
+            },
+        }
+    %}
+
+    {% from _self import button %}
+    {% macro button(visibility, action, hidden) %}
+
+        <button
+            type="button"
+            class="btn {{ visibility.color }} {% if hidden %}hide{% endif %} visibility-{{ action }}"
+            data-value="{{ visibility.value | e('html_attr') }}"
+            {% if action == 'open-modal' %}
+                data-toggle="modal"
+                data-target="#visibility-modal"
+            {% elseif action == 'selection' %}
+                data-dismiss="modal"
+            {% endif %}
+        >
+            <span class="glyphicon glyphicon {{ visibility.glyphicon }} hidden-md hidden-sm hidden-xs"></span>
+            {{ visibility.label }}
+        </button>
+
+    {% endmacro %}
+
+    {% set body %}
+
+        <p class="text-left">
+            You can choose the way your fiddle will be available to the public.
+            <br/>
+            Click on the button that fits with your needs.
+        </p>
+
+        <div class="clear">&nbsp;</div>
+
+        {# public #}
+        <div class="row">
+            <div class="col-md-4 col-sm-6 col-xs-12 text-left">{{ button(visibilities[public], 'selection') }}</div>
+            <div class="col-md-8 col-sm-6 col-xs-12 text-left">
+                Everybody can access your fiddle, by using its direct URL, or by using the <a class="green" href="{{ path('browse') }}">fiddle browser</a>.
+            </div>
+        </div>
+
+        <div class="clear">&nbsp;</div>
+
+        {# unlisted #}
+        <div class="row">
+            <div class="col-md-4 col-sm-6 col-xs-12 text-left">{{ button(visibilities[unlisted], 'selection') }}</div>
+            <div class="col-md-8 col-sm-6 col-xs-12 text-left">
+                Only people who knows fiddle's direct URL will be able to access this fiddle.
+            </div>
+        </div>
+
+        <div class="clear">&nbsp;</div>
+
+        {# private #}
+        <div class="row">
+            <div class="col-md-4 col-sm-6 col-xs-12 text-left">{{ button(visibilities[private], 'selection') }}</div>
+            <div class="col-md-8 col-sm-6 col-xs-12 text-left">
+                Only you, {{ macros.me() }}, will be able to access this fiddle.
+            </div>
+        </div>
+
+    {% endset %}
+
+    {{ macros.modal('visibility-modal', "Fiddle's visibility", body) }}
+
+    {% for visibility in visibilities %}
+        {{ button(visibility, 'open-modal', visibility.value != data.visibility) }}
+    {% endfor %}
+
+{% endif %}

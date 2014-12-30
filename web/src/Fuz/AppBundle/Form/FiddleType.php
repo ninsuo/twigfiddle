@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Fuz\AppBundle\Service\ProcessConfiguration;
 use Fuz\AppBundle\Transformer\FiddleTagTransformer;
+use Fuz\AppBundle\Entity\Fiddle;
 
 class FiddleType extends AbstractType
 {
@@ -44,7 +45,6 @@ class FiddleType extends AbstractType
            ->add('title', 'text', array(
                    'required' => false,
            ))
-
            ->add(
                     $builder
                         ->create('tags', 'text', array(
@@ -52,6 +52,13 @@ class FiddleType extends AbstractType
                         ))
                         ->addModelTransformer($transformer)
            )
+           ->add('visibility', 'choice', array(
+                   'choices' => array(
+                        Fiddle::VISIBILITY_PUBLIC => 1,
+                        Fiddle::VISIBILITY_UNLISTED => 2,
+                        Fiddle::VISIBILITY_PRIVATE => 3,
+                   )
+           ))
         ;
     }
 

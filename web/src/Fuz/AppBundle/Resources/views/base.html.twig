@@ -58,8 +58,7 @@
 
                         {#
             <div class="col-md-12 col-sm-12 col-xs-12 user-menu text-right">
-                Logged as <img id="logout-image" src="{{ asset('bundles/fuzapp/img/oauth/' ~ app.user.resourceOwner ~ '-small.png') }}" alt=""/>
-                {{ app.user.username }}
+                Logged as {{ macros.me() }}
             </div>
                         #}
                     {% endblock %}

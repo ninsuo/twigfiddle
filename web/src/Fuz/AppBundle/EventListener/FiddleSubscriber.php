@@ -27,6 +27,11 @@ class FiddleSubscriber implements EventSubscriber
         $object = $args->getObject();
         if ($object instanceof Fiddle)
         {
+            if (is_null($object->getUser()))
+            {
+                $object->setVisibility(Fiddle::VISIBILITY_PUBLIC);
+            }
+
             $this->context = $object->getContext();
             $object->setContext(null);
             $this->templates = $object->getTemplates();
