@@ -41,7 +41,7 @@ class FiddleTagTransformer implements DataTransformerInterface
         {
             $oldTags[] = $fiddleTag->getTag();
         }
-        $newTags = explode(',', $tags);
+        $newTags = array_unique(array_map('strtolower', explode(',', $tags)));
 
         $toDel = array_diff($oldTags, $newTags);
         $toAdd = array_diff($newTags, $oldTags);
