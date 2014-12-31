@@ -250,6 +250,10 @@ div.tagsinput span.tag {
     padding: 2px 5px;
     margin-top: -1px;
 }
+.visibility-button button {
+    width: 100%;
+    text-align: left;
+}
 .tags .tagsinput {
     height:34px !important;
 }
