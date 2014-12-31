@@ -166,6 +166,16 @@ img {
 .green {
     color: #76a728;
 }
+.text-light-success {
+    color: #7eda7e;
+}
+.text-light-warning {
+    color: #f2cf6f;
+}
+.text-light-danger {
+    color: #fb756f;
+}
+
 /******************************************************/
 /***************** RESPONSIVE FIX *********************/
 /******************************************************/
@@ -239,4 +249,7 @@ pre.compiled-code {
 div.tagsinput span.tag {
     padding: 2px 5px;
     margin-top: -1px;
+}
+.tags .tagsinput {
+    height:34px !important;
 }

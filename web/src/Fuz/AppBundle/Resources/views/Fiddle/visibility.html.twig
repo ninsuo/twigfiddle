@@ -16,40 +16,41 @@
             (public): {
                 'value': public,
                 'label': 'Public',
-                'color': 'btn-success',
+                'color': 'success',
                 'glyphicon': 'glyphicon-eye-open',
             },
             (unlisted): {
                 'value': unlisted,
                 'label': 'Unlisted',
-                'color': 'btn-warning',
+                'color': 'warning',
                 'glyphicon': 'glyphicon-eye-close',
             },
             (private): {
                 'value': private,
                 'label': 'Private',
-                'color': 'btn-danger',
+                'color': 'danger',
                 'glyphicon': 'glyphicon-lock',
             },
         }
     %}
 
     {% from _self import button %}
-    {% macro button(visibility, action, hidden) %}
+    {% macro button(visibility, action, data) %}
 
         <button
             type="button"
-            class="btn {{ visibility.color }} {% if hidden %}hide{% endif %} visibility-{{ action }}"
             data-value="{{ visibility.value | e('html_attr') }}"
             {% if action == 'open-modal' %}
+                class="btn btn-tf-dark {% if visibility.value != data.visibility %}hide{% endif %} visibility-open-modal"
                 data-toggle="modal"
                 data-target="#visibility-modal"
             {% elseif action == 'selection' %}
+                class="btn btn-{{ visibility.color }} visibility-selection"
                 data-dismiss="modal"
             {% endif %}
         >
             <span class="glyphicon glyphicon {{ visibility.glyphicon }} hidden-md hidden-sm hidden-xs"></span>
-            {{ visibility.label }}
+            <span class="{% if action == 'open-modal' %}text-light-{{ visibility.color }}{% endif %}">{{ visibility.label }}</span>
         </button>
 
     {% endmacro %}
@@ -103,7 +104,7 @@
     {{ macros.modal('visibility-modal', "Fiddle's visibility", body) }}
 
     {% for visibility in visibilities %}
-        {{ button(visibility, 'open-modal', visibility.value != data.visibility) }}
+        {{ button(visibility, 'open-modal', data) }}
     {% endfor %}
 
 {% endif %}
