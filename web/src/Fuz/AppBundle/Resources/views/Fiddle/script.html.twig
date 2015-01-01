@@ -270,7 +270,7 @@ $(document).ready(function() {
     });
 
     {#
-     #  Fired when choosing another Fiddle's visibility
+     #  Changes button's layout when choosing another Fiddle's visibility
      #  Used in FuzAppBundle:Fiddle:visibility.html.twig
      #}
     $('.visibility-selection').click(function() {
@@ -334,6 +334,19 @@ function processSaveFiddleResponse(elem, response) {
     }
 
     return true;
+};
+
+{#
+ #  Change button's layout when faving / unfaving a fiddle
+ #  Used in FuzAppBundle:Fiddle:favorite.html.twig
+ #}
+function processFavFiddleResponse(elem, response)
+{
+    if (response.isFavorite) {
+        elem.find('span.glyphicon').removeClass('glyphicon-star-empty').addClass('glyphicon-star');
+    } else {
+        elem.find('span.glyphicon').removeClass('glyphicon-star').addClass('glyphicon-star-empty');
+    }
 };
 
 {#

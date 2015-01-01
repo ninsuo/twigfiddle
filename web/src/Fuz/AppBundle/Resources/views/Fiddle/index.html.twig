@@ -6,7 +6,7 @@
 {% block title %}
 {% spaceless %}
     {% if data.id == null %}
-        twigfiddle.com - Create a new fiddle
+        {{ parent() }}
     {% elseif data.title == null %}
         twigfiddle.com - Fiddle {{ data.hash }} v{{ data.revision }} - Created on {{ data.creationTm|date }}
     {% else %}
@@ -41,6 +41,8 @@
 {% endblock %}
 
 {% block header_right %}
+
+    {{ include('FuzAppBundle:Fiddle:favorite.html.twig') }}
 
     {{ include('FuzAppBundle:Fiddle:visibility.html.twig') }}
 

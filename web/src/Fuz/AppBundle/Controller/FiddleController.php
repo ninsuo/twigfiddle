@@ -11,7 +11,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Fuz\AppBundle\Base\BaseController;
 use Fuz\AppBundle\Entity\Fiddle;
-use Fuz\AppBundle\Entity\FiddleTag;
 
 class FiddleController extends BaseController
 {
@@ -123,6 +122,42 @@ class FiddleController extends BaseController
     }
 
     /**
+     * Mark / Unmark a fiddle as favorite
+     *
+     * @Route(
+     *      "/fav/{revision}/{hash}",
+     *      name = "fav_fiddle",
+     *      requirements = {
+     *          "hash" = "^[a-zA-Z0-9-]{1,16}$",
+     *          "revision" = "^\d+$"
+     *      }
+     * )
+     * @Method({"POST"})
+     * @param Request $request
+     * @param string|null $hash
+     * @param int $revision
+     * @return JsonResponse
+     */
+    public function favAction(Request $request, $hash, $revision)
+    {
+        $response = array (
+                'hash' => $hash,
+                'revision' => $revision,
+        );
+
+        if (!$request->isXmlHttpRequest())
+        {
+            return new RedirectResponse($this->generateUrl('fiddle', $response, Response::HTTP_PRECONDITION_REQUIRED));
+        }
+
+
+        // save state
+
+        $response['isFavorite'] = true;
+        return new JsonResponse($response);
+    }
+
+    /**
      * Displays twigfiddle's editor
      *
      * @Route(
@@ -163,6 +198,7 @@ class FiddleController extends BaseController
                 'revision' => $revision,
                 'canSave' => $this->get('app.save_fiddle')->canClickSave($data, $user),
                 'revisionBrowser' => $repo->getRevisionList($data, $user),
+                'isFavorite' => false,
         );
     }
 
