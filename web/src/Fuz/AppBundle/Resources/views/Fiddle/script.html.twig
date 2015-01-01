@@ -344,8 +344,10 @@ function processFavFiddleResponse(elem, response)
 {
     if (response.isFavorite) {
         elem.find('span.glyphicon').removeClass('glyphicon-star-empty').addClass('glyphicon-star');
+        $('#save').removeAttr('disabled');
     } else {
         elem.find('span.glyphicon').removeClass('glyphicon-star').addClass('glyphicon-star-empty');
+        $('#save').attr('disabled', 'disabled');
     }
 };
 
