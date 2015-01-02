@@ -16,7 +16,7 @@ use Symfony\Component\Security\Core\User\EquatableInterface;
  *          @ORM\UniqueConstraint(name="resource_owner_idx", columns={"resource_owner", "resource_owner_id"})
  *      }
  * )
- * @ORM\Entity(repositoryClass="Fuz\AppBundle\Entity\UserRepository")
+ * @ORM\Entity(repositoryClass="Fuz\AppBundle\Repository\UserRepository")
  * @ORM\HasLifecycleCallbacks
  */
 class User implements UserInterface, EquatableInterface
@@ -69,21 +69,13 @@ class User implements UserInterface, EquatableInterface
     /**
      * @var ArrayCollection[UserPreference]
      *
-     * @ORM\OneToMany(targetEntity="UserPreference", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="UserPreference", mappedBy="user", cascade={"all"})
      */
     protected $preferences;
-
-    /**
-     * @var ArrayCollection[UserFavorite]
-     *
-     * @ORM\OneToMany(targetEntity="UserFavorite", mappedBy="user")
-     */
-    protected $favorites;
 
     public function __construct()
     {
         $this->preferences = new ArrayCollection();
-        $this->favorites = new ArrayCollection();
     }
 
     /**
@@ -230,29 +222,6 @@ class User implements UserInterface, EquatableInterface
     public function getPreferences()
     {
         return $this->preferences;
-    }
-
-    /**
-     * Set favorites
-     *
-     * @param ArrayCollection[UserFavorite] $favorites
-     * @return User
-     */
-    public function setFavorites(ArrayCollection $favorites)
-    {
-        $this->favorites = $favorites;
-
-        return $this;
-    }
-
-    /**
-     * Get favorites
-     *
-     * @return ArrayCollection[UserFavorite]
-     */
-    public function getFavorites()
-    {
-        return $this->favorites;
     }
 
     /**

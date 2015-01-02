@@ -3,11 +3,10 @@
 namespace Fuz\AppBundle\Transformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
-use Symfony\Component\Form\Exception\TransformationFailedException;
 use Fuz\AppBundle\Entity\Fiddle;
 use Fuz\AppBundle\Entity\FiddleTag;
 
-class FiddleTagTransformer implements DataTransformerInterface
+class FiddleTagTransformer extends AbstractTagTransformer implements DataTransformerInterface
 {
 
     protected $fiddle;
@@ -17,57 +16,12 @@ class FiddleTagTransformer implements DataTransformerInterface
         $this->fiddle = $fiddle;
     }
 
-    public function transform($tagCollection)
-    {
-        $tags = array ();
-
-        foreach ($tagCollection as $fiddleTag)
-        {
-            $tags[] = $fiddleTag->getTag();
-        }
-
-        return implode(',', $tags);
-    }
-
     public function reverseTransform($tags)
     {
-        if (is_null($this->fiddle))
-        {
-            throw new TransformationFailedException("Can't reverseTransform fiddle's tags without Doctrine-attached entity.");
-        }
+        $empty = new FiddleTag();
+        $empty->setFiddle($this->fiddle);
 
-        $oldTags = array ();
-        foreach ($this->fiddle->getTags() as $fiddleTag)
-        {
-            $oldTags[] = $fiddleTag->getTag();
-        }
-        $newTags = array_unique(array_map('strtolower', explode(',', $tags)));
-
-        $toDel = array_diff($oldTags, $newTags);
-        $toAdd = array_diff($newTags, $oldTags);
-
-        foreach ($this->fiddle->getTags() as $fiddleTag)
-        {
-            if (in_array($fiddleTag->getTag(), $toDel))
-            {
-                $this->fiddle->getTags()->removeElement($fiddleTag);
-            }
-        }
-
-        foreach ($toAdd as $tag)
-        {
-            $tag = trim($tag, " \n\r\t");
-            if (strlen($tag) == 0)
-            {
-                continue ;
-            }
-            $fiddleTag = new FiddleTag();
-            $fiddleTag->setFiddle($this->fiddle);
-            $fiddleTag->setTag($tag);
-            $this->fiddle->getTags()->add($fiddleTag);
-        }
-
-        return $this->fiddle->getTags();
+        return parent::reverseTransformHelper($this->fiddle, $empty, $tags);
     }
 
 }

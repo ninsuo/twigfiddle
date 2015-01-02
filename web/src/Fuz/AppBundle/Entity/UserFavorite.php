@@ -4,14 +4,16 @@ namespace Fuz\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
+use Fuz\AppBundle\Api\TagContainerInterface;
 
 /**
  * UserFavorite
  *
  * @ORM\Table(name="user_favorite")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Fuz\AppBundle\Repository\UserFavoriteRepository")
  */
-class UserFavorite
+class UserFavorite implements TagContainerInterface
 {
 
     /**
@@ -26,14 +28,16 @@ class UserFavorite
     /**
      * @var integer
      *
-     * @ORM\ManyToOne(targetEntity="User", cascade="remove", inversedBy="favorites")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="favorites")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="cascade")
      */
     protected $user;
 
     /**
      * @var Fiddle
      *
-     * @ORM\ManyToOne(targetEntity="Fiddle", cascade="remove")
+     * @ORM\ManyToOne(targetEntity="Fiddle")
+     * @ORM\JoinColumn(name="fiddle_id", referencedColumnName="id", onDelete="cascade")
      */
     protected $fiddle;
 
@@ -41,27 +45,24 @@ class UserFavorite
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255, nullable=true)
+     * @Assert\Length(max = 255)
      */
     protected $title;
 
     /**
      * @var ArrayCollection[UserFavoriteTag]
      *
-     * @ORM\OneToMany(targetEntity="UserFavoriteTag", mappedBy="userFavorite", orphanRemoval=true)
+     * fiddle.max_tags
+     *
+     * @ORM\OneToMany(targetEntity="UserFavoriteTag", mappedBy="userFavorite", cascade={"all"}, orphanRemoval=true)
+     * @Assert\Count(max = 5, maxMessage = "You can't set more than 5 tags.")
+     * @Assert\Valid()
      */
     protected $tags;
 
-    /**
-     * Set id
-     *
-     * @param int $id
-     * @return UserFavorite
-     */
-    public function setId($id)
+    public function __construct()
     {
-        $this->id = $id;
-
-        return $this;
+        $this->tags = new ArrayCollection();
     }
 
     /**
@@ -151,6 +152,11 @@ class UserFavorite
      */
     public function setTags(ArrayCollection $tags)
     {
+        foreach ($tags as $tag)
+        {
+            $tag->setUserFavorite($this);
+        }
+
         $this->tags = $tags;
 
         return $this;

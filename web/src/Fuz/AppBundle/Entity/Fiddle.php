@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Fuz\AppBundle\Api\TagContainerInterface;
 
 /**
  * Fiddle
@@ -14,10 +15,10 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  *      name="fiddle",
  *      uniqueConstraints={@ORM\UniqueConstraint(name="fiddle_idx", columns={"hash", "revision"})}
  * )
- * @ORM\Entity(repositoryClass="Fuz\AppBundle\Entity\FiddleRepository")
+ * @ORM\Entity(repositoryClass="Fuz\AppBundle\Repository\FiddleRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class Fiddle
+class Fiddle implements TagContainerInterface
 {
 
     const VISIBILITY_PUBLIC = 'public';

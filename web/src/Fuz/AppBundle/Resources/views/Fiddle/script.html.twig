@@ -342,12 +342,15 @@ function processSaveFiddleResponse(elem, response) {
  #}
 function processFavFiddleResponse(elem, response)
 {
+    if (undefined !== response.errors) {
+        $.symfony2.dispatchErrors(response.errors);
+    }
     if (response.isFavorite) {
         elem.find('span.glyphicon').removeClass('glyphicon-star-empty').addClass('glyphicon-star');
-        $('#save').removeAttr('disabled');
+        $('#save').removeAttr('disabled').data('input-attr', '.favorite-input');
     } else {
         elem.find('span.glyphicon').removeClass('glyphicon-star').addClass('glyphicon-star-empty');
-        $('#save').attr('disabled', 'disabled');
+        $('#save').attr('disabled', 'disabled').data('input-attr', '#page-container');
     }
 };
 

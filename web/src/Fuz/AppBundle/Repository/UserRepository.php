@@ -1,6 +1,6 @@
 <?php
 
-namespace Fuz\AppBundle\Entity;
+namespace Fuz\AppBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 

@@ -4,6 +4,7 @@ namespace Fuz\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Fuz\AppBundle\Api\TagInterface;
 
 /**
  * FiddleTag
@@ -11,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="fiddle_tag")
  * @ORM\Entity
  */
-class FiddleTag
+class FiddleTag implements TagInterface
 {
 
     /**

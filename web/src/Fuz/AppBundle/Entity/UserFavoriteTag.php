@@ -3,6 +3,7 @@
 namespace Fuz\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Fuz\AppBundle\Api\TagInterface;
 
 /**
  * FiddleTag
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="user_favorite_tag")
  * @ORM\Entity
  */
-class UserFavoriteTag
+class UserFavoriteTag implements TagInterface
 {
 
     /**
@@ -36,7 +37,7 @@ class UserFavoriteTag
      * @param UserFavorite $userFavorite
      * @return UserFavoriteTag
      */
-    public function setUserFavorite(UserFavoriteTag $userFavorite)
+    public function setUserFavorite(UserFavorite $userFavorite)
     {
         $this->userFavorite = $userFavorite;
 

@@ -53,10 +53,8 @@
 {% block content %}
 
 {# General errors #}
-<div class="row">
-    <div class="col-md-12">
-        <div id="general-errors" class="error-container control-label box-style text-center bg-danger alert alert-danger">{{ macros.form_general_errors(form) }}</div>
-    </div>
+<div id="general-errors">
+    {{ macros.form_general_errors(form) }}
 </div>
 
 {# Revision browser, title, tags #}
@@ -130,7 +128,13 @@
     {# End Right Side #}
 
     {# CSRF token #}
-    {{ form_rest(form) }}
+    {{
+        form_widget(form._token, {
+            'attr': {
+                'class': 'favorite-input',
+            }
+        })
+    }}
 
 </div>
 

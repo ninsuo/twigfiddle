@@ -8,6 +8,7 @@ parameters:
     app.twig.hash_extension.class: Fuz\AppBundle\Twig\Extension\HashExtension
     app.helper.doctrine_helper.class: Fuz\AppBundle\Helper\DoctrineHelper
     app.subscriber.fiddle.class: Fuz\AppBundle\EventListener\FiddleSubscriber
+    app.subscriber.user_favorite.class: Fuz\AppBundle\EventListener\UserFavoriteSubscriber
     app.utilities.class: Fuz\AppBundle\Service\Utilities
     app.process_configuration.class: Fuz\AppBundle\Service\ProcessConfiguration
     app.run_fiddle.class: Fuz\AppBundle\Service\RunFiddle
@@ -58,6 +59,11 @@ services:
 
     app.subscriber.fiddle:
         class: %app.subscriber.fiddle.class%
+        tags:
+             - { name: doctrine.event_subscriber, connection: default }
+
+    app.subscriber.user_favorite:
+        class: %app.subscriber.user_favorite.class%
         tags:
              - { name: doctrine.event_subscriber, connection: default }
 

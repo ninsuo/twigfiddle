@@ -94,7 +94,7 @@ class BaseController extends Controller
         if (array_key_exists('#', $originalErrors))
         {
             $globalErrors = $originalErrors['#'];
-            unset($form['#']);
+            unset($originalErrors['#']);
         }
 
         $normalizedErrors = $this->normalizeErrorMessagesAjaxFormat($originalErrors, $form->getName());

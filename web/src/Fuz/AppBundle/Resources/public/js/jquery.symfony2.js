@@ -67,7 +67,7 @@
                 $.each(errors['#'], function (index, error) {
                     html += '<div class="error">' + escape(error) + '</div>';
                 });
-                html += '</div><div>&nbsp;</div></div>';
+                html += '</div></div>';
                 $(generalSelector).html(html);
             }
 
