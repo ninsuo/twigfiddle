@@ -10,7 +10,7 @@ $(document).ready(function() {
 
     {#
      #  Add a template button
-     #  Used in FuzAppBundle:Fiddle:templates-pane.html.twig
+     #  Used in FuzAppBundle:Fiddle:templates.html.twig
      #}
     $('body').on('click', '.add-template', function () {
         var templates = $('#templates');
@@ -148,7 +148,7 @@ $(document).ready(function() {
 
     {#
      #  Context Syntax Highlighting Loader
-     #  Used in FuzAppBundle:Fiddle:context-pane.html.twig
+     #  Used in FuzAppBundle:Fiddle:context.html.twig
      #}
      var convertContextModeToCodeMirrorMode = function(id) {
         var selectedMode = $('#' + $('#' + id).data('format-id')).val();
@@ -199,7 +199,7 @@ $(document).ready(function() {
 
     {#
      #  Context Syntax Highlighting Switcher
-     #  Used in FuzAppBundle:Fiddle:context-pane.html.twig
+     #  Used in FuzAppBundle:Fiddle:context.html.twig
      #}
     $('body').on('change', '.switcher-context-format', function() {
         contextEditor.setOption("mode", convertContextModeToCodeMirrorMode($(this).data('content-id')));
@@ -276,6 +276,23 @@ $(document).ready(function() {
     $('.visibility-selection').click(function() {
         $("#{{ form.visibility.vars.id }}").val($(this).data('value'));
         displayRightVisibilityButton();
+    });
+
+    {#
+     #  Toggle used to display / hide the resulting compiled templates
+     #  Used in FuzAppBundle:Fiddle:result-compiled.html.twig
+     #}
+    $('body').on('click', '#result-compiled-toggle', function(e) {
+        e.preventDefault();
+        var link = $(this);
+        var compiled = $('#result-compiled-container');
+        if (compiled.is(':visible')) {
+            link.html('Show compiled template' + link.data('plur'));
+            compiled.addClass('hide');
+        } else {
+            link.html('Hide compiled template' + link.data('plur'));
+            compiled.removeClass('hide');
+        }
     });
 
     {#
