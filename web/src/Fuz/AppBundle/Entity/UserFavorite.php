@@ -28,7 +28,7 @@ class UserFavorite implements TagContainerInterface
     /**
      * @var integer
      *
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="favorites")
+     * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="cascade")
      */
     protected $user;
