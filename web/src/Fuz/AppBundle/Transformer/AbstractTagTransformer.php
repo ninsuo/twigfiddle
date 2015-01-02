@@ -2,10 +2,11 @@
 
 namespace Fuz\AppBundle\Transformer;
 
+use Symfony\Component\Form\DataTransformerInterface;
 use Fuz\AppBundle\Api\TagInterface;
 use Fuz\AppBundle\Api\TagContainerInterface;
 
-class AbstractTagTransformer
+abstract class AbstractTagTransformer implements DataTransformerInterface
 {
 
     public function transform($tagCollection)
@@ -30,7 +31,7 @@ class AbstractTagTransformer
         {
             $oldTags[] = $tagObj->getTag();
         }
-        $newTags = array_unique(array_map(array($this, 'normalizeTag'), explode(',', $tags)));
+        $newTags = array_unique(array_map(array ($this, 'normalizeTag'), explode(',', $tags)));
 
         $toDel = array_diff($oldTags, $newTags);
         $toAdd = array_diff($newTags, $oldTags);
@@ -62,4 +63,5 @@ class AbstractTagTransformer
         return strtolower(trim($tag, " \n\r\t"));
     }
 
+    abstract public function reverseTransform($tags);
 }

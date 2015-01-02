@@ -2,11 +2,10 @@
 
 namespace Fuz\AppBundle\Transformer;
 
-use Symfony\Component\Form\DataTransformerInterface;
 use Fuz\AppBundle\Entity\Fiddle;
 use Fuz\AppBundle\Entity\FiddleTag;
 
-class FiddleTagTransformer extends AbstractTagTransformer implements DataTransformerInterface
+class FiddleTagTransformer extends AbstractTagTransformer
 {
 
     protected $fiddle;

@@ -2,11 +2,10 @@
 
 namespace Fuz\AppBundle\Transformer;
 
-use Symfony\Component\Form\DataTransformerInterface;
 use Fuz\AppBundle\Entity\UserFavorite;
 use Fuz\AppBundle\Entity\UserFavoriteTag;
 
-class UserFavoriteTagTransformer extends AbstractTagTransformer implements DataTransformerInterface
+class UserFavoriteTagTransformer extends AbstractTagTransformer
 {
 
     protected $fav;
