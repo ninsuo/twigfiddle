@@ -10,10 +10,6 @@ security:
         main:
             pattern: ^/
             anonymous: true
-            logout: true
-            logout:
-                path: /logout
-                target: /
             oauth:
                 resource_owners:
                     google: "/login/check-google"
@@ -22,6 +18,7 @@ security:
                     sensio_connect: "/login/check-sensio-connect"
                 login_path: /login
                 failure_path: /login
+                default_target_path: /welcome
                 oauth_user_provider:
                     service: app.oauth_user_provider
         default:
