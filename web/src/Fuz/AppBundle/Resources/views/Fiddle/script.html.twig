@@ -253,10 +253,10 @@ $(document).ready(function() {
         var link = $(this);
         var context = $('#result-context-php');
         if (context.is(':visible')) {
-            link.html('Display context in PHP');
+            link.html('Dump context');
             context.addClass('hide');
         } else {
-            link.html('Hide context in PHP');
+            link.html('Hide context');
             context.removeClass('hide');
         }
     });
