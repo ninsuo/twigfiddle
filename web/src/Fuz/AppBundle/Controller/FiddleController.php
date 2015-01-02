@@ -2,6 +2,7 @@
 
 namespace Fuz\AppBundle\Controller;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,6 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Fuz\AppBundle\Base\BaseController;
 use Fuz\AppBundle\Entity\Fiddle;
+use Fuz\AppBundle\Entity\FiddleTag;
 use Fuz\AppBundle\Entity\UserFavorite;
 use Fuz\AppBundle\Form\UserFavoriteType;
 
@@ -87,23 +89,21 @@ class FiddleController extends BaseController
      */
     public function saveAction(Request $request, $hash, $revision)
     {
+        $fiddle = null;
+        if ($revision > 0)
+        {
+            $fiddle = $this->getFiddle($hash, $revision);
+            $fav = $this->getUserFavorite($fiddle);
+            if ($fav)
+            {
+                return $this->saveUserFavorite($request, $fav);
+            }
+        }
+
         return $this->validateAjaxFiddle($request, $hash, $revision,
               function (Fiddle $fiddle) use ($request, $hash, $revision)
            {
                $user = $this->getUser();
-
-               $fav = $this
-                  ->getDoctrine()
-                  ->getRepository('FuzAppBundle:UserFavorite')
-                  ->getFavorite($fiddle, $user)
-               ;
-
-               if ($fav)
-               {
-                   // todo
-                   return $this->saveUserFavorite($request, $fav);
-               }
-
                $saveService = $this->get('app.save_fiddle');
 
                if (is_null($fiddle->getId()) || !$saveService->ownsFiddle($fiddle, $user))
@@ -133,7 +133,7 @@ class FiddleController extends BaseController
 
                    return array ('relocate' => $url);
                }
-           });
+           }, $fiddle);
     }
 
     /**
@@ -166,11 +166,7 @@ class FiddleController extends BaseController
             return new RedirectResponse($this->generateUrl('fiddle', $response, Response::HTTP_PRECONDITION_REQUIRED));
         }
 
-        $fiddle = $this
-           ->getDoctrine()
-           ->getRepository('FuzAppBundle:Fiddle')
-           ->getFiddle($hash, $revision, $user)
-        ;
+        $fiddle = $this->getFiddle($hash, $revision);
 
         if ($this->get('app.save_fiddle')->ownsFiddle($fiddle, $user))
         {
@@ -196,8 +192,7 @@ class FiddleController extends BaseController
         $new->setUser($user);
         $new->setFiddle($fiddle);
 
-        $saved = $this->saveUserFavorite($request, $new);
-        return new JsonResponse($saved);
+        return $this->saveUserFavorite($request, $new);
     }
 
     protected function saveUserFavorite(Request $request, UserFavorite $fav)
@@ -223,7 +218,7 @@ class FiddleController extends BaseController
         $em->flush();
 
         $response['isFavorite'] = true;
-        return $response;
+        return new JsonResponse($response);
     }
 
     /**
@@ -254,14 +249,15 @@ class FiddleController extends BaseController
            ->getRepository('FuzAppBundle:Fiddle')
         ;
 
-        $favRepo = $this
-           ->getDoctrine()
-           ->getRepository('FuzAppBundle:UserFavorite')
-        ;
-
         $user = $this->getUser();
-        $fiddle = $fiddleRepo->getFiddle($hash, $revision, $user);
+        $fiddle = $this->getFiddle($hash, $revision);
         $fiddleRepo->incrementVisitCount($fiddle);
+
+        $fav = $this->getUserFavorite($fiddle);
+        if ($fav)
+        {
+            $this->mapFavoriteToFiddle($fiddle, $fav);
+        }
 
         $form = $this->createForm('FiddleType', $fiddle);
 
@@ -272,37 +268,33 @@ class FiddleController extends BaseController
                 'revision' => $revision,
                 'canSave' => $this->get('app.save_fiddle')->canClickSave($fiddle, $user),
                 'revisionBrowser' => $fiddleRepo->getRevisionList($fiddle, $user),
-                'favorite' => $favRepo->getFavorite($fiddle, $user),
+                'favorite' => $fav,
         );
     }
 
     /**
-     * Validates fiddle's form and if valid, performs a callback
+     * Performs a callback if Fiddle's form is properly submitted and valid
      *
      * @param Request $request
      * @param string|null $hash
      * @param int $revision
      * @param callable $onValid
+     * @param Fiddle|null $fiddle
      * @return RedirectResponse|JsonResponse
-     * @return JsonResponse
      */
-    protected function validateAjaxFiddle(Request $request, $hash, $revision, $onValid)
+    protected function validateAjaxFiddle(Request $request, $hash, $revision, $onValid, Fiddle $fiddle = null)
     {
-        $response = array (
-                'hash' => $hash,
-                'revision' => $revision,
-        );
+        $response = array ();
 
         if (!$request->isXmlHttpRequest())
         {
             return new RedirectResponse($this->generateUrl('fiddle', $response, Response::HTTP_PRECONDITION_REQUIRED));
         }
 
-        $fiddle = $this
-           ->getDoctrine()
-           ->getRepository('FuzAppBundle:Fiddle')
-           ->getFiddle($hash, $revision, $this->getUser())
-        ;
+        if (is_null($fiddle))
+        {
+            $fiddle = $this->getFiddle($hash, $revision);
+        }
 
         $form = $this->createForm('FiddleType', $fiddle, array (
                 'data_object' => $fiddle,
@@ -323,6 +315,37 @@ class FiddleController extends BaseController
         }
 
         return new JsonResponse($response);
+    }
+
+    protected function getFiddle($hash, $revision)
+    {
+        return $this
+              ->getDoctrine()
+              ->getRepository('FuzAppBundle:Fiddle')
+              ->getFiddle($hash, $revision, $this->getUser())
+        ;
+    }
+
+    protected function getUserFavorite(Fiddle $fiddle)
+    {
+        return $this
+              ->getDoctrine()
+              ->getRepository('FuzAppBundle:UserFavorite')
+              ->getFavorite($fiddle, $this->getUser())
+        ;
+    }
+
+    protected function mapFavoriteToFiddle(Fiddle $fiddle, UserFavorite $fav)
+    {
+        $fiddle->setTitle($fav->getTitle());
+        $collection = new ArrayCollection();
+        foreach ($fav->getTags() as $tag)
+        {
+            $tagObj = new FiddleTag();
+            $tagObj->setTag($tag->getTag());
+            $collection->add($tagObj);
+        }
+        $fiddle->setTags($collection);
     }
 
 }
