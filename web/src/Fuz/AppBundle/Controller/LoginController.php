@@ -43,7 +43,8 @@ class LoginController extends BaseController
      */
     public function connectAction(Request $request, $service)
     {
-        $this->get('session')->set('referer', $request->headers->get('referer'));
+        file_put_contents("/tmp/test.txt", "1:" . $request->headers->get('referer') . "\n", FILE_APPEND);
+        $this->get('session')->set('login-referer', $request->headers->get('referer'));
         return $this->forward('HWIOAuthBundle:Connect:redirectToService', array('service' => $service));
     }
 
@@ -53,7 +54,8 @@ class LoginController extends BaseController
      */
     public function welcomeAction()
     {
-        $referer = $this->get('session')->get('referer');
+        $referer = $this->get('session')->get('login-referer');
+        file_put_contents("/tmp/test.txt", "2:" . $referer . "\n", FILE_APPEND);
         if (is_null($referer))
         {
             return new RedirectResponse($this->generateUrl('fiddle'));

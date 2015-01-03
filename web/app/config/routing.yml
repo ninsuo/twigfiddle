@@ -1,4 +1,9 @@
 
+fuz_app_login:
+    resource: "@FuzAppBundle/Controller/LoginController.php"
+    type:     annotation
+    prefix:   /
+
 hwi_oauth_redirect:
     resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
     prefix:   /connect
@@ -18,11 +23,6 @@ twitter_login:
 
 sensio_login:
     pattern: /login/check-sensio-connect
-
-fuz_app_login:
-    resource: "@FuzAppBundle/Controller/LoginController.php"
-    type:     annotation
-    prefix:   /
 
 fuz_app_browse:
     resource: "@FuzAppBundle/Controller/BrowseController.php"
