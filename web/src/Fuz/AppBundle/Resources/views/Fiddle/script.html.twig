@@ -305,10 +305,10 @@ $(document).ready(function() {
 });
 
 {#
- #  Function called before "Run" button is going to be proceeded
+ #  Function called before fiddle's form is being to be proceeded
  #  Used in FuzAppBundle:Fiddle:index.html.twig
  #}
-function beforeRunFiddle(elem) {
+function clearFiddleErrors(elem) {
     $('.error-container').html('');
     $('.result-container').html('');
 }
