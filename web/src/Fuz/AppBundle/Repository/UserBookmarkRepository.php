@@ -7,12 +7,12 @@ use Fuz\AppBundle\Entity\Fiddle;
 use Fuz\AppBundle\Entity\User;
 
 /**
- * UserFavoriteRepository
+ * UserBookmarkRepository
  */
-class UserFavoriteRepository extends EntityRepository
+class UserBookmarkRepository extends EntityRepository
 {
 
-    public function getFavorite(Fiddle $fiddle, User $user = null)
+    public function getBookmark(Fiddle $fiddle, User $user = null)
     {
         if ((is_null($user)) || (is_null($fiddle->getId())))
         {
@@ -20,10 +20,10 @@ class UserFavoriteRepository extends EntityRepository
         }
 
         $query = $this->_em->createQuery("
-            SELECT uf
-            FROM Fuz\AppBundle\Entity\UserFavorite uf
-            WHERE uf.fiddle = :fiddle
-            AND uf.user = :user
+            SELECT ub
+            FROM Fuz\AppBundle\Entity\UserBookmark ub
+            WHERE ub.fiddle = :fiddle
+            AND ub.user = :user
         ");
 
         $params = array (
@@ -31,12 +31,12 @@ class UserFavoriteRepository extends EntityRepository
                 'user' => $user,
         );
 
-        $userFavorite = $query
+        $userBookmark = $query
            ->setParameters($params)
            ->getOneOrNullResult()
         ;
 
-        return $userFavorite;
+        return $userBookmark;
     }
 
 }

@@ -8,20 +8,20 @@ use Fuz\AppBundle\Api\TagInterface;
 /**
  * FiddleTag
  *
- * @ORM\Table(name="user_favorite_tag")
+ * @ORM\Table(name="user_bookmark_tag")
  * @ORM\Entity
  */
-class UserFavoriteTag implements TagInterface
+class UserBookmarkTag implements TagInterface
 {
 
     /**
      * @var User
      *
-     * @ORM\ManyToOne(targetEntity="UserFavorite", inversedBy="tags")
-     * @ORM\JoinColumn(name="user_favorite_id", referencedColumnName="id", onDelete="cascade")
+     * @ORM\ManyToOne(targetEntity="UserBookmark", inversedBy="tags")
+     * @ORM\JoinColumn(name="user_bookmark_id", referencedColumnName="id", onDelete="cascade")
      * @ORM\Id
      */
-    protected $userFavorite;
+    protected $userBookmark;
 
     /**
      * @var string
@@ -32,26 +32,26 @@ class UserFavoriteTag implements TagInterface
     protected $tag;
 
     /**
-     * Set userFavorite
+     * Set userBookmark
      *
-     * @param UserFavorite $userFavorite
-     * @return UserFavoriteTag
+     * @param UserBookmark $userBookmark
+     * @return UserBookmarkTag
      */
-    public function setUserFavorite(UserFavorite $userFavorite)
+    public function setUserBookmark(UserBookmark $userBookmark)
     {
-        $this->userFavorite = $userFavorite;
+        $this->userBookmark = $userBookmark;
 
         return $this;
     }
 
     /**
-     * Get userFavorite
+     * Get userBookmark
      *
-     * @return UserFavorite
+     * @return UserBookmark
      */
-    public function getUserFavorite()
+    public function getUserBookmark()
     {
-        return $this->userFavorite;
+        return $this->userBookmark;
     }
 
     /**

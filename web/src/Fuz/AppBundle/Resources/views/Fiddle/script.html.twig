@@ -354,17 +354,17 @@ function processSaveFiddleResponse(elem, response) {
 };
 
 {#
- #  Change button's layout when faving / unfaving a fiddle
- #  Used in FuzAppBundle:Fiddle:favorite.html.twig
+ #  Change button's layout when bookmarking / unbookmarking a fiddle
+ #  Used in FuzAppBundle:Fiddle:bookmark.html.twig
  #}
-function processFavFiddleResponse(elem, response)
+function processBookmarkFiddleResponse(elem, response)
 {
     if (undefined !== response.errors) {
         $.symfony2.dispatchErrors(response.errors);
     }
-    if (response.isFavorite) {
+    if (response.isBookmarked) {
         elem.find('span.glyphicon').removeClass('glyphicon-star-empty').addClass('glyphicon-star');
-        $('#save').removeAttr('disabled').data('input-attr', '.favorite-input');
+        $('#save').removeAttr('disabled').data('input-attr', '.bookmark-input');
     } else {
         elem.find('span.glyphicon').removeClass('glyphicon-star').addClass('glyphicon-star-empty');
         $('#save').attr('disabled', 'disabled').data('input-attr', '#page-container');

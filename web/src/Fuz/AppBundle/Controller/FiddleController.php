@@ -13,8 +13,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Fuz\AppBundle\Base\BaseController;
 use Fuz\AppBundle\Entity\Fiddle;
 use Fuz\AppBundle\Entity\FiddleTag;
-use Fuz\AppBundle\Entity\UserFavorite;
-use Fuz\AppBundle\Form\UserFavoriteType;
+use Fuz\AppBundle\Entity\UserBookmark;
+use Fuz\AppBundle\Form\UserBookmarkType;
 
 class FiddleController extends BaseController
 {
@@ -93,10 +93,10 @@ class FiddleController extends BaseController
         if ($revision > 0)
         {
             $fiddle = $this->getFiddle($hash, $revision);
-            $fav = $this->getUserFavorite($fiddle);
-            if ($fav)
+            $bookmark = $this->getUserBookmark($fiddle);
+            if ($bookmark)
             {
-                return $this->saveUserFavorite($request, $fav);
+                return $this->saveUserBookmark($request, $bookmark);
             }
         }
 
@@ -137,11 +137,11 @@ class FiddleController extends BaseController
     }
 
     /**
-     * Mark / Unmark a fiddle as favorite
+     * Bookmark / Unbookmark a fiddle
      *
      * @Route(
-     *      "/fav/{revision}/{hash}",
-     *      name = "fav_fiddle",
+     *      "/bookmark/{revision}/{hash}",
+     *      name = "bookmark_fiddle",
      *      requirements = {
      *          "hash" = "^[a-zA-Z0-9-]{1,16}$",
      *          "revision" = "^\d+$"
@@ -153,10 +153,10 @@ class FiddleController extends BaseController
      * @param int $revision
      * @return JsonResponse
      */
-    public function favAction(Request $request, $hash, $revision)
+    public function bookmarkAction(Request $request, $hash, $revision)
     {
         $response = array (
-                'isFavorite' => false,
+                'isBookmarked' => false,
         );
 
         $user = $this->getUser();
@@ -173,14 +173,14 @@ class FiddleController extends BaseController
             return new JsonResponse($response);
         }
 
-        $favRepo = $this
+        $bookmarkRepo = $this
            ->getDoctrine()
-           ->getRepository('FuzAppBundle:UserFavorite')
+           ->getRepository('FuzAppBundle:UserBookmark')
         ;
 
         $em = $this->getDoctrine()->getManager();
 
-        $old = $favRepo->getFavorite($fiddle, $user);
+        $old = $bookmarkRepo->getBookmark($fiddle, $user);
         if ($old)
         {
             $em->remove($old);
@@ -188,21 +188,21 @@ class FiddleController extends BaseController
             return new JsonResponse($response);
         }
 
-        $new = new UserFavorite();
+        $new = new UserBookmark();
         $new->setUser($user);
         $new->setFiddle($fiddle);
 
-        return $this->saveUserFavorite($request, $new);
+        return $this->saveUserBookmark($request, $new);
     }
 
-    protected function saveUserFavorite(Request $request, UserFavorite $fav)
+    protected function saveUserBookmark(Request $request, UserBookmark $bookmark)
     {
         $response = array (
-                'isFavorite' => false
+                'isBookmarked' => false
         );
 
-        $form = $this->createForm(new UserFavoriteType(), $fav, array (
-                'data_object' => $fav,
+        $form = $this->createForm(new UserBookmarkType(), $bookmark, array (
+                'data_object' => $bookmark,
         ));
 
         $form->handleRequest($request);
@@ -210,14 +210,14 @@ class FiddleController extends BaseController
         if (!$form->isValid())
         {
             $response['errors'] = $this->getErrorMessagesAjaxFormat($form);
-            return $response;
+            return new JsonResponse($response);
         }
 
         $em = $this->getDoctrine()->getManager();
-        $em->persist($fav);
+        $em->persist($bookmark);
         $em->flush();
 
-        $response['isFavorite'] = true;
+        $response['isBookmarked'] = true;
         return new JsonResponse($response);
     }
 
@@ -253,10 +253,10 @@ class FiddleController extends BaseController
         $fiddle = $this->getFiddle($hash, $revision);
         $fiddleRepo->incrementVisitCount($fiddle);
 
-        $fav = $this->getUserFavorite($fiddle);
-        if ($fav)
+        $bookmark = $this->getUserBookmark($fiddle);
+        if ($bookmark)
         {
-            $this->mapFavoriteToFiddle($fiddle, $fav);
+            $this->mapBookmarkToFiddle($fiddle, $bookmark);
         }
 
         $form = $this->createForm('FiddleType', $fiddle);
@@ -268,7 +268,7 @@ class FiddleController extends BaseController
                 'revision' => $revision,
                 'canSave' => $this->get('app.save_fiddle')->canClickSave($fiddle, $user),
                 'revisionBrowser' => $fiddleRepo->getRevisionList($fiddle, $user),
-                'favorite' => $fav,
+                'bookmark' => $bookmark,
         );
     }
 
@@ -326,20 +326,20 @@ class FiddleController extends BaseController
         ;
     }
 
-    protected function getUserFavorite(Fiddle $fiddle)
+    protected function getUserBookmark(Fiddle $fiddle)
     {
         return $this
               ->getDoctrine()
-              ->getRepository('FuzAppBundle:UserFavorite')
-              ->getFavorite($fiddle, $this->getUser())
+              ->getRepository('FuzAppBundle:UserBookmark')
+              ->getBookmark($fiddle, $this->getUser())
         ;
     }
 
-    protected function mapFavoriteToFiddle(Fiddle $fiddle, UserFavorite $fav)
+    protected function mapBookmarkToFiddle(Fiddle $fiddle, UserBookmark $bookmark)
     {
-        $fiddle->setTitle($fav->getTitle());
+        $fiddle->setTitle($bookmark->getTitle());
         $collection = new ArrayCollection();
-        foreach ($fav->getTags() as $tag)
+        foreach ($bookmark->getTags() as $tag)
         {
             $tagObj = new FiddleTag();
             $tagObj->setTag($tag->getTag());

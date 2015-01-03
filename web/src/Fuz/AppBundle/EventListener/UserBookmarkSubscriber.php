@@ -5,9 +5,9 @@ namespace Fuz\AppBundle\EventListener;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Doctrine\Common\Collections\ArrayCollection;
-use Fuz\AppBundle\Entity\UserFavorite;
+use Fuz\AppBundle\Entity\UserBookmark;
 
-class UserFavoriteSubscriber implements EventSubscriber
+class UserBookmarkSubscriber implements EventSubscriber
 {
 
     protected $tags;
@@ -23,7 +23,7 @@ class UserFavoriteSubscriber implements EventSubscriber
     public function prePersist(LifecycleEventArgs $args)
     {
         $object = $args->getObject();
-        if ($object instanceof UserFavorite)
+        if ($object instanceof UserBookmark)
         {
             $this->tags = $object->getTags();
             $object->setTags(new ArrayCollection());
@@ -34,11 +34,11 @@ class UserFavoriteSubscriber implements EventSubscriber
     {
         $om = $args->getObjectManager();
         $object = $args->getObject();
-        if ($object instanceof UserFavorite)
+        if ($object instanceof UserBookmark)
         {
             foreach ($this->tags as $tag)
             {
-                $tag->setUserFavorite($object);
+                $tag->setUserBookmark($object);
                 $om->persist($tag);
             }
             $object->setTags($this->tags);

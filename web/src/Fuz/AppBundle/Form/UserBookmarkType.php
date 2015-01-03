@@ -5,14 +5,14 @@ namespace Fuz\AppBundle\Form;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Fuz\AppBundle\Transformer\UserFavoriteTagTransformer;
+use Fuz\AppBundle\Transformer\UserBookmarkTagTransformer;
 
-class UserFavoriteType extends AbstractType
+class UserBookmarkType extends AbstractType
 {
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $transformer = new UserFavoriteTagTransformer($options['data_object']);
+        $transformer = new UserBookmarkTagTransformer($options['data_object']);
 
         $builder
            ->add('title', 'text', array(
@@ -32,13 +32,13 @@ class UserFavoriteType extends AbstractType
     {
         $resolver->setDefaults(array (
                 'data_object' => null,
-                'data_class' => 'Fuz\AppBundle\Entity\UserFavorite',
+                'data_class' => 'Fuz\AppBundle\Entity\UserBookmark',
         ));
     }
 
     /**
      * We use the same type name to handle the same form whenever
-     * user saves a fiddle or favorite customizations.
+     * user saves a fiddle or bookmark customizations.
      *
      * @return string
      */

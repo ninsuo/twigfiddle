@@ -22,13 +22,13 @@
     id="save"
     class="btn btn-primary domajax click"
     data-endpoint="{{ path('save_fiddle', {'hash': hash, 'revision': revision}) }}"
-    data-input="{% if favorite %}.favorite-input{% else %}#page-container{% endif %}"
+    data-input="{% if bookmark %}.bookmark-input{% else %}#page-container{% endif %}"
     data-callback-success="processSaveFiddleResponse"
     data-callback-failure="handleAjaxErrors"
     data-lock="#actions"
     data-highlight=""
     data-highlight-color="#FFFF00"
-    {% if canSave == false and favorite == null %}disabled{% endif %}
+    {% if canSave == false and bookmark == null %}disabled{% endif %}
  ><span class="glyphicon glyphicon glyphicon-floppy-disk hidden-md hidden-sm hidden-xs"></span> Save</button>
 
 {# Share button #}

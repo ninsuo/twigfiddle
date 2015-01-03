@@ -8,12 +8,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Fuz\AppBundle\Api\TagContainerInterface;
 
 /**
- * UserFavorite
+ * UserBookmark
  *
- * @ORM\Table(name="user_favorite")
- * @ORM\Entity(repositoryClass="Fuz\AppBundle\Repository\UserFavoriteRepository")
+ * @ORM\Table(name="user_bookmark")
+ * @ORM\Entity(repositoryClass="Fuz\AppBundle\Repository\UserBookmarkRepository")
  */
-class UserFavorite implements TagContainerInterface
+class UserBookmark implements TagContainerInterface
 {
 
     /**
@@ -50,11 +50,11 @@ class UserFavorite implements TagContainerInterface
     protected $title;
 
     /**
-     * @var ArrayCollection[UserFavoriteTag]
+     * @var ArrayCollection[UserBookmarkTag]
      *
      * fiddle.max_tags
      *
-     * @ORM\OneToMany(targetEntity="UserFavoriteTag", mappedBy="userFavorite", cascade={"all"}, orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="UserBookmarkTag", mappedBy="userBookmark", cascade={"all"}, orphanRemoval=true)
      * @Assert\Count(max = 5, maxMessage = "You can't set more than 5 tags.")
      * @Assert\Valid()
      */
@@ -79,7 +79,7 @@ class UserFavorite implements TagContainerInterface
      * Set user
      *
      * @param User $user
-     * @return UserFavorite
+     * @return UserBookmark
      */
     public function setUser(User $user)
     {
@@ -102,7 +102,7 @@ class UserFavorite implements TagContainerInterface
      * Set fiddle
      *
      * @param Fiddle $fiddle
-     * @return UserFavorite
+     * @return UserBookmark
      */
     public function setFiddle(Fiddle $fiddle)
     {
@@ -125,7 +125,7 @@ class UserFavorite implements TagContainerInterface
      * Set title
      *
      * @param string $title
-     * @return UserFavorite
+     * @return UserBookmark
      */
     public function setTitle($title)
     {
@@ -147,14 +147,14 @@ class UserFavorite implements TagContainerInterface
     /**
      * Set tags
      *
-     * @param ArrayCollection[UserFavoriteTag] $tags
-     * @return UserFavorite
+     * @param ArrayCollection[UserBookmarkTag] $tags
+     * @return UserBookmark
      */
     public function setTags(ArrayCollection $tags)
     {
         foreach ($tags as $tag)
         {
-            $tag->setUserFavorite($this);
+            $tag->setUserBookmark($this);
         }
 
         $this->tags = $tags;
@@ -165,7 +165,7 @@ class UserFavorite implements TagContainerInterface
     /**
      * Get tags
      *
-     * @return ArrayCollection[UserFavoriteTag]
+     * @return ArrayCollection[UserBookmarkTag]
      */
     public function getTags()
     {

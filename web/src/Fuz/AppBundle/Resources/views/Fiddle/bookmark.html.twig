@@ -1,0 +1,18 @@
+{# FuzAppBundle:Fiddle:bookmark.html.twig #}
+{# Included by: FuzAppBundle:Fiddle:index.html.twig #}
+
+{% if is_granted('ROLE_USER') and data.id and app.user != data.user %}
+
+    <button
+        id="bookmark"
+        type="button"
+        class="btn btn-tf-dark domajax click"
+        data-endpoint="{{ path('bookmark_fiddle', {'hash': hash, 'revision': revision}) }}"
+        data-input=".bookmark-input"
+        data-callback-success="processBookmarkFiddleResponse"
+        data-lock=""
+    >
+        <span class="glyphicon glyphicon {% if bookmark %}glyphicon-star{% else %}glyphicon-star-empty{% endif %}"></span>
+    </button>
+
+{% endif %}

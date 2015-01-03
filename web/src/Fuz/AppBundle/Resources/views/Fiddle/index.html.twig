@@ -42,7 +42,7 @@
 
 {% block header_right %}
 
-    {{ include('FuzAppBundle:Fiddle:favorite.html.twig') }}
+    {{ include('FuzAppBundle:Fiddle:bookmark.html.twig') }}
 
     {{ include('FuzAppBundle:Fiddle:visibility.html.twig') }}
 
@@ -72,7 +72,7 @@
                 {{
                     form_widget(form.title, {
                         'attr': {
-                            'class': 'favorite-input',
+                            'class': 'bookmark-input',
                             'placeholder': 'Optional title, related URL, ...',
                         },
                     })
@@ -87,7 +87,7 @@
                 {{
                     form_widget(form.tags, {
                         'attr': {
-                            'class': 'favorite-input tags-input',
+                            'class': 'bookmark-input tags-input',
                         },
                     })
                 }}
@@ -129,7 +129,7 @@
     {{
         form_widget(form._token, {
             'attr': {
-                'class': 'favorite-input',
+                'class': 'bookmark-input',
             }
         })
     }}
