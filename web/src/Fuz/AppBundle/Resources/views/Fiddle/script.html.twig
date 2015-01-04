@@ -364,10 +364,10 @@ function processBookmarkFiddleResponse(elem, response)
     }
     if (response.isBookmarked) {
         elem.find('span.glyphicon').removeClass('glyphicon-star-empty').addClass('glyphicon-star');
-        $('#save').removeAttr('disabled').data('input-attr', '.bookmark-input');
+        $('#save').removeAttr('disabled').data('input', '.bookmark-input');
     } else {
         elem.find('span.glyphicon').removeClass('glyphicon-star').addClass('glyphicon-star-empty');
-        $('#save').attr('disabled', 'disabled').data('input-attr', '#page-container');
+        $('#save').attr('disabled', 'disabled').data('input', '#page-container');
     }
 };
 
