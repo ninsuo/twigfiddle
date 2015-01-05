@@ -6,7 +6,6 @@
  * <a class="select-text" data-selector="#container-to-select">Select</a>
  *
  * @see http://stackoverflow.com/a/987376/731138
- * @todo not working on input fields
  */
 ;
 (function ($) {
@@ -20,7 +19,7 @@
             }).join('');
         };
 
-        var GetOrCreateId = function ( jqElement ) {
+        var GetOrCreateId = function (jqElement) {
             if (!jqElement.attr('id')) {
                 var generated_id;
                 do {
@@ -31,11 +30,11 @@
             return jqElement.attr('id');
         };
 
-        var SelectText = function( element ) {
+        var SelectText = function (element) {
             var doc = document
-                , text = doc.getElementById(element)
-                , range, selection
-            ;
+                    , text = doc.getElementById(element)
+                    , range, selection
+                    ;
             if (doc.body.createTextRange) {
                 range = document.body.createTextRange();
                 range.moveToElementText(text);
@@ -49,7 +48,13 @@
             }
         };
 
-        SelectText( GetOrCreateId ( $(this) ) );
+        var that = $(this);
+        if (that.is((':input'))) {
+            that.focus();
+            that[0].setSelectionRange(0, that.val().length)
+        } else {
+            SelectText(GetOrCreateId(that));
+        }
 
     };
 
