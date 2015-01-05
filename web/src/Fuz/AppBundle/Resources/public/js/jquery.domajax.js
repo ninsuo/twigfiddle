@@ -507,19 +507,21 @@
             }
         }
 
-        // --- data-callback-event
+       // --- data-callback-event
         var option = 'callback-' + event;
         if (settings[option] !== null) {
-            var callback = settings[option];
-            var closure = tools.getClosureFronString(callback, windowObj);
-            if ($.isFunction(closure)) {
-                var callbackReturn = closure(elem, response, textStatus, jqXHR);
-                if (callbackReturn === false) {
-                    return false;
+            var callbacks = settings[option].split(' ');
+          $.each(callbacks, function(index, callback) {
+                var closure = tools.getClosureFronString(callback, windowObj);
+                if ($.isFunction(closure)) {
+                    var callbackReturn = closure(elem, response, textStatus, jqXHR);
+                    if (callbackReturn === false) {
+                        return false;
+                    }
+                } else {
+                    throw 'data-callback must contain JavaScript function(s).';
                 }
-            } else {
-                throw 'data-callback must contain a JavaScript function.';
-            }
+            });
         }
 
     };
