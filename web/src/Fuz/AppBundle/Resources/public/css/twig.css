@@ -256,4 +256,5 @@ div.tagsinput span.tag {
 }
 .tags .tagsinput {
     height:34px !important;
+    overflow-y: hidden;
 }
