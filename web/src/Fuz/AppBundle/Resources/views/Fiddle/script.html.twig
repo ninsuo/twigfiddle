@@ -306,10 +306,17 @@ $(document).ready(function() {
 
 {#
  #  Function called before fiddle's form is being to be proceeded
- #  Used in FuzAppBundle:Fiddle:index.html.twig
+ #  Used in FuzAppBundle:Fiddle:actions.html.twig
  #}
 function clearFiddleErrors(elem) {
     $('.error-container').html('');
+}
+
+{#
+ #  Function called before fiddle is being run
+ #  Used in FuzAppBundle:Fiddle:actions.html.twig
+ #}
+function clearFiddleResult() {
     $('.result-container').html('');
 }
 

@@ -8,7 +8,7 @@
     class="btn btn-primary domajax click"
     data-endpoint="{{ path('run_fiddle', {'hash': hash, 'revision': revision}) }}"
     data-input="#page-container"
-    data-callback-before="clearFiddleErrors"
+    data-callback-before="clearFiddleErrors clearFiddleResult"
     data-callback-success="processRunFiddleResponse"
     data-callback-failure="handleAjaxErrors"
     data-lock="#actions"
