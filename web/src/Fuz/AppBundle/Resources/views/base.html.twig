@@ -22,82 +22,84 @@
 
          {# Start Container #}
         <div id="page-container" class="container-fluid">
+            {% block container %}
 
-            {# Start Header #}
-            <div class="row" id="header">
-                <div class="col-md-2 col-sm-6 col-xs-6 logo"><a href="{{ path('fiddle') }}"><img src="{{ asset('bundles/fuzapp/img/logo_twig-fiddle.png') }}" alt="Twig Fiddle"></a></div>
-                <div class="col-md-2 col-sm-6 col-xs-6 version">
-                    {% block header_left %}&nbsp;{% endblock %}
+                {# Start Header #}
+                <div class="row" id="header">
+                    <div class="col-md-2 col-sm-6 col-xs-6 logo"><a href="{{ path('fiddle') }}"><img src="{{ asset('bundles/fuzapp/img/logo_twig-fiddle.png') }}" alt="Twig Fiddle"></a></div>
+                    <div class="col-md-2 col-sm-6 col-xs-6 version">
+                        {% block header_left %}&nbsp;{% endblock %}
+                    </div>
+                    <div class="clearfix hidden-md hidden-lg"></div>
+                    <div id="actions" class="col-md-3 col-sm-6 col-xs-12 top-menu text-right">
+                        {% block header_middle %}&nbsp;{% endblock %}
+                    </div>
+                    <div class="col-md-5 col-sm-6 col-xs-12 user-menu text-right">
+                        {% block header_right %}
+
+                            {# Samples #}
+                            <button type="button" class="btn btn-tf-dark"><span class="glyphicon glyphicon glyphicon-cloud hidden-md hidden-sm hidden-xs"></span> Samples</button>
+
+                            {# About #}
+                            <a  class="btn btn-tf-dark" href="{{ path('about') }}"><span class="glyphicon glyphicon glyphicon-info-sign hidden-md hidden-sm hidden-xs"></span> About</a>
+
+                            {# Login / Logout #}
+                            {% if is_granted('ROLE_USER') %}
+                                <a href="{{ path('logout') }}" class="btn btn-tf-green">
+                                    <span class="glyphicon glyphicon glyphicon-log-out hidden-md hidden-sm hidden-xs"></span>
+                                    Logout
+                                </a>
+                            {% else %}
+                                <a href="#" class="btn btn-tf-green" data-toggle="modal" data-target="#login-modal">
+                                    <span class="glyphicon glyphicon glyphicon-log-in hidden-md hidden-sm hidden-xs"></span>
+                                    Login
+                                </a>
+                                {{ include('FuzAppBundle:Login:modal.html.twig') }}
+                            {% endif %}
+
+                            {#
+                <div class="col-md-12 col-sm-12 col-xs-12 user-menu text-right">
+                    Logged as {{ macros.me() }}
                 </div>
-                <div class="clearfix hidden-md hidden-lg"></div>
-                <div id="actions" class="col-md-3 col-sm-6 col-xs-12 top-menu text-right">
-                    {% block header_middle %}&nbsp;{% endblock %}
+                            #}
+                        {% endblock %}
+                    </div>
                 </div>
-                <div class="col-md-5 col-sm-6 col-xs-12 user-menu text-right">
-                    {% block header_right %}
+                {# End Header #}
 
-                        {# Samples #}
-                        <button type="button" class="btn btn-tf-dark"><span class="glyphicon glyphicon glyphicon-cloud hidden-md hidden-sm hidden-xs"></span> Samples</button>
+                {# Start Body #}
+                    {% block content %}{% endblock %}
+                {# End Body #}
 
-                        {# About #}
-                        <a  class="btn btn-tf-dark" href="{{ path('about') }}"><span class="glyphicon glyphicon glyphicon-info-sign hidden-md hidden-sm hidden-xs"></span> About</a>
+                <div class="clear"></div>
 
-                        {# Login / Logout #}
-                        {% if is_granted('ROLE_USER') %}
-                            <a href="{{ path('logout') }}" class="btn btn-tf-green">
-                                <span class="glyphicon glyphicon glyphicon-log-out hidden-md hidden-sm hidden-xs"></span>
-                                Logout
-                            </a>
-                        {% else %}
-                            <a href="#" class="btn btn-tf-green" data-toggle="modal" data-target="#login-modal">
-                                <span class="glyphicon glyphicon glyphicon-log-in hidden-md hidden-sm hidden-xs"></span>
-                                Login
-                            </a>
-                            {{ include('FuzAppBundle:Login:modal.html.twig') }}
-                        {% endif %}
-
-                        {#
-            <div class="col-md-12 col-sm-12 col-xs-12 user-menu text-right">
-                Logged as {{ macros.me() }}
-            </div>
-                        #}
-                    {% endblock %}
+                {# Start Footer #}
+                <div class="row" id="footer">
+                    <div class="col-md-12 text-center">
+                        <p>
+                            <span>twigfiddle.com @ 2015</span>
+                            <br/>
+                            <a href="#">Contact</a>
+                            <span class="space"></span>
+                            <a href="#">Report issue</a>
+                            <span class="space"></span>
+                            <a href="#">GitHub</a>
+                            <span class="space"></span>
+                            <a href="#">Google Groups</a>
+                            <span class="space"></span>
+                            <a href="#">Paypal</a>
+                            <span class="space"></span>
+                            <a href="#">Facebook</a>
+                            <span class="space"></span>
+                            <a href="#">Twitter</a>
+                        </p>
+                    </div>
                 </div>
-            </div>
-            {# End Header #}
+                {# End Footer #}
 
-            {# Start Body #}
-                {% block content %}{% endblock %}
-            {# End Body #}
-
-            <div class="clear"></div>
-
-            {# Start Footer #}
-            <div class="row" id="footer">
-                <div class="col-md-12 text-center">
-                    <p>
-                        <span>twigfiddle.com @ 2015</span>
-                        <br/>
-                        <a href="#">Contact</a>
-                        <span class="space"></span>
-                        <a href="#">Report issue</a>
-                        <span class="space"></span>
-                        <a href="#">GitHub</a>
-                        <span class="space"></span>
-                        <a href="#">Google Groups</a>
-                        <span class="space"></span>
-                        <a href="#">Paypal</a>
-                        <span class="space"></span>
-                        <a href="#">Facebook</a>
-                        <span class="space"></span>
-                        <a href="#">Twitter</a>
-                    </p>
-                </div>
-            </div>
-            {# End Footer #}
-
-          {# End Container #}
+            {% endblock %}
         </div>
+       {# End Container #}
 
         {# Wait gif #}
         <div id="wait" class="hide">

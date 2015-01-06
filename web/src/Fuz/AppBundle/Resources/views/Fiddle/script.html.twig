@@ -296,6 +296,13 @@ $(document).ready(function() {
     });
 
     {#
+     #  Dirty form's alert
+     #}
+    $('#page-form').areYouSure({
+        'message': 'This page is asking you to confirm that you want to leave - data you have entered may not be saved.',
+    });
+
+    {#
      #  Automatic run at startup if a saved fiddle was loaded
      #}
     {% if data.id %}
@@ -352,6 +359,8 @@ function processRunFiddleResponse(elem, response) {
 function processSaveFiddleResponse(elem, response) {
     if (undefined !== response.errors) {
         $.symfony2.dispatchErrors(response.errors);
+    } else {
+        $('#page-form').trigger('reinitialize.areYouSure');
     }
 
     if (undefined !== response.relocate) {
@@ -369,13 +378,15 @@ function processBookmarkFiddleResponse(elem, response)
 {
     if (undefined !== response.errors) {
         $.symfony2.dispatchErrors(response.errors);
+    } else {
+        $('#page-form').trigger('reinitialize.areYouSure');
     }
     if (response.isBookmarked) {
         elem.find('span.glyphicon').removeClass('glyphicon-star-empty').addClass('glyphicon-star');
         $('#save').removeAttr('disabled').data('input', '.bookmark-input');
     } else {
         elem.find('span.glyphicon').removeClass('glyphicon-star').addClass('glyphicon-star-empty');
-        $('#save').attr('disabled', 'disabled').data('input', '#page-container');
+        $('#save').attr('disabled', 'disabled').data('input', '#page-form');
     }
 };
 
