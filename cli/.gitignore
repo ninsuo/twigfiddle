@@ -3,4 +3,5 @@ composer.phar
 composer.lock
 logs/*
 !logs/.gitkeep
-twig/uncompressed
+twig/uncompressed/*
+!twig/uncompressed/.gitkeep
