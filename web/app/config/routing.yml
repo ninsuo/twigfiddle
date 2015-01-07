@@ -1,6 +1,6 @@
 
-fuz_app_login:
-    resource: "@FuzAppBundle/Controller/LoginController.php"
+fuz_app_user:
+    resource: "@FuzAppBundle/Controller/UserController.php"
     type:     annotation
     prefix:   /
 

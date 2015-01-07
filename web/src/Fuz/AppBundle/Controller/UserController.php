@@ -8,7 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Fuz\AppBundle\Base\BaseController;
 
-class LoginController extends BaseController
+class UserController extends BaseController
 {
 
     /**
@@ -17,11 +17,11 @@ class LoginController extends BaseController
      * @Route("/login", name="login")
      * @Method({"GET"})
      */
-    public function loginAction(Request $request)
+    public function loginAction()
     {
         if ($this->getUser())
         {
-            return $this->goBack($request);
+            return new RedirectResponse($this->generateUrl('fiddle'));
         }
         else
         {
@@ -105,12 +105,12 @@ class LoginController extends BaseController
                 $em = $this->get('doctrine.orm.entity_manager');
                 $em->remove($user);
                 $em->flush();
-                return $this->forward('FuzAppBundle:Login:logout');
+                return $this->forward('FuzAppBundle:User:logout');
             }
             return $this->goBack($request);
         }
 
-        return $this->render("FuzAppBundle:Login:unsuscribe.html.twig",
+        return $this->render("FuzAppBundle:User:unsuscribe.html.twig",
               array (
                    'form' => $form->createView(),
         ));
