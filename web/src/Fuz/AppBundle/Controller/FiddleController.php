@@ -222,6 +222,21 @@ class FiddleController extends BaseController
     }
 
     /**
+     * Fiddle's samples
+     *
+     * @Template()
+     * @return array
+     */
+    public function samplesAction()
+    {
+       $webConfig = $this->container->getParameter('web');
+
+       return array(
+               'categories' => $webConfig['samples'],
+       );
+    }
+
+    /**
      * Displays twigfiddle's editor
      *
      * @Route(

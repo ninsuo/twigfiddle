@@ -1,0 +1,25 @@
+{# FuzAppBundle:Login:unsuscribe.html.twig #}
+
+{% extends 'FuzAppBundle::base.html.twig' %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-12">
+
+        <h1>You are going to unsuscribe.</h1>
+
+        <p>Your private fiddles will be <span class="text-danger">removed</span>.</p>
+
+        <p>Your other fiddles will not be editable anymore.</p>
+
+        <div>
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            {{ form_end(form) }}
+        </div>
+
+    <div class="clear">&nbsp;</div>
+</div>
+
+{% endblock %}

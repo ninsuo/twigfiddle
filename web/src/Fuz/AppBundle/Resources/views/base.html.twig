@@ -38,7 +38,7 @@
                         {% block header_right %}
 
                             {# Samples #}
-                            <button type="button" class="btn btn-tf-dark"><span class="glyphicon glyphicon glyphicon-cloud hidden-md hidden-sm hidden-xs"></span> Samples</button>
+                            {{ render(controller('FuzAppBundle:Fiddle:samples')) }}
 
                             {# About #}
                             <a  class="btn btn-tf-dark" href="{{ path('about') }}"><span class="glyphicon glyphicon glyphicon-info-sign hidden-md hidden-sm hidden-xs"></span> About</a>
@@ -57,11 +57,6 @@
                                 {{ include('FuzAppBundle:Login:modal.html.twig') }}
                             {% endif %}
 
-                            {#
-                <div class="col-md-12 col-sm-12 col-xs-12 user-menu text-right">
-                    Logged as {{ macros.me() }}
-                </div>
-                            #}
                         {% endblock %}
                     </div>
                 </div>
@@ -76,6 +71,18 @@
                 {# Start Footer #}
                 <div class="row" id="footer">
                     <div class="col-md-12 text-center">
+
+                       {% block logged_as %}
+                           <div class="white">
+                              {% if is_granted('ROLE_USER') %}
+                                 Logged as {{ macros.me() }}
+                              {% else %}
+                                 Not logged in.
+                              {% endif %}
+                              <div>&nbsp;</div>
+                           </div>
+                       {% endblock %}
+
                         <p>
                             <span>twigfiddle.com @ 2015</span>
                             <br/>
