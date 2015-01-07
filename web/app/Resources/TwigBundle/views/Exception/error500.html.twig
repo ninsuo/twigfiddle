@@ -2,6 +2,7 @@
 {% extends 'FuzAppBundle::base.html.twig' %}
 
 {% block header_right %}{% endblock %}
+{% block logged_as %}{% endblock %}
 
 {% block title %}It looks like something went wrong.{% endblock %}
 
@@ -24,7 +25,7 @@
         <div>&nbsp;</div>
 
         <div class="text-center">
-            <a href="{{ path('home') }}" class="btn btn-default btn-sm">Back to home</a>
+            <a href="{{ path('fiddle') }}" class="btn btn-default btn-sm">Back to home</a>
         </div>
 
     </div>
