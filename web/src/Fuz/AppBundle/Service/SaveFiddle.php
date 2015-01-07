@@ -157,7 +157,7 @@ class SaveFiddle
 
         do
         {
-            $hash = $this->utilities->randomString($this->webConfig['default_fiddle_hash_size']);
+            $hash = $this->utilities->randomString($this->webConfig['default_fiddle_hash_size'], 'abcdefghijklmnopqrstuvwxyz012345689');
             $this->logger->debug("Testing hash: {$hash}");
         }
         while ($repository->hashExists($hash));
@@ -179,6 +179,7 @@ class SaveFiddle
         $revision = $repository->getNextRevisionNumber($fiddle->getHash());
 
         $clone = clone $fiddle;
+        $clone->setHash(strtolower($clone->getHash()));
         $clone->setRevision($revision);
 
         if ($user)

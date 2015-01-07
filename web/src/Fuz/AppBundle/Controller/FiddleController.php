@@ -201,7 +201,8 @@ class FiddleController extends BaseController
                 'isBookmarked' => false
         );
 
-        $form = $this->createForm(new UserBookmarkType(), $bookmark, array (
+        $form = $this->createForm(new UserBookmarkType(), $bookmark,
+           array (
                 'data_object' => $bookmark,
         ));
 
@@ -229,11 +230,11 @@ class FiddleController extends BaseController
      */
     public function samplesAction()
     {
-       $webConfig = $this->container->getParameter('web');
+        $webConfig = $this->container->getParameter('web');
 
-       return array(
-               'categories' => $webConfig['samples'],
-       );
+        return array (
+                'categories' => $webConfig['samples'],
+        );
     }
 
     /**
