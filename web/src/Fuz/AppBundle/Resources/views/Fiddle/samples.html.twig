@@ -1,0 +1,47 @@
+{# FuzAppBundle:Fiddle:index.html.twig #}
+{# Rendered by: FuzAppBundle:Fiddle:samples #}
+
+{% if categories|length > 0 %}
+
+   {% import "FuzAppBundle::macros.html.twig" as macros %}
+
+   <button type="button" class="btn btn-tf-dark" data-toggle="modal" data-target="#samples-modal">
+      <span class="glyphicon glyphicon glyphicon-cloud hidden-md hidden-sm hidden-xs"></span>
+      <span>Samples</span>
+   </button>
+
+   {% set body %}
+
+   <div class="text-left">
+
+      <p>Click on the following buttons to open fiddle's samples in a new tab:</p>
+
+      {% set count = 0 %}
+      {% for category, samples in categories %}
+
+         <p class="text-center">
+            <strong>{{ category|title }}</strong>
+         </p>
+
+         {% for sample in samples %}
+
+            <a
+               class="btn {{ cycle(['btn-tf-dark', 'btn-tf-green'], count) }}"
+               href="{{ path('fiddle', {'hash': sample.hash, 'revision': sample.revision}) }}"
+               target="_blank">{{ sample.label }}</a>
+
+            {% set count = count + 1 %}
+
+         {% endfor %}
+
+         <div class="clear">&nbsp;</div>
+
+      {% endfor %}
+
+   </div>
+
+   {% endset %}
+
+   {{ macros.modal('samples-modal', 'Samples', body) }}
+
+{% endif %}

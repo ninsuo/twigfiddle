@@ -49,9 +49,9 @@ assetic:
 doctrine:
     dbal:
         driver:   "%database_driver%"
-#        host:     "%database_host%"
-#        port:     "%database_port%"
-        unix_socket: %database_socket%
+        host:     "%database_host%"
+        port:     "%database_port%"
+#        unix_socket: %database_socket%
         dbname:   "%database_name%"
         user:     "%database_user%"
         password: "%database_password%"
@@ -92,3 +92,8 @@ fuz_app:
         github_repository_root: %github_repository_root%
         max_fiddles_in_session: 100
         default_fiddle_hash_size: 6
+        samples:
+           basics:
+               - { hash: hello, revision: 1, label: "Hello, world!" }
+           twig language overview:
+               - { hash: macros, revision: 1, label: "Macros" }
