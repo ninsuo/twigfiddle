@@ -6,6 +6,7 @@ twigfiddle.com provides a small development environment to develop, run, store a
 
 # Installation
 
+```sh
 cd cli
 composer update
 cd twig
@@ -17,4 +18,5 @@ composer update
 echo 'create database twigfiddle' | mysql -u root
 php app/console doctrine:schema:drop --force
 php app/console doctrine:schema:create
-
+php app/console twigfiddle:import ../samples/*
+```
