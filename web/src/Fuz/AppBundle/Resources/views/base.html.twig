@@ -37,11 +37,20 @@
                     <div class="col-md-5 col-sm-6 col-xs-12 user-menu text-right">
                         {% block header_right %}
 
+                            {# Browse #}
+                            <a class="btn btn-tf-dark" href="{{ path('browse') }}">
+                               <span class="glyphicon glyphicon glyphicon-th hidden-md hidden-sm hidden-xs"></span>
+                               Browse
+                            </a>
+
                             {# Samples #}
                             {{ render(controller('FuzAppBundle:Fiddle:samples')) }}
 
                             {# About #}
-                            <a  class="btn btn-tf-dark" href="{{ path('about') }}"><span class="glyphicon glyphicon glyphicon-info-sign hidden-md hidden-sm hidden-xs"></span> About</a>
+                            <a class="btn btn-tf-dark" href="{{ path('about') }}">
+                               <span class="glyphicon glyphicon glyphicon-info-sign hidden-md hidden-sm hidden-xs"></span>
+                               About
+                            </a>
 
                             {# Login / Logout #}
                             {% if is_granted('ROLE_USER') %}

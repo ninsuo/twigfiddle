@@ -5,7 +5,7 @@
 <button
     type="button"
     id="run"
-    class="btn btn-primary domajax click"
+    class="btn btn-tf-green domajax click"
     data-endpoint="{{ path('run_fiddle', {'hash': hash, 'revision': revision}) }}"
     data-input="#page-form"
     data-callback-before="clearFiddleErrors clearFiddleResult"
@@ -20,7 +20,7 @@
 <button
     type="button"
     id="save"
-    class="btn btn-primary domajax click"
+    class="btn btn-tf-dark domajax click"
     data-endpoint="{{ path('save_fiddle', {'hash': hash, 'revision': revision}) }}"
     data-input="{% if bookmark %}.bookmark-input{% else %}#page-form{% endif %}"
     data-callback-before="clearFiddleErrors"
@@ -33,5 +33,9 @@
  ><span class="glyphicon glyphicon glyphicon-floppy-disk hidden-md hidden-sm hidden-xs"></span> Save</button>
 
 {# Share button #}
-<button id="share" type="button" class="btn btn-primary" {% if data.id == null %}disabled{% else %}data-toggle="modal" data-target="#share-modal"{% endif %}><span class="glyphicon glyphicon glyphicon-share-alt hidden-md hidden-sm hidden-xs"></span> Share</button>
+<button id="share" type="button" class="btn btn-tf-dark" {% if data.id == null %}disabled{% else %}data-toggle="modal" data-target="#share-modal"{% endif %}><span class="glyphicon glyphicon glyphicon-share-alt hidden-md hidden-sm hidden-xs"></span> Share</button>
 {% if data.id %}{{ include('FuzAppBundle:Fiddle:share-modal.html.twig') }}{% endif %}
+
+{{ include('FuzAppBundle:Fiddle:visibility.html.twig') }}
+
+{{ include('FuzAppBundle:Fiddle:bookmark.html.twig') }}
