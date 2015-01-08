@@ -14,6 +14,7 @@ parameters:
     app.process_configuration.class: Fuz\AppBundle\Service\ProcessConfiguration
     app.run_fiddle.class: Fuz\AppBundle\Service\RunFiddle
     app.save_fiddle.class: Fuz\AppBundle\Service\SaveFiddle
+    app.search_fiddle.class: Fuz\AppBundle\Service\SearchFiddle
 
 services:
 
@@ -95,4 +96,10 @@ services:
          class: %app.save_fiddle.class%
          arguments: [@logger, @app.utilities, @app.helper.doctrine_helper, @doctrine.orm.entity_manager, @session, @router, %web%]
          tags:
-             - { name: monolog.logger, channel: helper.fiddle }
+             - { name: monolog.logger, channel: service.save_fiddle }
+
+    app.search_fiddle:
+         class: %app.search_fiddle.class%
+         arguments: [@logger, @doctrine.orm.entity_manager, %web%]
+         tags:
+             - { name: monolog.logger, channel: service.search_fiddle }

@@ -66,8 +66,12 @@ class RunCommand extends BaseCommand
             $this->memory = null;
             if ((!is_null($err = error_get_last())) && (!in_array($err['type'], array (E_NOTICE, E_WARNING))))
             {
-                $this->agent->addError(Error::E_UNEXPECTED, $err);
-                $this->finish();
+                // No need to debug main.twig if it contains {{ include('main.twig') }}
+                if (!strpos($err['message'], 'Allowed memory size'))
+                {
+                    $this->agent->addError(Error::E_UNEXPECTED, $err);
+                    $this->finish();
+                }
             }
         });
         return $this;

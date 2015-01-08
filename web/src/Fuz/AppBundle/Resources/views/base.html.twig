@@ -38,10 +38,12 @@
                         {% block header_right %}
 
                             {# Browse #}
+                            {% block browse %}
                             <a class="btn btn-tf-dark" href="{{ path('browse') }}">
                                <span class="glyphicon glyphicon glyphicon-th hidden-md hidden-sm hidden-xs"></span>
                                Browse
                             </a>
+                            {% endblock %}
 
                             {# Samples #}
                             {{ render(controller('FuzAppBundle:Fiddle:samples')) }}

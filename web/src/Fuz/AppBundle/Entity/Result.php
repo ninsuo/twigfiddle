@@ -4,6 +4,11 @@ namespace Fuz\AppBundle\Entity;
 
 use Fuz\Process\Entity\Result as FiddleResult;
 
+/**
+ * Entity used to contain fiddle's result
+ *
+ * @See Fuz\AppBundle\Service\RunFiddle
+ */
 class Result
 {
 

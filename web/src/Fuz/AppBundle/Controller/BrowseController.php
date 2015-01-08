@@ -10,7 +10,7 @@ use Fuz\AppBundle\Base\BaseController;
 class BrowseController extends BaseController
 {
 
-   /**
+    /**
      * Loads fiddle's browser
      *
      * @Route(
@@ -21,13 +21,32 @@ class BrowseController extends BaseController
      *      }
      * )
      * @Method({"GET"})
-     * @param string|null $tag
      * @Template()
-     * @return array
      */
     public function indexAction($tag)
     {
-        return array ();
+        return array (
+                'tag' => $tag,
+        );
+    }
+
+    /**
+     * Searches for results
+     *
+     * @Route(
+     *      "/search/{tag}",
+     *      name = "search",
+     *      defaults = {
+     *          "tag" = null,
+     *      }
+     * )
+     * @Template("FuzAppBundle:Browse:results.html.twig")
+     */
+    public function searchAction($tag)
+    {
+        return array (
+                'tag' => $tag,
+        );
     }
 
 }

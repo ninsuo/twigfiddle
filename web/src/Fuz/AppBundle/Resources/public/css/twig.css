@@ -224,6 +224,10 @@ img {
 /******************************************************/
 /************** FIDDLE ********************/
 /******************************************************/
+#result {
+    background: url("../img/background/bg_t_11.png") repeat scroll 0 0 rgba(0, 0, 0, 0);
+    padding: 10px 0 20px;
+}
 .result-box {
     background-color: #eee;
     color: #555;
