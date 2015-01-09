@@ -5,6 +5,10 @@
 
 {% block browse %}{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{{ asset('bundles/fuzapp/jquery-tagsinput/jquery.tagsinput.css') }}">
+{% endblock %}
+
 {% block header_middle %}
 
     {# Create new fiddle #}
@@ -26,7 +30,11 @@
 {% endblock %}
 
  {% block extra_js %}
-
+<script type="text/javascript" src="{{ asset('bundles/fuzapp/js/jquery.symfony2.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fuzapp/js/jquery.domajax.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fuzapp/jquery-tagsinput/jquery.tagsinput.js') }}"></script>
  {% endblock %}
 
+ {% block script %}
 {{ include('FuzAppBundle:Browse:script.html.twig') }}
+{% endblock %}

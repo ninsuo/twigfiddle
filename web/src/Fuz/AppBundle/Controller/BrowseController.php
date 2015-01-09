@@ -27,11 +27,12 @@ class BrowseController extends BaseController
      */
     public function indexAction($tag)
     {
-        $form = $this->createForm(new BrowseType(), new Browse());
+        list($data, $form) = $this->createBrowseForm($tag);
 
         return array (
                 'tag' => $tag,
                 'form' => $form->createView(),
+                'data' => $data,
         );
     }
 
@@ -52,6 +53,17 @@ class BrowseController extends BaseController
         return array (
                 'tag' => $tag,
         );
+    }
+
+    protected function createBrowseForm($tag)
+    {
+        $data = new Browse();
+        if (!is_null($tag))
+        {
+            $data->setTags(array($tag));
+        }
+        $form = $this->createForm(new BrowseType(), $data);
+        return array($data, $form);
     }
 
 }

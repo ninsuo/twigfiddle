@@ -53,12 +53,13 @@
             <label class="sr-only">Tags</label>
             <p class="form-control-static">Tags</p>
         </div>
-        <div class="form-group">
+        <div class="form-group tags">
             <label class="sr-only">Filter Tags...</label>
             {{
                 form_widget(form.tags, {
                     'attr': {
                         'placeholder': 'Filter tags...',
+                        'class': 'tags-input',
                     }
                 })
             }}

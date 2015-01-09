@@ -3,4 +3,23 @@
 
 <script type="text/javascript">
 
+$(document).ready(function() {
+
+    {#
+     #  Make tags having a tag layout
+     #  Used in FuzAppBundle:Browse:filters.html.twig
+     #}
+    $('.tags-input').each(function() {
+        var that = $(this);
+        that.tagsInput({
+            'width': (that.width() + 26) + 'px',
+            'height': '34px',
+            'defaultText': 'Filter tags...',
+            'placeholderColor' : '#999',
+        });
+    });
+
+});
+
+
 </script>
