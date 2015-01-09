@@ -6,6 +6,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Fuz\AppBundle\Base\BaseController;
+use Fuz\AppBundle\Entity\Browse;
+use Fuz\AppBundle\Form\BrowseType;
 
 class BrowseController extends BaseController
 {
@@ -25,8 +27,11 @@ class BrowseController extends BaseController
      */
     public function indexAction($tag)
     {
+        $form = $this->createForm(new BrowseType(), new Browse());
+
         return array (
                 'tag' => $tag,
+                'form' => $form->createView(),
         );
     }
 

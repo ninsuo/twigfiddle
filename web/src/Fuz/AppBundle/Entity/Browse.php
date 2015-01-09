@@ -26,7 +26,7 @@ class Browse
      *
      * @Assert\Count(max = 5, maxMessage = "Fiddles contains at last 5 tags.")
      */
-    protected $tags;
+    protected $tags = array();
 
     /**
      * @var bool

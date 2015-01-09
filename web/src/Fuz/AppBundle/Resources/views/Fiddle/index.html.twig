@@ -23,9 +23,20 @@
 {% endblock %}
 
 {% block container %}
-<form id="page-form" action="#" method="post">
+
+    {{
+        form_start(form, {
+            'attr': {
+                'id': 'page-form',
+                'role': 'form',
+            }
+        })
+    }}
+
     {{ parent() }}
-</form>
+
+    {{ form_end(form) }}
+
 {% endblock %}
 
 {% block header_left %}

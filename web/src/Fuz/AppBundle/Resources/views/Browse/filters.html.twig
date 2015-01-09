@@ -1,37 +1,123 @@
 {# FuzAppBundle:Browse:filters.html.twig #}
 {# Included by: FuzAppBundle:Browse:index.html.twig #}
 
+{{
+    form_start(form, {
+        'attr': {
+            'id': form.vars.id,
+            'class': 'form-inline',
+            'role': 'form',
+        }
+    })
+}}
+
+{% macro display_submit(form) %}
+
+    <button
+        type="submit"
+        class="btn btn-default domajax click"
+        data-endpoint="{{ path('search') }}"
+        data-input="#{{ form.vars.id }}"
+        data-lock="#{{ form.vars.id }}"
+        data-output="#result-container"
+        data-replace="#result-container"
+        data-replace-by="#wait"
+    >OK</button>
+
+{% endmacro %}
+
 <div class="row" id="search">
-    <div class="col-md-4 col-sm-6">
-        <form class="form-inline" role="form">
-            <div class="form-group">
-                <label class="sr-only">Keywords</label>
-                <p class="form-control-static">Keywords</p>
-            </div>
-            <div class="form-group">
-                <label class="sr-only">search for...</label>
-                <input class="form-control" id="" placeholder="search for...">
-            </div>
-            <button type="submit" class="btn btn-default">ok</button>
-        </form>
+
+    {# Keywords filter #}
+    <div class="{% if is_granted('ROLE_USER') %}col-md-3{% else %}col-md-6{% endif %} col-sm-6 col-xs-12">
+        <div class="form-group">
+            <label class="sr-only">Keywords</label>
+            <p class="form-control-static">Keywords</p>
+        </div>
+        <div class="form-group">
+            <label class="sr-only">search for...</label>
+            {{
+                form_widget(form.keywords, {
+                    'attr': {
+                        'placeholder': 'Search for...',
+                    }
+                })
+            }}
+        </div>
+        {{ _self.display_submit(form) }}
     </div>
-    <div class="col-md-4 col-sm-6">
-        <form class="form-inline" role="form">
-            <div class="form-group">
-                <label class="sr-only">Tags</label>
-                <p class="form-control-static">Tags</p>
-            </div>
-            <div class="form-group">
-                <label class="sr-only">Filter Tags...</label>
-                <input class="form-control" id="" placeholder="Filter Tags...">
-            </div>
-            <button type="submit" class="btn btn-default">ok</button>
-        </form>
+
+    {# Tags filter #}
+    <div class="{% if is_granted('ROLE_USER') %}col-md-3{% else %}col-md-6{% endif %} col-sm-6 col-xs-12">
+        <div class="form-group">
+            <label class="sr-only">Tags</label>
+            <p class="form-control-static">Tags</p>
+        </div>
+        <div class="form-group">
+            <label class="sr-only">Filter Tags...</label>
+            {{
+                form_widget(form.tags, {
+                    'attr': {
+                        'placeholder': 'Filter tags...',
+                    }
+                })
+            }}
+        </div>
+        {{ _self.display_submit(form) }}
     </div>
+
     <div class="clearfix hidden-md hidden-lg">&nbsp;</div>
-    <div class="col-md-4 col-sm-12">
-        <input type="checkbox" id="blankCheckbox" value="option1" aria-label="...">
-        Filter private Fiddles
-        <input type="checkbox" id="blankCheckbox" value="option1" aria-label="...">
-        Filter favorite Fiddles</div>
+
+    {% if is_granted('ROLE_USER') %}
+
+        {# Search ticks #}
+        <div class="col-md-3 col-sm-6 col-xs-12">
+
+            <label class="checkbox-inline" for="{{ form.mine.vars.id }}">
+                {{
+                    form_widget(form.mine, {
+                        'attr': {
+                            'aria-label': 'Search my fiddles',
+                        }
+                    })
+                }}
+                Search my fiddles
+            </label>
+
+            <label class="checkbox-inline" for="{{ form.bookmark.vars.id }}">
+                {{
+                    form_widget(form.bookmark, {
+                        'attr': {
+                            'aria-label': 'Search in bookmarks',
+                        }
+                    })
+                }}
+                Search in bookmarks
+            </label>
+
+        </div>
+
+        {# Visibility filter #}
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="form-group">
+                <label class="sr-only">Visibility</label>
+                <p class="form-control-static">Visibility</p>
+            </div>
+            <div class="form-group">
+                <label class="sr-only">Fiddle's visibility</label>
+                {{ form_widget(form.visibility) }}
+            </div>
+            {{ _self.display_submit(form) }}
+        </div>
+
+    {% else %}
+
+        <div class="hide">
+            {{ form_rest(form) }}
+        </div>
+
+    {% endif %}
+
 </div>
+
+{{ form_end(form) }}

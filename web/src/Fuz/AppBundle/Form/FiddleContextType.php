@@ -26,6 +26,7 @@ class FiddleContextType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array (
+                'data_object' => null,
                 'data_class' => 'Fuz\AppBundle\Entity\FiddleContext',
         ));
     }

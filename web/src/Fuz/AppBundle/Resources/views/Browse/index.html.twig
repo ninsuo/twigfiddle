@@ -19,6 +19,14 @@
 
     {{ include('FuzAppBundle:Browse:filters.html.twig') }}
 
-    {{ render(controller('FuzAppBundle:Browse:search', {'tag': tag})) }}
+    <div id="result-container">
+        {{ render(controller('FuzAppBundle:Browse:search', {'tag': tag})) }}
+    </div>
 
 {% endblock %}
+
+ {% block extra_js %}
+
+ {% endblock %}
+
+{{ include('FuzAppBundle:Browse:script.html.twig') }}
