@@ -50,7 +50,7 @@
                         <span class="unavailable">(No title)</span>
                     {% endif %}
                 </p>
-                <p id="input-{{ form.title.vars.id ~ '_' ~ index }}" class="hidde">
+                <p id="input-{{ form.title.vars.id ~ '_' ~ index }}" class="hide">
                     {{
                         form_widget(form.title, {
                             'id': form.title.vars.id ~ '_' ~ index,
@@ -66,7 +66,7 @@
                         <span class="static-tag"><span>{{ tag.tag }}</span></span>
                     {% endfor %}
                 </p>
-                <p id="input-{{ form.tags.vars.id ~ '_' ~ index }}" class="hidde tags">
+                <p id="input-{{ form.tags.vars.id ~ '_' ~ index }}" class="hide tags">
                     {{
                         form_widget(form.tags, {
                             'attr': {
@@ -97,16 +97,22 @@
                 })
              }}
 
-             <a class="btn btn-tf-dark" href="{{ path('fiddle', {'hash': fiddle.hash, 'revision': fiddle.revision}) }}">
-               <span class="glyphicon glyphicon glyphicon-pencil hidden-md hidden-sm hidden-xs"></span>
-               Edit
-            </a>
-
              {% if is_granted('ROLE_USER') and isMyFiddle == false %}
-              <a class="btn btn-tf-dark" href="{{ path('save_fiddle', {'hash': fiddle.hash, 'revision': fiddle.revision}) }}">
-                <span class="glyphicon glyphicon glyphicon-floppy-disk hidden-md hidden-sm hidden-xs"></span>
-                Save
-             </a>
+
+                <span class="edit-{{ index }}">
+                   <a class="btn btn-tf-dark" href="{{ path('fiddle', {'hash': fiddle.hash, 'revision': fiddle.revision}) }}">
+                     <span class="glyphicon glyphicon glyphicon-pencil hidden-md hidden-sm hidden-xs"></span>
+                     Edit
+                  </a>
+                </span>
+
+                <span class="save-{{ index }} hide">
+                   <a class="btn btn-tf-dark" href="{{ path('save_fiddle', {'hash': fiddle.hash, 'revision': fiddle.revision}) }}">
+                     <span class="glyphicon glyphicon glyphicon-floppy-disk hidden-md hidden-sm hidden-xs"></span>
+                     Save
+                  </a>
+                </span>
+
              {% endif %}
 
              <a class="btn btn-tf-dark" href="{{ path('fiddle', {'hash': fiddle.hash, 'revision': fiddle.revision}) }}">
