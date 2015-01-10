@@ -2,7 +2,6 @@
 
 namespace Fuz\AppBundle\Controller;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -11,7 +10,6 @@ use Fuz\AppBundle\Base\BaseController;
 use Fuz\AppBundle\Entity\BrowseFilters;
 use Fuz\AppBundle\Form\BrowseFiltersType;
 use Fuz\AppBundle\Entity\UserBookmark;
-use Fuz\AppBundle\Entity\UserBookmarkTag;
 use Fuz\AppBundle\Form\UserBookmarkType;
 
 class BrowseController extends BaseController
@@ -50,7 +48,7 @@ class BrowseController extends BaseController
      *          "tag" = null,
      *      }
      * )
-     * @Template("FuzAppBundle:Browse:results.html.twig")
+     * @Template()
      */
     public function searchAction(Request $request, $tag)
     {
@@ -62,7 +60,6 @@ class BrowseController extends BaseController
         }
 
         $fiddles = $this->get('app.search_fiddle')->search($data, $this->getUser());
-        $forms = $this->createBookmarkFormsFromFiddles($fiddles);
 
         $list_left = $list_right = array ();
         foreach ($fiddles as $key => $fiddle)
@@ -80,8 +77,6 @@ class BrowseController extends BaseController
         return array (
                 'tag' => $tag,
                 'filters' => $filters->createView(),
-                'forms' => $forms,
-                'data' => $data,
                 'list_left' => $list_left,
                 'list_right' => $list_right,
         );
@@ -100,34 +95,37 @@ class BrowseController extends BaseController
     }
 
     /**
-     * Yes. That's a hack.
+     * Runs a fiddle
      *
-     * We can't use a collection as we'll use FuzAppBundle:Fiddle:save to
-     * update a bookmark.
-     *
-     * @param array $fiddles
-     * @return array
+     * @Route(
+     *      "/result/{revision}/{hash}",
+     *      name = "result_fiddle",
+     *      requirements = {
+     *          "hash" = "^[a-zA-Z0-9-]{1,16}$",
+     *          "version" = "^\d+$"
+     *      }
+     * )
+     * @Template()
      */
-    protected function createBookmarkFormsFromFiddles(array $fiddles)
+    public function resultAction($hash, $revision)
     {
-        $bookmarkForms = array ();
-        foreach ($fiddles as $key => $fiddle)
+        $fiddle = $this->getFiddle($hash, $revision);
+
+        $bookmark = $this->getUserBookmark($fiddle);
+        if ($bookmark)
         {
-            $bookmarkData = new UserBookmark();
-            $bookmarkData->setTitle($fiddle->getTitle());
-
-            $tags = new ArrayCollection();
-            foreach ($fiddle->getTags() as $fiddleTag)
-            {
-                $tag = new UserBookmarkTag();
-                $tag->setTag($fiddleTag->getTag());
-                $tags->add($tag);
-            }
-            $bookmarkData->setTags($tags);
-
-            $bookmarkForms[$key] = $this->createForm(new UserBookmarkType($key), $bookmarkData)->createView();
+            $fiddle->mapBookmark($bookmark);
         }
-        return $bookmarkForms;
+
+        $bookmarkData = new UserBookmark();
+        $bookmarkData->mapFiddle($fiddle);
+
+        $form = $this->createForm(new UserBookmarkType(), $bookmarkData)->createView();
+
+        return array(
+                'fiddle' => $fiddle,
+                'form' => $form,
+        );
     }
 
 }

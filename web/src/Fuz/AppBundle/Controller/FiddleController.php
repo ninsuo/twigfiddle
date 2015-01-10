@@ -331,22 +331,4 @@ class FiddleController extends BaseController
         return new JsonResponse($response);
     }
 
-    protected function getFiddle($hash, $revision)
-    {
-        return $this
-              ->getDoctrine()
-              ->getRepository('FuzAppBundle:Fiddle')
-              ->getFiddle($hash, $revision, $this->getUser())
-        ;
-    }
-
-    protected function getUserBookmark(Fiddle $fiddle)
-    {
-        return $this
-              ->getDoctrine()
-              ->getRepository('FuzAppBundle:UserBookmark')
-              ->getBookmark($fiddle, $this->getUser())
-        ;
-    }
-
 }

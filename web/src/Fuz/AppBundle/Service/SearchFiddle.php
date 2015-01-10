@@ -8,7 +8,6 @@ use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Query\Expr;
 use Fuz\AppBundle\Entity\Fiddle;
 use Fuz\AppBundle\Entity\User;
-use Fuz\AppBundle\Entity\UserBookmark;
 use Fuz\AppBundle\Entity\BrowseFilters;
 
 class SearchFiddle
@@ -36,7 +35,7 @@ class SearchFiddle
         $qb = $this->em->createQueryBuilder();
 
         $qb
-           ->select('f', 'b')
+           ->select('DISTINCT f.hash, f.revision')
            ->from('Fuz\AppBundle\Entity\Fiddle', 'f')
            ->leftJoin('f.user', 'u')
            ->leftJoin('f.tags', 't')
@@ -67,37 +66,10 @@ class SearchFiddle
         ;
 
         $query = $qb->getQuery();
-        $query->setFetchMode("Fuz\AppBundle\Entity\Fiddle", "tags", \Doctrine\ORM\Mapping\ClassMetadata::FETCH_EAGER);
-        $query->setFetchMode("Fuz\AppBundle\Entity\UserBookmark", "tags", \Doctrine\ORM\Mapping\ClassMetadata::FETCH_EAGER);
-        $query->setMaxResults(100);
-        $array = $query->getResult();
+        $query->setMaxResults(10);
+        $array = $query->getArrayResult();
 
-        return $this->arrange($array);
-    }
-
-    protected function arrange(array $list)
-    {
-        $fiddles = array ();
-
-        foreach ($list as $row)
-        {
-            if (is_null($row))
-            {
-                continue;
-            }
-
-            if ($row instanceof Fiddle)
-            {
-                $fiddles[$row->getId()] = $row;
-            }
-
-            if ($row instanceof UserBookmark)
-            {
-                $fiddles[$row->getFiddle()->getId()]->mapBookmark($row);
-            }
-        }
-
-        return array_values($fiddles);
+        return $array;
     }
 
     public function applyKeywordsFilter(BrowseFilters $criteria, QueryBuilder $qb, User $user = null)

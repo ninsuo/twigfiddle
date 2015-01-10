@@ -172,4 +172,20 @@ class UserBookmark implements TagContainerInterface
         return $this->tags;
     }
 
+    public function mapFiddle(Fiddle $fiddle)
+    {
+        $this->setTitle($fiddle->getTitle());
+
+        $tags = new ArrayCollection();
+        foreach ($fiddle->getTags() as $fiddleTag)
+        {
+            $tag = new UserBookmarkTag();
+            $tag->setTag($fiddleTag->getTag());
+            $tags->add($tag);
+        }
+        $this->setTags($tags);
+
+        return $this;
+    }
+
 }
