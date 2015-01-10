@@ -157,7 +157,7 @@ img {
 .searchbloc {
     padding:10px;
 }
-.searchbloc.bottomline {
+div.bottomline {
     border-bottom:1px solid #f5f5f5;
 }
 .btn-tf-dark {
@@ -300,4 +300,7 @@ div.tagsinput span.tag {
     margin-bottom:5px;
     font-family: helvetica;
     font-size:13px;
+}
+.fiddle-result {
+    height: 180px;
 }

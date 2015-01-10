@@ -3,7 +3,7 @@
 
 {% macro list_fiddles(list) %}
     {% for index, fiddle in list %}
-        <div id="fiddle-{{ fiddle.hash }}-{{ fiddle.revision }}" class="{% if (index + 1) != list|length %}bottomline{% endif %}">
+        <div id="fiddle-{{ fiddle.hash }}-{{ fiddle.revision }}" class="fiddle-result {% if (index + 1) != list|length %}bottomline{% endif %}">
             {{ render(controller('FuzAppBundle:Browse:result', {'hash': fiddle.hash, 'revision': fiddle.revision})) }}
         </div>
     {% endfor %}
