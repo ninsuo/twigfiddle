@@ -9,15 +9,13 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @see Fuz\AppBundle\Controller\BrowseController.php
  */
-class Browse
+class BrowseFilters
 {
 
     /**
-     * @var string
-     *
-     * @Assert\Length(max = 255)
+     * @var array
      */
-    protected $keywords;
+    protected $keywords = array();
 
     /**
      * @var array
@@ -44,8 +42,6 @@ class Browse
 
     /**
      * @var string
-     *
-     * @Assert\Length(max = 255)
      */
     protected $visibility;
 

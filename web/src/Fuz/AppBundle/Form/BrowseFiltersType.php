@@ -5,26 +5,28 @@ namespace Fuz\AppBundle\Form;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Fuz\AppBundle\Transformer\SimpleTagsTransformer;
+use Fuz\AppBundle\Transformer\ArrayTransformer;
 use Fuz\AppBundle\Entity\Fiddle;
 
-class BrowseType extends AbstractType
+class BrowseFiltersType extends AbstractType
 {
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $transformer = new SimpleTagsTransformer();
-
         $builder
-           ->add('keywords', 'text', array(
-                   'required' => false,
-           ))
+           ->add(
+                    $builder
+                        ->create('keywords', 'text', array(
+                                'required' => false,
+                        ))
+                        ->addModelTransformer(new ArrayTransformer(' '))
+           )
            ->add(
                     $builder
                         ->create('tags', 'text', array(
                                 'required' => false,
                         ))
-                        ->addModelTransformer($transformer)
+                        ->addModelTransformer(new ArrayTransformer(','))
            )
            ->add('bookmark', 'checkbox', array(
                    'required' => false,
@@ -45,7 +47,7 @@ class BrowseType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array (
-                'data_class' => 'Fuz\AppBundle\Entity\Browse',
+                'data_class' => 'Fuz\AppBundle\Entity\BrowseFilters',
         ));
     }
 

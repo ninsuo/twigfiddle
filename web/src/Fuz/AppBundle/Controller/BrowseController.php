@@ -5,9 +5,10 @@ namespace Fuz\AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Request;
 use Fuz\AppBundle\Base\BaseController;
-use Fuz\AppBundle\Entity\Browse;
-use Fuz\AppBundle\Form\BrowseType;
+use Fuz\AppBundle\Entity\BrowseFilters;
+use Fuz\AppBundle\Form\BrowseFiltersType;
 
 class BrowseController extends BaseController
 {
@@ -25,9 +26,9 @@ class BrowseController extends BaseController
      * @Method({"GET"})
      * @Template()
      */
-    public function indexAction($tag)
+    public function indexAction(Request $request, $tag)
     {
-        list($data, $form) = $this->createBrowseForm($tag);
+        list($data, $form) = $this->createBrowseForm($request, $tag);
 
         return array (
                 'tag' => $tag,
@@ -48,22 +49,36 @@ class BrowseController extends BaseController
      * )
      * @Template("FuzAppBundle:Browse:results.html.twig")
      */
-    public function searchAction($tag)
+    public function searchAction(Request $request, $tag)
     {
+        list($data, $form) = $this->createBrowseForm($request, $tag);
+
+        $list = array();
+        if ($form->isSubmitted() && !$form->isValid())
+        {
+            $data = new BrowseFilters();
+        }
+
+        $list = $this->get('app.search_fiddle')->search($data, $this->getUser());
+
         return array (
                 'tag' => $tag,
+                'form' => $form->createView(),
+                'data' => $data,
+                'list' => $list,
         );
     }
 
-    protected function createBrowseForm($tag)
+    protected function createBrowseForm(Request $request, $tag)
     {
-        $data = new Browse();
+        $data = new BrowseFilters();
         if (!is_null($tag))
         {
-            $data->setTags(array($tag));
+            $data->setTags(array ($tag));
         }
-        $form = $this->createForm(new BrowseType(), $data);
-        return array($data, $form);
+        $form = $this->createForm(new BrowseFiltersType(), $data);
+        $form->handleRequest($request);
+        return array ($data, $form);
     }
 
 }

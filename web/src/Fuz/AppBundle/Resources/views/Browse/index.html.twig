@@ -21,16 +21,13 @@
 
 {% block content %}
 
-    {{ include('FuzAppBundle:Browse:filters.html.twig') }}
-
-    <div id="result-container">
+    <div id="search-container">
         {{ render(controller('FuzAppBundle:Browse:search', {'tag': tag})) }}
     </div>
 
 {% endblock %}
 
  {% block extra_js %}
-<script type="text/javascript" src="{{ asset('bundles/fuzapp/js/jquery.symfony2.js') }}"></script>
 <script type="text/javascript" src="{{ asset('bundles/fuzapp/js/jquery.domajax.js') }}"></script>
 <script type="text/javascript" src="{{ asset('bundles/fuzapp/jquery-tagsinput/jquery.tagsinput.js') }}"></script>
  {% endblock %}
