@@ -104,10 +104,19 @@
 {% macro me() %}
     {% spaceless %}
         {% if is_granted('ROLE_USER') %}
-            <img class="user-image" src="{{ asset('bundles/fuzapp/img/oauth/' ~ app.user.resourceOwner ~ '-small.png') }}" alt=""/>
-            {{ app.user.username }}
+            {{ _self.user('', app.user) }}
         {% else %}
             Guest
         {% endif %}
     {% endspaceless %}
+{% endmacro %}
+
+{% macro user(prefix, user) %}
+    {%- spaceless %}
+        {% if user != null %}
+            {{ prefix }}
+           <img class="user-image" src="{{ asset('bundles/fuzapp/img/oauth/' ~ user.resourceOwner ~ '-small.png') }}" alt=""/>
+           {{ user.username }}
+        {% endif %}
+    {% endspaceless -%}
 {% endmacro %}

@@ -517,6 +517,20 @@ class Fiddle implements TagContainerInterface
         }
     }
 
+    public function mapBookmark(UserBookmark $bookmark)
+    {
+        $this->setTitle($bookmark->getTitle());
+        $collection = new ArrayCollection();
+        foreach ($bookmark->getTags() as $tag)
+        {
+            $tagObj = new FiddleTag();
+            $tagObj->setTag($tag->getTag());
+            $collection->add($tagObj);
+        }
+        $this->setTags($collection);
+        return $this;
+    }
+
     public function __clone()
     {
         if ($this->context)

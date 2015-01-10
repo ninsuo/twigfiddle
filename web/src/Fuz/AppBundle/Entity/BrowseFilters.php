@@ -3,6 +3,7 @@
 namespace Fuz\AppBundle\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * Entity used by the fiddle's browser filters form.
@@ -29,14 +30,14 @@ class BrowseFilters
     /**
      * @var bool
      *
-     * @Choice(choices = {0, 1})
+     * @Assert\Choice(choices = {0, 1})
      */
     protected $bookmark;
 
     /**
      * @var bool
      *
-     * @Choice(choices = {0, 1})
+     * @Assert\Choice(choices = {0, 1})
      */
     protected $mine;
 

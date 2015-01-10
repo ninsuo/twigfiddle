@@ -2,23 +2,23 @@
 {# Included by: FuzAppBundle:Browse:index.html.twig #}
 
 {{
-    form_start(form, {
+    form_start(filters, {
         'attr': {
-            'id': form.vars.id,
+            'id': filters.vars.id,
             'class': 'form-inline',
             'role': 'form',
         }
     })
 }}
 
-{% macro display_submit(form) %}
+{% macro display_submit(filters) %}
 
     <button
         type="submit"
         class="btn btn-default domajax click"
         data-endpoint="{{ path('search') }}"
-        data-input="#{{ form.vars.id }}"
-        data-lock="#{{ form.vars.id }}"
+        data-input="#{{ filters.vars.id }}"
+        data-lock="#{{ filters.vars.id }}"
         data-output="#search-container"
         data-replace="#result-container"
         data-replace-by="#wait"
@@ -37,14 +37,14 @@
         <div class="form-group">
             <label class="sr-only">search for...</label>
             {{
-                form_widget(form.keywords, {
+                form_widget(filters.keywords, {
                     'attr': {
                         'placeholder': 'Search for...',
                     }
                 })
             }}
         </div>
-        {{ _self.display_submit(form) }}
+        {{ _self.display_submit(filters) }}
     </div>
 
     {# Tags filter #}
@@ -56,7 +56,7 @@
         <div class="form-group tags">
             <label class="sr-only">Filter Tags...</label>
             {{
-                form_widget(form.tags, {
+                form_widget(filters.tags, {
                     'attr': {
                         'placeholder': 'Filter tags...',
                         'class': 'tags-input',
@@ -64,7 +64,7 @@
                 })
             }}
         </div>
-        {{ _self.display_submit(form) }}
+        {{ _self.display_submit(filters) }}
     </div>
 
     <div class="clearfix hidden-md hidden-lg">&nbsp;</div>
@@ -74,9 +74,9 @@
         {# Search ticks #}
         <div class="col-md-3 col-sm-6 col-xs-12">
 
-            <label class="checkbox-inline" for="{{ form.mine.vars.id }}">
+            <label class="checkbox-inline" for="{{ filters.mine.vars.id }}">
                 {{
-                    form_widget(form.mine, {
+                    form_widget(filters.mine, {
                         'attr': {
                             'aria-label': 'Search my fiddles',
                         }
@@ -85,9 +85,9 @@
                 Search my fiddles
             </label>
 
-            <label class="checkbox-inline" for="{{ form.bookmark.vars.id }}">
+            <label class="checkbox-inline" for="{{ filters.bookmark.vars.id }}">
                 {{
-                    form_widget(form.bookmark, {
+                    form_widget(filters.bookmark, {
                         'attr': {
                             'aria-label': 'Search in bookmarks',
                         }
@@ -106,19 +106,19 @@
             </div>
             <div class="form-group">
                 <label class="sr-only">Fiddle's visibility</label>
-                {{ form_widget(form.visibility) }}
+                {{ form_widget(filters.visibility) }}
             </div>
-            {{ _self.display_submit(form) }}
+            {{ _self.display_submit(filters) }}
         </div>
 
     {% else %}
 
         <div class="hide">
-            {{ form_rest(form) }}
+            {{ form_rest(filters) }}
         </div>
 
     {% endif %}
 
 </div>
 
-{{ form_end(form) }}
+{{ form_end(filters) }}

@@ -53,7 +53,7 @@ class BrowseFiltersType extends AbstractType
 
     public function getName()
     {
-        return 'BrowseType';
+        return 'BrowseFiltersType';
     }
 
 }

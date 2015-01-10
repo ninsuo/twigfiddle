@@ -1,16 +1,22 @@
 {# FuzAppBundle:Browse:results.html.twig #}
 {# Rendered by: FuzAppBundle:Browse:search #}
 
-<div class="filters-container">
-    {{ include('FuzAppBundle:Browse:filters.html.twig') }}
-</div>
+{% extends 'FuzAppBundle::base-ajax.html.twig' %}
 
-<div class="result-container">
+{% block content %}
 
-    {{ include('FuzAppBundle:Browse:fiddles.html.twig') }}
+    <div class="filters-container">
+        {{ include('FuzAppBundle:Browse:filters.html.twig') }}
+    </div>
 
-    <div class="clear">&nbsp;</div>
+    <div class="result-container">
 
-    {{ include('FuzAppBundle:Browse:pagination.html.twig') }}
+        {{ include('FuzAppBundle:Browse:fiddles.html.twig') }}
 
-</div>
+        <div class="clear">&nbsp;</div>
+
+        {{ include('FuzAppBundle:Browse:pagination.html.twig') }}
+
+    </div>
+
+{% endblock %}

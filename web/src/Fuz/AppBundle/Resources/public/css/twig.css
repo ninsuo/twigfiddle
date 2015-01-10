@@ -8,6 +8,7 @@
 4. RESPONSIVE FIX
 5. LOGIN
 6. FIDDLE
+7. BROWSER
 */
 
 /******************************************************/
@@ -145,6 +146,8 @@ img {
 }
 .searchbloc {
     padding:10px;
+}
+.searchbloc.bottomline {
     border-bottom:1px solid #f5f5f5;
 }
 .btn-tf-dark {
@@ -263,7 +266,13 @@ div.tagsinput span.tag {
     overflow-x: hidden;
     overflow-y: hidden;
 }
-
 .tags .tagsinput input {
     width:100px !important;
+}
+/******************************************************/
+/************** BROWSER ********************/
+/******************************************************/
+.unavailable {
+    color:#999;
+    font-style:italic;
 }

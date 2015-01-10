@@ -1,170 +1,59 @@
 {# FuzAppBundle:Browse:fiddles.html.twig #}
 {# Included by: FuzAppBundle:Browse:results.html.twig #}
 
-<!-- Start Content -->
+{% macro display_fiddles(macros, list) %}
+    {% for index, fiddle in list %}
+
+        <div class="row searchbloc {% if (index + 1) != list|length %}bottomline{% endif %}">
+            <div class="col-md-12">
+                <p>
+                    Fiddle
+                    <a href="{{ path('fiddle', {'hash': fiddle.hash, 'revision': fiddle.revision}) }}" class="green">{{ fiddle.hash }} {% if fiddle.revision > 1 %}v{{ fiddle.revision }}{% endif %}</a>
+                    created on {{ fiddle.creationTm|date }}
+                    {% if is_granted('ROLE_USER') and fiddle.user|default(null) and app.user.isEqualTo(fiddle.user) %}by <i>yourself</i>{% else %}{{ macros.user('by', fiddle.user|default(null)) }}{% endif %}
+                </p>
+                <p>
+                    {% if fiddle.title|length > 0 %}
+                        {{ fiddle.title }}
+                    {% else %}
+                        <span class="unavailable">(No title)</span>
+                    {% endif %}
+                </p>
+                <p>
+                    Visited {{ fiddle.visitsCount }} time{% if fiddle.visitsCount != 1 %}s{% endif %}{% if fiddle.visitsCount > 0 %}, last one on  {{ fiddle.updateTm|date }}{% endif %}
+                </p>
+                <p>
+                    <input class="form-control tags-input" id="" placeholder="..." value="">
+                </p>
+            </div>
+            <div class="col-md-6 col-sm-7 col-xs-6">
+                <input class="form-control" id="" placeholder="...">
+            </div>
+            <div class="col-md-3 col-sm-2 col-xs-3">
+                <button type="button" class="btn btn-warning"><span class="glyphicon glyphicon-folder-open hidden-md hidden-sm hidden-xs"></span> Open Fiddle</button>
+            </div>
+            <div class="col-md-3 col-sm-2 col-xs-3">
+                <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-star"></span></button>
+                <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span></button>
+            </div>
+        </div>
+
+    {% endfor %}
+{% endmacro %}
+
 <div class="row" id="result">
 
-    <!-- Start Left Col -->
+    {# Left side #}
     <div class="col-md-6">
-        <div class="row searchbloc">
-            <div class="col-md-12">
-                <p>This fiddle generates an autocomplete plugin adaptable to Sympfony2</p>
-            </div>
-            <div class="col-md-6 col-sm-7 col-xs-6">
-                <input class="form-control" id="" placeholder="...">
-            </div>
-            <div class="col-md-3 col-sm-2 col-xs-3">
-                <button type="button" class="btn btn-warning"><span class="glyphicon glyphicon-folder-open hidden-md hidden-sm hidden-xs"></span> Open Fiddle</button>
-            </div>
-            <div class="col-md-3 col-sm-2 col-xs-3">
-                <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-star"></span></button>
-                <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span></button>
-            </div>
-        </div>
-        <div class="row searchbloc">
-            <div class="col-md-12">
-                <p>This fiddle generates an autocomplete plugin adaptable to Sympfony2</p>
-            </div>
-            <div class="col-md-6 col-sm-7 col-xs-6">
-                <input class="form-control" id="" placeholder="...">
-            </div>
-            <div class="col-md-3 col-sm-2 col-xs-3">
-                <button type="button" class="btn btn-warning"><span class="glyphicon glyphicon-folder-open hidden-md hidden-sm hidden-xs"></span> Open Fiddle</button>
-            </div>
-            <div class="col-md-3 col-sm-2 col-xs-3">
-                <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-star"></span></button>
-                <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span></button>
-            </div>
-        </div>
-        <div class="row searchbloc">
-            <div class="col-md-12">
-                <p>This fiddle generates an autocomplete plugin adaptable to Sympfony2</p>
-            </div>
-            <div class="col-md-6 col-sm-7 col-xs-6">
-                <input class="form-control" id="" placeholder="...">
-            </div>
-            <div class="col-md-3 col-sm-2 col-xs-3">
-                <button type="button" class="btn btn-warning"><span class="glyphicon glyphicon-folder-open hidden-md hidden-sm hidden-xs"></span> Open Fiddle</button>
-            </div>
-            <div class="col-md-3 col-sm-2 col-xs-3">
-                <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-star"></span></button>
-                <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span></button>
-            </div>
-        </div>
-        <div class="row searchbloc">
-            <div class="col-md-12">
-                <p>This fiddle generates an autocomplete plugin adaptable to Sympfony2</p>
-            </div>
-            <div class="col-md-6 col-sm-7 col-xs-6">
-                <input class="form-control" id="" placeholder="...">
-            </div>
-            <div class="col-md-3 col-sm-2 col-xs-3">
-                <button type="button" class="btn btn-warning"><span class="glyphicon glyphicon-folder-open hidden-md hidden-sm hidden-xs"></span> Open Fiddle</button>
-            </div>
-            <div class="col-md-3 col-sm-2 col-xs-3">
-                <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-star"></span></button>
-                <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span></button>
-            </div>
-        </div>
-        <div class="row searchbloc">
-            <div class="col-md-12">
-                <p>This fiddle generates an autocomplete plugin adaptable to Sympfony2</p>
-            </div>
-            <div class="col-md-6 col-sm-7 col-xs-6">
-                <input class="form-control" id="" placeholder="...">
-            </div>
-            <div class="col-md-3 col-sm-2 col-xs-3">
-                <button type="button" class="btn btn-warning"><span class="glyphicon glyphicon-folder-open hidden-md hidden-sm hidden-xs"></span> Open Fiddle</button>
-            </div>
-            <div class="col-md-3 col-sm-2 col-xs-3">
-                <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-star"></span></button>
-                <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span></button>
-            </div>
-        </div>
+        {{ _self.display_fiddles(macros, list_left) }}
     </div>
-    <!-- End Left Col -->
 
     <div class="clearfix hidden-md hidden-lg">&nbsp;</div>
 
-    <!-- Start Right Col -->
+    {# Right side #}
     <div class="col-md-6">
-        <div class="row searchbloc">
-            <div class="col-md-12">
-                <p>This fiddle generates an autocomplete plugin adaptable to Sympfony2</p>
-            </div>
-            <div class="col-md-6 col-sm-7 col-xs-6">
-                <input class="form-control" id="" placeholder="...">
-            </div>
-            <div class="col-md-3 col-sm-2 col-xs-3">
-                <button type="button" class="btn btn-warning"><span class="glyphicon glyphicon-folder-open hidden-md hidden-sm hidden-xs"></span> Open Fiddle</button>
-            </div>
-            <div class="col-md-3 col-sm-2 col-xs-3">
-                <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-star"></span></button>
-                <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span></button>
-            </div>
-        </div>
-        <div class="row searchbloc">
-            <div class="col-md-12">
-                <p>This fiddle generates an autocomplete plugin adaptable to Sympfony2</p>
-            </div>
-            <div class="col-md-6 col-sm-7 col-xs-6">
-                <input class="form-control" id="" placeholder="...">
-            </div>
-            <div class="col-md-3 col-sm-2 col-xs-3">
-                <button type="button" class="btn btn-warning"><span class="glyphicon glyphicon-folder-open hidden-md hidden-sm hidden-xs"></span> Open Fiddle</button>
-            </div>
-            <div class="col-md-3 col-sm-2 col-xs-3">
-                <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-star"></span></button>
-                <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span></button>
-            </div>
-        </div>
-        <div class="row searchbloc">
-            <div class="col-md-12">
-                <p>This fiddle generates an autocomplete plugin adaptable to Sympfony2</p>
-            </div>
-            <div class="col-md-6 col-sm-7 col-xs-6">
-                <input class="form-control" id="" placeholder="...">
-            </div>
-            <div class="col-md-3 col-sm-2 col-xs-3">
-                <button type="button" class="btn btn-warning"><span class="glyphicon glyphicon-folder-open hidden-md hidden-sm hidden-xs"></span> Open Fiddle</button>
-            </div>
-            <div class="col-md-3 col-sm-2 col-xs-3">
-                <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-star"></span></button>
-                <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span></button>
-            </div>
-        </div>
-        <div class="row searchbloc">
-            <div class="col-md-12">
-                <p>This fiddle generates an autocomplete plugin adaptable to Sympfony2</p>
-            </div>
-            <div class="col-md-6 col-sm-7 col-xs-6">
-                <input class="form-control" id="" placeholder="...">
-            </div>
-            <div class="col-md-3 col-sm-2 col-xs-3">
-                <button type="button" class="btn btn-warning"><span class="glyphicon glyphicon-folder-open hidden-md hidden-sm hidden-xs"></span> Open Fiddle</button>
-            </div>
-            <div class="col-md-3 col-sm-2 col-xs-3">
-                <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-star"></span></button>
-                <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span></button>
-            </div>
-        </div>
-        <div class="row searchbloc">
-            <div class="col-md-12">
-                <p>This fiddle generates an autocomplete plugin adaptable to Sympfony2</p>
-            </div>
-            <div class="col-md-6 col-sm-7 col-xs-6">
-                <input class="form-control" id="" placeholder="...">
-            </div>
-            <div class="col-md-3 col-sm-2 col-xs-3">
-                <button type="button" class="btn btn-warning"><span class="glyphicon glyphicon-folder-open hidden-md hidden-sm hidden-xs"></span> Open Fiddle</button>
-            </div>
-            <div class="col-md-3 col-sm-2 col-xs-3">
-                <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-star"></span></button>
-                <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span></button>
-            </div>
-        </div>
+        {{ _self.display_fiddles(macros, list_right) }}
     </div>
-    <!-- End Right Col -->
 
 </div>
-<!-- End Content -->
+

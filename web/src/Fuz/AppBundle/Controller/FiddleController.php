@@ -272,7 +272,7 @@ class FiddleController extends BaseController
         $bookmark = $this->getUserBookmark($fiddle);
         if ($bookmark)
         {
-            $this->mapBookmarkToFiddle($fiddle, $bookmark);
+            $fiddle->mapBookmark($bookmark);
         }
 
         $form = $this->createForm('FiddleType', $fiddle);
@@ -349,19 +349,6 @@ class FiddleController extends BaseController
               ->getRepository('FuzAppBundle:UserBookmark')
               ->getBookmark($fiddle, $this->getUser())
         ;
-    }
-
-    protected function mapBookmarkToFiddle(Fiddle $fiddle, UserBookmark $bookmark)
-    {
-        $fiddle->setTitle($bookmark->getTitle());
-        $collection = new ArrayCollection();
-        foreach ($bookmark->getTags() as $tag)
-        {
-            $tagObj = new FiddleTag();
-            $tagObj->setTag($tag->getTag());
-            $collection->add($tagObj);
-        }
-        $fiddle->setTags($collection);
     }
 
 }
