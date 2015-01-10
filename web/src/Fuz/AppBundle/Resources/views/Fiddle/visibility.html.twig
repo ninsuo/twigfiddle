@@ -7,33 +7,6 @@
 
 {% if is_granted('ROLE_USER') %}
 
-    {% set public = constant('Fuz\\AppBundle\\Entity\\Fiddle::VISIBILITY_PUBLIC') %}
-    {% set unlisted = constant('Fuz\\AppBundle\\Entity\\Fiddle::VISIBILITY_UNLISTED') %}
-    {% set private = constant('Fuz\\AppBundle\\Entity\\Fiddle::VISIBILITY_PRIVATE') %}
-
-    {%
-        set visibilities = {
-            (public): {
-                'value': public,
-                'label': 'Public',
-                'color': 'success',
-                'glyphicon': 'glyphicon-eye-open',
-            },
-            (unlisted): {
-                'value': unlisted,
-                'label': 'Unlisted',
-                'color': 'warning',
-                'glyphicon': 'glyphicon-eye-close',
-            },
-            (private): {
-                'value': private,
-                'label': 'Private',
-                'color': 'danger',
-                'glyphicon': 'glyphicon-lock',
-            },
-        }
-    %}
-
     {% from _self import button %}
     {% macro button(visibility, action, data) %}
 

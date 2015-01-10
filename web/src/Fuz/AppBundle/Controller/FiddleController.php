@@ -2,7 +2,6 @@
 
 namespace Fuz\AppBundle\Controller;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,7 +11,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Fuz\AppBundle\Base\BaseController;
 use Fuz\AppBundle\Entity\Fiddle;
-use Fuz\AppBundle\Entity\FiddleTag;
 use Fuz\AppBundle\Entity\UserBookmark;
 use Fuz\AppBundle\Form\UserBookmarkType;
 
@@ -96,7 +94,7 @@ class FiddleController extends BaseController
             $bookmark = $this->getUserBookmark($fiddle);
             if ($bookmark)
             {
-                return $this->saveUserBookmark($request, $bookmark);
+                return $this->saveUserBookmark($request, $hash, $revision, $bookmark);
             }
         }
 
@@ -192,10 +190,10 @@ class FiddleController extends BaseController
         $new->setUser($user);
         $new->setFiddle($fiddle);
 
-        return $this->saveUserBookmark($request, $new);
+        return $this->saveUserBookmark($request, $hash, $revision, $new);
     }
 
-    protected function saveUserBookmark(Request $request, UserBookmark $bookmark)
+    protected function saveUserBookmark(Request $request, $hash, $revision, UserBookmark $bookmark)
     {
         $response = array (
                 'isBookmarked' => false

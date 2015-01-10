@@ -1,5 +1,6 @@
 {# FuzAppBundle:Fiddle:bookmark.html.twig #}
 {# Included by: FuzAppBundle:Fiddle:index.html.twig #}
+{# Included by: FuzAppBundle:Browse:fiddles.html.twig #}
 
 {% if is_granted('ROLE_USER') and data.id and app.user != data.user %}
 
@@ -15,6 +16,7 @@
         data-lock=""
     >
         <span class="glyphicon glyphicon {% if bookmark %}glyphicon-star{% else %}glyphicon-star-empty{% endif %}"></span>
+        {{ label|default('') }}
     </button>
 
 {% endif %}

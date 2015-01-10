@@ -26,11 +26,13 @@ class FiddleType extends AbstractType
         $transformer = new FiddleTagTransformer($options['data_object']);
 
         $builder
-           ->add('twigVersion', 'choice', array(
+           ->add('twigVersion', 'choice',
+              array (
                    'choices' => array_combine($this->twigVersions, $this->twigVersions),
                    'required' => true,
            ))
-           ->add('templates', 'collection', array(
+           ->add('templates', 'collection',
+              array (
                    'type' => new FiddleTemplateType(),
                    'allow_add' => true,
                    'allow_delete' => true,
@@ -39,24 +41,26 @@ class FiddleType extends AbstractType
                    'by_reference' => false,
                    'required' => false,
            ))
-           ->add('context', new FiddleContextType(), array(
+           ->add('context', new FiddleContextType(), array (
                    'required' => false,
            ))
-           ->add('title', 'text', array(
+           ->add('title', 'text', array (
                    'required' => false,
            ))
            ->add(
-                    $builder
-                        ->create('tags', 'text', array(
-                                'required' => false,
-                        ))
-                        ->addModelTransformer($transformer)
+              $builder
+              ->create('tags', 'text',
+                 array (
+                      'required' => false,
+              ))
+              ->addModelTransformer($transformer)
            )
-           ->add('visibility', 'choice', array(
-                   'choices' => array(
-                        Fiddle::VISIBILITY_PUBLIC => 1,
-                        Fiddle::VISIBILITY_UNLISTED => 2,
-                        Fiddle::VISIBILITY_PRIVATE => 3,
+           ->add('visibility', 'choice',
+              array (
+                   'choices' => array (
+                           Fiddle::VISIBILITY_PUBLIC => 1,
+                           Fiddle::VISIBILITY_UNLISTED => 2,
+                           Fiddle::VISIBILITY_PRIVATE => 3,
                    )
            ))
         ;

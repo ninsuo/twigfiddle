@@ -15,15 +15,16 @@ class UserBookmarkType extends AbstractType
         $transformer = new UserBookmarkTagTransformer($options['data_object']);
 
         $builder
-           ->add('title', 'text', array(
+           ->add('title', 'text', array (
                    'required' => false,
            ))
            ->add(
-                    $builder
-                        ->create('tags', 'text', array(
-                                'required' => false,
-                        ))
-                        ->addModelTransformer($transformer)
+              $builder
+              ->create('tags', 'text',
+                 array (
+                      'required' => false,
+              ))
+              ->addModelTransformer($transformer)
            )
         ;
     }

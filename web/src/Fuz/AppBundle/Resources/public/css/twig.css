@@ -33,6 +33,16 @@ html, body {
 html.error, body.error {
     background: #ffffff;
 }
+.error-message {
+    background-color: #f2dede;
+    color: red;
+    border: 1px solid darkred;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    text-align: center;
+}
 body {
     font-family: 'Archivo Narrow', verdana, sans-serif;
 }
@@ -275,4 +285,19 @@ div.tagsinput span.tag {
 .unavailable {
     color:#999;
     font-style:italic;
+}
+.static-tag {
+    border: 1px solid #a5d24a;
+    -moz-border-radius:2px;
+    -webkit-border-radius:2px;
+    display: block;
+    float: left;
+    padding: 5px;
+    text-decoration:none;
+    background: #cde69c;
+    color: #638421;
+    margin-right: 5px;
+    margin-bottom:5px;
+    font-family: helvetica;
+    font-size:13px;
 }

@@ -402,7 +402,7 @@ function processBookmarkFiddleResponse(elem, response)
  #  Used in FuzAppBundle:Fiddle:index.html.twig
  #}
 function handleAjaxErrors(elem, errorThrown) {
-    $('#general-errors').html("We're sorry, but an error occured...");
+    $('#general-errors').html('<p class="error-message error">We\'re sorry, but an error occured...</p>');
 };
 
 {#

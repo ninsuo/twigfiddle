@@ -2,6 +2,7 @@
 
 namespace Fuz\AppBundle\Controller;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -9,8 +10,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Fuz\AppBundle\Base\BaseController;
 use Fuz\AppBundle\Entity\BrowseFilters;
 use Fuz\AppBundle\Form\BrowseFiltersType;
-use Fuz\AppBundle\Entity\BrowseFiddle;
-use Fuz\AppBundle\Form\BrowseFiddleType;
+use Fuz\AppBundle\Entity\UserBookmark;
+use Fuz\AppBundle\Entity\UserBookmarkTag;
+use Fuz\AppBundle\Form\UserBookmarkType;
 
 class BrowseController extends BaseController
 {
@@ -60,7 +62,7 @@ class BrowseController extends BaseController
         }
 
         $fiddles = $this->get('app.search_fiddle')->search($data, $this->getUser());
-        $forms = $this->createBrowseFormsFromFiddles($fiddles);
+        $forms = $this->createBookmarkFormsFromFiddles($fiddles);
 
         $list_left = $list_right = array ();
         foreach ($fiddles as $key => $fiddle)
@@ -97,22 +99,35 @@ class BrowseController extends BaseController
         return array ($data, $filters);
     }
 
-    protected function createBrowseFormsFromFiddles(array $fiddles)
+    /**
+     * Yes. That's a hack.
+     *
+     * We can't use a collection as we'll use FuzAppBundle:Fiddle:save to
+     * update a bookmark.
+     *
+     * @param array $fiddles
+     * @return array
+     */
+    protected function createBookmarkFormsFromFiddles(array $fiddles)
     {
-        $fiddleForms = array ();
+        $bookmarkForms = array ();
         foreach ($fiddles as $key => $fiddle)
         {
-            $fiddleData = new BrowseFiddle();
-            $fiddleData->setTitle($fiddle->getTitle());
-            $tags = array ();
-            foreach ($fiddle->getTags() as $tag)
+            $bookmarkData = new UserBookmark();
+            $bookmarkData->setTitle($fiddle->getTitle());
+
+            $tags = new ArrayCollection();
+            foreach ($fiddle->getTags() as $fiddleTag)
             {
-                $tags[] = $tag->getTag();
+                $tag = new UserBookmarkTag();
+                $tag->setTag($fiddleTag->getTag());
+                $tags->add($tag);
             }
-            $fiddleData->setTags($tags);
-            $fiddleForms[$key] = $this->createForm(new BrowseFiddleType($key), $fiddleData)->createView();
+            $bookmarkData->setTags($tags);
+
+            $bookmarkForms[$key] = $this->createForm(new UserBookmarkType($key), $bookmarkData)->createView();
         }
-        return $fiddleForms;
+        return $bookmarkForms;
     }
 
 }

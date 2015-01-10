@@ -1,58 +1,141 @@
 {# FuzAppBundle:Browse:fiddles.html.twig #}
 {# Included by: FuzAppBundle:Browse:results.html.twig #}
 
-{% macro display_fiddles(macros, list) %}
-    {% for index, fiddle in list %}
+{% set public = constant('Fuz\\AppBundle\\Entity\\Fiddle::VISIBILITY_PUBLIC') %}
+{% set unlisted = constant('Fuz\\AppBundle\\Entity\\Fiddle::VISIBILITY_UNLISTED') %}
+{% set private = constant('Fuz\\AppBundle\\Entity\\Fiddle::VISIBILITY_PRIVATE') %}
 
-        <div class="row searchbloc {% if (index + 1) != list|length %}bottomline{% endif %}">
-            <div class="col-md-12">
-                <p>
-                    Fiddle
-                    <a href="{{ path('fiddle', {'hash': fiddle.hash, 'revision': fiddle.revision}) }}" class="green">{{ fiddle.hash }} {% if fiddle.revision > 1 %}v{{ fiddle.revision }}{% endif %}</a>
-                    created on {{ fiddle.creationTm|date }}
-                    {% if is_granted('ROLE_USER') and fiddle.user|default(null) and app.user.isEqualTo(fiddle.user) %}by <i>yourself</i>{% else %}{{ macros.user('by', fiddle.user|default(null)) }}{% endif %}
-                </p>
-                <p>
+{%
+    set visibilities = {
+        (public): {
+            'label': 'Public',
+            'color': 'success',
+        },
+        (unlisted): {
+            'label': 'Unlisted',
+            'color': 'warning',
+        },
+        (private): {
+            'label': 'Private',
+            'color': 'danger',
+        },
+    }
+%}
+
+{% macro display_fiddles(macros, visibilities, index, fiddle, form, count) %}
+
+    {% set isMyFiddle = (is_granted('ROLE_USER') and fiddle.user|default(null) and app.user.isEqualTo(fiddle.user)) %}
+
+    <div class="row searchbloc {% if (index + 1) != count %}bottomline{% endif %}">
+        {{ form_start(form) }}
+        <div class="col-md-12">
+
+            {# General #}
+            <p>
+                {% if is_granted('ROLE_USER') %}
+                    <span class="label label-{{ visibilities[fiddle.visibility].color}}">{{ visibilities[fiddle.visibility].label|lower }}</span>
+                {% endif %}
+                Fiddle
+                <a href="{{ path('fiddle', {'hash': fiddle.hash, 'revision': fiddle.revision}) }}" class="green">{{ fiddle.hash }} {% if fiddle.revision > 1 %}v{{ fiddle.revision }}{% endif %}</a>
+                created on {{ fiddle.creationTm|date }}
+                {% if isMyFiddle %}by <i>yourself</i>{% else %}{{ macros.user('by', fiddle.user|default(null)) }}{% endif %}
+            </p>
+
+            {# Title #}
+            <div>
+                <p id="ro-{{ form.title.vars.id ~ '-' ~ index }}">
                     {% if fiddle.title|length > 0 %}
                         {{ fiddle.title }}
                     {% else %}
                         <span class="unavailable">(No title)</span>
                     {% endif %}
                 </p>
-                <p>
-                    Visited {{ fiddle.visitsCount }} time{% if fiddle.visitsCount != 1 %}s{% endif %}{% if fiddle.visitsCount > 0 %}, last one on  {{ fiddle.updateTm|date }}{% endif %}
+                <p id="input-{{ form.title.vars.id ~ '_' ~ index }}" class="hidde">
+                    {{
+                        form_widget(form.title, {
+                            'id': form.title.vars.id ~ '_' ~ index,
+                        })
+                    }}
                 </p>
-                <p>
-                    <input class="form-control tags-input" id="" placeholder="..." value="">
+            </div>
+
+            {# Tags #}
+            <div>
+                <p id="ro-{{ form.tags.vars.id ~ '_' ~ index }}" class="{% if fiddle.tags|length == 0 %}hide{% endif %}">
+                    {% for tag in fiddle.tags %}
+                        <span class="static-tag"><span>{{ tag.tag }}</span></span>
+                    {% endfor %}
+                </p>
+                <p id="input-{{ form.tags.vars.id ~ '_' ~ index }}" class="hidde tags">
+                    {{
+                        form_widget(form.tags, {
+                            'attr': {
+                                'class': 'tags-input',
+                             },
+                             'id': form.tags.vars.id ~ '_' ~ index,
+                        })
+                    }}
                 </p>
             </div>
-            <div class="col-md-6 col-sm-7 col-xs-6">
-                <input class="form-control" id="" placeholder="...">
-            </div>
-            <div class="col-md-3 col-sm-2 col-xs-3">
-                <button type="button" class="btn btn-warning"><span class="glyphicon glyphicon-folder-open hidden-md hidden-sm hidden-xs"></span> Open Fiddle</button>
-            </div>
-            <div class="col-md-3 col-sm-2 col-xs-3">
-                <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-star"></span></button>
-                <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span></button>
-            </div>
+
+             {# Visits #}
+            <p class="clear">
+                Visited {{ fiddle.visitsCount }} time{% if fiddle.visitsCount != 1 %}s{% endif %}{% if fiddle.visitsCount > 0 %}, last one on  {{ fiddle.updateTm|date }}{% endif %}
+            </p>
+
         </div>
 
-    {% endfor %}
+         <div class="col-md-12">
+
+             {{
+                include('FuzAppBundle:Fiddle:bookmark.html.twig', {
+                    'data': fiddle,
+                    'bookmark': null,
+                    'hash': fiddle.hash,
+                    'revision': fiddle.revision,
+                    'label': true ? 'Bookmark' : 'Unbookmark',
+                })
+             }}
+
+             <a class="btn btn-tf-dark" href="{{ path('fiddle', {'hash': fiddle.hash, 'revision': fiddle.revision}) }}">
+               <span class="glyphicon glyphicon glyphicon-pencil hidden-md hidden-sm hidden-xs"></span>
+               Edit
+            </a>
+
+             {% if is_granted('ROLE_USER') and isMyFiddle == false %}
+              <a class="btn btn-tf-dark" href="{{ path('save_fiddle', {'hash': fiddle.hash, 'revision': fiddle.revision}) }}">
+                <span class="glyphicon glyphicon glyphicon-floppy-disk hidden-md hidden-sm hidden-xs"></span>
+                Save
+             </a>
+             {% endif %}
+
+             <a class="btn btn-tf-dark" href="{{ path('fiddle', {'hash': fiddle.hash, 'revision': fiddle.revision}) }}">
+               <span class="glyphicon glyphicon glyphicon-folder-open hidden-md hidden-sm hidden-xs"></span>
+               Open
+            </a>
+
+         </div>
+         {{ form_end(form) }}
+    </div>
+
 {% endmacro %}
 
 <div class="row" id="result">
 
     {# Left side #}
     <div class="col-md-6">
-        {{ _self.display_fiddles(macros, list_left) }}
+        {% for index, fiddle in list_left %}
+            {{ _self.display_fiddles(macros, visibilities, index, fiddle, forms[index], forms|length) }}
+        {% endfor %}
     </div>
 
     <div class="clearfix hidden-md hidden-lg">&nbsp;</div>
 
     {# Right side #}
     <div class="col-md-6">
-        {{ _self.display_fiddles(macros, list_right) }}
+        {% for index, fiddle in list_right %}
+            {{ _self.display_fiddles(macros, visibilities, index, fiddle, forms[index]) }}
+        {% endfor %}
     </div>
 
 </div>
