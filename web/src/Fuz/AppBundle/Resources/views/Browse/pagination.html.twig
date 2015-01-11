@@ -1,24 +1,27 @@
 {# FuzAppBundle:Browse:pagination.html.twig #}
 {# Included by: FuzAppBundle:Browse:search.html.twig #}
 
-<div class="row" id="footernav">
-    <div class="col-md-4 col-sm-6 col-xs-6">
-        <p>Fiddles per page <a href="#">10</a> <a href="#">20</a> <a href="#">30</a> <a href="#">50</a> <a href="#">100</a></p>
-    </div>
-    <div class="col-md-4 col-sm-6 col-xs-6 text-center">
-        <p>153 Results</p>
-    </div>
-    <div class="col-md-4  col-sm-12 col-xs-12 text-right">
-        <form class="form-inline" role="form">
-            <div class="form-group">
-                <label class="sr-only">Go to page</label>
-                <p class="form-control-static">Go to page</p>
-            </div>
-            <div class="form-group">
-                <label class="sr-only"></label>
-                <input class="form-control" id="" placeholder="...">
-            </div>
-            <button type="submit" class="btn btn-default">ok</button>
-        </form>
-    </div>
-</div>
+{{
+    include('FuzAppBundle::pagination.html.twig', {
+        'pagination': pagination,
+        'route': path('browse_search'),
+        'linksAttr': {
+            'href': '#',
+            'class': 'domajax click',
+            'data-endpoint': path('browse_search', {'__KEY__': '__VALUE__'}),
+            'data-input': '#' ~ filters.vars.id,
+            'data-lock': '#' ~ filters.vars.id,
+            'data-output': '#search-container',
+            'data-replace': '#result-container',
+            'data-replace-by': '#wait',
+        },
+        'submitAttr': {
+            'class': 'domajax btn btn-default',
+            'data-input': '#' ~ filters.vars.id,
+            'data-lock': '#' ~ filters.vars.id,
+            'data-output': '#search-container',
+            'data-replace': '#result-container',
+            'data-replace-by': '#wait',
+        },
+    })
+}}

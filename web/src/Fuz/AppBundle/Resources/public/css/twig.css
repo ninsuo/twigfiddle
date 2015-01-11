@@ -179,6 +179,9 @@ div.bottomline {
 .green {
     color: #76a728;
 }
+.grey {
+    color: #4d4041 !important;
+}
 .text-light-success {
     color: #7eda7e;
 }
@@ -306,4 +309,14 @@ div.tagsinput {
 }
 .fiddle-result {
     min-height: 180px;
+}
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+    background-color: #5e5051 !important;
+    border: 1px solid #5e5051 !important;
+}
+.pagination {
+    margin: 5px;
+}
+#result-container {
+    min-height: 200px;
 }

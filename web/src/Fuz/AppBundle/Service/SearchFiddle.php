@@ -6,21 +6,25 @@ use Psr\Log\LoggerInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Query\Expr;
+use Symfony\Component\HttpFoundation\Request;
 use Fuz\AppBundle\Entity\Fiddle;
 use Fuz\AppBundle\Entity\User;
 use Fuz\AppBundle\Entity\BrowseFilters;
+use Fuz\AppBundle\Service\Paginator;
 
 class SearchFiddle
 {
 
     protected $logger;
     protected $em;
+    protected $paginator;
     protected $webConfig;
 
-    public function __construct(LoggerInterface $logger, EntityManager $em, array $webConfig)
+    public function __construct(LoggerInterface $logger, EntityManager $em, Paginator $paginator, array $webConfig)
     {
         $this->logger = $logger;
         $this->em = $em;
+        $this->paginator = $paginator;
         $this->webConfig = $webConfig;
     }
 
@@ -30,12 +34,30 @@ class SearchFiddle
      * @param BrowseFilters $criteria
      * @param User $user
      */
-    public function search(BrowseFilters $criteria, User $user = null)
+    public function search(Request $request, BrowseFilters $criteria, User $user = null)
     {
-        $qb = $this->em->createQueryBuilder();
+        $qbCount = $this->em->createQueryBuilder();
+        $qbCount->select('COUNT(f)');
 
+        $count = $this
+           ->createSearchQueryBuilder($qbCount, $criteria, $user)
+           ->getQuery()
+           ->getSingleScalarResult()
+        ;
+
+        $qbResult = $this->em->createQueryBuilder();
+        $qbResult->select('DISTINCT f.hash, f.revision');
+        $this->createSearchQueryBuilder($qbResult, $criteria, $user);
+
+        $pagination = $this->paginator->paginate($request, $qbResult, $count);
+        $fiddles = $qbResult->getQuery()->getArrayResult();
+
+        return array($pagination, $fiddles);
+    }
+
+    public function createSearchQueryBuilder(QueryBuilder $qb, BrowseFilters $criteria, User $user = null)
+    {
         $qb
-           ->select('DISTINCT f.hash, f.revision')
            ->from('Fuz\AppBundle\Entity\Fiddle', 'f')
            ->leftJoin('f.user', 'u')
            ->leftJoin('f.tags', 't')
@@ -65,11 +87,7 @@ class SearchFiddle
            ->setParameter('user', $user)
         ;
 
-        $query = $qb->getQuery();
-        $query->setMaxResults(10);
-        $array = $query->getArrayResult();
-
-        return $array;
+        return $qb;
     }
 
     public function applyKeywordsFilter(BrowseFilters $criteria, QueryBuilder $qb, User $user = null)

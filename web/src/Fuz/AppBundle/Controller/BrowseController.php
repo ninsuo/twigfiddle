@@ -16,29 +16,6 @@ class BrowseController extends BaseController
 {
 
     /**
-     * Loads fiddle's browser
-     *
-     * @Route(
-     *      "/{tag}",
-     *      name = "browse",
-     *      defaults = {
-     *          "tag" = null,
-     *      }
-     * )
-     * @Method({"GET"})
-     * @Template()
-     */
-    public function indexAction(Request $request, $tag)
-    {
-        list($data) = $this->createBrowseFilters($request, $tag);
-
-        return array (
-                'tag' => $tag,
-                'data' => $data,
-        );
-    }
-
-    /**
      * Searches for results
      *
      * @Route(
@@ -59,7 +36,7 @@ class BrowseController extends BaseController
             $data = new BrowseFilters();
         }
 
-        $fiddles = $this->get('app.search_fiddle')->search($data, $this->getUser());
+        list($pagination, $fiddles) = $this->get('app.search_fiddle')->search($request, $data, $this->getUser());
 
         $list_left = $list_right = array ();
         foreach ($fiddles as $key => $fiddle)
@@ -79,6 +56,7 @@ class BrowseController extends BaseController
                 'filters' => $filters->createView(),
                 'list_left' => $list_left,
                 'list_right' => $list_right,
+                'pagination' => $pagination,
         );
     }
 
@@ -127,6 +105,29 @@ class BrowseController extends BaseController
                 'form' => $form,
                 'bookmark' => $bookmark,
                 'isAjax' => $request->isXmlHttpRequest(),
+        );
+    }
+
+    /**
+     * Loads fiddle's browser
+     *
+     * @Route(
+     *      "/{tag}",
+     *      name = "browse",
+     *      defaults = {
+     *          "tag" = null,
+     *      }
+     * )
+     * @Method({"GET"})
+     * @Template()
+     */
+    public function indexAction(Request $request, $tag)
+    {
+        list($data) = $this->createBrowseFilters($request, $tag);
+
+        return array (
+                'tag' => $tag,
+                'data' => $data,
         );
     }
 

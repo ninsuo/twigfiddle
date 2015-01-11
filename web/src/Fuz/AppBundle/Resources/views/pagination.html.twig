@@ -1,0 +1,133 @@
+{# FuzAppBundle::pagination.html.twig #}
+
+{% macro attributes(attr, key, value) %}
+{% spaceless %}
+
+    {% for attr, val in attr %}
+        {{ attr }}="{{ val|replace({'__KEY__': key, '__VALUE__': value})|e('html_attr') }}"
+    {% endfor %}
+
+{% endspaceless %}
+{% endmacro %}
+
+<div class="row" id="footernav">
+    <div class="col-md-12 text-center">
+
+        {# Page switcher #}
+        <nav>
+            <ul class="pagination">
+
+                {% set isFirst = (pagination.session.current_page == 1) %}
+                <li {% if isFirst %}class="disabled"{% endif %}>
+                    {% if isFirst %}
+                        <span aria-label="Previous page" class="disabled">
+                            <span aria-hidden="true">«</span>
+                        </span>
+                    {% else %}
+                        <a aria-label="Previous page" {{ _self.attributes(linksAttr, pagination.page_query_string, (pagination.session.current_page - 1)) }}>
+                            <span aria-hidden="true">«</span>
+                        </a>
+                    {% endif %}
+                </li>
+
+                {% if pagination.display_first %}
+                <li>
+                    <a aria-label="First page" {{ _self.attributes(linksAttr, pagination.page_query_string, 1) }}>
+                        <span>1</span>
+                    </a>
+                </li>
+                {% endif %}
+
+                {% if pagination.dots_first %}
+                    <li><span class="grey">...</span></li>
+                    {% endif %}
+
+                {% for page in pagination.page_list %}
+                    {% set isCurrent = (page == pagination.session.current_page) %}
+                    <li {% if isCurrent %}class="active"{% endif %}>
+                        {% if isCurrent %}
+                            <span>{{ page }} <span class="sr-only">(current)</span></span>
+                        {% else %}
+                            <a {{ _self.attributes(linksAttr, pagination.page_query_string, page) }}>{{ page }}</a>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+
+                {% if pagination.dots_last %}
+                    <li><span class="grey">...</span></li>
+                    {% endif %}
+
+                {% if pagination.display_last %}
+                <li>
+                    <a aria-label="Last page" {{ _self.attributes(linksAttr, pagination.page_query_string, pagination.count_pages) }}>
+                        <span>{{ pagination.count_pages }}</span>
+                    </a>
+                </li>
+                {% endif %}
+
+                {% set isLast = (pagination.session.current_page == pagination.count_pages) %}
+                <li {% if isLast %}class="disabled"{% endif %}>
+                    {% if isLast %}
+                        <span aria-label="Next page" class="disabled">
+                            <span aria-hidden="true">»</span>
+                        </span>
+                    {% else %}
+                        <a aria-label="Next page" {{ _self.attributes(linksAttr, pagination.page_query_string, pagination.session.current_page + 1) }}>
+                            <span aria-hidden="true">»</span>
+                        </a>
+                    {% endif %}
+                </li>
+
+            </ul>
+        </nav>
+
+    </div>
+
+    <div class="col-md-4 text-left">
+
+        {# Results per page #}
+        <nav>
+            <ul class="pagination">
+
+                {% for per_page in pagination.per_page_list %}
+                    {% set isCurrentPerPage = (pagination.session.current_per_page == per_page) %}
+
+                    <li {% if isCurrentPerPage %}class="active"{% endif %}>
+                        {% if isCurrentPerPage %}
+                            <span>{{ per_page }} <span class="sr-only">(current)</span></span>
+                        {% else %}
+                            <a {{ _self.attributes(linksAttr, pagination.per_page_query_string, per_page) }}>{{ per_page }}</a>
+                        {% endif %}
+                    </li>
+
+                {% endfor %}
+
+            </ul>
+        </nav>
+
+    </div>
+
+    {# Number of results #}
+    <div class="col-md-4 text-center">
+        <div style="display:block;margin:5px;padding:6px 12px;">
+            {{ pagination.count_results }} result{% if pagination.count_results != 1 %}s{% endif %}
+        </div>
+    </div>
+
+    <div class="col-md-4 text-right">
+
+        <form action="{{ route }}" method="get" role="form" class="form-inline">
+            <div class="form-group">
+                <label class="sr-only">Go to page</label>
+                <p class="form-control-static">Go to page</p>
+            </div>
+            <div class="form-group">
+                <label class="sr-only"></label>
+                <input placeholder="" name="{{ pagination.page_query_string }}" class="form-control" style="width: 50px;">
+            </div>
+            <button {{ _self.attributes(submitAttr, '', '') }} type="submit">OK</button>
+        </form>
+
+    </div>
+
+</div>
