@@ -12,6 +12,9 @@ use Fuz\AppBundle\Entity\User;
 use Fuz\AppBundle\Entity\BrowseFilters;
 use Fuz\AppBundle\Service\Paginator;
 
+/**
+ * Known bug, see http://stackoverflow.com/questions/27890452/filter-tags-with-doctrine
+ */
 class SearchFiddle
 {
 
@@ -59,7 +62,7 @@ class SearchFiddle
     {
         $qb
            ->from('Fuz\AppBundle\Entity\Fiddle', 'f')
-           ->leftJoin('f.user', 'u')
+           ->leftJoin('Fuz\AppBundle\Entity\User', 'u',  Expr\Join::WITH, $qb->expr()->eq('f.user', ':user'))
            ->leftJoin('f.tags', 't')
            ->leftJoin('Fuz\AppBundle\Entity\UserBookmark', 'b', Expr\Join::WITH, $qb->expr()->andX(
               $qb->expr()->eq('b.fiddle', 'f.id'),
@@ -68,6 +71,10 @@ class SearchFiddle
            ->leftJoin('Fuz\AppBundle\Entity\UserBookmarkTag', 'bt', Expr\Join::WITH, $qb->expr()->eq('b.id', 'bt.userBookmark'))
            ->where(
                $qb->expr()->andX(
+                   $qb->expr()->orX(
+                       $qb->expr()->eq('u.id', ':user'),
+                       $qb->expr()->isNull('u.id')
+                   ),
                    $qb->expr()->orX(
                        $qb->expr()->eq('f.visibility', ':public'),
                        $qb->expr()->eq('f.user', ':user')
@@ -108,14 +115,18 @@ class SearchFiddle
 
     public function applyTagsFilter(BrowseFilters $criteria, QueryBuilder $qb, User $user = null)
     {
-        $andF = $qb->expr()->andX();
-        $andB = $qb->expr()->andX();
+        /**
+         * @XXX I expected to use ->andX (cumulative tags), but there is no GROUP_CONCAT nor FIND_IN_SET
+         * in Doctrine, this leaded to an ugly workaround... Should add it soon!.
+         */
+        $andF = $qb->expr()->orX();
+        $andB = $qb->expr()->orX();
         foreach ($criteria->getTags() as $key => $keyword)
         {
             if (strlen($keyword) > 0)
             {
-                $andF->add($qb->expr()->like('t.tag', ":tag_{$key}"));
-                $andB->add($qb->expr()->like('bt.tag', ":tag_{$key}"));
+                $andF->add($qb->expr()->eq('t.tag', ":tag_{$key}"));
+                $andB->add($qb->expr()->eq('bt.tag', ":tag_{$key}"));
                 $qb->setParameter(":tag_{$key}", $keyword);
             }
         }
