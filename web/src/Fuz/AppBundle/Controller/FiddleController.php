@@ -33,10 +33,6 @@ class FiddleController extends BaseController
      *      }
      * )
      * @Method({"POST"})
-     * @param Request $request
-     * @param string|null $hash
-     * @param int $revision
-     * @return JsonResponse
      */
     public function runAction(Request $request, $hash, $revision)
     {
@@ -80,10 +76,6 @@ class FiddleController extends BaseController
      *      }
      * )
      * @Method({"POST"})
-     * @param Request $request
-     * @param string|null $hash
-     * @param int $revision
-     * @return JsonResponse
      */
     public function saveAction(Request $request, $hash, $revision)
     {
@@ -146,10 +138,6 @@ class FiddleController extends BaseController
      *      }
      * )
      * @Method({"POST"})
-     * @param Request $request
-     * @param string|null $hash
-     * @param int $revision
-     * @return JsonResponse
      */
     public function bookmarkAction(Request $request, $hash, $revision)
     {
@@ -224,7 +212,6 @@ class FiddleController extends BaseController
      * Fiddle's samples
      *
      * @Template()
-     * @return array
      */
     public function samplesAction()
     {
@@ -252,9 +239,6 @@ class FiddleController extends BaseController
      * )
      * @Method({"GET"})
      * @Template()
-     * @param string|null $hash
-     * @param int $revision
-     * @return array
      */
     public function indexAction($hash, $revision)
     {
