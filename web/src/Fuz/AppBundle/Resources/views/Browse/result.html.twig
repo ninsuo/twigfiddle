@@ -63,6 +63,7 @@
                     })
                 }}
             </p>
+            <div id="error-{{ form.title.vars.id ~ '_' ~ index }}" class="error-container">{{ form_errors(form.title) }}</div>
         </div>
 
         {# Tags #}
@@ -82,6 +83,7 @@
                     })
                 }}
             </p>
+            <div id="error-{{ form.tags.vars.id ~ '_' ~ index }}" class="error-container">{{ form_errors(form.tags) }}</div>
         </div>
 
          {# Visits #}
@@ -127,6 +129,12 @@
         </a>
 
      </div>
+
+    {{
+        form_widget(form._token, {
+            'id': form._token.vars.id ~ '_' ~ index,
+        })
+    }}
 
      {{ form_end(form) }}
 

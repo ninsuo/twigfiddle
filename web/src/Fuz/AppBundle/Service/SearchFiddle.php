@@ -82,7 +82,7 @@ class SearchFiddle
             {
                 $andF->add($qb->expr()->like('f.title', ":keyword_{$key}"));
                 $andB->add($qb->expr()->like('b.title', ":keyword_{$key}"));
-                $qb->setParameter(":keyword_{$key}", $keyword);
+                $qb->setParameter(":keyword_{$key}", '%' . addcslashes($keyword, '_%') . '%');
             }
         }
         return $qb->expr()->orX($andF, $andB);
@@ -122,7 +122,7 @@ class SearchFiddle
 
     public function applyVisibilityFilter(BrowseFilters $criteria, QueryBuilder $qb, User $user = null)
     {
-        if (!is_null($user) && $criteria->getMine())
+        if (!is_null($user) && $criteria->getVisibility())
         {
             $qb->setParameter('visibility', $criteria->getVisibility());
             return $qb->expr()->eq('f.visibility', ':visibility');

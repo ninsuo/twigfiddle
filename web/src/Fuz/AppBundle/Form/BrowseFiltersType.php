@@ -39,7 +39,8 @@ class BrowseFiltersType extends AbstractType
                         Fiddle::VISIBILITY_PUBLIC => ucfirst(Fiddle::VISIBILITY_PUBLIC),
                         Fiddle::VISIBILITY_UNLISTED => ucfirst(Fiddle::VISIBILITY_UNLISTED),
                         Fiddle::VISIBILITY_PRIVATE => ucfirst(Fiddle::VISIBILITY_PRIVATE),
-                   )
+                   ),
+                   'required' => false,
            ))
         ;
     }

@@ -15,6 +15,8 @@ class BrowseFilters
 
     /**
      * @var array
+     *
+     * @Assert\Count(max = 10)
      */
     protected $keywords = array();
 

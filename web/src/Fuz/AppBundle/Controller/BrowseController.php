@@ -66,11 +66,11 @@ class BrowseController extends BaseController
         {
             if ($key % 2)
             {
-                $list_right[$key] = $fiddle;
+                $list_right[] = $fiddle;
             }
             else
             {
-                $list_left[$key] = $fiddle;
+                $list_left[] = $fiddle;
             }
         }
 
@@ -95,7 +95,7 @@ class BrowseController extends BaseController
     }
 
     /**
-     * Runs a fiddle
+     * Displays a fiddle widget
      *
      * @Route(
      *      "/result/{revision}/{hash}",

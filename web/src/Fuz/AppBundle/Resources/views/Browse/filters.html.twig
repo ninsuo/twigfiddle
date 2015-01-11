@@ -14,7 +14,7 @@
 {% macro display_submit(filters) %}
 
     <button
-        type="submit"
+        type="button"
         class="btn btn-default domajax click"
         data-endpoint="{{ path('search') }}"
         data-input="#{{ filters.vars.id }}"
@@ -45,6 +45,7 @@
             }}
         </div>
         {{ _self.display_submit(filters) }}
+        <div class="error-container">{{ form_errors(filters.keywords) }}</div>
     </div>
 
     {# Tags filter #}
@@ -65,6 +66,7 @@
             }}
         </div>
         {{ _self.display_submit(filters) }}
+       <div class="error-container">{{ form_errors(filters.tags) }}</div>
     </div>
 
     <div class="clearfix hidden-md hidden-lg">&nbsp;</div>
@@ -110,6 +112,7 @@
             </div>
             {{ _self.display_submit(filters) }}
         </div>
+       <div class="error-container">{{ form_errors(filters.visibility) }}</div>
 
     {% else %}
 
