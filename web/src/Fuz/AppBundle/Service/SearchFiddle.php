@@ -13,7 +13,8 @@ use Fuz\AppBundle\Entity\BrowseFilters;
 use Fuz\AppBundle\Service\Paginator;
 
 /**
- * Known bug, see http://stackoverflow.com/questions/27890452/filter-tags-with-doctrine
+ * Known bug on tag filter
+ * see http://stackoverflow.com/questions/27890452/filter-tags-with-doctrine
  */
 class SearchFiddle
 {
@@ -117,7 +118,7 @@ class SearchFiddle
     {
         /**
          * @XXX I expected to use ->andX (cumulative tags), but there is no GROUP_CONCAT nor FIND_IN_SET
-         * in Doctrine, this leaded to an ugly workaround... Should add it soon!.
+         * built-in in Doctrine.
          */
         $andF = $qb->expr()->orX();
         $andB = $qb->expr()->orX();
