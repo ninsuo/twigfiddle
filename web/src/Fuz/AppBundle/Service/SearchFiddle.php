@@ -37,7 +37,7 @@ class SearchFiddle
     public function search(Request $request, BrowseFilters $criteria, User $user = null)
     {
         $qbCount = $this->em->createQueryBuilder();
-        $qbCount->select('COUNT(f)');
+        $qbCount->select('COUNT(DISTINCT f.id)');
 
         $count = $this
            ->createSearchQueryBuilder($qbCount, $criteria, $user)
