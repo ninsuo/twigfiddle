@@ -6,6 +6,7 @@ parameters:
     app.twig.safety_extension.class: Fuz\AppBundle\Twig\Extension\SafetyExtension
     app.twig.github_extension.class: Fuz\AppBundle\Twig\Extension\GitHubExtension
     app.twig.hash_extension.class: Fuz\AppBundle\Twig\Extension\HashExtension
+    app.twig.pcre_extension.class: Fuz\AppBundle\Twig\Extension\PcreExtension
     app.helper.doctrine_helper.class: Fuz\AppBundle\Helper\DoctrineHelper
     app.subscriber.fiddle.class: Fuz\AppBundle\EventListener\FiddleSubscriber
     app.subscriber.user.class: Fuz\AppBundle\EventListener\UserSubscriber
@@ -52,6 +53,12 @@ services:
 
     app.twig.hash_extension:
          class: %app.twig.hash_extension.class%
+         arguments: []
+         tags:
+             - { name: twig.extension }
+
+    app.twig.pcre_extension:
+         class: %app.twig.pcre_extension.class%
          arguments: []
          tags:
              - { name: twig.extension }

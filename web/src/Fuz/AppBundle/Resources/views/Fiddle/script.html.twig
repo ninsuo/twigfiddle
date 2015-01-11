@@ -124,6 +124,39 @@ $(document).ready(function() {
     }); // $.on
 
     {#
+     #  Show raw result instead of "prettified" result
+     #  Used in FuzAppBundle:Fiddle:result-rendered.html.twig
+     #}
+    $('body').on('click', '#show-raw-result', function (e) {
+        $('#show-raw-result').addClass('hide');
+        $('#hide-raw-result').removeClass('hide');
+
+        $('#select-result-rendered').data('selector', '#result-rendered-raw');
+
+        $('#result-rendered-simple').addClass('hide');
+        $('#result-rendered-raw').removeClass('hide');
+
+        e.preventDefault();
+    });
+
+    {#
+     #  Show "prettified" result instead of raw result
+     #  Used in FuzAppBundle:Fiddle:result-rendered.html.twig
+     #}
+    $('body').on('click', '#hide-raw-result', function (e) {
+        $('#hide-raw-result').addClass('hide');
+        $('#show-raw-result').removeClass('hide');
+
+        $('#select-result-rendered').data('selector', '#result-rendered-simple');
+
+        $('#result-rendered-raw').addClass('hide');
+        $('#result-rendered-simple').removeClass('hide');
+
+        e.preventDefault();
+    });
+
+
+    {#
      #  Template Syntax Highlighting Loader
      #  Used in FuzAppBundle:Fiddle:templates-theme.html.twig
      #}

@@ -14,11 +14,31 @@
                 </div>
             </div>
 
-             <pre id="result-rendered">{{ data.result.rendered }}</pre>
+            {% set rawResult = data.result.rendered %}
+            {% set simpleResult = rawResult|preg_replace('/\\n{2,}/', '\n\n') %}
 
-              <button id="select-result-rendered" class="btn btn-default btn-sm btn-twigfiddle select-text" data-selector="#result-rendered">
-                    <span class="glyphicon glyphicon-flash"></span> Select result
-              </button>
+            <pre id="result-rendered-simple">{{ simpleResult }}</pre>
+
+            {% if simpleResult != rawResult %}
+                <pre id="result-rendered-raw" class="hide">{{ rawResult }}</pre>
+            {% endif %}
+
+            <button id="select-result-rendered" class="btn btn-default btn-sm btn-twigfiddle select-text" data-selector="#result-rendered-simple">
+                <span class="glyphicon glyphicon-flash"></span> Select result
+            </button>
+
+            {% if simpleResult != rawResult %}
+
+            <button id="show-raw-result" class="btn btn-default btn-sm btn-twigfiddle">
+                <span class="glyphicon glyphicon-asterisk"></span> Show raw result
+            </button>
+
+            <button id="hide-raw-result" class="btn btn-default btn-sm btn-twigfiddle hide">
+                <span class="glyphicon glyphicon-asterisk"></span> Hide raw result
+            </button>
+
+            {% endif %}
+
 
         </div>
     </div>

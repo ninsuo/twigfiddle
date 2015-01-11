@@ -263,7 +263,7 @@ pre.compiled-code {
 .CodeMirror pre.CodeMirror-placeholder {
     color: #999;
 }
-#select-result-rendered {
+#select-result-rendered, #show-raw-result {
     margin-top: 5px;
 }
 div.tagsinput span.tag {
