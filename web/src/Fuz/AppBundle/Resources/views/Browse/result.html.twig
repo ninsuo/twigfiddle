@@ -32,7 +32,11 @@
 
 <div class="row searchbloc">
 
-    {{ form_start(form) }}
+    {{
+        form_start(form, {
+            'id': form.vars.id ~ '_' ~ index,
+        })
+    }}
 
     <div class="col-md-12">
 
@@ -49,14 +53,14 @@
 
         {# Title #}
         <div>
-            <p id="ro-{{ form.title.vars.id ~ '_' ~ index }}">
+            <p class="ro-{{ index }}">
                 {% if fiddle.title|length > 0 %}
                     {{ fiddle.title }}
                 {% else %}
                     <span class="unavailable">(No title)</span>
                 {% endif %}
             </p>
-            <p id="input-{{ form.title.vars.id ~ '_' ~ index }}" class="hide">
+            <p class="input-{{ index }} hide">
                 {{
                     form_widget(form.title, {
                         'id': form.title.vars.id ~ '_' ~ index,
@@ -68,12 +72,12 @@
 
         {# Tags #}
         <div>
-            <p id="ro-{{ form.tags.vars.id ~ '_' ~ index }}" class="{% if fiddle.tags|length == 0 %}hide{% endif %}">
+            <p class="ro-{{ index }} {% if fiddle.tags|length == 0 %}hide{% endif %}">
                 {% for tag in fiddle.tags %}
                     <span class="static-tag"><span>{{ tag.tag }}</span></span>
                 {% endfor %}
             </p>
-            <p id="input-{{ form.tags.vars.id ~ '_' ~ index }}" class="hide tags">
+            <p class="input-{{ index }} hide tags">
                 {{
                     form_widget(form.tags, {
                         'attr': {
@@ -83,7 +87,7 @@
                     })
                 }}
             </p>
-            <div id="error-{{ form.tags.vars.id ~ '_' ~ index }}" class="error-container">{{ form_errors(form.tags) }}</div>
+            <div id="error-{{ index }}" class="error-container">{{ form_errors(form.tags) }}</div>
         </div>
 
          {# Visits #}
@@ -95,31 +99,52 @@
 
      <div class="col-md-12">
 
-         {{
-            include('FuzAppBundle:Fiddle:bookmark.html.twig', {
-                'data': fiddle,
-                'bookmark': null,
-                'hash': fiddle.hash,
-                'revision': fiddle.revision,
-                'label': true ? 'Bookmark' : 'Unbookmark',
-            })
-         }}
-
          {% if is_granted('ROLE_USER') and isMyFiddle == false %}
 
-            <span class="edit-{{ index }}">
-               <a class="btn btn-tf-dark" href="{{ path('fiddle', {'hash': fiddle.hash, 'revision': fiddle.revision}) }}">
-                 <span class="glyphicon glyphicon glyphicon-pencil hidden-md hidden-sm hidden-xs"></span>
-                 Edit
-              </a>
-            </span>
+             {# Bookmark / Unbookmark #}
+            <button
+                type="button"
+                class="btn btn-tf-dark domajax click"
+                data-endpoint="{{ path('bookmark_fiddle', {'hash': fiddle.hash, 'revision': fiddle.revision}) }}"
+                data-input="#fiddle-{{ index }}"
+                data-output="#fiddle-{{ index }}"
+                data-replace="#fiddle-{{ index }}"
+                data-replace-by="#wait"
+                data-domajax-complete="#fiddle-{{ index }}"
+                data-index="{{ index }}"
+            >
+                <span class="glyphicon glyphicon {% if bookmark %}glyphicon-star{% else %}glyphicon-star-empty{% endif %}"></span>
+                {% if bookmark %}Unbookmark{% else %}Bookmark{% endif %}
+            </button>
 
-            <span class="save-{{ index }} hide">
-               <a class="btn btn-tf-dark" href="{{ path('save_fiddle', {'hash': fiddle.hash, 'revision': fiddle.revision}) }}">
-                 <span class="glyphicon glyphicon glyphicon-floppy-disk hidden-md hidden-sm hidden-xs"></span>
-                 Save
-              </a>
-            </span>
+            {% if bookmark %}
+
+                {# Edit #}
+                <span id="edit-{{ index }}">
+                    <button type="button" class="btn btn-tf-dark result-edit" data-index="{{ index }}">
+                        <span class="glyphicon glyphicon-pencil"></span> Edit
+                    </button>
+                </span>
+
+                {# Save #}
+                <span id="save-{{ index }}" class="hide">
+                    <button
+                        type="button"
+                        class="btn btn-tf-dark domajax click"
+                        data-endpoint="{{ path('save_fiddle', {'hash': fiddle.hash, 'revision': fiddle.revision}) }}"
+                        data-input="#fiddle-{{ index }}"
+                        data-output="#fiddle-{{ index }}"
+                        data-replace="#fiddle-{{ index }}"
+                        data-replace-by="#wait"
+                        data-domajax-complete="#fiddle-{{ index }}"
+                        data-index="{{ index }}"
+                    >
+                        <span class="glyphicon glyphicon glyphicon-floppy-disk hidden-md hidden-sm hidden-xs"></span>
+                        Save
+                    </button>
+                </span>
+
+            {% endif %}
 
          {% endif %}
 
@@ -140,4 +165,18 @@
 
 </div>
 
+{% endblock %}
+
+{% block script %}
+    {% if isAjax %}
+
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+           putTagStyle();
+        });
+
+    </script>
+
+    {% endif %}
 {% endblock %}

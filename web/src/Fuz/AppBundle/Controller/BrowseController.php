@@ -43,7 +43,7 @@ class BrowseController extends BaseController
      *
      * @Route(
      *      "/search/{tag}",
-     *      name = "search",
+     *      name = "browse_search",
      *      defaults = {
      *          "tag" = null,
      *      }
@@ -99,7 +99,7 @@ class BrowseController extends BaseController
      *
      * @Route(
      *      "/result/{revision}/{hash}",
-     *      name = "result_fiddle",
+     *      name = "browse_result",
      *      requirements = {
      *          "hash" = "^[a-zA-Z0-9-]{1,16}$",
      *          "version" = "^\d+$"
@@ -107,7 +107,7 @@ class BrowseController extends BaseController
      * )
      * @Template()
      */
-    public function resultAction($hash, $revision)
+    public function resultAction(Request $request, $hash, $revision)
     {
         $fiddle = $this->getFiddle($hash, $revision);
 
@@ -122,9 +122,11 @@ class BrowseController extends BaseController
 
         $form = $this->createForm(new UserBookmarkType(), $bookmarkData)->createView();
 
-        return array(
+        return array (
                 'fiddle' => $fiddle,
                 'form' => $form,
+                'bookmark' => $bookmark,
+                'isAjax' => $request->isXmlHttpRequest(),
         );
     }
 

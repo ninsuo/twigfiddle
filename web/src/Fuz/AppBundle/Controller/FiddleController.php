@@ -94,7 +94,7 @@ class FiddleController extends BaseController
             $bookmark = $this->getUserBookmark($fiddle);
             if ($bookmark)
             {
-                return $this->saveUserBookmark($request, $hash, $revision, $bookmark);
+                return $this->saveUserBookmark($request, $bookmark);
             }
         }
 
@@ -190,13 +190,13 @@ class FiddleController extends BaseController
         $new->setUser($user);
         $new->setFiddle($fiddle);
 
-        return $this->saveUserBookmark($request, $hash, $revision, $new);
+        return $this->saveUserBookmark($request, $new);
     }
 
-    protected function saveUserBookmark(Request $request, $hash, $revision, UserBookmark $bookmark)
+    protected function saveUserBookmark(Request $request, UserBookmark $bookmark)
     {
         $response = array (
-                'isBookmarked' => false
+                'isBookmarked' => false,
         );
 
         $form = $this->createForm(new UserBookmarkType(), $bookmark,

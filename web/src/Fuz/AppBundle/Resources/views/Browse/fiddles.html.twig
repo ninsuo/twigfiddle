@@ -3,7 +3,14 @@
 
 {% macro list_fiddles(list) %}
     {% for index, fiddle in list %}
-        <div id="fiddle-{{ fiddle.hash }}-{{ fiddle.revision }}" class="fiddle-result {% if (index + 1) != list|length %}bottomline{% endif %}">
+        <div
+            id="fiddle-{{ fiddle.hash }}_{{ fiddle.revision }}"
+            class="fiddle-result {% if (index + 1) != list|length %}bottomline{% endif %}"
+            data-endpoint="{{ path('browse_result', {'hash': fiddle.hash, 'revision': fiddle.revision}) }}"
+            data-output=""
+            data-replace=""
+            data-replace-by="#wait"
+        >
             {{ render(controller('FuzAppBundle:Browse:result', {'hash': fiddle.hash, 'revision': fiddle.revision})) }}
         </div>
     {% endfor %}

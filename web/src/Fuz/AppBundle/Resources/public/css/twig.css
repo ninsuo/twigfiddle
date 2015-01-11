@@ -276,8 +276,11 @@ div.tagsinput span.tag {
     overflow-x: hidden;
     overflow-y: hidden;
 }
+div.tagsinput {
+    width: 100% !important;
+}
 .tags .tagsinput input {
-    width:100px !important;
+    min-width:100px !important;
 }
 /******************************************************/
 /************** BROWSER ********************/
@@ -302,5 +305,5 @@ div.tagsinput span.tag {
     font-size:13px;
 }
 .fiddle-result {
-    height: 180px;
+    min-height: 180px;
 }

@@ -9,17 +9,50 @@ $(document).ready(function() {
      #  Make tags having a tag layout
      #  Used in FuzAppBundle:Browse:filters.html.twig
      #}
+     putTagStyle();
+
+    {#
+     #  Opens embedded form to edit a bookmark
+     #  Used in FuzAppBundle:Browse:result.html.twig
+     #}
+    $('body').on('click', '.result-edit', function() {
+        var that = $(this);
+        var index = that.data('index');
+
+        $('#edit-' + index).addClass('hide');
+        $('.ro-' + index).addClass('hide');
+
+        $('#save-' + index).removeClass('hide');
+        $('.input-' + index).removeClass('hide');
+    });
+
+});
+
+{#
+ #  Make tags having a tag layout
+ #  Used in FuzAppBundle:Browse:filters.html.twig
+ #  Used in FuzAppBundle:Browse:result.html.twig
+ #}
+function putTagStyle() {
     $('.tags-input').each(function() {
         var that = $(this);
+        if (that.data('has-tag-layout')) {
+            return true;
+        }
+        that.data('has-tag-layout', true);
         that.tagsInput({
             'width': (that.width() + 26) + 'px',
             'height': '34px',
             'defaultText': 'Filter tags...',
             'placeholderColor' : '#999',
+            'onAddTag': function (tag) {
+                var tags = that.val().split(',');
+                if (tags.length > 5 {# fiddle.max_tags #} ) {
+                    that.importTags(tags.slice(0, 5 {# fiddle.max_tags #} ).join(','));
+                }
+            }
         });
     });
-
-});
-
+}
 
 </script>
