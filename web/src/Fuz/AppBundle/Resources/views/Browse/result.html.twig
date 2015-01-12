@@ -45,10 +45,7 @@
             {% if is_granted('ROLE_USER') %}
                 <span class="label label-{{ visibilities[fiddle.visibility].color}}">{{ visibilities[fiddle.visibility].label|lower }}</span>
             {% endif %}
-            Fiddle
-            <a href="{{ path('fiddle', {'hash': fiddle.hash, 'revision': fiddle.revision}) }}" target="_blank" class="green">{{ fiddle.hash }} {% if fiddle.revision > 1 %}v{{ fiddle.revision }}{% endif %}</a>
-            created on {{ fiddle.creationTm|date }}
-            {% if isMyFiddle %}by <i>yourself</i>{% else %}{{ macros.user('by', fiddle.user|default(null)) }}{% endif %}
+            {{ macros.fiddle(fiddle, false) }}
         </p>
 
         {# Title #}

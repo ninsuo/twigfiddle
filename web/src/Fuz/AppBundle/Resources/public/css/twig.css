@@ -285,6 +285,10 @@ div.tagsinput {
 .tags .tagsinput input {
     min-width:100px !important;
 }
+.fiddle-owner {
+   margin-top: 10px;
+   margin-bottom: 10px;
+}
 /******************************************************/
 /************** BROWSER ********************/
 /******************************************************/
