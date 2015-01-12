@@ -12,10 +12,6 @@ use Fuz\AppBundle\Entity\User;
 use Fuz\AppBundle\Entity\BrowseFilters;
 use Fuz\AppBundle\Service\Paginator;
 
-/**
- * Known bug on tag filter
- * see http://stackoverflow.com/questions/27890452/filter-tags-with-doctrine
- */
 class SearchFiddle
 {
 
@@ -40,23 +36,40 @@ class SearchFiddle
      */
     public function search(Request $request, BrowseFilters $criteria, User $user = null)
     {
-        $qbCount = $this->em->createQueryBuilder();
-        $qbCount->select('COUNT(DISTINCT f.id)');
+        $criteria->setKeywords(array("hello", "bar"));
 
-        $count = $this
-           ->createSearchQueryBuilder($qbCount, $criteria, $user)
-           ->getQuery()
-           ->getSingleScalarResult()
-        ;
+        $count = $this->countResults($criteria, $user);
 
         $qbResult = $this->em->createQueryBuilder();
-        $qbResult->select('DISTINCT f.hash, f.revision');
+        $qbResult->select('f.id, f.hash, f.revision');
         $this->createSearchQueryBuilder($qbResult, $criteria, $user);
 
         $pagination = $this->paginator->paginate($request, $qbResult, $count);
         $fiddles = $qbResult->getQuery()->getArrayResult();
 
         return array($pagination, $fiddles);
+    }
+
+    public function countResults(BrowseFilters $criteria, User $user = null)
+    {
+        $qbIn = $this->em->createQueryBuilder();
+        $qbIn->select('f.id');
+        $this->createSearchQueryBuilder($qbIn, $criteria, $user);
+
+        $qb = $this->em->createQueryBuilder();
+
+        $count = $qb
+           ->select('COUNT(DISTINCT x.id)')
+           ->from('Fuz\AppBundle\Entity\Fiddle', 'x')
+           ->where(
+              $qb->expr()->in('x.id', $qbIn->getDQL())
+           )
+           ->setParameters($qbIn->getParameters())
+           ->getQuery()
+           ->getSingleScalarResult()
+        ;
+
+        return $count;
     }
 
     public function createSearchQueryBuilder(QueryBuilder $qb, BrowseFilters $criteria, User $user = null)
@@ -80,11 +93,17 @@ class SearchFiddle
                        $qb->expr()->eq('f.visibility', ':public'),
                        $qb->expr()->eq('f.user', ':user')
                    ),
-                  $this->applyKeywordsFilter($criteria, $qb, $user),
-                  $this->applyTagsFilter($criteria, $qb, $user),
                   $this->applyBookmarkFilter($criteria, $qb, $user),
                   $this->applyMineFilter($criteria, $qb, $user),
                   $this->applyVisibilityFilter($criteria, $qb, $user)
+               )
+           )
+           ->groupBy('f.id, b.id')
+           ->having(
+               $qb->expr()->andX(
+                  $qb->expr()->eq(1, 1),
+                  $this->applyKeywordsFilter($criteria, $qb, $user),
+                  $this->applyTagsFilter($criteria, $qb, $user)
                )
            )
            ->orderBy('f.creationTm', 'DESC')
@@ -106,8 +125,8 @@ class SearchFiddle
         {
             if (strlen($keyword) > 0)
             {
-                $andF->add($qb->expr()->like('f.title', ":keyword_{$key}"));
-                $andB->add($qb->expr()->like('b.title', ":keyword_{$key}"));
+                $andF->add($qb->expr()->like("GROUP_CONCAT(f.title SEPARATOR ' ')", ":keyword_{$key}"));
+                $andB->add($qb->expr()->like("GROUP_CONCAT(b.title SEPARATOR ' ')", ":keyword_{$key}"));
                 $qb->setParameter(":keyword_{$key}", '%' . addcslashes($keyword, '_%') . '%');
             }
         }
@@ -116,18 +135,14 @@ class SearchFiddle
 
     public function applyTagsFilter(BrowseFilters $criteria, QueryBuilder $qb, User $user = null)
     {
-        /**
-         * @XXX I expected to use ->andX (cumulative tags), but there is no GROUP_CONCAT nor FIND_IN_SET
-         * built-in in Doctrine.
-         */
-        $andF = $qb->expr()->orX();
-        $andB = $qb->expr()->orX();
+        $andF = $qb->expr()->andX();
+        $andB = $qb->expr()->andX();
         foreach ($criteria->getTags() as $key => $keyword)
         {
             if (strlen($keyword) > 0)
             {
-                $andF->add($qb->expr()->eq('t.tag', ":tag_{$key}"));
-                $andB->add($qb->expr()->eq('bt.tag', ":tag_{$key}"));
+                $andF->add($qb->expr()->gt("FIND_IN_SET(:tag_{$key}, GROUP_CONCAT(t.tag))", '0'));
+                $andB->add($qb->expr()->gt("FIND_IN_SET(:tag_{$key}, GROUP_CONCAT(bt.tag))", '0'));
                 $qb->setParameter(":tag_{$key}", $keyword);
             }
         }
