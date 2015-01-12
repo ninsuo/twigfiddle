@@ -36,8 +36,6 @@ class SearchFiddle
      */
     public function search(Request $request, BrowseFilters $criteria, User $user = null)
     {
-        $criteria->setKeywords(array("hello", "bar"));
-
         $count = $this->countResults($criteria, $user);
 
         $qbResult = $this->em->createQueryBuilder();
