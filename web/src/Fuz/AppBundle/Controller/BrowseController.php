@@ -75,11 +75,13 @@ class BrowseController extends BaseController
     /**
      * Displays a fiddle widget
      *
+     * fiddle.hash_regexp
+     *
      * @Route(
      *      "/result/{revision}/{hash}",
      *      name = "browse_result",
      *      requirements = {
-     *          "hash" = "^[a-zA-Z0-9-]{1,16}$",
+     *          "hash" = "^[a-zA-Z0-9-]{1,32}$",
      *          "version" = "^\d+$"
      *      }
      * )

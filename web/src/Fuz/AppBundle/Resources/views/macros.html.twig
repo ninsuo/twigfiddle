@@ -7,12 +7,13 @@
         set defaults = {
             'ok-endpoint': null,
             'ok-options': null,
+            'modal-class': null,
         }
     %}
     {% set options = defaults|merge(options|default({})) %}
 
     <div class="modal fade" id="{{ id }}" tabindex="-1" role="dialog" aria-labelledby="{{ id }}" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog {{ options['modal-class'] }}">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>

@@ -20,11 +20,13 @@ class FiddleController extends BaseController
     /**
      * Runs a fiddle
      *
+     * fiddle.hash_regexp
+     *
      * @Route(
      *      "/run/{revision}/{hash}",
      *      name = "run_fiddle",
      *      requirements = {
-     *          "hash" = "^[a-zA-Z0-9-]{1,16}$",
+     *          "hash" = "^[a-zA-Z0-9-]{1,32}$",
      *          "version" = "^\d+$"
      *      },
      *      defaults = {
@@ -63,11 +65,13 @@ class FiddleController extends BaseController
     /**
      * Saves a fiddle
      *
+     * fiddle.hash_regexp
+     *
      * @Route(
      *      "/save/{revision}/{hash}",
      *      name = "save_fiddle",
      *      requirements = {
-     *          "hash" = "^[a-zA-Z0-9-]{1,16}$",
+     *          "hash" = "^[a-zA-Z0-9-]{1,32}$",
      *          "revision" = "^\d+$"
      *      },
      *      defaults = {
@@ -129,11 +133,13 @@ class FiddleController extends BaseController
     /**
      * Bookmark / Unbookmark a fiddle
      *
+     * fiddle.hash_regexp
+     *
      * @Route(
      *      "/bookmark/{revision}/{hash}",
      *      name = "bookmark_fiddle",
      *      requirements = {
-     *          "hash" = "^[a-zA-Z0-9-]{1,16}$",
+     *          "hash" = "^[a-zA-Z0-9-]{1,32}$",
      *          "revision" = "^\d+$"
      *      }
      * )
@@ -225,11 +231,13 @@ class FiddleController extends BaseController
     /**
      * Displays twigfiddle's editor
      *
+     * fiddle.hash_regexp
+     *
      * @Route(
      *      "/{hash}/{revision}",
      *      name = "fiddle",
      *      requirements = {
-     *          "hash" = "^[a-zA-Z0-9-]{1,16}$",
+     *          "hash" = "^[a-zA-Z0-9-]{1,32}$",
      *          "revision" = "^\d+$"
      *      },
      *      defaults = {

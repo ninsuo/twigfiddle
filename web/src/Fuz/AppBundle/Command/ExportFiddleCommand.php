@@ -9,14 +9,14 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Fuz\AppBundle\Entity\FiddleTemplate;
 use Fuz\AppBundle\Entity\FiddleTag;
 
-class ExportCommand extends ContainerAwareCommand
+class ExportFiddleCommand extends ContainerAwareCommand
 {
 
     protected function configure()
     {
         parent::configure();
         $this
-           ->setName("twigfiddle:export")
+           ->setName("twigfiddle:export:fiddle")
            ->setDescription("Export a fiddle as a json string")
            ->addArgument('hash', InputArgument::REQUIRED, "Fiddle's hash")
            ->addArgument('revision', InputArgument::REQUIRED, "Fiddle's revision")
@@ -65,6 +65,7 @@ class ExportCommand extends ContainerAwareCommand
         );
 
         $output->writeln(json_encode($json));
+        return 0;
     }
 
 }

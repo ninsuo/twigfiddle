@@ -102,5 +102,87 @@ fuz_app:
         samples:
            basics:
                - { hash: hello, revision: 1, label: "Hello, world!" }
-           twig language overview:
-               - { hash: macros, revision: 1, label: "Macros" }
+           "twig's tags overview":
+               - { hash: autoescape, revision: 1, label: "autoescape" }
+               - { hash: block, revision: 1, label: "block" }
+               - { hash: do, revision: 1, label: "do" }
+               - { hash: embed, revision: 1, label: "embed" }
+               - { hash: extends, revision: 1, label: "extends" }
+               - { hash: filter, revision: 1, label: "filter" }
+               - { hash: flush, revision: 1, label: "flush" }
+               - { hash: for, revision: 1, label: "for" }
+               - { hash: from, revision: 1, label: "from" }
+               - { hash: if, revision: 1, label: "if" }
+               - { hash: import, revision: 1, label: "import" }
+               - { hash: include, revision: 1, label: "include" }
+               - { hash: macro, revision: 1, label: "macro" }
+               - { hash: sandbox, revision: 1, label: "sandbox" }
+               - { hash: set, revision: 1, label: "set" }
+               - { hash: spaceless, revision: 1, label: "spaceless" }
+               - { hash: use, revision: 1, label: "use" }
+               - { hash: verbatim, revision: 1, label: "verbatim" }
+           "Twig's filters overview":
+               - { hash: abs, revision: 1, label: "abs" }
+               - { hash: batch, revision: 1, label: "batch" }
+               - { hash: capitalize, revision: 1, label: "capitalize" }
+               - { hash: convert-encoding, revision: 1, label: "convert_encoding" }
+               - { hash: date, revision: 1, label: "date" }
+               - { hash: date-modify, revision: 1, label: "date_modify" }
+               - { hash: default, revision: 1, label: "default" }
+               - { hash: escape, revision: 1, label: "escape" }
+               - { hash: first, revision: 1, label: "first" }
+               - { hash: format, revision: 1, label: "format" }
+               - { hash: join, revision: 1, label: "join" }
+               - { hash: json-encode, revision: 1, label: "json_encode" }
+               - { hash: keys, revision: 1, label: "keys" }
+               - { hash: last, revision: 1, label: "last" }
+               - { hash: length, revision: 1, label: "length" }
+               - { hash: lower, revision: 1, label: "lower" }
+               - { hash: merge, revision: 1, label: "merge" }
+               - { hash: nl2br, revision: 1, label: "nl2br" }
+               - { hash: number-format, revision: 1, label: "number_format" }
+               - { hash: raw, revision: 1, label: "raw" }
+               - { hash: replace, revision: 1, label: "replace" }
+               - { hash: reverse, revision: 1, label: "reverse" }
+               - { hash: round, revision: 1, label: "round" }
+               - { hash: slice, revision: 1, label: "slice" }
+               - { hash: sort, revision: 1, label: "sort" }
+               - { hash: split, revision: 1, label: "split" }
+               - { hash: striptags, revision: 1, label: "striptags" }
+               - { hash: title, revision: 1, label: "title" }
+               - { hash: trim, revision: 1, label: "trim" }
+               - { hash: upper, revision: 1, label: "upper" }
+               - { hash: url-encode, revision: 1, label: "url_encode" }
+           "Twig's functions overview":
+               - { hash: attribute, revision: 1, label: "attribute" }
+               - { hash: block, revision: 1, label: "block" }
+               - { hash: constant, revision: 1, label: "constant" }
+               - { hash: cycle, revision: 1, label: "cycle" }
+               - { hash: date, revision: 1, label: "date" }
+               - { hash: dump, revision: 1, label: "dump" }
+               - { hash: include, revision: 1, label: "include" }
+               - { hash: max, revision: 1, label: "max" }
+               - { hash: min, revision: 1, label: "min" }
+               - { hash: parent, revision: 1, label: "parent" }
+               - { hash: random, revision: 1, label: "random" }
+               - { hash: range, revision: 1, label: "range" }
+               - { hash: source, revision: 1, label: "source" }
+               - { hash: template-from-string, revision: 1, label: "template_from_string" }
+           "Twig's tests overview":
+               - { hash: constant, revision: 1, label: "constant" }
+               - { hash: defined, revision: 1, label: "defined" }
+               - { hash: divisibleby, revision: 1, label: "divisibleby" }
+               - { hash: empty, revision: 1, label: "empty" }
+               - { hash: even, revision: 1, label: "even" }
+               - { hash: iterable, revision: 1, label: "iterable" }
+               - { hash: null, revision: 1, label: "null" }
+               - { hash: odd, revision: 1, label: "odd" }
+               - { hash: sameas, revision: 1, label: "sameas" }
+           "Twig's operators overview":
+               - { hash: in, revision: 1, label: "in" }
+               - { hash: is, revision: 1, label: "is" }
+               - { hash: math-operators, revision: 1, label: "Math (+, -, /, %, //, *, **)" }
+               - { hash: logic-operators, revision: 1, label: "Logic (and, or, not, (), b-and, b-xor, b-or)" }
+               - { hash: comparisons-operators, revision: 1, label: "Comparisons (==, !=, <, >, >=, <=, ===)" }
+               - { hash: matches-operators, revision: 1, label: "starts with, ends with, matches" }
+               - { hash: 'other-operators', revision: 1, label: "Others (.., |, ~, ., [], ?:)" }

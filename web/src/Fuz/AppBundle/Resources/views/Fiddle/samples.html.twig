@@ -12,14 +12,14 @@
 
    {% set body %}
 
-   <div class="text-left">
+   <div class="text-center">
 
       <p>Click on the following buttons to open fiddle's samples in a new tab:</p>
 
       {% set count = 0 %}
       {% for category, samples in categories %}
 
-         <p class="text-center">
+         <p>
             <strong>{{ category|title }}</strong>
          </p>
 
@@ -28,6 +28,7 @@
             <a
                class="btn {{ cycle(['btn-tf-dark', 'btn-tf-green'], count) }}"
                href="{{ path('fiddle', {'hash': sample.hash, 'revision': sample.revision}) }}"
+               style="margin: 3px;"
                target="_blank">{{ sample.label }}</a>
 
             {% set count = count + 1 %}
@@ -42,6 +43,6 @@
 
    {% endset %}
 
-   {{ macros.modal('samples-modal', 'Samples', body) }}
+   {{ macros.modal('samples-modal', 'Samples', body, {'modal-class': 'modal-lg'}) }}
 
 {% endif %}

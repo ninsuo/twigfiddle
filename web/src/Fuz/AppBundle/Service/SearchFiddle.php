@@ -84,10 +84,6 @@ class SearchFiddle
            ->where(
                $qb->expr()->andX(
                    $qb->expr()->orX(
-                       $qb->expr()->eq('u.id', ':user'),
-                       $qb->expr()->isNull('u.id')
-                   ),
-                   $qb->expr()->orX(
                        $qb->expr()->eq('f.visibility', ':public'),
                        $qb->expr()->eq('f.user', ':user')
                    ),
