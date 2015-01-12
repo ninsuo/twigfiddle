@@ -535,6 +535,8 @@ class Fiddle implements TagContainerInterface
 
     public function __clone()
     {
+        $this->user = null;
+
         if ($this->context)
         {
             $this->context = clone $this->context;
@@ -559,6 +561,8 @@ class Fiddle implements TagContainerInterface
                 $this->tags->add(clone $tag);
             }
         }
+
+        $this->visitsCount = 0;
     }
 
 }
