@@ -40,6 +40,7 @@
                 form_widget(filters.keywords, {
                     'attr': {
                         'placeholder': 'Search for...',
+                        'autocomplete': 'off',
                     }
                 })
             }}
@@ -61,6 +62,7 @@
                     'attr': {
                         'placeholder': 'Filter tags...',
                         'class': 'tags-input',
+                        'autocomplete': 'off',
                     }
                 })
             }}
@@ -81,6 +83,7 @@
                     form_widget(filters.mine, {
                         'attr': {
                             'aria-label': 'Search my fiddles',
+                            'autocomplete': 'off',
                         }
                     })
                 }}
@@ -92,6 +95,7 @@
                     form_widget(filters.bookmark, {
                         'attr': {
                             'aria-label': 'Search in bookmarks',
+                            'autocomplete': 'off',
                         }
                     })
                 }}
