@@ -12,26 +12,23 @@
 
    {% set body %}
 
-   <div class="text-center">
+   <div class="text-left">
 
-      <p>Click on the following buttons to open fiddle's samples in a new tab:</p>
+      <p class="text-center lead">Click on the following buttons to open fiddle's samples in a new tab</p>
 
-      {% set count = 0 %}
       {% for category, samples in categories %}
 
-         <p>
+         <p class="text-center">
             <strong>{{ category|title }}</strong>
          </p>
 
          {% for sample in samples %}
 
             <a
-               class="btn {{ cycle(['btn-tf-dark', 'btn-tf-green'], count) }}"
+               class="btn btn-sm btn-tf-dark"
                href="{{ path('fiddle', {'hash': sample.hash, 'revision': sample.revision}) }}"
                style="margin: 3px;"
                target="_blank">{{ sample.label }}</a>
-
-            {% set count = count + 1 %}
 
          {% endfor %}
 
