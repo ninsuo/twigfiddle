@@ -92,7 +92,7 @@ class SaveFiddle
      * @param string|null $hash
      * @return bool
      */
-    public function validateHash($hash, $revision)
+    public function validateHash($hash)
     {
         if (is_null($hash))
         {
