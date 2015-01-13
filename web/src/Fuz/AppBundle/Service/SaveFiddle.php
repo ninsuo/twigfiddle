@@ -92,7 +92,7 @@ class SaveFiddle
      * @param string|null $hash
      * @return bool
      */
-    public function validateHash($hash)
+    public function validateHash($hash, $revision)
     {
         if (is_null($hash))
         {
@@ -104,6 +104,16 @@ class SaveFiddle
             return false;
         }
 
+        if ($this->isReservedRoute($hash, $revision))
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    protected function isReservedRoute($hash)
+    {
         $routes = $this->router->getRouteCollection();
         $reserved = array ();
         foreach ($routes->getIterator() as $route)
@@ -120,10 +130,9 @@ class SaveFiddle
         }
         if (in_array($hash, $reserved))
         {
-            return false;
+            return true;
         }
-
-        return true;
+        return false;
     }
 
     public function save($hash, $revision, Fiddle $fiddle, User $user = null)
