@@ -104,7 +104,7 @@ class SaveFiddle
             return false;
         }
 
-        if ($this->isReservedRoute($hash, $revision))
+        if ($this->isReservedRoute($hash))
         {
             return false;
         }
