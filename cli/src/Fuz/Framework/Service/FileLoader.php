@@ -12,16 +12,18 @@ use Fuz\Framework\FileLoader\PhpFileLoader;
 
 class FileLoader
 {
+
     public function load($dir, $file)
     {
-        if (is_scalar($dir)) {
-            return $this->load(array($dir), $file);
+        if (is_scalar($dir))
+        {
+            return $this->load(array ($dir), $file);
         }
 
         $locator = new FileLocator($dir);
         $path = $locator->locate($file);
 
-        $loaderResolver = new LoaderResolver(array(
+        $loaderResolver = new LoaderResolver(array (
                 new YamlFileLoader($locator),
                 new XmlFileLoader($locator),
                 new JsonFileLoader($locator),
@@ -34,4 +36,5 @@ class FileLoader
 
         return $content;
     }
+
 }

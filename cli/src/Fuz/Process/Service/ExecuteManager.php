@@ -10,6 +10,7 @@ use Fuz\Process\Agent\FiddleAgent;
 
 class ExecuteManager extends BaseService
 {
+
     protected $fileSystem;
     protected $environmentManager;
     protected $engineManager;
@@ -41,35 +42,36 @@ class ExecuteManager extends BaseService
         $mainTemplate = $this->templateManager->getMainTemplateFromAgent($agent);
 
         $this->logger->debug("Rendering fiddle's main template: {$mainTemplate}");
-        try {
+        try
+        {
             $rendered = $engine->render($sourceDirectory, $cacheDirectory, $mainTemplate, $context);
             $this->logger->debug("Fiddle's rendered result: {$rendered}");
-        } catch (\Exception $ex) {
+        }
+        catch (\Exception $ex)
+        {
             $this->treatError($agent, $ex);
             throw new StopExecutionException();
         }
 
         $agent->setRendered($rendered);
-
         return $this;
     }
 
     protected function checkNoTwigEnvironmentLoaded()
     {
-        if (class_exists("\Twig_Environment")) {
+        if (class_exists("\Twig_Environment"))
+        {
             throw new \LogicException("A twig environment has already been loaded.");
         }
-
         return $this;
     }
 
     protected function createCacheDirectory(FiddleAgent $agent)
     {
         $dir = $agent->getDirectory();
-        $cacheDirectory = $dir.DIRECTORY_SEPARATOR.$this->fiddleConfiguration['compiled_dir'];
+        $cacheDirectory = $dir . DIRECTORY_SEPARATOR . $this->fiddleConfiguration['compiled_dir'];
         $this->logger->debug("Creating cache directory: {$cacheDirectory}");
         $this->fileSystem->mkdir($cacheDirectory);
-
         return $cacheDirectory;
     }
 
@@ -78,15 +80,16 @@ class ExecuteManager extends BaseService
      * as old Twig versions do not distinguish Twig errors and
      * just thrown \Twig_Error.
      *
-     * @param  FiddleAgent                         $agent
-     * @param  \Exception                          $ex
+     * @param FiddleAgent $agent
+     * @param \Exception $ex
      * @return \Fuz\Process\Service\ExecuteManager
      */
     protected function treatError(FiddleAgent $agent, \Exception $ex)
     {
         $no = null;
 
-        switch (get_class($ex)) {
+        switch (get_class($ex))
+        {
             case 'Twig_Error_Loader':
                 $no = Error::E_TWIG_LOADER_ERROR;
                 break;
@@ -105,4 +108,5 @@ class ExecuteManager extends BaseService
 
         return $this;
     }
+
 }

@@ -4,6 +4,7 @@ namespace Fuz\Process\Entity;
 
 class Result
 {
+
     protected $context;
     protected $rendered;
     protected $compiled;
@@ -12,7 +13,6 @@ class Result
     public function setContext(array $context)
     {
         $this->context = $context;
-
         return $this;
     }
 
@@ -24,7 +24,6 @@ class Result
     public function setRendered($rendered)
     {
         $this->rendered = $rendered;
-
         return $this;
     }
 
@@ -36,7 +35,6 @@ class Result
     public function setCompiled(array $compiled)
     {
         $this->compiled = $compiled;
-
         return $this;
     }
 
@@ -54,4 +52,5 @@ class Result
     {
         return $this->errors;
     }
+
 }

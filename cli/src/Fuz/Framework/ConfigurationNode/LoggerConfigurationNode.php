@@ -8,6 +8,7 @@ use Fuz\Framework\Api\ConfigurationNodeInterface;
 
 class LoggerConfigurationNode implements ConfigurationNodeInterface
 {
+
     public function getConfigurationNode()
     {
         $levels = array_keys(Logger::getLevels());
@@ -25,11 +26,11 @@ class LoggerConfigurationNode implements ConfigurationNodeInterface
                 ->scalarNode('name')
                     ->defaultValue('app.log')
                     ->validate()
-                        ->ifTrue(function ($file) {
+                        ->ifTrue(function($file) {
                             return strpos($file, '/') !== false;
                         })
                         ->thenInvalid("The log file name can't contain a slash ( / ): %s")
-                        ->ifTrue(function ($file) {
+                        ->ifTrue(function($file) {
                             return is_file($file) && !is_writeable($file);
                         })
                         ->thenInvalid("The log file exists but is not writeable: %s")
@@ -37,7 +38,7 @@ class LoggerConfigurationNode implements ConfigurationNodeInterface
                 ->end()
            ->end()
         ;
-
         return $rootNode;
     }
+
 }

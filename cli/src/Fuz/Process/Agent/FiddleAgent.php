@@ -10,6 +10,7 @@ use Fuz\Process\TwigEngine\TwigEngineInterface;
 
 class FiddleAgent
 {
+
     /**
      * Error Management service
      *
@@ -50,7 +51,7 @@ class FiddleAgent
      *
      * @var Error[]
      */
-    protected $errors = array();
+    protected $errors = array ();
 
     /**
      * File that contains the shared memory
@@ -106,7 +107,7 @@ class FiddleAgent
      *
      * @var array[string]
      */
-    protected $compiled = array();
+    protected $compiled = array ();
 
     public function __construct(ErrorManager $errorManager)
     {
@@ -116,7 +117,6 @@ class FiddleAgent
     public function setEnvironmentId($environmentId)
     {
         $this->environmentId = $environmentId;
-
         return $this;
     }
 
@@ -128,7 +128,6 @@ class FiddleAgent
     public function setIsDebug($isDebug)
     {
         $this->isDebug = $isDebug;
-
         return $this;
     }
 
@@ -140,7 +139,6 @@ class FiddleAgent
     public function setDirectory($directory)
     {
         $this->directory = $directory;
-
         return $this;
     }
 
@@ -152,7 +150,6 @@ class FiddleAgent
     public function setFiddle(Fiddle $fiddle)
     {
         $this->fiddle = $fiddle;
-
         return $this;
     }
 
@@ -161,17 +158,20 @@ class FiddleAgent
         return $this->fiddle;
     }
 
-    public function addError($error, $context = array())
+    public function addError($error, $context = array ())
     {
-        if (!($error instanceof Error)) {
-            if ($this->errorManager) {
+        if (!($error instanceof Error))
+        {
+            if ($this->errorManager)
+            {
                 return $this->addError($this->errorManager->getError($error, $context));
-            } else {
+            }
+            else
+            {
                 throw new \LogicException("Unserialized agent cannot be reused at runtime.");
             }
         }
         $this->errors[] = $error;
-
         return $this;
     }
 
@@ -183,7 +183,6 @@ class FiddleAgent
     public function setStorageName($storageName)
     {
         $this->storageName = $storageName;
-
         return $this;
     }
 
@@ -195,7 +194,6 @@ class FiddleAgent
     public function setSharedMemory(SharedMemory $sharedMemory)
     {
         $this->sharedMemory = $sharedMemory;
-
         return $this;
     }
 
@@ -207,7 +205,6 @@ class FiddleAgent
     public function setEngine(TwigEngineInterface $engine)
     {
         $this->engine = $engine;
-
         return $this;
     }
 
@@ -219,7 +216,6 @@ class FiddleAgent
     public function setSourceDirectory($sourceDirectory)
     {
         $this->sourceDirectory = $sourceDirectory;
-
         return $this;
     }
 
@@ -231,7 +227,6 @@ class FiddleAgent
     public function setContext(array $context)
     {
         $this->context = $context;
-
         return $this;
     }
 
@@ -243,7 +238,6 @@ class FiddleAgent
     public function setTemplates(array $templates)
     {
         $this->templates = $templates;
-
         return $this;
     }
 
@@ -255,7 +249,6 @@ class FiddleAgent
     public function setRendered($rendered)
     {
         $this->rendered = $rendered;
-
         return $this;
     }
 
@@ -267,7 +260,6 @@ class FiddleAgent
     public function setCompiled(array $compiled)
     {
         $this->compiled = $compiled;
-
         return $this;
     }
 
@@ -278,11 +270,12 @@ class FiddleAgent
 
     public function __sleep()
     {
-        return array_diff(array_keys(get_object_vars($this)), array('errorManager', 'engine'));
+        return array_diff(array_keys(get_object_vars($this)), array ('errorManager', 'engine'));
     }
 
     public function __wakeup()
     {
         $this->errorManager = null;
     }
+
 }

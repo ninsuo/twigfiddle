@@ -10,6 +10,7 @@ use Fuz\Framework\Service\FileSystem;
 
 class TemplateManager extends BaseService
 {
+
     protected $fileSystem;
     protected $fiddleConfiguration;
     protected $templatesConfiguration;
@@ -24,37 +25,43 @@ class TemplateManager extends BaseService
     public function prepareTemplates(FiddleAgent $agent)
     {
         $fiddle = $agent->getFiddle();
-        if (is_null($fiddle)) {
+        if (is_null($fiddle))
+        {
             throw new \LogicException("You should load a fiddle before trying to prepare its templates.");
         }
         $templates = $this->validateAndSortTemplates($agent);
         $this->writeTemplates($agent, $templates);
-
         return $this;
     }
 
     protected function validateAndSortTemplates(FiddleAgent $agent)
     {
         $collection = $agent->getFiddle()->getTemplates();
-        if (count($collection) == 0) {
+        if (count($collection) == 0)
+        {
             $agent->addError(Error::E_NO_TEMPLATE);
             throw new StopExecutionException();
         }
 
         $isMain = 0;
-        foreach ($collection as $template) {
+        foreach ($collection as $template)
+        {
             $isMain += (int) $template->isMain();
         }
-        if ($isMain == 0) {
+        if ($isMain == 0)
+        {
             $agent->addError(Error::E_NO_MAIN_TEMPLATE);
             throw new StopExecutionException();
-        } elseif ($isMain >= 2) {
+        }
+        else if ($isMain >= 2)
+        {
             $agent->addError(Error::E_SEVERAL_MAIN_TEMPLATES);
             throw new StopExecutionException();
         }
 
         $templates = $collection->toArray();
-        usort($templates, function ($a, $b) {
+        usort($templates, function($a, $b)
+        {
             return $a->isMain() ? -1 : 1;
         });
 
@@ -63,37 +70,40 @@ class TemplateManager extends BaseService
 
     public function writeTemplates(FiddleAgent $agent, array $templates)
     {
-        $dir = $agent->getDirectory().DIRECTORY_SEPARATOR.$this->fiddleConfiguration['templates_dir'];
+        $dir = $agent->getDirectory() . DIRECTORY_SEPARATOR . $this->fiddleConfiguration['templates_dir'];
         $this->logger->debug("Creating template directory: {$dir}");
         $this->fileSystem->mkdir($dir);
-        $files = array();
-        foreach ($templates as $template) {
+        $files = array ();
+        foreach ($templates as $template)
+        {
             $filename = $template->getFilename();
-            if (!preg_match("/{$this->templatesConfiguration['validation']}/", $filename)) {
-                $agent->addError(Error::E_INVALID_TEMPLATE_NAME, array('name' => $filename));
+            if (!preg_match("/{$this->templatesConfiguration['validation']}/", $filename))
+            {
+                $agent->addError(Error::E_INVALID_TEMPLATE_NAME, array ('name' => $filename));
                 throw new StopExecutionException();
             }
 
-            $file = $dir.DIRECTORY_SEPARATOR.$filename;
+            $file = $dir . DIRECTORY_SEPARATOR . $filename;
             $this->logger->debug("Writing template: {$file}.");
-            if (@file_put_contents($file, $template->getContent()) === false) {
-                $agent->addError(Error::E_CANNOT_WRITE_TEMPLATE, array('file' => $file));
+            if (@file_put_contents($file, $template->getContent()) === false)
+            {
+                $agent->addError(Error::E_CANNOT_WRITE_TEMPLATE, array ('file' => $file));
                 throw new StopExecutionException();
             }
             $files[] = $file;
         }
         $agent->setTemplates($files);
-
         return $this;
     }
 
     public function getMainTemplateFromAgent(FiddleAgent $agent)
     {
         $templates = $agent->getTemplates();
-        if (is_null($templates)) {
+        if (is_null($templates))
+        {
             throw new \LogicException("Templates have not been generated in this fiddle.");
         }
-
         return reset($templates);
     }
+
 }
