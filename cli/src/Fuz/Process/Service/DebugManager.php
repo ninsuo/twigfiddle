@@ -8,7 +8,6 @@ use Fuz\Process\Agent\FiddleAgent;
 
 class DebugManager extends BaseService
 {
-
     protected $fileSystem;
     protected $debugConfiguration;
     protected $environmentConfiguration;
@@ -22,31 +21,25 @@ class DebugManager extends BaseService
 
     public function backupIfDebugRequired(FiddleAgent $agent)
     {
-        if (!$this->debugConfiguration['allowed'])
-        {
+        if (!$this->debugConfiguration['allowed']) {
             return $this;
         }
 
         $this->cleanExpiredDebugFiles();
 
-        if ($agent->isDebug())
-        {
+        if ($agent->isDebug()) {
             return $this;
         }
 
         $requiresDebug = 0;
-        foreach ($agent->getErrors() as $error)
-        {
+        foreach ($agent->getErrors() as $error) {
             $requiresDebug += (int) $error->isDebug();
         }
 
-        if ($requiresDebug)
-        {
+        if ($requiresDebug) {
             $this->logger->warning("This fiddle requires developers attention, copying it to the debug directory.");
             $this->copyFiddleToDebugDirectory($agent);
-        }
-        else
-        {
+        } else {
             $this->logger->debug("This fiddle does not require developers attention.");
         }
     }
@@ -64,14 +57,12 @@ class DebugManager extends BaseService
     protected function copyFiddleToDebugDirectory(FiddleAgent $agent)
     {
         $environmentId = $agent->getEnvironmentId();
-        if (preg_match("/{$this->environmentConfiguration['validation']}/", $environmentId))
-        {
-            $source = $this->environmentConfiguration['directory'] . DIRECTORY_SEPARATOR . $environmentId;
-            $target = $this->debugConfiguration['directory'] . DIRECTORY_SEPARATOR . $environmentId;
+        if (preg_match("/{$this->environmentConfiguration['validation']}/", $environmentId)) {
+            $source = $this->environmentConfiguration['directory'].DIRECTORY_SEPARATOR.$environmentId;
+            $target = $this->debugConfiguration['directory'].DIRECTORY_SEPARATOR.$environmentId;
             $this->logger->debug("Copying {$source} to {$target}");
             $this->fileSystem->copyDirectory($source, $target);
-            @file_put_contents($target . DIRECTORY_SEPARATOR . $this->debugConfiguration['context_file'], serialize($agent));
+            @file_put_contents($target.DIRECTORY_SEPARATOR.$this->debugConfiguration['context_file'], serialize($agent));
         }
     }
-
 }

@@ -6,7 +6,6 @@ use Symfony\Component\Config\Loader\FileLoader;
 
 class PhpFileLoader extends FileLoader
 {
-
     public function load($resource, $type = null)
     {
         return eval(file_get_contents($resource));
@@ -18,5 +17,4 @@ class PhpFileLoader extends FileLoader
               $resource, PATHINFO_EXTENSION
         );
     }
-
 }

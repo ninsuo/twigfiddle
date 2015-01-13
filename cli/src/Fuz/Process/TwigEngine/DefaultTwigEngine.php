@@ -6,7 +6,6 @@ use Fuz\Framework\Base\BaseService;
 
 class DefaultTwigEngine extends BaseService implements TwigEngineInterface
 {
-
     /**
      * From all released versions of Twig, there are backward compatibility to load a template.
      *
@@ -14,22 +13,22 @@ class DefaultTwigEngine extends BaseService implements TwigEngineInterface
      * directory (in fact, compilation directory) were given in the twig loader. But now, the cache
      * directory is given on Environment's options.
      *
-     * @param string $sourceDirectory
-     * @param string $cacheDirectory
-     * @param string $template
-     * @param array $context
+     * @param  string $sourceDirectory
+     * @param  string $cacheDirectory
+     * @param  string $template
+     * @param  array  $context
      * @return string
      */
-    public function render($sourceDirectory, $cacheDirectory, $template, array $context = array ())
+    public function render($sourceDirectory, $cacheDirectory, $template, array $context = array())
     {
-        require($sourceDirectory . DIRECTORY_SEPARATOR . '/lib/Twig/Autoloader.php');
+        require $sourceDirectory.DIRECTORY_SEPARATOR.'/lib/Twig/Autoloader.php';
         \Twig_Autoloader::register();
 
         $executionDirectory = dirname($template);
         $mainTemplate = basename($template);
 
         $twigLoader = new \Twig_Loader_Filesystem($executionDirectory, $cacheDirectory);
-        $twigEnvironment = new \Twig_Environment($twigLoader, array ('cache' => $cacheDirectory));
+        $twigEnvironment = new \Twig_Environment($twigLoader, array('cache' => $cacheDirectory));
 
         $templateObject = $twigEnvironment->loadTemplate($mainTemplate);
 
@@ -44,29 +43,26 @@ class DefaultTwigEngine extends BaseService implements TwigEngineInterface
      * The first coomment of all compiled twig file contains the twig file name since the very first Twig's version.
      * This method just extracts it.
      *
-     * @param string $cacheDirectory
-     * @param array $files
+     * @param  string $cacheDirectory
+     * @param  array  $files
      * @return array
      */
     public function extractTemplateName($content)
     {
         $templateName = null;
         $tokens = token_get_all($content);
-        foreach ($tokens as $token)
-        {
-            if (!is_array($token))
-            {
+        foreach ($tokens as $token) {
+            if (!is_array($token)) {
                 continue;
             }
             list($identifier, $string, $lineno) = $token;
-            if ($identifier !== T_COMMENT)
-            {
+            if ($identifier !== T_COMMENT) {
                 continue;
             }
-            $templateName = trim(str_replace(array ('/*', '*/'), '', $string));
+            $templateName = trim(str_replace(array('/*', '*/'), '', $string));
             break;
         }
+
         return $templateName;
     }
-
 }

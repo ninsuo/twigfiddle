@@ -10,7 +10,6 @@ use Psr\Log\LoggerInterface;
 
 class BaseCommand extends Command implements ContainerAwareInterface, LoggerAwareInterface
 {
-
     public $container;
     protected $logger;
 
@@ -33,5 +32,4 @@ class BaseCommand extends Command implements ContainerAwareInterface, LoggerAwar
     {
         return $this->container->getParameter($name);
     }
-
 }

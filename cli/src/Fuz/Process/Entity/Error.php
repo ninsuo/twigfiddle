@@ -4,7 +4,6 @@ namespace Fuz\Process\Entity;
 
 class Error
 {
-
     const G_GENERAL = 'GENERAL';
     const G_ENVIRONMENT = 'ENVIRONMENT';
     const G_CONTEXT = 'CONTEXT';
@@ -59,6 +58,7 @@ class Error
     public function setNo($no)
     {
         $this->no = $no;
+
         return $this;
     }
 
@@ -70,6 +70,7 @@ class Error
     public function setGroup($group)
     {
         $this->group = $group;
+
         return $this;
     }
 
@@ -81,6 +82,7 @@ class Error
     public function setMessage($message)
     {
         $this->message = $message;
+
         return $this;
     }
 
@@ -92,6 +94,7 @@ class Error
     public function setContext(array $context)
     {
         $this->context = $context;
+
         return $this;
     }
 
@@ -103,6 +106,7 @@ class Error
     public function setIsDebug($isDebug)
     {
         $this->isDebug = $isDebug;
+
         return $this;
     }
 
@@ -114,7 +118,7 @@ class Error
     public function setCaller($caller)
     {
         $this->caller = $caller;
+
         return $this;
     }
-
 }

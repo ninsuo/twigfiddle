@@ -12,7 +12,6 @@ use Fuz\Process\Exception\StopExecutionException;
 
 class RunTimeoutCommand extends BaseCommand
 {
-
     protected $environmentId;
     protected $timeout;
     protected $process;
@@ -45,26 +44,26 @@ class RunTimeoutCommand extends BaseCommand
     {
         $this->environmentId = $input->getArgument('environment-id');
         $this->timeout = $input->getArgument('timeout');
+
         return $this;
     }
 
     protected function initErrorHandler()
     {
-        register_shutdown_function(function()
-        {
-            if ((!is_null($err = error_get_last())) && (!in_array($err['type'], array (E_NOTICE, E_WARNING))))
-            {
+        register_shutdown_function(function () {
+            if ((!is_null($err = error_get_last())) && (!in_array($err['type'], array(E_NOTICE, E_WARNING)))) {
                 $this->saveError(Error::E_UNEXPECTED, $err);
             }
         });
+
         return $this;
     }
 
     protected function initProcess()
     {
-        $command = array (
+        $command = array(
                 '/usr/bin/php',
-                $this->getParameter('root_dir') . '/run-' . $this->getParameter('env') . '.php',
+                $this->getParameter('root_dir').'/run-'.$this->getParameter('env').'.php',
                 'twigfiddle:run',
                 $this->environmentId,
         );
@@ -81,22 +80,17 @@ class RunTimeoutCommand extends BaseCommand
     protected function runProcess()
     {
         $this->process->start();
-        try
-        {
-            while ($this->process->isRunning())
-            {
+        try {
+            while ($this->process->isRunning()) {
                 $this->process->checkTimeout();
                 usleep(200000);
             }
-        }
-        catch (\RuntimeException $e)
-        {
+        } catch (\RuntimeException $e) {
             $this->saveError(Error::E_TIMEOUT, $e);
-        }
-        catch (StopExecutionException $e)
-        {
+        } catch (StopExecutionException $e) {
             $this->saveError(Error::E_UNEXPECTED, $e);
         }
+
         return $this;
     }
 
@@ -115,5 +109,4 @@ class RunTimeoutCommand extends BaseCommand
            ->recoverSharedMemory($agent, false)
            ->saveResults($agent);
     }
-
 }

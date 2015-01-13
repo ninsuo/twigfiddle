@@ -7,7 +7,6 @@ use Fuz\Framework\Api\ConfigurationNodeInterface;
 
 class TwigSourcesConfigurationNode implements ConfigurationNodeInterface
 {
-
     public function getConfigurationNode()
     {
         $treeBuilder = new TreeBuilder();
@@ -18,7 +17,7 @@ class TwigSourcesConfigurationNode implements ConfigurationNodeInterface
                 ->scalarNode("directory")
                     ->isRequired()
                     ->validate()
-                        ->ifTrue(function($dir) {
+                        ->ifTrue(function ($dir) {
                             return !is_dir($dir) || !is_readable($dir);
                         })
                         ->thenInvalid("Unable to find twig sources in %s: did you run the installation script?")
@@ -29,5 +28,4 @@ class TwigSourcesConfigurationNode implements ConfigurationNodeInterface
 
         return $rootNode;
     }
-
 }

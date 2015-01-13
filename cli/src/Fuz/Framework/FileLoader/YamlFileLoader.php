@@ -7,7 +7,6 @@ use Symfony\Component\Yaml\Yaml;
 
 class YamlFileLoader extends FileLoader
 {
-
     public function load($resource, $type = null)
     {
         return Yaml::parse($resource);
@@ -19,5 +18,4 @@ class YamlFileLoader extends FileLoader
               $resource, PATHINFO_EXTENSION
         );
     }
-
 }

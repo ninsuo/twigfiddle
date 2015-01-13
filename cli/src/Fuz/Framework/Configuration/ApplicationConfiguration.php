@@ -7,7 +7,6 @@ use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
 class ApplicationConfiguration implements ConfigurationInterface
 {
-
     protected $nodes;
 
     public function __construct(array $nodes = array())
@@ -20,12 +19,10 @@ class ApplicationConfiguration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('app');
 
-        foreach ($this->nodes as $object)
-        {
+        foreach ($this->nodes as $object) {
             $rootNode->append($object->getConfigurationNode());
         }
 
         return $treeBuilder;
     }
-
 }

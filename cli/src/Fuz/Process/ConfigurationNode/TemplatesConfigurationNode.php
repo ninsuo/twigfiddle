@@ -7,7 +7,6 @@ use Fuz\Framework\Api\ConfigurationNodeInterface;
 
 class TemplatesConfigurationNode implements ConfigurationNodeInterface
 {
-
     public function getConfigurationNode()
     {
         $treeBuilder = new TreeBuilder();
@@ -18,7 +17,7 @@ class TemplatesConfigurationNode implements ConfigurationNodeInterface
                 ->scalarNode("validation")
                     ->defaultValue('^[A-Za-z0-9-_]{1,16}\\.twig$')
                     ->validate()
-                        ->ifTrue(function($expr) {
+                        ->ifTrue(function ($expr) {
                             return preg_match("/{$expr}/", '/') === true;
                         })
                         ->thenInvalid("Template names expression must reject names containing slashs ( / ): current expresion %s is too permissive.")
@@ -29,5 +28,4 @@ class TemplatesConfigurationNode implements ConfigurationNodeInterface
 
         return $rootNode;
     }
-
 }

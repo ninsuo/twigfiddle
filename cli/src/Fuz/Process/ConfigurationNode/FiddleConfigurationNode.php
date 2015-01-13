@@ -7,7 +7,6 @@ use Fuz\Framework\Api\ConfigurationNodeInterface;
 
 class FiddleConfigurationNode implements ConfigurationNodeInterface
 {
-
     public function getConfigurationNode()
     {
         $treeBuilder = new TreeBuilder();
@@ -18,7 +17,7 @@ class FiddleConfigurationNode implements ConfigurationNodeInterface
                 ->scalarNode("file")
                     ->defaultValue('fiddle.shr')
                     ->validate()
-                        ->ifTrue(function($file) {
+                        ->ifTrue(function ($file) {
                             return strpos($file, '/') !== false;
                         })
                         ->thenInvalid("The shared memory file name can't contain a slash ( / ): %s")
@@ -27,7 +26,7 @@ class FiddleConfigurationNode implements ConfigurationNodeInterface
                 ->scalarNode('templates_dir')
                     ->defaultValue('twig')
                     ->validate()
-                        ->ifTrue(function($dir) {
+                        ->ifTrue(function ($dir) {
                             return strpos($dir, '/') !== false;
                         })
                         ->thenInvalid("The template directory's name can't contain a slash ( / ): %s")
@@ -36,7 +35,7 @@ class FiddleConfigurationNode implements ConfigurationNodeInterface
                 ->scalarNode('compiled_dir')
                     ->defaultValue('php')
                     ->validate()
-                        ->ifTrue(function($dir) {
+                        ->ifTrue(function ($dir) {
                             return strpos($dir, '/') !== false;
                         })
                         ->thenInvalid("The compiled files directory's name can't contain a slash ( / ): %s")
@@ -47,5 +46,4 @@ class FiddleConfigurationNode implements ConfigurationNodeInterface
 
         return $rootNode;
     }
-
 }

@@ -15,7 +15,6 @@ use Fuz\Framework\Core\MonologContainer;
 
 class Application
 {
-
     protected $environment;
     protected $container;
     protected $applicationDir;
@@ -63,62 +62,64 @@ class Application
     {
         $r = new \ReflectionObject($this);
         $this->applicationDir = realpath(str_replace('\\', '/', dirname($r->getFileName())));
-        $this->rootDir = realpath($this->applicationDir . '/../../../');
+        $this->rootDir = realpath($this->applicationDir.'/../../../');
         $this->container->setParameter('root_dir', $this->rootDir);
+
         return $this;
     }
 
     protected function initCoreServices()
     {
-        $locator = new FileLocator($this->applicationDir . '/Resources/config');
+        $locator = new FileLocator($this->applicationDir.'/Resources/config');
         $loader = new YamlFileLoader($this->container, $locator);
         $loader->load('services.yml');
+
         return $this;
     }
 
     protected function initUserServices()
     {
-        $locator = new FileLocator($this->rootDir . "/config/");
+        $locator = new FileLocator($this->rootDir."/config/");
         $loader = new YamlFileLoader($this->container, $locator);
         $loader->load('services.yml');
         $loader->load("parameters.{$this->environment}.yml");
+
         return $this;
     }
 
     protected function initConfiguration()
     {
-        $dir = $this->rootDir . "/config/";
+        $dir = $this->rootDir."/config/";
         $config = $this->container->get('file_loader')->load($dir, 'config.yml');
-        $configs = array ($this->container->getParameterBag()->resolveValue($config));
+        $configs = array($this->container->getParameterBag()->resolveValue($config));
         $serviceIds = array_keys($this->container->findTaggedServiceIds('configuration.node'));
-        $nodes = array ();
-        foreach ($serviceIds as $serviceId)
-        {
+        $nodes = array();
+        foreach ($serviceIds as $serviceId) {
             $service = $this->container->get($serviceId);
-            if ($service instanceof ConfigurationNodeInterface)
-            {
+            if ($service instanceof ConfigurationNodeInterface) {
                 $nodes[] = $service;
             }
         }
         $processor = new Processor();
         $configuration = new ApplicationConfiguration($nodes);
-        foreach ($processor->processConfiguration($configuration, $configs) as $name => $value)
-        {
+        foreach ($processor->processConfiguration($configuration, $configs) as $name => $value) {
             $this->container->setParameter("config.{$name}", $value);
         }
+
         return $this;
     }
 
     protected function initLogger()
     {
         $config = $this->container->getParameter('config.logger');
-        $dir = $this->rootDir . "/logs/";
+        $dir = $this->rootDir."/logs/";
         $log = "{$dir}/{$config['name']}";
         $max_files = $config['max_files'];
         $levels = Logger::getLevels();
         $level = $levels[$config['level']];
         $handler = new RotatingFileHandler($log, $max_files, $level);
         $this->container->pushHandler($handler);
+
         return $this;
     }
 
@@ -126,16 +127,14 @@ class Application
     {
         $this->console = new Console();
         $serviceIds = array_keys($this->container->findTaggedServiceIds('command'));
-        foreach ($serviceIds as $serviceId)
-        {
+        foreach ($serviceIds as $serviceId) {
             $command = $this->container->get($serviceId);
-            if ($command instanceof ContainerAwareInterface)
-            {
+            if ($command instanceof ContainerAwareInterface) {
                 $command->setContainer($this->container);
             }
             $this->console->add($command);
         }
+
         return $this;
     }
-
 }

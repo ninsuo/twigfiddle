@@ -2,13 +2,11 @@
 
 namespace Fuz\Framework\StringLoader;
 
-use Fuz\Framework\StringLoader\StringLoaderInterface;
 use Fuz\Framework\Exception\StringLoaderException;
 
 class JsonStringLoader implements StringLoaderInterface
 {
-
-    public static $errors = array (
+    public static $errors = array(
             JSON_ERROR_NONE => 'No error has occurred',
             JSON_ERROR_DEPTH => 'The maximum stack depth has been exceeded',
             JSON_ERROR_STATE_MISMATCH => 'Invalid or malformed JSON',
@@ -22,21 +20,18 @@ class JsonStringLoader implements StringLoaderInterface
 
     public function load($stream)
     {
-        if (strtolower($stream) === 'null')
-        {
+        if (strtolower($stream) === 'null') {
             return array();
         }
         $array = json_decode($stream, true, 512, JSON_BIGINT_AS_STRING);
-        if ($array === null)
-        {
+        if ($array === null) {
             $error = json_last_error();
-            if (!array_key_exists($error, self::$errors))
-            {
+            if (!array_key_exists($error, self::$errors)) {
                 throw new StringLoaderException("Unable to parse the given JSON input.");
             }
             throw new StringLoaderException(sprintf("Unable to parse the given JSON input: %s\n", self::$errors[$error]));
         }
+
         return $array;
     }
-
 }
