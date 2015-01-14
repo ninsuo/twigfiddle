@@ -177,7 +177,7 @@ $(document).ready(function() {
                 }
             }
         }).on('change', function(cm) {
-            $('#' + id).html(cm.getValue());
+            $('#' + id).html($.symfony2.escape(cm.getValue()));
         });
     };
 
@@ -234,7 +234,7 @@ $(document).ready(function() {
 
     var contextEditor = initCodeMirrorForContext($('.codemirror-context').attr('id'));
     contextEditor.on('change', function(cm) {
-        $('.codemirror-context').html(cm.getValue());
+        $('.codemirror-context').html($.symfony2.escape(cm.getValue()));
     });
 
     {#
