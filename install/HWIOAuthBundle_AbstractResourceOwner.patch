@@ -1,0 +1,27 @@
+--- ./web/vendor/hwi/oauth-bundle/HWI/Bundle/OAuthBundle/OAuth/ResourceOwner/AbstractResourceOwner.php	2015-01-13 23:16:14.667325284 +0100
++++ /home/ninsuo/AbstractResourceOwner.php	2015-01-14 00:34:53.574194102 +0100
+@@ -226,17 +226,17 @@
+         $request  = new HttpRequest($method, $url);
+         $response = new HttpResponse();
+ 
+-        $contentLength = 0;
+-        if (is_string($content)) {
+-            $contentLength = strlen($content);
+-        } elseif (is_array($content)) {
+-            $contentLength = strlen(implode('', $content));
+-        }
++//        $contentLength = 0;
++//        if (is_string($content)) {
++//            $contentLength = strlen($content);
++//        } elseif (is_array($content)) {
++//            $contentLength = strlen(implode('', $content));
++//        }
+ 
+         $headers = array_merge(
+             array(
+                 'User-Agent: HWIOAuthBundle (https://github.com/hwi/HWIOAuthBundle)',
+-                'Content-Length: ' . $contentLength,
++               // 'Content-Length: ' . $contentLength,
+             ),
+             $headers
+         );

@@ -5,7 +5,7 @@ parameters:
     database_name:     symfony
     database_user:     root
     database_password: ~
-    database_socket: /opt/local/var/run/mysql56/mysqld.sock
+    database_socket: /var/run/mysqld/mysqld.sock
 
     mailer_transport:  smtp
     mailer_host:       127.0.0.1
