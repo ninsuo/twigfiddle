@@ -67,7 +67,8 @@ class RunCommand extends BaseCommand
             if ((!is_null($err = error_get_last())) && (!in_array($err['type'], array (E_NOTICE, E_WARNING))))
             {
                 // No need to debug main.twig if it contains {{ include('main.twig') }}
-                if (!strpos($err['message'], 'Allowed memory size'))
+                if (!strpos($err['message'], 'Allowed memory size')
+                   && !strpos($err['message'], 'Maximum function nesting level'))
                 {
                     $this->agent->addError(Error::E_UNEXPECTED, $err);
                     $this->finish();
