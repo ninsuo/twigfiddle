@@ -133,7 +133,7 @@
                {% if isMyFiddle %}by <i>yourself</i>{% else %}{{ _self.user('by', fiddle.user|default(null)) }}{% endif %}
            {% endif %}
            {% if showVisits %}
-                and visited {{ fiddle.visitsCount }} times
+                and visited {{ fiddle.visitsCount }} time{% if fiddle.visitsCount != 1 %}s{% endif %}
            {% endif %}
         {% endif %}
     {% endspaceless -%}
