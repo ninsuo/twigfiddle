@@ -37,7 +37,7 @@ class GitHubExtension extends \Twig_Extension
                        $path = substr($path, 0, strrpos($path, ':'));
 
                        // https://github.com/ninsuo/twigfiddle/blob/master/cli/src/Fuz/Process/Service/ExecuteManager.php#L98
-                       return $this->repositoryRoot . '/' . $path . $line;
+                       return $this->repositoryRoot . '/blob/master/' . $path . $line;
                    }),
         );
     }

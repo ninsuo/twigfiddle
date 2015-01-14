@@ -2,7 +2,13 @@
 {# Included by: FuzAppBundle:Fiddle:index.html.twig #}
 
 <div class="col-md-3 col-sm-6 col-xs-12 revision">
-    <select id="revision-browser" class="form-control input-sm" data-ays-ignore="true" {% if data.id == null %}disabled{% endif %}>
+    <select
+        id="revision-browser"
+        class="form-control input-sm"
+        title="Use this menu to switch between fiddle's revisions"
+        aria-label="Use this menu to switch between fiddle's revisions"
+        data-ays-ignore="true"
+        {% if data.id == null %}disabled{% endif %}>
         {% for rev in revisionBrowser %}
             <option {% if rev.revision == data.revision %}selected{% endif %} value="{{ path('fiddle', {'hash': data.hash, 'revision': rev.revision}) }}">Revision {{ rev.revision }} - {{ rev.creationTm|date }}</option>
         {% endfor %}
@@ -12,6 +18,8 @@
     <button
         type="button"
         class="btn btn-default domajax click"
+        title="Fork this fiddle to add your own code"
+        aria-label="Fork this fiddle to add your own code"
         data-endpoint="{{ path('save_fiddle', {'hash': hash}) }}"
         data-input="#page-form"
         data-callback-success="processSaveFiddleResponse"
@@ -20,8 +28,7 @@
         data-highlight=""
         data-highlight-color-success="#87b839"
         data-highlight-color-failure="#FF0000"
-        {% if data.id == null %}disabled{% endif %}
-        >
+        {% if data.id == null %}disabled{% endif %}>
         <span class="glyphicon glyphicon glyphicon-file hidden-md hidden-sm hidden-xs"></span> Create new revision
     </button>
 </div>

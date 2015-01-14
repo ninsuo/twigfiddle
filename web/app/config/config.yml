@@ -31,6 +31,8 @@ twig:
     form:
         resources:
             - 'FuzAppBundle::fields.html.twig'
+    globals:
+        github_repository_root: %github_repository_root%
 
 # Assetic Configuration
 assetic:

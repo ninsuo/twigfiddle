@@ -102,6 +102,8 @@
             <button
                 type="button"
                 class="btn btn-tf-dark domajax click"
+                title="Bookmark fiddle {{ fiddle.hash }} v{{ fiddle.revision }} - more than a filter, bookmarks let you override titles and tags of any fiddle you don't own"
+                aria-label="Bookmark fiddle {{ fiddle.hash }} v{{ fiddle.revision }} - more than a filter, bookmarks let you override titles and tags of any fiddle you don't own"
                 data-endpoint="{{ path('bookmark_fiddle', {'hash': fiddle.hash, 'revision': fiddle.revision}) }}"
                 data-input="#fiddle-{{ index }}"
                 data-output="#fiddle-{{ index }}"
@@ -118,7 +120,12 @@
 
                 {# Edit #}
                 <span id="edit-{{ index }}">
-                    <button type="button" class="btn btn-tf-dark result-edit" data-index="{{ index }}">
+                    <button
+                        type="button"
+                        class="btn btn-tf-dark result-edit"
+                        title="Edit fiddle {{ fiddle.hash }} v{{ fiddle.revision }}'s title and tags"
+                        aria-label="Edit fiddle {{ fiddle.hash }} v{{ fiddle.revision }}'s title and tags"
+                        data-index="{{ index }}">
                         <span class="glyphicon glyphicon-pencil"></span> Edit
                     </button>
                 </span>
@@ -128,6 +135,8 @@
                     <button
                         type="button"
                         class="btn btn-tf-dark domajax click"
+                        title="Save fiddle {{ fiddle.hash }} v{{ fiddle.revision }} changes"
+                        aria-label="Save fiddle {{ fiddle.hash }} v{{ fiddle.revision }} changes"
                         data-endpoint="{{ path('save_fiddle', {'hash': fiddle.hash, 'revision': fiddle.revision}) }}"
                         data-input="#fiddle-{{ index }}"
                         data-output="#fiddle-{{ index }}"
@@ -145,7 +154,12 @@
 
          {% endif %}
 
-         <a class="btn btn-tf-dark" href="{{ path('fiddle', {'hash': fiddle.hash, 'revision': fiddle.revision}) }}" target="_blank">
+         <a
+             class="btn btn-tf-dark"
+             href="{{ path('fiddle', {'hash': fiddle.hash, 'revision': fiddle.revision}) }}"
+             title="Open fiddle {{ fiddle.hash }} v{{ fiddle.revision }} in a new tab"
+             aria-label="Open fiddle {{ fiddle.hash }} v{{ fiddle.revision }} in a new tab"
+             target="_blank">
            <span class="glyphicon glyphicon glyphicon-folder-open hidden-md hidden-sm hidden-xs"></span>
            Open
         </a>

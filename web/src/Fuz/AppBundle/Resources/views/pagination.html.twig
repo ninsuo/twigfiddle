@@ -24,7 +24,10 @@
                             <span aria-hidden="true">«</span>
                         </span>
                     {% else %}
-                        <a aria-label="Previous page" {{ _self.attributes(linksAttr, pagination.page_query_string, (pagination.session.current_page - 1)) }}>
+                        <a
+                            aria-label="Go to previous page, page {{ (pagination.session.current_page - 1) }}"
+                            title="Go to previous page, page {{ (pagination.session.current_page - 1) }}"
+                            {{ _self.attributes(linksAttr, pagination.page_query_string, (pagination.session.current_page - 1)) }}>
                             <span aria-hidden="true">«</span>
                         </a>
                     {% endif %}
@@ -32,7 +35,10 @@
 
                 {% if pagination.display_first %}
                 <li>
-                    <a aria-label="First page" {{ _self.attributes(linksAttr, pagination.page_query_string, 1) }}>
+                    <a
+                        aria-label="Go to first page"
+                        title="Go to first page"
+                        {{ _self.attributes(linksAttr, pagination.page_query_string, 1) }}>
                         <span>1</span>
                     </a>
                 </li>
@@ -48,7 +54,10 @@
                         {% if isCurrent %}
                             <span>{{ page }} <span class="sr-only">(current)</span></span>
                         {% else %}
-                            <a {{ _self.attributes(linksAttr, pagination.page_query_string, page) }}>{{ page }}</a>
+                            <a
+                                aria-label="Go to page {{ page }}"
+                                title="Go to page {{ page }}"
+                                {{ _self.attributes(linksAttr, pagination.page_query_string, page) }}>{{ page }}</a>
                         {% endif %}
                     </li>
                 {% endfor %}
@@ -59,7 +68,10 @@
 
                 {% if pagination.display_last %}
                 <li>
-                    <a aria-label="Last page" {{ _self.attributes(linksAttr, pagination.page_query_string, pagination.count_pages) }}>
+                    <a
+                        aria-label="Go to last page, page {{ pagination.count_pages }}"
+                        title="Go to last page, page {{ pagination.count_pages }}"
+                        {{ _self.attributes(linksAttr, pagination.page_query_string, pagination.count_pages) }}>
                         <span>{{ pagination.count_pages }}</span>
                     </a>
                 </li>
@@ -72,7 +84,10 @@
                             <span aria-hidden="true">»</span>
                         </span>
                     {% else %}
-                        <a aria-label="Next page" {{ _self.attributes(linksAttr, pagination.page_query_string, pagination.session.current_page + 1) }}>
+                        <a
+                            aria-label="Go to next page, page {{ (pagination.session.current_page + 1) }}"
+                            title="Go to next page, page {{ (pagination.session.current_page + 1) }}"
+                            {{ _self.attributes(linksAttr, pagination.page_query_string, pagination.session.current_page + 1) }}>
                             <span aria-hidden="true">»</span>
                         </a>
                     {% endif %}
@@ -83,7 +98,7 @@
 
     </div>
 
-    <div class="col-md-4 text-left">
+    <div class="col-md-4 col-sm-6 col-xs-12 text-left">
 
         {# Results per page #}
         <nav>
@@ -96,7 +111,10 @@
                         {% if isCurrentPerPage %}
                             <span>{{ per_page }} <span class="sr-only">(current)</span></span>
                         {% else %}
-                            <a {{ _self.attributes(linksAttr, pagination.per_page_query_string, per_page) }}>{{ per_page }}</a>
+                            <a
+                                aria-label="Show {{ per_page }} results per page"
+                                title="Show {{ per_page }} results per page"
+                                {{ _self.attributes(linksAttr, pagination.per_page_query_string, per_page) }}>{{ per_page }}</a>
                         {% endif %}
                     </li>
 
@@ -108,13 +126,13 @@
     </div>
 
     {# Number of results #}
-    <div class="col-md-4 text-center">
+    <div class="col-md-4 col-sm-6 col-xs-12 text-center">
         <div style="display:block;margin:5px;padding:6px 12px;">
             {{ pagination.count_results }} result{% if pagination.count_results != 1 %}s{% endif %}
         </div>
     </div>
 
-    <div class="col-md-4 text-right">
+    <div class="col-md-4 col-sm-6 col-xs-12 text-right">
 
         <form action="{{ route }}" method="get" role="form" class="form-inline">
             <div class="form-group">
@@ -125,7 +143,10 @@
                 <label class="sr-only"></label>
                 <input placeholder="" name="{{ pagination.page_query_string }}" class="form-control" style="width: 50px;">
             </div>
-            <button {{ _self.attributes(submitAttr, '', '') }} type="submit">OK</button>
+            <button
+                aria-label="Go to the given page"
+                title="Go to the given page" {{ _self.attributes(submitAttr, '', '') }}
+                type="submit">OK</button>
         </form>
 
     </div>

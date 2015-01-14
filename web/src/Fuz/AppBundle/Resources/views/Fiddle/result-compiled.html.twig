@@ -5,7 +5,12 @@
 <div class="form-group result-container">
     <div class="row">
         <div class="col-md-12 text-center small">
-            <a id="result-compiled-toggle" class="dark" href="#" data-plur="{% if data.result.compiled|length > 1 %}s{% endif %}">Show compiled template{% if data.result.compiled|length > 1 %}s{% endif %}</a>
+            <a
+                id="result-compiled-toggle"
+                class="dark" href="#"
+                title="Twig templates are converted to PHP classes, use this link to see how those fiddle's templates were compiled"
+                aria-label="Twig templates are converted to PHP classes, use this link to see how those fiddle's templates were compiled"
+                data-plur="{% if data.result.compiled|length > 1 %}s{% endif %}">Show compiled template{% if data.result.compiled|length > 1 %}s{% endif %}</a>
         </div>
     </div>
 </div>
@@ -17,7 +22,11 @@
             <div class="form-group">
                 <div class="input-group">
                     <div class="input-group-addon">Compiled</div>
-                    <select id="compiled-switcher" class="form-control">
+                    <select
+                        id="compiled-switcher"
+                        class="form-control"
+                        title="Use this menu to switch between compiled templates"
+                        aria-label="Use this menu to switch between compiled templates">
                         {% for filename, code in data.result.compiled %}
                             <option value="{{ filename | sha1 }}">{{ filename }}</option>
                         {% endfor %}

@@ -57,7 +57,12 @@
                 {# Exception pushed by... #}
                 <p class="text-right small">{{ error.group|title ~ '/' ~ error.no }}</p>
                 <p class="text-right small">
-                    <a class="dark" href="{{ error.caller|hide_project_path|github_repository_link }}" alt="See source code" target="_blank">{{ error.caller|hide_project_path }}</a>
+                    <a
+                        class="dark"
+                        href="{{ error.caller|hide_project_path|github_repository_link }}"
+                        title="See source code online"
+                        aria-label="See source code online"
+                        target="_blank">{{ error.caller|hide_project_path }}</a>
                 </p>
 
             </div>

@@ -15,7 +15,11 @@
     </div>
 
     {# SensioLabs Connect #}
-    <a href="{{ hwi_oauth_login_url('sensio_connect') }}" class="black">
+    <a
+        title="Login using your SensioLabs Connect account"
+        aria-label="Login using SensioLabs Connect account"
+        href="{{ hwi_oauth_login_url('sensio_connect') }}"
+        class="black">
         <div class="oauth sensio col-md-10">
             <img src="{{ asset('bundles/fuzapp/img/oauth/sensio_connect.png') }}" alt="SensioLabs Connect"/>
             <p>Click here to login using SensioLabs Connect</p>
@@ -36,7 +40,11 @@
         <div class="row" id="login">
 
             {# Google #}
-            <a href="{{ hwi_oauth_login_url('google') }}" class="black">
+            <a
+                title="Login using your Google account"
+                aria-label="Login using your Google account"
+                href="{{ hwi_oauth_login_url('google') }}"
+                class="black">
                 <div class="oauth col-md-4">
                     <img src="{{ asset('bundles/fuzapp/img/oauth/google.png') }}" alt="Google"/>
                     <p>Login using Google</p>
@@ -44,7 +52,11 @@
             </a>
 
             {# Facebook #}
-            <a href="{{ hwi_oauth_login_url('facebook') }}" class="black">
+            <a
+                title="Login using your Facebook account"
+                aria-label="Login using your Facebook account"
+                href="{{ hwi_oauth_login_url('facebook') }}"
+                class="black">
                 <div class="oauth col-md-4">
                     <img src="{{ asset('bundles/fuzapp/img/oauth/facebook.png') }}" alt="Facebook"/>
                     <p>Login using Facebook</p>
@@ -52,7 +64,11 @@
             </a>
 
              {# Twitter #}
-            <a href="{{ hwi_oauth_login_url('twitter') }}" class="black">
+            <a
+                title="Login using your Twitter account"
+                aria-label="Login using your Twitter account"
+                href="{{ hwi_oauth_login_url('twitter') }}"
+                class="black">
                 <div class="oauth col-md-4">
                     <img src="{{ asset('bundles/fuzapp/img/oauth/twitter.png') }}" alt="Twitter"/>
                     <p>Login using Twitter</p>

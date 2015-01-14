@@ -23,10 +23,12 @@
                     {{ body }}
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close the window" title="Close the window">Close</button>
                     {% if options['ok-endpoint'] %}
                         <button
                             type="button"
+                            aria-label="OK"
+                            title="OK"
                             data-endpoint="{{ options['ok-endpoint'] }}"
                             data-input="#{{ id }}"
                             {% if options['ok-options'] %}{{ options['ok-options'] }}{% endif %}
@@ -127,7 +129,12 @@
         {% if fiddle.id %}
             {% set isMyFiddle = (is_granted('ROLE_USER') and fiddle.user|default(null) and app.user.isEqualTo(fiddle.user)) %}
              Fiddle
-           <a href="{{ path('fiddle', {'hash': fiddle.hash, 'revision': fiddle.revision}) }}" target="_blank" class="green">{{ fiddle.hash }} {% if fiddle.revision > 1 %}v{{ fiddle.revision }}{% endif %}</a>
+           <a
+               title="Open fiddle in a new window"
+               aria-label="Open fiddle in a new window"
+               href="{{ path('fiddle', {'hash': fiddle.hash, 'revision': fiddle.revision}) }}"
+               target="_blank"
+               class="green">{{ fiddle.hash }} {% if fiddle.revision > 1 %}v{{ fiddle.revision }}{% endif %}</a>
              created on {{ fiddle.creationTm|date }}
            {% if fiddle.user|default(null) %}
                {% if isMyFiddle %}by <i>yourself</i>{% else %}{{ _self.user('by', fiddle.user|default(null)) }}{% endif %}

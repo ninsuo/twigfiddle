@@ -19,12 +19,22 @@
                 </div>
             </div>
             <div class="main-template-div col-md-3 col-sm-3  col-xs-8 text-center hide">
-               <button class="btn {% if form.isMain.vars.data %}btn-tf-green{% else %}btn-default{% endif %} btn-sm btn-twigfiddle main-template" data-id="{{ form.content.vars.id }}" type="button">
+               <button
+                   title="Select this file as main template"
+                   aria-label="Select this file as main template"
+                   class="btn {% if form.isMain.vars.data %}btn-tf-green{% else %}btn-default{% endif %} btn-sm btn-twigfiddle main-template"
+                   data-id="{{ form.content.vars.id }}"
+                   type="button">
                    <span class="glyphicon {% if form.isMain.vars.data %}glyphicon-check{% else %}glyphicon-unchecked{% endif %}"></span> Set as main template
                </button>
             </div>
             <div class="delete-template-div col-md-2 col-sm-2  col-xs-4 text-right hide">
-                <button class="btn btn-default btn-sm btn-twigfiddle delete-template" data-id="{{ form.content.vars.id }}" type="button">
+                <button
+                    title="Delete this template"
+                    aria-label="Delete this template"
+                    class="btn btn-default btn-sm btn-twigfiddle delete-template"
+                    data-id="{{ form.content.vars.id }}"
+                    type="button">
                     <span class="glyphicon glyphicon-trash"></span>
                 </button>
             </div>

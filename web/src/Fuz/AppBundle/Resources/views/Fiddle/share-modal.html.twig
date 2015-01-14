@@ -10,7 +10,12 @@
         <pre id="share-link">{{ url('fiddle', {'hash': data.hash, 'revision': data.revision}) }}</pre>
 
         <p>
-            <button id="select-share-link" class="btn btn-default btn-sm btn-twigfiddle select-text" data-selector="#share-link">
+            <button
+                title="Select the link to copy it to your clipboard easily"
+                aria-label="Select the link to copy it to your clipboard easily"
+                id="select-share-link"
+                class="btn btn-default btn-sm btn-twigfiddle select-text"
+                data-selector="#share-link">
                 <span class="glyphicon glyphicon-flash"></span> Select link
             </button>
         </p>

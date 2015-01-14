@@ -5,7 +5,13 @@
 
    {% import "FuzAppBundle::macros.html.twig" as macros %}
 
-   <button type="button" class="btn btn-tf-dark" data-toggle="modal" data-target="#samples-modal">
+   <button
+       type="button"
+       title="You can open samples in new tab to get started with twigfiddle"
+       aria-label="You can open samples in new tab to get started with twigfiddle"
+       class="btn btn-tf-dark"
+       data-toggle="modal"
+       data-target="#samples-modal">
       <span class="glyphicon glyphicon glyphicon-cloud hidden-md hidden-sm hidden-xs"></span>
       <span>Samples</span>
    </button>
@@ -26,6 +32,8 @@
 
             <a
                class="btn btn-sm btn-tf-dark"
+               title="Open the {{ sample.label|lower }} sample"
+               aria-label="Open the {{ sample.label|lower }} sample"
                href="{{ path('fiddle', {'hash': sample.hash, 'revision': sample.revision}) }}"
                style="margin: 3px;"
                target="_blank">{{ sample.label }}</a>

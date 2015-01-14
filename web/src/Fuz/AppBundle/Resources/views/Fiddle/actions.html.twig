@@ -6,6 +6,8 @@
     type="button"
     id="run"
     class="btn btn-tf-green domajax click"
+    title="Render the given template/context"
+    aria-label="Render the given template/context"
     data-endpoint="{{ path('run_fiddle', {'hash': hash, 'revision': revision}) }}"
     data-input="#page-form"
     data-callback-before="clearFiddleErrors clearFiddleResult"
@@ -21,6 +23,8 @@
     type="button"
     id="save"
     class="btn btn-tf-dark domajax click"
+    title="Save fiddle's changes"
+    aria-label="Save fiddle's changes"
     data-endpoint="{{ path('save_fiddle', {'hash': hash, 'revision': revision}) }}"
     data-input="{% if bookmark %}.bookmark-input{% else %}#page-form{% endif %}"
     data-callback-before="clearFiddleErrors"
@@ -34,7 +38,15 @@
  ><span class="glyphicon glyphicon glyphicon-floppy-disk hidden-md hidden-sm hidden-xs"></span> Save</button>
 
 {# Share button #}
-<button id="share" type="button" class="btn btn-tf-dark" {% if data.id == null %}disabled{% else %}data-toggle="modal" data-target="#share-modal"{% endif %}><span class="glyphicon glyphicon glyphicon-share-alt hidden-md hidden-sm hidden-xs"></span> Share</button>
+<button
+    id="share"
+    type="button"
+    class="btn btn-tf-dark"
+    title="Get fiddle's url"
+    aria-label="Get fiddle's url"
+    {% if data.id == null %}disabled{% else %}data-toggle="modal" data-target="#share-modal"{% endif %}>
+    <span class="glyphicon glyphicon glyphicon-share-alt hidden-md hidden-sm hidden-xs"></span> Share
+</button>
 {% if data.id %}{{ include('FuzAppBundle:Fiddle:share-modal.html.twig') }}{% endif %}
 
 {{ include('FuzAppBundle:Fiddle:visibility.html.twig') }}
