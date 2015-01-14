@@ -60,8 +60,8 @@ php app/check.php
 
 # Configure OAuth resource owners
 
-Google: https://console.developers.google.com/project
-Facebook: https://developers.facebook.com/apps/
-Twitter: https://apps.twitter.com/
-SensioLabs Connect: https://connect.sensiolabs.com/account/apps
+- Google: https://console.developers.google.com/project
+- Facebook: https://developers.facebook.com/apps/
+- Twitter: https://apps.twitter.com/
+- SensioLabs Connect: https://connect.sensiolabs.com/account/apps
 
