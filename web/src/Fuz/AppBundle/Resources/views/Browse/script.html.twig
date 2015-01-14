@@ -3,7 +3,8 @@
 
 <script type="text/javascript">
 
-setTimeout(function() {
+if (typeof $ !== 'undefined')
+{
 
     {#
      #  Make tags having a tag layout
@@ -26,7 +27,7 @@ setTimeout(function() {
         $('.input-' + index).removeClass('hide');
     });
 
-}, 0);
+}
 
 {#
  #  Make tags having a tag layout
