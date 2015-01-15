@@ -41,14 +41,13 @@ class SaveFiddle
     }
 
     /**
-     * Checks whether user can use the save button, to save
-     * current fiddle's instance or the fav form.
+     * Checks whether user can save a fiddle
      *
      * @param Fiddle $fiddle
      * @param User $user
      * @return bool
      */
-    public function canClickSave(Fiddle $fiddle, User $user = null)
+    public function canSaveFiddle(Fiddle $fiddle, User $user = null)
     {
         if (is_null($fiddle->getId()))
         {

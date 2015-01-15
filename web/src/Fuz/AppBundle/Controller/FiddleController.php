@@ -272,7 +272,7 @@ class FiddleController extends BaseController
                 'data' => $fiddle,
                 'hash' => $hash,
                 'revision' => $revision,
-                'canSave' => $this->get('app.save_fiddle')->canClickSave($fiddle, $user),
+                'canSave' => $this->get('app.save_fiddle')->canSaveFiddle($fiddle, $user),
                 'revisionBrowser' => $fiddleRepo->getRevisionList($fiddle, $user),
                 'bookmark' => $bookmark,
         );

@@ -5,7 +5,7 @@
     {{ form_widget(form.visibility) }}
 </div>
 
-{% if is_granted('ROLE_USER') %}
+{% if is_granted('ROLE_USER') and canSave %}
 
     {% set public = constant('Fuz\\AppBundle\\Entity\\Fiddle::VISIBILITY_PUBLIC') %}
     {% set unlisted = constant('Fuz\\AppBundle\\Entity\\Fiddle::VISIBILITY_UNLISTED') %}
