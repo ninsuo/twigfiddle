@@ -149,7 +149,9 @@
 
 </div>
 
+{% if data.id %}
 <p class="text-center fiddle-owner">{{ macros.fiddle(data, true) }}</p>
+{% endif %}
 
 {% endblock %}
 
