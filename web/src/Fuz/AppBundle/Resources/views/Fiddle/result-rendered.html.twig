@@ -15,7 +15,7 @@
             </div>
 
             {% set rawResult = data.result.rendered %}
-            {% set simpleResult = rawResult|preg_replace('/\\n{2,}/', '\n\n') %}
+            {% set simpleResult = rawResult|prettify %}
 
             <pre id="result-rendered-simple">{{ simpleResult }}</pre>
 
