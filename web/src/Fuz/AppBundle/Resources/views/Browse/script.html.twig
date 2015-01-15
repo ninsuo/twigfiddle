@@ -22,10 +22,16 @@ if (typeof $ !== 'undefined')
         var index = that.data('index');
 
         $('#edit-' + index).addClass('hide');
+        $('#edit-' + index).attr('aria-hidden', 'true');
+
         $('.ro-' + index).addClass('hide');
+        $('.ro-' + index).attr('aria-hidden', 'true');
 
         $('#save-' + index).removeClass('hide');
+        $('#save-' + index).removeAttr('aria-hidden');
+
         $('.input-' + index).removeClass('hide');
+        $('.input-' + index).removeAttr('aria-hidden');
     });
 
 }

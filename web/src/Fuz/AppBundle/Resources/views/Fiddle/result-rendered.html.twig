@@ -20,7 +20,7 @@
             <pre id="result-rendered-simple">{{ simpleResult }}</pre>
 
             {% if simpleResult != rawResult %}
-                <pre id="result-rendered-raw" class="hide">{{ rawResult }}</pre>
+                <pre id="result-rendered-raw" class="hide" aria-hidden="true">{{ rawResult }}</pre>
             {% endif %}
 
             <button
@@ -43,6 +43,7 @@
             <button
                 id="hide-raw-result"
                 class="btn btn-default btn-sm btn-twigfiddle hide"
+                aria-hidden="true"
                 title="Raw result is currently displayed, click here to come back to a more human-readable version">
                 <span class="glyphicon glyphicon-asterisk"></span> Hide raw result
             </button>

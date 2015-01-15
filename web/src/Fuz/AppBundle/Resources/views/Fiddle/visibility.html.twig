@@ -1,7 +1,7 @@
 {# FuzAppBundle:Fiddle:visibility.html.twig #}
 {# Included by: FuzAppBundle:Fiddle:index.html.twig #}
 
- <div class="hide">
+ <div class="hide" aria-hidden="true">
     {{ form_widget(form.visibility) }}
 </div>
 
@@ -43,6 +43,7 @@
             {% if action == 'open-modal' %}
                 title="Click here to change the way users can access your fiddle"
                 class="btn btn-tf-dark {% if visibility.value != data.visibility %}hide{% endif %} visibility-open-modal"
+                {% if visibility.value != data.visibility %}aria-hidden="true"{% endif %}
                 data-toggle="modal"
                 data-target="#visibility-modal"
             {% elseif action == 'selection' %}

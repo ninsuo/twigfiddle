@@ -57,7 +57,7 @@
                     <span class="unavailable">(No title)</span>
                 {% endif %}
             </p>
-            <p class="input-{{ index }} hide">
+            <p class="input-{{ index }} hide" aria-hidden="true">
                 {{
                     form_widget(form.title, {
                         'id': form.title.vars.id ~ '_' ~ index,
@@ -69,12 +69,12 @@
 
         {# Tags #}
         <div>
-            <p class="ro-{{ index }} {% if fiddle.tags|length == 0 %}hide{% endif %}">
+            <p class="ro-{{ index }} {% if fiddle.tags|length == 0 %}hide{% endif %}" {% if fiddle.tags|length == 0 %}aria-hidden="true"{% endif %}>
                 {% for tag in fiddle.tags %}
                     <span class="static-tag"><span>{{ tag.tag }}</span></span>
                 {% endfor %}
             </p>
-            <p class="input-{{ index }} hide tags">
+            <p class="input-{{ index }} hide tags" aria-hidden="true">
                 {{
                     form_widget(form.tags, {
                         'attr': {
@@ -129,7 +129,7 @@
                 </span>
 
                 {# Save #}
-                <span id="save-{{ index }}" class="hide">
+                <span id="save-{{ index }}" class="hide" aria-hidden="true">
                     <button
                         type="button"
                         class="btn btn-tf-dark domajax click"

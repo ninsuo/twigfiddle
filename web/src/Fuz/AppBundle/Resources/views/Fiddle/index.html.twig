@@ -71,7 +71,7 @@
 </div>
 
 {# Revision browser, title, tags #}
-<div class="row {% if data.id == null %}hide{% endif %}">
+<div class="row {% if data.id == null %}hide{% endif %}" {% if data.id == null %}aria-hidden="true"{% endif %}>
 
     <div class="clear">&nbsp</div>
 
