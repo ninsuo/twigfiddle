@@ -43,7 +43,6 @@
                             {% block browse %}
                             <a
                                 title="Browse existing fiddles"
-                                aria-label="Browse existing fiddles"
                                 class="btn btn-tf-dark"
                                 href="{{ path('browse') }}">
                                <span class="glyphicon glyphicon glyphicon-th hidden-md hidden-sm hidden-xs"></span>
@@ -57,7 +56,6 @@
                             {# About #}
                             <a
                                 title="Get help to use twigfiddle and learn who is behind"
-                                aria-label="Get help to use twigfiddle and learn who is behind"
                                 class="btn btn-tf-dark"
                                 href="{{ path('about') }}">
                                <span class="glyphicon glyphicon glyphicon-info-sign hidden-md hidden-sm hidden-xs"></span>
@@ -68,7 +66,6 @@
                             {% if is_granted('ROLE_USER') %}
                                 <a
                                     title="Logout from twigfiddle"
-                                    aria-label="Logout from twigfiddle"
                                     href="{{ path('logout') }}"
                                     class="btn btn-tf-green">
                                     <span class="glyphicon glyphicon glyphicon-log-out hidden-md hidden-sm hidden-xs"></span>
@@ -77,7 +74,6 @@
                             {% else %}
                                 <a
                                     title="Login to twigfiddle"
-                                    aria-label="Login to twigfiddle"
                                     href="#"
                                     class="btn btn-tf-green"
                                     data-toggle="modal"
@@ -119,17 +115,14 @@
                             <br/>
                             <a
                                 title="Click here to ask a question about twigfiddle"
-                                aria-label="Click here to ask a question about twigfiddle"
                                 href="https://groups.google.com/forum/#!forum/twigfiddle">Ask a question</a>
                             <span class="space"></span>
                             <a
                                 title="Click here if you found an issue or want a new feature"
-                                aria-label="Click here if you found an issue or want a new feature"
                                 href="{{ github_repository_root }}/issues">Report issue</a>
                             <span class="space"></span>
                             <a
                                 title="Click here to download twigfiddle's source code and contribute"
-                                aria-label="Click here to download twigfiddle's source code and contribute"
                                 href="{{ github_repository_root }}">Download source code</a>
                         </p>
                     </div>

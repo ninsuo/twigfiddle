@@ -23,11 +23,10 @@
                     {{ body }}
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close the window" title="Close the window">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" title="Close the window">Close</button>
                     {% if options['ok-endpoint'] %}
                         <button
                             type="button"
-                            aria-label="OK"
                             title="OK"
                             data-endpoint="{{ options['ok-endpoint'] }}"
                             data-input="#{{ id }}"
@@ -131,7 +130,6 @@
              Fiddle
            <a
                title="Open fiddle in a new window"
-               aria-label="Open fiddle in a new window"
                href="{{ path('fiddle', {'hash': fiddle.hash, 'revision': fiddle.revision}) }}"
                target="_blank"
                class="green">{{ fiddle.hash }} {% if fiddle.revision > 1 %}v{{ fiddle.revision }}{% endif %}</a>
