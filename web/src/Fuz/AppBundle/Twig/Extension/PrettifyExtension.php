@@ -11,7 +11,7 @@ namespace Fuz\AppBundle\Twig\Extension;
 class PrettifyExtension extends \Twig_Extension
 {
 
-    const INDENT = '   ';
+    const INDENT = '    ';
 
     protected $result;
 
