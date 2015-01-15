@@ -6,9 +6,12 @@ namespace Fuz\AppBundle\Twig\Extension;
  * This extension makes results more human-readable:
  * - replaces multiple newlines by at last double newlines
  * - remove blank space at the top, left, bottom
+ * - indents result with regular number of spaces
  */
 class PrettifyExtension extends \Twig_Extension
 {
+
+    const INDENT = '   ';
 
     protected $result;
 
@@ -74,7 +77,7 @@ class PrettifyExtension extends \Twig_Extension
         $spaces = array ();
         foreach ($this->result as $index => $line)
         {
-            if (strlen($line) > 0)
+            if (strlen($line))
             {
                 $matches = array ();
                 preg_match("/^\s*/", $line, $matches);
@@ -86,6 +89,18 @@ class PrettifyExtension extends \Twig_Extension
         foreach ($this->result as $index => $line)
         {
             $this->result[$index] = substr($line, $min);
+        }
+
+        asort($spaces);
+        $deeps = array_values(array_unique($spaces));
+
+        foreach ($this->result as $index => $line)
+        {
+            if (strlen($line))
+            {
+                $deep = array_search($spaces[$index], $deeps);
+                $this->result[$index] = preg_replace("/^\s*/", str_repeat(self::INDENT, $deep), $line);
+            }
         }
 
         return $this;
