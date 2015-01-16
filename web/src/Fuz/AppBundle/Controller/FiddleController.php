@@ -317,7 +317,15 @@ class FiddleController extends BaseController
         }
         else
         {
-            $response['errors'] = $this->getErrorMessagesAjaxFormat($form);
+            $errors = $this->getErrorMessagesAjaxFormat($form);
+            if (!array_key_exists('#', $errors))
+            {
+                $plurial = count($errors) > 1 ? 's' : '';
+                $errors['#'] = array (
+                        "Form contains error{$plurial}, please check messages below involved field{$plurial}.",
+                );
+            }
+            $response['errors'] = $errors;
         }
 
         return new JsonResponse($response);
