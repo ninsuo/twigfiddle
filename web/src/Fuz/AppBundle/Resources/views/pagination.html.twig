@@ -10,13 +10,13 @@
  #}
 
 {% macro attributes(attr, key, value) %}
-{% spaceless %}
+    {% spaceless %}
 
-    {% for attr, val in attr %}
-        {{ attr }}="{{ val|replace({'__KEY__': key, '__VALUE__': value})|e('html_attr') }}"
-    {% endfor %}
+        {% for attr, val in attr %}
+            {{ attr }}="{{ val|replace({'__KEY__': key, '__VALUE__': value})|e('html_attr') }}"
+        {% endfor %}
 
-{% endspaceless %}
+    {% endspaceless %}
 {% endmacro %}
 
 <div class="row" id="footernav">
@@ -42,13 +42,13 @@
                 </li>
 
                 {% if pagination.display_first %}
-                <li>
-                    <a
-                        title="Go to first page"
-                        {{ _self.attributes(linksAttr, pagination.page_query_string, 1) }}>
-                        <span>1</span>
-                    </a>
-                </li>
+                    <li>
+                        <a
+                            title="Go to first page"
+                            {{ _self.attributes(linksAttr, pagination.page_query_string, 1) }}>
+                            <span>1</span>
+                        </a>
+                    </li>
                 {% endif %}
 
                 {% if pagination.dots_first %}
@@ -73,13 +73,13 @@
                     {% endif %}
 
                 {% if pagination.display_last %}
-                <li>
-                    <a
-                        title="Go to last page, page {{ pagination.count_pages }}"
-                        {{ _self.attributes(linksAttr, pagination.page_query_string, pagination.count_pages) }}>
-                        <span>{{ pagination.count_pages }}</span>
-                    </a>
-                </li>
+                    <li>
+                        <a
+                            title="Go to last page, page {{ pagination.count_pages }}"
+                            {{ _self.attributes(linksAttr, pagination.page_query_string, pagination.count_pages) }}>
+                            <span>{{ pagination.count_pages }}</span>
+                        </a>
+                    </li>
                 {% endif %}
 
                 {% set isLast = (pagination.session.current_page == pagination.count_pages) %}
@@ -102,7 +102,7 @@
 
     </div>
 
-    <div class="col-md-4 col-sm-6 col-xs-12 text-left">
+    <div class="col-md-4 col-sm-12 col-xs-12 text-center">
 
         {# Results per page #}
         <nav>
@@ -129,28 +129,23 @@
     </div>
 
     {# Number of results #}
-    <div class="col-md-4 col-sm-6 col-xs-12 text-center">
+    <div class="col-md-4 col-sm-12 col-xs-12 text-center">
         <div style="display:block;margin:5px;padding:6px 12px;">
             {{ pagination.count_results }} result{% if pagination.count_results != 1 %}s{% endif %}
         </div>
     </div>
 
-    <div class="col-md-4 col-sm-6 col-xs-12 text-right">
 
-        <form action="{{ route }}" method="get" role="form" class="form-inline">
-            <div class="form-group">
-                <label class="sr-only">Go to page</label>
-                <p class="form-control-static">Go to page</p>
-            </div>
-            <div class="form-group">
-                <label class="sr-only"></label>
-                <input placeholder="" name="{{ pagination.page_query_string }}" class="form-control" style="width: 50px;">
-            </div>
-            <button
-                title="Go to the given page" {{ _self.attributes(submitAttr, '', '') }}
-                type="submit">OK</button>
-        </form>
-
-    </div>
+    <form action="{{ route }}" method="get" role="form" class="form-inline">
+        <div class="col-md-4 col-sm-12 col-xs-12 text-center">
+                Go to page
+                &nbsp;
+                <input placeholder="" name="{{ pagination.page_query_string }}" class="form-control-static" style="width: 50px;">
+                &nbsp;
+                <button
+                    title="Go to the given page" {{ _self.attributes(submitAttr, '', '') }}
+                    type="submit">OK</button>
+        </div>
+    </form>
 
 </div>
