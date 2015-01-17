@@ -100,7 +100,7 @@ class Captcha
     {
         $sessionsPerIp = $this->ipLimitRepo->findOneByIp($ip);
         $sessionsCount = $this->sessionIpRepo->count($ip);
-        if ($sessionsCount >= $sessionsPerIp->getLimit())
+        if ($sessionsPerIp && $sessionsCount >= $sessionsPerIp->getLimit())
         {
             return true;
         }
