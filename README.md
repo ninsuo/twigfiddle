@@ -58,10 +58,10 @@ composer update
 php app/check.php
 ```
 
-# Configure OAuth resource owners
+# Configure OAuth resource owners and other services
 
-- Google: https://console.developers.google.com/project
-- Facebook: https://developers.facebook.com/apps/
-- Twitter: https://apps.twitter.com/
-- SensioLabs Connect: https://connect.sensiolabs.com/account/apps
-
+- Google Login: https://console.developers.google.com/project
+- Facebook Login: https://developers.facebook.com/apps/
+- Twitter Login: https://apps.twitter.com/
+- SensioLabs Connect Login: https://connect.sensiolabs.com/account/apps
+- reCaptcha: https://www.google.com/recaptcha/admin

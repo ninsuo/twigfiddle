@@ -396,6 +396,8 @@ function clearFiddleResult() {
 function processRunFiddleResponse(elem, response) {
     if (undefined !== response.errors) {
         $.symfony2.dispatchErrors(response.errors);
+    } else if (undefined !== response.captcha) {
+        displayCaptchaModal();
     }
 
     if (undefined !== response.result) {
@@ -420,6 +422,8 @@ function processRunFiddleResponse(elem, response) {
 function processSaveFiddleResponse(elem, response) {
     if (undefined !== response.errors) {
         $.symfony2.dispatchErrors(response.errors);
+    } else if (undefined !== response.captcha) {
+        displayCaptchaModal();
     } else {
         $('#page-form').trigger('reinitialize.areYouSure');
     }

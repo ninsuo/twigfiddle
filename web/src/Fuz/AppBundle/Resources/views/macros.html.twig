@@ -5,8 +5,6 @@
 
     {%
         set defaults = {
-            'ok-endpoint': null,
-            'ok-options': null,
             'modal-class': null,
         }
     %}
@@ -24,15 +22,6 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal" title="Close the window">Close</button>
-                    {% if options['ok-endpoint'] %}
-                        <button
-                            type="button"
-                            title="OK"
-                            data-endpoint="{{ options['ok-endpoint'] }}"
-                            data-input="#{{ id }}"
-                            {% if options['ok-options'] %}{{ options['ok-options'] }}{% endif %}
-                            class="btn btn-primary domajax click">OK</button>
-                    {% endif %}
                 </div>
             </div>
         </div>

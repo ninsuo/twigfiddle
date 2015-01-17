@@ -33,6 +33,7 @@ twig:
             - 'FuzAppBundle::fields.html.twig'
     globals:
         github_repository_root: %github_repository_root%
+        recaptcha_site_key: %recaptcha_site_key%
 
 # Assetic Configuration
 assetic:
@@ -101,6 +102,14 @@ fuz_app:
         github_repository_root: %github_repository_root%
         max_fiddles_in_session: 100
         default_fiddle_hash_size: 6
+        recaptcha:
+            check_url: https://www.google.com/recaptcha/api/siteverify
+            site_key: %recaptcha_site_key%
+            secret_key: %recaptcha_secret_key%
+            sessions_per_ip: { max: 20, delay: 3600 }
+            strategies:
+                run: { hits: 10, delay: 60 }
+                save: { hits: 3, delay: 60 }
         samples:
            basics:
                - { hash: hello, revision: 1, label: "Hello, world!" }

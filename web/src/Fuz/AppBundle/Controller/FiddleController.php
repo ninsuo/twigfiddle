@@ -39,9 +39,15 @@ class FiddleController extends BaseController
     public function runAction(Request $request, $hash, $revision)
     {
         return $this->validateAjaxFiddle($request, $hash, $revision,
-              function(Fiddle $fiddle)
+              function(Fiddle $fiddle) use ($request)
            {
                $response = array ();
+
+               if (!$this->get('app.captcha')->check($request, 'run'))
+               {
+                   $response['captcha'] = true;
+                   return $response;
+               }
 
                $result = $this->get('app.run_fiddle')->run($fiddle);
 
@@ -97,12 +103,20 @@ class FiddleController extends BaseController
         return $this->validateAjaxFiddle($request, $hash, $revision,
               function (Fiddle $fiddle) use ($request, $hash, $revision)
            {
+               $response = array ();
+
                $user = $this->getUser();
                $saveService = $this->get('app.save_fiddle');
 
                if (is_null($fiddle->getId()) || !$saveService->ownsFiddle($fiddle, $user))
                {
                    $revision = 0;
+               }
+
+               if (!$revision && !$this->get('app.captcha')->check($request, 'save'))
+               {
+                   $response['captcha'] = true;
+                   return $response;
                }
 
                if ($fiddle->getId())
@@ -122,10 +136,10 @@ class FiddleController extends BaseController
 
                if ($originalId !== $saved->getId())
                {
-                   $url = $this->generateUrl('fiddle',
+                   $response['relocate'] = $this->generateUrl('fiddle',
                       array ('hash' => $saved->getHash(), 'revision' => $saved->getRevision()));
 
-                   return array ('relocate' => $url);
+                   return $response;
                }
            }, $fiddle);
     }

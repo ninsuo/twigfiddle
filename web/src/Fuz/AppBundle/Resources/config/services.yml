@@ -14,6 +14,7 @@ parameters:
     app.subscriber.user_bookmark.class: Fuz\AppBundle\EventListener\UserBookmarkSubscriber
     app.utilities.class: Fuz\AppBundle\Service\Utilities
     app.paginator.class: Fuz\AppBundle\Service\Paginator
+    app.captcha.class: Fuz\AppBundle\Service\Captcha
     app.process_configuration.class: Fuz\AppBundle\Service\ProcessConfiguration
     app.run_fiddle.class: Fuz\AppBundle\Service\RunFiddle
     app.save_fiddle.class: Fuz\AppBundle\Service\SaveFiddle
@@ -100,6 +101,12 @@ services:
          arguments: [@logger, @session, @security.token_storage]
          tags:
              - { name: monolog.logger, channel: service.paginator }
+
+    app.captcha:
+         class: %app.captcha.class%
+         arguments: [@logger, @session, @doctrine.orm.entity_manager, %web%]
+         tags:
+             - { name: monolog.logger, channel: service.captcha }
 
     app.process_configuration:
         class: %app.process_configuration.class%

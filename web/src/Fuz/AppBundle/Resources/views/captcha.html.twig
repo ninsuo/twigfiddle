@@ -1,0 +1,49 @@
+{# FuzAppBundle::captcha.html.twig #}
+{# Included by FuzAppBundle::base.html.twig #}
+
+{% set body %}
+
+    <div class="text-center">
+
+        <p>In order to process your request, please fill the form below and try again.</p>
+
+        <center>
+            <div id="captcha-modal-container"></div>
+        </center>
+
+    </div>
+
+{% endset %}
+
+<a
+    id="captcha-modal-open"
+    title="reCaptcha"
+    href="#"
+    class="btn btn-tf-green hide"
+    data-toggle="modal"
+    data-target="#captcha-modal">
+    <span class="glyphicon glyphicon-barcode hidden-md hidden-sm hidden-xs"></span>
+    reCaptcha
+</a>
+
+<script type="text/javascript">
+
+    var reCaptchaIsReady = false;
+
+    var reCaptchaNowReady = function() {
+        reCaptchaIsReady = true;
+    };
+
+    var displayCaptchaModal = function() {
+        $('#captcha-modal-container').html('');
+        if ((reCaptchaIsReady) && (typeof $ !== 'undefined')) {
+            grecaptcha.render('captcha-modal-container', {
+                'sitekey': '{{ recaptcha_site_key }}'
+            });
+            $('#captcha-modal-open').click();
+        }
+    };
+
+</script>
+
+{{ macros.modal('captcha-modal', 'Are you human ?', body) }}

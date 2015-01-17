@@ -18,6 +18,7 @@
             <link rel="stylesheet" href="{{ asset('bundles/fuzapp/css/twig.css') }}">
         {% endblock %}
 
+        <script src='https://www.google.com/recaptcha/api.js?onload=reCaptchaNowReady&render=explicit' async defer></script>
     </head>
 
     <body>
@@ -127,6 +128,9 @@
                         </p>
                     </div>
                 </div>
+
+
+                {{ include('FuzAppBundle::captcha.html.twig') }}
                 {# End Footer #}
 
             {% endblock %}
