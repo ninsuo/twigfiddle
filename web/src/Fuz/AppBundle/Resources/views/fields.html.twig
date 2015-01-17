@@ -1,5 +1,14 @@
 {# FuzAppBundle::fields.html.twig #}
 
+{#
+ # This file is part of twigfiddle.com project.
+ #
+ # (c) Alain Tiemblo <alain@fuz.org>
+ #
+ # For the full copyright and license information, please view the LICENSE
+ # file that was distributed with this source code.
+ #}
+
 {% block form_row -%}
     <div class="form-group {% if errors|length > 0 %}has-error{% endif %}">
         {{- form_label(form) -}}

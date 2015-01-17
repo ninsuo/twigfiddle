@@ -1,6 +1,15 @@
 {# FuzAppBundle:Fiddle:templates.html.twig #}
 {# Included by: FuzAppBundle:Fiddle:index.html.twig #}
 
+{#
+ # This file is part of twigfiddle.com project.
+ #
+ # (c) Alain Tiemblo <alain@fuz.org>
+ #
+ # For the full copyright and license information, please view the LICENSE
+ # file that was distributed with this source code.
+ #}
+
 {% form_theme form.templates 'FuzAppBundle:Fiddle:templates-theme.html.twig' %}
 
 <div id="templates" data-prototype="{{ form_widget(form.templates.vars.prototype)|e('html_attr') }}">

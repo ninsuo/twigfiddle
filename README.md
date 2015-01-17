@@ -58,7 +58,7 @@ composer update
 php app/check.php
 ```
 
-# Configure OAuth resource owners and other services
+# Configure external services
 
 - Google Login: https://console.developers.google.com/project
 - Facebook Login: https://developers.facebook.com/apps/
