@@ -61,6 +61,8 @@ class DefaultEngineTest extends \PHPUnit_Framework_TestCase
     public function versionProvider()
     {
         return array (
+                array ('Twig-1.17.0'),
+                array ('Twig-1.16.3'),
                 array ('Twig-1.16.2'),
                 array ('Twig-1.16.1'),
                 array ('Twig-1.16.0'),
@@ -140,14 +142,13 @@ class DefaultEngineTest extends \PHPUnit_Framework_TestCase
         $context->setContent(json_encode(array ('name' => 'world')));
         $fiddle->setContext($context);
 
-        $templates = new ArrayCollection();
-        $fiddle->setTemplates($templates);
-
         $template = new FiddleTemplate();
         $template->setIsMain(true);
         $template->setFilename("template.twig");
         $template->setContent('Hello, {{ name }}!');
-        $templates->add($template);
+
+        $fiddle->clearTemplates();
+        $fiddle->addTemplate($template);
 
         $storage = new StorageFile("{$this->envDir}/{$this->envId}/fiddle.shr");
         $this->shared = new SharedMemory($storage);
