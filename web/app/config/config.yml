@@ -104,6 +104,7 @@ fuz_app:
         default_fiddle_hash_size: 6
         recaptcha:
             check_url: https://www.google.com/recaptcha/api/siteverify
+            post_param: g-recaptcha-response
             site_key: %recaptcha_site_key%
             secret_key: %recaptcha_secret_key%
             sessions_per_ip: { max: 20, delay: 3600 }

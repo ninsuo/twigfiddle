@@ -60,7 +60,7 @@ class Captcha
 
     public function validateCaptcha(Request $request)
     {
-        $response = $request->request->get('g-recaptcha-response');
+        $response = $request->request->get($this->config['post_param']);
         if ($response)
         {
             $ip = ip2long($request->getClientIp()) ? $request->getClientIp() : '127.0.0.1';
