@@ -1,0 +1,128 @@
+{# FuzAppBundle:Article:about/logged-in-users.html.twig #}
+{# Included by FuzAppBundle:Article:about.html.twig #}
+
+{#
+ # This file is part of twigfiddle.com project.
+ #
+ # (c) Alain Tiemblo <alain@fuz.org>
+ #
+ # For the full copyright and license information, please view the LICENSE
+ # file that was distributed with this source code.
+ #}
+
+{%
+    set visibilities = {
+        'public': {
+            'label': 'Public',
+            'color': 'success',
+        },
+        'unlisted': {
+            'label': 'Unlisted',
+            'color': 'warning',
+        },
+        'private': {
+            'label': 'Private',
+            'color': 'danger',
+        },
+    }
+%}
+
+<span id="other-options-for-registered-users"></span>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="h3">Other options for registered users</div>
+    </div>
+    <div class="clear">&nbsp;</div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 col-sm-12">
+        <p>Registered users can change fiddle's visibility.</p>
+        <ul>
+            <li>
+                Set your fiddle's visibility to <span class="label label-{{ visibilities['public'].color }}">{{ visibilities['public'].label|lower }}</span>
+                to let everybody access your fiddle, even by using the <a href="{{ path('browse') }}" target="_blank">fiddle's browser</a>.
+            </li>
+            <br/>
+            <li>
+                Set your fiddle's visibility to <span class="label label-{{ visibilities['unlisted'].color }}">{{ visibilities['unlisted'].label|lower }}</span>
+                to let only people who knows your fiddle's URL access it; it will be available in the fiddle's browser only to you.
+            </li>
+            <br/>
+            <li>
+                Set your fiddle's visibility to <span class="label label-{{ visibilities['private'].color }}">{{ visibilities['private'].label|lower }}</span>
+                to let nobody access your fiddle's revision. Only you will be able to access it.
+            </li>
+            <br/>
+        </ul>
+    </div>
+    <div class="col-md-8 col-sm-12">
+        <p>
+            <img class="img-rounded" src="{{ asset('bundles/fuzapp/img/about/change-visibility.png') }}"/>
+        </p>
+        <p>
+            <img class="img-rounded" src="{{ asset('bundles/fuzapp/img/about/visibility.png') }}"/>
+        </p>
+    </div>
+    <div class="clear">&nbsp;</div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 col-sm-12">
+        <p>Registered users can bookmark fiddles they don't own.</p>
+        <ul>
+            <li>
+                You are able to filter bookmarked fiddles in the fiddle's browser.
+            </li>
+            <br/>
+            <li>
+                You can overwrite title and tags of bookmarked fiddles.
+            </li>
+            <br/>
+            <li>
+                If you unbookmark a fiddle, you loose the title and tags you've set to it.
+            </li>
+            <br/>
+        </ul>
+    </div>
+    <div class="col-md-8 col-sm-12">
+        <p>
+            <img class="img-rounded" src="{{ asset('bundles/fuzapp/img/about/bookmark.png') }}"/>
+        </p>
+        <p>
+            <img class="img-rounded" src="{{ asset('bundles/fuzapp/img/about/browser-user.png') }}"/>
+        </p>
+        <p>
+            <img class="img-rounded" src="{{ asset('bundles/fuzapp/img/about/browser-user-edit.png') }}"/>
+        </p>
+    </div>
+    <div class="clear">&nbsp;</div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 col-sm-12">
+        <p>About your account</p>
+        <ul>
+            <li>
+                You can see in the picture what we store about your account.
+            </li>
+            <br/>
+            <li>
+                You are free to remove your account when you want, by following <a href="{{ path('unsuscribe') }}" target="_blank">this link</a>.
+                This will automatically remove your private fiddles and all your bookmarks.
+            </li>
+            <br/>
+        </ul>
+    </div>
+    <div class="col-md-8 col-sm-12">
+        <p>
+            <img class="img-rounded" src="{{ asset('bundles/fuzapp/img/about/what-we-store.png') }}"/>
+        </p>
+    </div>
+    <div class="clear">&nbsp;</div>
+</div>
+
+<div class="text-center">
+    <a class="btn btn-default btn-tf-dark" href="#table-of-contents">Top</a>
+</div>
