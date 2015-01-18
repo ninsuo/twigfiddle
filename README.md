@@ -8,7 +8,7 @@ twigfiddle.com provides a small development environment to develop, run, store a
 This is the project's repository, come here if you found a bug, if you want to request new features or if you want to contribute.
 
 If you need help to use twigfiddle, please read the twigfiddle's [help page](http://localhost/twigfiddle.com/web/web/app_dev.php/about) or
-ask a question on the dedicated [google mailing list](https://groups.google.com/forum/#!forum/twigfiddle).
+ask a question on the dedicated [mailing list](https://groups.google.com/forum/#!forum/twigfiddle).
 
 # Some words about the project
 
