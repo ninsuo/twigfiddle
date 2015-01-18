@@ -1,0 +1,125 @@
+{# FuzAppBundle:Article:about/introduction.html.twig #}
+{# Included by FuzAppBundle:Article:about.html.twig #}
+
+{#
+ # This file is part of twigfiddle.com project.
+ #
+ # (c) Alain Tiemblo <alain@fuz.org>
+ #
+ # For the full copyright and license information, please view the LICENSE
+ # file that was distributed with this source code.
+ #}
+
+<div class="row">
+    <div class="col-md-6 col-sm-12">
+        <div class="jumbotron">
+            <div class="h2"><strong>twigfiddle.com</strong></div>
+            <div class="h3"><strong>Develop, run, store and access Twig code online</strong></div>
+            <div>
+                <p>
+                    Twig (<a href="http://twig.sensiolabs.org" target="_blank">http://twig.sensiolabs.org</a>) is a modern template engine for PHP,
+                    based on Django and Jinja syntaxes. It is an opensource product, released under the new BSD license
+                    (<a href="http://twig.sensiolabs.org/license" target="_blank">http://twig.sensiolabs.org/license</a>) by Fabien Potencier.
+                </p>
+
+                <p>
+                    As Twig becomes well known, a lot of questions are asked on Q/A websites, such as
+                    <a href="http://stackoverflow.com" target="_blank">http://stackoverflow.com</a>, and some answers can be more explicit
+                    with runnable examples.
+                </p>
+
+                <p>
+                    A lot of websites exists to run code online: <a href="http://jsfiddle.net" target="_blank">jsfiddle.net</a> for Javascript,
+                    <a href="http://sqlfiddle.com" target="_blank">sqlfiddle.com</a> for database queries,
+                    <a href="http://codepad.org/" target="_blank">codepad.org</a> for C, C++, PHP, (and lots of others)...
+                    twigfiddle.com's aim is to provide a small development environment to develop, run, store and access Twig code online.
+                </p>
+
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="col-md-2 text-center">
+
+                {# github button #}
+                <iframe src="http://ghbtns.com/github-btn.html?user=ninsuo&repo=twigfiddle&type=watch&count=true&size=medium" height="30" width="170" frameborder="0" scrolling="0" style="width:170px; height: 30px;" allowTransparency="true"></iframe>
+            </div>
+            <div class="col-md-2 text-center">
+
+                {# facebook #}
+                <div id="fb-root"></div>
+                <script>
+                    (function (d, s, id) {
+                        var js, fjs = d.getElementsByTagName(s)[0];
+                        if (d.getElementById(id))
+                            return;
+                        js = d.createElement(s);
+                        js.id = id;
+                        js.src = "//connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v2.0";
+                        fjs.parentNode.insertBefore(js, fjs);
+                    }(document, 'script', 'facebook-jssdk'));
+                </script>
+                <div class="fb-like" data-href="http://twigfiddle.com" data-layout="button_count" data-action="like" data-show-faces="true" data-share="false"></div>
+            </div>
+            <div class="col-md-2 text-center">
+
+                {# twitter #}
+                <a href="https://twitter.com/share" class="twitter-share-button" data-lang="en">Tweet</a>
+                <script>
+                    !function (d, s, id) {
+                        var js, fjs = d.getElementsByTagName(s)[0];
+                        if (!d.getElementById(id)) {
+                            js = d.createElement(s);
+                            js.id = id;
+                            js.src = "https://platform.twitter.com/widgets.js";
+                            fjs.parentNode.insertBefore(js, fjs);
+                        }
+                    }(document, "script", "twitter-wjs");
+                </script>
+            </div>
+            <div class="col-md-2 text-center">
+
+                {# google+ #}
+                <div class="g-plusone"></div>
+                <script type="text/javascript">
+                    (function () {
+                        var po = document.createElement('script');
+                        po.type = 'text/javascript';
+                        po.async = true;
+                        po.src = 'https://apis.google.com/js/platform.js';
+                        var s = document.getElementsByTagName('script')[0];
+                        s.parentNode.insertBefore(po, s);
+                    })();
+                </script>
+            </div>
+            <div class="col-md-2 text-center">
+
+                {# flattr #}
+                <script id='fbprsjz'>
+                    (function (i) {
+                        var f, s = document.getElementById(i);
+                        f = document.createElement('iframe');
+                        f.src = '//api.flattr.com/button/view/?uid=ninsuo&button=compact&url=' + encodeURIComponent(document.URL);
+                        f.title = 'Flattr';
+                        f.height = 20;
+                        f.width = 110;
+                        f.style.borderWidth = 0;
+                        s.parentNode.insertBefore(f, s);
+                    })('fbprsjz');
+                </script>
+            </div>
+            <div class="col-md-2 text-center">
+
+                {# paypal #}
+                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                    <input type="hidden" name="cmd" value="_s-xclick">
+                    <input type="hidden" name="hosted_button_id" value="H3Q4UPYFYSMRE">
+                    <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                    <img alt="" border="0" src="https://www.paypalobjects.com/fr_FR/i/scr/pixel.gif" width="1" height="1">
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-12">
+        <img class="img-rounded" src="{{ asset('bundles/fuzapp/img/about/abstract.jpg') }}"/>
+    </div>
+</div>

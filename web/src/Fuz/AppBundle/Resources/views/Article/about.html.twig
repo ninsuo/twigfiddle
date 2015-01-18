@@ -1,4 +1,4 @@
-{# FuzAppBundle:About:index.html.twig #}
+{# FuzAppBundle:Article:about.html.twig #}
 
 {#
  # This file is part of twigfiddle.com project.
@@ -11,7 +11,25 @@
 
 {% extends 'FuzAppBundle::base.html.twig' %}
 
+{% block header_middle %}
+
+    {# Create new fiddle #}
+    <a
+        class="btn btn-tf-green"
+        href="{{ path('fiddle') }}"
+        title="Go to the fiddle editor">
+        <span class="glyphicon glyphicon glyphicon-file hidden-md hidden-sm hidden-xs"></span>
+        Create new fiddle
+    </a>
+
+{% endblock %}
+
 {% block content %}
+
+    <div id="about">
+        {{ include('FuzAppBundle:Article:about/introduction.html.twig') }}
+        {{ include('FuzAppBundle:Article:about/what-i-am-supposed-to-do-here.html.twig') }}
+    </div>
 
 <div class="row">
     <div class="col-md-12"><h1>Text Bloc Title</h1><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum a tempus eros. Suspendisse tincidunt felis at eleifend mollis. Cras aliquet dapibus enim, a sodales leo fermentum id. Sed dignissim sodales velit a facilisis. In id leo eu tellus pharetra aliquet.</p><p> Cras quis quam ullamcorper, varius arcu sed, tincidunt arcu. Quisque vitae ante sit amet odio mollis molestie.Cras sollicitudin ut metus nec vehicula. Nam sit amet arcu ipsum. Nulla eget urna in diam rhoncus tempus. Vestibulum sit amet magna pharetra, suscipit odio sit amet, facilisis libero. Vestibulum in nisl nibh. Phasellus lobortis interdum cursus.</p><p> Nam mi sem, accumsan vitae egestas ut, bibendum et neque. Sed imperdiet, arcu vitae egestas ornare, nisl eros fringilla ligula, ut lacinia ipsum justo non ex. Curabitur commodo, nibh rutrum feugiat commodo, sapien ex fringilla dui, sed egestas lorem mauris et justo. Curabitur efficitur tortor at mauris imperdiet, sit amet tempus dolor eleifend. Sed non quam quam. Vestibulum maximus neque in lacus euismod scelerisque.</p></div>
