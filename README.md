@@ -79,3 +79,4 @@ php app/check.php
 - Twitter Login: https://apps.twitter.com/
 - SensioLabs Connect Login: https://connect.sensiolabs.com/account/apps
 - reCaptcha: https://www.google.com/recaptcha/admin
+- Google Analytics: https://www.google.com/analytics/web/

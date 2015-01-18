@@ -36,3 +36,5 @@ parameters:
 
     recaptcha_site_key: <your recaptcha site key>
     recaptcha_secret_key: <your recaptcha secret key>
+
+    google_analytics_tracking_id: <your google analytics tracking id>

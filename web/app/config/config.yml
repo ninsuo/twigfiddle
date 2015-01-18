@@ -34,6 +34,7 @@ twig:
     globals:
         github_repository_root: %github_repository_root%
         recaptcha_site_key: %recaptcha_site_key%
+        google_analytics_tracking_id: %google_analytics_tracking_id%
 
 # Assetic Configuration
 assetic:
