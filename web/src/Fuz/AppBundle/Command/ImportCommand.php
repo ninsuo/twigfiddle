@@ -48,6 +48,17 @@ class ImportCommand extends ContainerAwareCommand
            ->get('doctrine.orm.entity_manager')
         ;
 
+        $fiddleRepo = $this
+           ->getContainer()
+           ->get('doctrine')
+           ->getRepository('FuzAppBundle:Fiddle')
+        ;
+
+        $em = $this
+           ->getContainer()
+           ->get('doctrine.orm.entity_manager')
+        ;
+
         foreach ($files as $file)
         {
             $this->error = false;
@@ -109,17 +120,12 @@ class ImportCommand extends ContainerAwareCommand
                 continue;
             }
 
-            $check = $this
-               ->getContainer()
-               ->get('doctrine')
-               ->getRepository('FuzAppBundle:Fiddle')
-               ->getFiddle($fiddle->getHash(), $fiddle->getRevision())
-            ;
+            $check = $fiddleRepo->getFiddle($fiddle->getHash(), $fiddle->getRevision());
 
             if (!is_null($check->getId()))
             {
-                $output->writeln("<error>Fiddle contained in {$file} already exists.</error>");
-                return 1;
+                $em->remove($check);
+                $em->flush();
             }
 
             $em->persist($fiddle);

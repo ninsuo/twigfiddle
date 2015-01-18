@@ -115,7 +115,7 @@ fuz_app:
         samples:
            basics:
                - { hash: hello, revision: 1, label: "Hello, world!" }
-#           "twig's tags overview":
+           "twig's tags overview":
 #               - { hash: autoescape, revision: 1, label: "autoescape" }
 #               - { hash: block, revision: 1, label: "block" }
 #               - { hash: do, revision: 1, label: "do" }
@@ -123,17 +123,17 @@ fuz_app:
 #               - { hash: extends, revision: 1, label: "extends" }
 #               - { hash: filter, revision: 1, label: "filter" }
 #               - { hash: flush, revision: 1, label: "flush" }
-#               - { hash: for, revision: 1, label: "for" }
+               - { hash: for, revision: 1, label: "for" }
 #               - { hash: from, revision: 1, label: "from" }
-#               - { hash: if, revision: 1, label: "if" }
+               - { hash: if, revision: 1, label: "if" }
 #               - { hash: import, revision: 1, label: "import" }
 #               - { hash: include, revision: 1, label: "include" }
-#               - { hash: macro, revision: 1, label: "macro" }
+               - { hash: macro, revision: 1, label: "macro" }
 #               - { hash: sandbox, revision: 1, label: "sandbox" }
 #               - { hash: set, revision: 1, label: "set" }
 #               - { hash: spaceless, revision: 1, label: "spaceless" }
 #               - { hash: use, revision: 1, label: "use" }
-#               - { hash: verbatim, revision: 1, label: "verbatim" }
+               - { hash: verbatim, revision: 1, label: "verbatim" }
 #           "Twig's filters overview":
 #               - { hash: abs, revision: 1, label: "abs" }
 #               - { hash: batch, revision: 1, label: "batch" }

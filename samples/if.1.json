@@ -1,0 +1,16 @@
+{
+    "hash": "if",
+    "revision": 1,
+    "twig-version": "Twig-1.17.0",
+    "context": {
+        "format": "YAML",
+        "content": "kenny:\n  dead: 1"
+    },
+    "templates": [{
+            "filename": "main.twig",
+            "content": "{#\n # Twig macros\n # http:\/\/twig.sensiolabs.org\/doc\/tags\/if.html\n #\n # Execute code only if a condition evaluates to true\n #}\n\nA test that passes:\n\n{% if true %}\n  Success!\n{% endif %}\n\nA test that fails:\n\n{% if false %}\n  Failed!\n{% endif %}\n\nA negative test:\n\n{% if not false %}\n  So that's true!\n{% endif %}\n\nIf, elseif, else, endif:\n\n{% if kenny.sick %}\n  Kenny is sick.\n{% elseif kenny.dead %}\n  You killed Kenny! You bastard!!!\n{% else %}\n  Kenny looks okay --- so far\n{% endif %}",
+            "is-main": true
+        }],
+    "title": null,
+    "tags": []
+}

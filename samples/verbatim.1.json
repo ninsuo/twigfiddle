@@ -1,0 +1,16 @@
+{
+    "hash": "verbatim",
+    "revision": 1,
+    "twig-version": "Twig-1.17.0",
+    "context": {
+        "format": "YAML",
+        "content": null
+    },
+    "templates": [{
+            "filename": "main.twig",
+            "content": "{#\n # Twig verbatim\n # http:\/\/twig.sensiolabs.org\/doc\/tags\/verbatim.html\n #\n # Verbatim let you write twig code inside twig files\n #}\n \nTo loop over an array in Twig, you should use:\n \n{% verbatim %}\n \n{% for key, value in array %}\n   {{ key }} = {{ value }}\n{% endfor %}\n \n{% endverbatim %}",
+            "is-main": true
+        }],
+    "title": "Twig's verbatim overview",
+    "tags": ["sample"]
+}
