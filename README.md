@@ -3,6 +3,20 @@ twigfiddle
 
 twigfiddle.com provides a small development environment to develop, run, store and access Twig code online.
 
+# Welcome
+
+This is the project's repository, come here if you found a bug, if you want to request new features or if you want to contribute.
+
+If you need help to use twigfiddle, please read the twigfiddle's [help page](http://localhost/twigfiddle.com/web/web/app_dev.php/about) or
+ask a question on the dedicated [google mailing list](https://groups.google.com/forum/#!forum/twigfiddle).
+
+# Some words about the project
+
+The project is made of 2 applications:
+
+- the cli directory contains the fiddle runner, an application built to execute a fiddle.
+
+- the web directory contains the web application, the website.
 
 # Installation
 
