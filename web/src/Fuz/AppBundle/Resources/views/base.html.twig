@@ -53,13 +53,7 @@
 
                             {# Browse #}
                             {% block browse %}
-                            <a
-                                title="Browse existing fiddles"
-                                class="btn btn-tf-dark"
-                                href="{{ path('browse') }}">
-                               <span class="glyphicon glyphicon glyphicon-th hidden-md hidden-sm hidden-xs"></span>
-                               Browse
-                            </a>
+                                {{ include('FuzAppBundle:Browse:button.html.twig') }}
                             {% endblock %}
 
                             {# Samples #}

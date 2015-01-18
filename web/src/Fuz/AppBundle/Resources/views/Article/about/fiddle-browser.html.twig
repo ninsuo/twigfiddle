@@ -12,6 +12,49 @@
 
 <div class="row">
     <div class="col-md-12">
+        <div class="h3">Fiddle's browser</div>
     </div>
     <div class="clear">&nbsp;</div>
 </div>
+
+<div class="row">
+    <div class="col-md-4 col-sm-12">
+        <p>By clicking on {{ include('FuzAppBundle:Browse:button.html.twig') }} button, you can access fiddle's browser.</p>
+        <p>This page let you browse and/or search for fiddles.</p>
+        <ul>
+            <li>
+                All fiddles matching your criterias are displayed with the following information:
+                <br/><br/>
+                <ul>
+                    <li>Fiddle's hash and revision</li>
+                    <br/>
+                    <li>Title and tags</li>
+                    <br/>
+                    <li>Creation date, author and visit counter</li>
+                    <br/>
+                    <li>An open button that let you open fiddle in a new tab.</li>
+                    <br/>
+                </ul>
+            </li>
+            <li>
+                You can search fiddles by keywords separated by a space: all fiddles containing at least one keyword will match.
+            </li>
+            <br/>
+            <li>
+                You can search fiddles by tags, all fiddles containing all given tags will match.
+            </li>
+            <br/>
+            <li>
+                Click on "Create new fiddle"'s button or on Twigfiddle's logo to get back to the fiddle editor.
+            </li>
+            <br/>
+        </ul>
+    </div>
+    <div class="col-md-8 col-sm-12">
+        <p>
+            <img class="img-rounded" src="{{ asset('bundles/fuzapp/img/about/browser-guest.png') }}"/>
+        </p>
+    </div>
+    <div class="clear">&nbsp;</div>
+</div>
+
