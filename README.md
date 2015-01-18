@@ -1,8 +1,3 @@
-twigfiddle
-==========
-
-twigfiddle.com provides a small development environment to develop, run, store and access Twig code online.
-
 # Welcome
 
 This is the project's repository, come here if you found a bug, if you want to request new features or if you want to contribute.
