@@ -287,8 +287,8 @@ div.tagsinput {
     min-width:100px !important;
 }
 .fiddle-owner {
-   margin-top: 10px;
-   margin-bottom: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 /******************************************************/
 /************** BROWSER ********************/
@@ -336,3 +336,7 @@ div.tagsinput {
     color: #4d4041;
 }
 
+#about img {
+    max-width:100%;
+    max-height:100%;
+}

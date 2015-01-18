@@ -1,0 +1,88 @@
+{# FuzAppBundle:Article:about/how-to-read-fiddles-result.html.twig #}
+{# Included by FuzAppBundle:Article:about.html.twig #}
+
+{#
+ # This file is part of twigfiddle.com project.
+ #
+ # (c) Alain Tiemblo <alain@fuz.org>
+ #
+ # For the full copyright and license information, please view the LICENSE
+ # file that was distributed with this source code.
+ #}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="h3">How to read fiddle's result?</div>
+    </div>
+    <div class="clear">&nbsp;</div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 col-sm-12">
+        <ul>
+            <li>
+                The result status appears as a small flag:
+                <br/><br/>
+                <ul>
+                    <li><img src="{{ asset('bundles/fuzapp/img/flags/green.gif') }}" alt="Green Flag" class="flag"/>: result were rendered without problems.</li>
+                    <br/>
+                    <li><img src="{{ asset('bundles/fuzapp/img/flags/red.gif') }}" alt="Red Flag" class="flag"/>: at least one template contains error(s).</li>
+                    <br/>
+                    <li><img src="{{ asset('bundles/fuzapp/img/flags/yellow.gif') }}" alt="Yellow Flag" class="flag"/>: context's format is invalid.</li>
+                    <br/>
+                    <li><img src="{{ asset('bundles/fuzapp/img/flags/black.gif') }}" alt="Green Flag" class="flag"/>: execution ended up in a fatal error.</li>
+                </ul>
+            </li>
+            <br/>
+            <li>Click on the "Select result" to quickly select your result in order to copy it to your clipboard.</li>
+            <br/>
+            <li>Your result appears without extra spaces, click on "Show raw result" if you want to see the real result coming from your fiddle's execution</li>
+            <br/>
+            <li>Duration regards only the time it took to run the fiddle, page load time is not counted.</li>
+            <br/>
+        </ul>
+    </div>
+    <div class="col-md-8 col-sm-12">
+        <p>
+            <img class="img-rounded" src="{{ asset('bundles/fuzapp/img/about/result-close.png') }}"/>
+        </p>
+    </div>
+    <div class="clear">&nbsp;</div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 col-sm-12">
+        <ul>
+            <li>Click on "Dump context" to see your context as a var-dumped PHP array, this is useful to double-check that it was correctly entered.</li>
+            <br/>
+            <li>
+                Click on "Show compiled templates" to look at PHP classes generated from your twig templates. This is really helpful to know how twig works to
+                avoid confusions when building complex templates, or even custom tags.
+            </li>
+            <br/>
+        </ul>
+    </div>
+    <div class="col-md-8 col-sm-12">
+        <p>
+            <img class="img-rounded" src="{{ asset('bundles/fuzapp/img/about/result-open.png') }}"/>
+        </p>
+    </div>
+    <div class="clear">&nbsp;</div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 col-sm-12">
+        <ul>
+            <li>On errors, all Twig exceptions and their details come back to you, so you can fix your code quickly.</li>
+            <br/>
+            <li>If you think you've found a bug on the project, you can click on the line that handled the exception to get further on github.</li>
+            <br/>
+        </ul>
+    </div>
+    <div class="col-md-8 col-sm-12">
+        <p>
+            <img class="img-rounded" src="{{ asset('bundles/fuzapp/img/about/result-error.png') }}"/>
+        </p>
+    </div>
+    <div class="clear">&nbsp;</div>
+</div>

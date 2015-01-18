@@ -1,0 +1,56 @@
+{# FuzAppBundle:Article:about/how-to-create-a-fiddle.html.twig #}
+{# Included by FuzAppBundle:Article:about.html.twig #}
+
+{#
+ # This file is part of twigfiddle.com project.
+ #
+ # (c) Alain Tiemblo <alain@fuz.org>
+ #
+ # For the full copyright and license information, please view the LICENSE
+ # file that was distributed with this source code.
+ #}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="h3">How to create a fiddle?</div>
+    </div>
+    <div class="clear">&nbsp;</div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 col-sm-12">
+        <p>To create a fiddle, just go to <a href="http://twigfiddle.com">twigfiddle.com</a> to get to the fiddle's editor.</p>
+        <p>You can customize your fiddle's URL by going to http://twigfiddle.com/whatever-you-want.</p>
+        <ul>
+            <li>Choose the right Twig version you're using with your project</li>
+            <br/>
+            <li>Code your template</li>
+            <br/>
+            <li>Select your context format between YAML, XML, JSON or INI</li>
+            <br/>
+            <li>Write the context you need to use with your template(s)</li>
+            <br/>
+            <li>
+                if you need to use several templates (to use extends, macro, include... tags), click on "Add template".
+                <br/><br/>
+                <ul>
+                    <li>Select the template that should be run first (the one which extends or include the others)</li>
+                    <br/>
+                    <li>You can delete useless templates by clicking on the small trash</li>
+                    <br/>
+                    <li>You can have 10 templates per fiddle</li>{# fiddle.max_templates #}
+                </ul>
+            </li>
+            <br/>
+            <li>You can run your fiddle by clicking "Run" button to check your result</li>
+            <br/>
+            <li>When you're done, you can save your fiddle and share it</li>
+        </ul>
+    </div>
+    <div class="col-md-8 col-sm-12">
+        <p>
+            <img class="img-rounded" src="{{ asset('bundles/fuzapp/img/about/create-a-fiddle.png') }}"/>
+        </p>
+    </div>
+    <div class="clear">&nbsp;</div>
+</div>

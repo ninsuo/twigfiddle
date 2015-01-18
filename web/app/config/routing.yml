@@ -32,7 +32,7 @@ fuz_app_browse:
 fuz_app_article:
     resource: "@FuzAppBundle/Controller/ArticleController.php"
     type:     annotation
-    prefix:   /article
+    prefix:   /
 
 fuz_app_fiddle:
     resource: "@FuzAppBundle/Controller/FiddleController.php"

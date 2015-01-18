@@ -45,15 +45,17 @@
  ><span class="glyphicon glyphicon glyphicon-floppy-disk hidden-md hidden-sm hidden-xs"></span> Save</button>
 
 {# Share button #}
+{% if data.id != null %}
 <button
     id="share"
     type="button"
     class="btn btn-tf-dark"
     title="Get fiddle's url"
-    {% if data.id == null %}disabled{% else %}data-toggle="modal" data-target="#share-modal"{% endif %}>
+    data-toggle="modal" data-target="#share-modal">
     <span class="glyphicon glyphicon glyphicon-share-alt hidden-md hidden-sm hidden-xs"></span> Share
 </button>
 {% if data.id %}{{ include('FuzAppBundle:Fiddle:share-modal.html.twig') }}{% endif %}
+{% endif %}
 
 {{ include('FuzAppBundle:Fiddle:visibility.html.twig') }}
 
