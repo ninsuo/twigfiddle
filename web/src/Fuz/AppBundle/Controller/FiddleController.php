@@ -168,7 +168,7 @@ class FiddleController extends BaseController
         }
         $em->detach($fiddle->getTemplates());
         $em->detach($fiddle->getTags());
-        if ($fiddle->getUser())
+        if ($fiddle->getUser() && $this->getUser() && !$fiddle->getUser()->isEqualTo($this->getUser()))
         {
             $em->detach($fiddle->getUser());
         }
