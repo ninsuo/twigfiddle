@@ -239,6 +239,11 @@ class Fiddle implements TagContainerInterface
      */
     public function setContext(FiddleContext $context = null)
     {
+        if (!is_null($context))
+        {
+            $context->setFiddle($this);
+        }
+
         $this->context = $context;
 
         return $this;
