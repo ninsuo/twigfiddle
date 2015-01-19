@@ -16,7 +16,7 @@
     id="run"
     class="btn btn-tf-green domajax click"
     title="Render the given template/context"
-    data-endpoint="{{ path('run_fiddle', {'hash': hash, 'revision': revision}) }}"
+    data-endpoint="{{ path('run_fiddle') }}"
     data-input="#page-form"
     data-callback-before="clearFiddleErrors clearFiddleResult"
     data-callback-success="processRunFiddleResponse"

@@ -29,30 +29,18 @@ class FiddleController extends BaseController
     /**
      * Runs a fiddle
      *
-     * fiddle.hash_regexp
-     *
      * @Route(
-     *      "/run/{revision}/{hash}",
-     *      name = "run_fiddle",
-     *      requirements = {
-     *          "hash" = "^[a-zA-Z0-9-]{1,32}$",
-     *          "version" = "^\d+$"
-     *      },
-     *      defaults = {
-     *          "hash" = null,
-     *          "revision" = 1
-     *      }
+     *      "/run",
+     *      name = "run_fiddle"
      * )
      * @Method({"POST"})
      */
-    public function runAction(Request $request, $hash, $revision)
+    public function runAction(Request $request)
     {
-        return $this->validateAjaxFiddle($request, $hash, $revision,
+        return $this->validateAjaxFiddle($request, new Fiddle(),
               function(Fiddle $fiddle) use ($request)
            {
                $response = array ();
-
-               $this->detachFiddle($fiddle);
 
                if (!$this->get('app.captcha')->check($request, 'run'))
                {
@@ -100,10 +88,10 @@ class FiddleController extends BaseController
      */
     public function saveAction(Request $request, $hash, $revision)
     {
-        $fiddle = null;
+        $fiddle = $this->getFiddle($hash, $revision);
+
         if ($revision > 0)
         {
-            $fiddle = $this->getFiddle($hash, $revision);
             $bookmark = $this->getUserBookmark($fiddle);
             if ($bookmark)
             {
@@ -111,7 +99,7 @@ class FiddleController extends BaseController
             }
         }
 
-        return $this->validateAjaxFiddle($request, $hash, $revision,
+        return $this->validateAjaxFiddle($request, $fiddle,
               function (Fiddle $fiddle) use ($request, $hash, $revision)
            {
                $response = array ();
@@ -155,7 +143,7 @@ class FiddleController extends BaseController
 
                    return $response;
                }
-           }, $fiddle);
+           });
     }
 
     protected function detachFiddle(Fiddle $fiddle)
@@ -326,24 +314,17 @@ class FiddleController extends BaseController
      * Performs a callback if Fiddle's form is properly submitted and valid
      *
      * @param Request $request
-     * @param string|null $hash
-     * @param int $revision
      * @param callable $onValid
      * @param Fiddle|null $fiddle
      * @return RedirectResponse|JsonResponse
      */
-    protected function validateAjaxFiddle(Request $request, $hash, $revision, $onValid, Fiddle $fiddle = null)
+    protected function validateAjaxFiddle(Request $request, $fiddle, $onValid)
     {
         $response = array ();
 
         if (!$request->isXmlHttpRequest())
         {
             return new RedirectResponse($this->generateUrl('fiddle', $response, Response::HTTP_PRECONDITION_REQUIRED));
-        }
-
-        if (is_null($fiddle))
-        {
-            $fiddle = $this->getFiddle($hash, $revision);
         }
 
         $form = $this->createForm('FiddleType', $fiddle, array (
