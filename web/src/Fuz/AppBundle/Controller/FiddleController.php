@@ -52,6 +52,8 @@ class FiddleController extends BaseController
            {
                $response = array ();
 
+               $this->detachFiddle($fiddle);
+
                if (!$this->get('app.captcha')->check($request, 'run'))
                {
                    $response['captcha'] = true;
@@ -119,11 +121,13 @@ class FiddleController extends BaseController
 
                if (is_null($fiddle->getId()) || !$saveService->ownsFiddle($fiddle, $user))
                {
+                   $this->detachFiddle($fiddle);
                    $revision = 0;
                }
 
                if (!$revision && !$this->get('app.captcha')->check($request, 'save'))
                {
+                   $this->detachFiddle($fiddle);
                    $response['captcha'] = true;
                    return $response;
                }
@@ -135,6 +139,7 @@ class FiddleController extends BaseController
 
                if (!$saveService->validateHash($hash))
                {
+                   $this->detachFiddle($fiddle);
                    $hash = null;
                }
 
@@ -151,6 +156,22 @@ class FiddleController extends BaseController
                    return $response;
                }
            }, $fiddle);
+    }
+
+    protected function detachFiddle(Fiddle $fiddle)
+    {
+        $em = $this->get('doctrine.orm.entity_manager');
+        $em->detach($fiddle);
+        if ($fiddle->getContext())
+        {
+            $em->detach($fiddle->getContext());
+        }
+        $em->detach($fiddle->getTemplates());
+        $em->detach($fiddle->getTags());
+        if ($fiddle->getUser())
+        {
+            $em->detach($fiddle->getUser());
+        }
     }
 
     /**
@@ -340,6 +361,7 @@ class FiddleController extends BaseController
         }
         else
         {
+            $this->detachFiddle($fiddle);
             $errors = $this->getErrorMessagesAjaxFormat($form);
             if (!array_key_exists('#', $errors))
             {
