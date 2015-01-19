@@ -314,8 +314,8 @@ class FiddleController extends BaseController
      * Performs a callback if Fiddle's form is properly submitted and valid
      *
      * @param Request $request
-     * @param callable $onValid
      * @param Fiddle|null $fiddle
+     * @param callable $onValid
      * @return RedirectResponse|JsonResponse
      */
     protected function validateAjaxFiddle(Request $request, $fiddle, $onValid)
@@ -342,7 +342,6 @@ class FiddleController extends BaseController
         }
         else
         {
-            $this->detachFiddle($fiddle);
             $errors = $this->getErrorMessagesAjaxFormat($form);
             if (!array_key_exists('#', $errors))
             {
