@@ -18,7 +18,7 @@ class PhpFileLoader extends FileLoader
 
     public function load($resource, $type = null)
     {
-        return eval(file_get_contents($resource));
+        return include ($resource);
     }
 
     public function supports($resource, $type = null)
