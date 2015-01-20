@@ -27,7 +27,7 @@ class SaveFiddle
      *
      * This pattern should be the same in FuzAppBundle:Fiddle's routing/entity
      */
-    const HASH_PATTERN = '/^[a-zA-Z0-9-]{1,32}$/';
+    const HASH_PATTERN = '/^[a-zA-Z0-9-]{1,128}$/';
 
     protected $logger;
     protected $utilities;

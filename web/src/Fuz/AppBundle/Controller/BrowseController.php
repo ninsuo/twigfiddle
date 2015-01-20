@@ -90,7 +90,7 @@ class BrowseController extends BaseController
      *      "/result/{revision}/{hash}",
      *      name = "browse_result",
      *      requirements = {
-     *          "hash" = "^[a-zA-Z0-9-]{1,32}$",
+     *          "hash" = "^[a-zA-Z0-9-]{1,128}$",
      *          "version" = "^\d+$"
      *      }
      * )

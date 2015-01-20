@@ -76,7 +76,7 @@ class FiddleController extends BaseController
      *      "/save/{revision}/{hash}",
      *      name = "save_fiddle",
      *      requirements = {
-     *          "hash" = "^[a-zA-Z0-9-]{1,32}$",
+     *          "hash" = "^[a-zA-Z0-9-]{1,128}$",
      *          "revision" = "^\d+$"
      *      },
      *      defaults = {
@@ -171,7 +171,7 @@ class FiddleController extends BaseController
      *      "/bookmark/{revision}/{hash}",
      *      name = "bookmark_fiddle",
      *      requirements = {
-     *          "hash" = "^[a-zA-Z0-9-]{1,32}$",
+     *          "hash" = "^[a-zA-Z0-9-]{1,128}$",
      *          "revision" = "^\d+$"
      *      }
      * )
@@ -269,7 +269,7 @@ class FiddleController extends BaseController
      *      "/{hash}/{revision}",
      *      name = "fiddle",
      *      requirements = {
-     *          "hash" = "^[a-zA-Z0-9-]{1,32}$",
+     *          "hash" = "^[a-zA-Z0-9-]{1,128}$",
      *          "revision" = "^\d+$"
      *      },
      *      defaults = {

@@ -48,7 +48,7 @@ class Fiddle implements TagContainerInterface
      *
      * fiddle.hash_regexp
      *
-     * @ORM\Column(name="hash", type="string", length=32)
+     * @ORM\Column(name="hash", type="string", length=128)
      */
     protected $hash;
 
