@@ -115,6 +115,7 @@ fuz_app:
         samples:
            basics:
                - { hash: hello, revision: 1, label: "Hello, world!" }
+               - { hash: what-are-properties-in-self, revision: 1, label: "What's inside _self ?" }
            "twig's tags overview":
 #               - { hash: autoescape, revision: 1, label: "autoescape" }
 #               - { hash: block, revision: 1, label: "block" }
