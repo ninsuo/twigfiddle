@@ -125,6 +125,7 @@ class ImportCommand extends ContainerAwareCommand
 
             if ($this->error)
             {
+                $em->detach($fiddle);
                 continue;
             }
 
