@@ -43,18 +43,14 @@ class ImportCommand extends ContainerAwareCommand
 
         $em = $this
            ->getContainer()
-           ->get('doctrine.orm.entity_manager')
+           ->get('doctrine')
+           ->getManager()
         ;
 
         $fiddleRepo = $this
            ->getContainer()
            ->get('doctrine')
            ->getRepository('FuzAppBundle:Fiddle')
-        ;
-
-        $em = $this
-           ->getContainer()
-           ->get('doctrine.orm.entity_manager')
         ;
 
         foreach ($files as $file)
