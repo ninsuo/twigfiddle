@@ -15,7 +15,8 @@ The project is made of 2 applications:
 
 # Installation
 
-Here are instructions to get started with the application. Replace the path names and
+Here are instructions to get started with the application.
+Of course, replace paths to fit with your own environment.
 
 ```sh
 # Clone the project
