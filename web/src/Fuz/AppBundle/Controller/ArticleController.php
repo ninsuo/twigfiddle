@@ -20,6 +20,7 @@ class ArticleController extends BaseController
 
     /**
      * @Route("/about", name="about")
+     * @Route("/help", name="help")
      * @Template()
      */
     public function aboutAction()
