@@ -87,7 +87,7 @@ class ImportCommand extends ContainerAwareCommand
                 if ($fiddle->getId())
                 {
                     $em->remove($template);
-                    $em->flush();
+                    $em->flush($template);
                 }
             }
 
@@ -109,7 +109,7 @@ class ImportCommand extends ContainerAwareCommand
                 if ($fiddle->getId())
                 {
                     $em->remove($tag);
-                    $em->flush();
+                    $em->flush($tag);
                 }
             }
 
@@ -130,11 +130,12 @@ class ImportCommand extends ContainerAwareCommand
             }
 
             $em->persist($fiddle);
-            $em->flush($fiddle);
 
             $id = $fiddle->getId();
             $output->writeln("Imported: {$file} as fiddle ID = {$id}");
         }
+
+        $em->flush();
     }
 
     protected function getFromArray(array $array)
