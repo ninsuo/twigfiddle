@@ -40,7 +40,7 @@ class CaptchaIpLimitRepository extends EntityRepository
             $new->setIp($ip);
             $new->setLimit($limit);
             $this->_em->persist($new);
-            $this->_em->flush();
+            $this->_em->flush($new);
         }
     }
 
@@ -51,7 +51,7 @@ class CaptchaIpLimitRepository extends EntityRepository
         {
             $entity->setLimit($entity->getLimit() + $toAdd);
             $this->_em->persist($entity);
-            $this->_em->flush();
+            $this->_em->flush($entity);
         }
     }
 

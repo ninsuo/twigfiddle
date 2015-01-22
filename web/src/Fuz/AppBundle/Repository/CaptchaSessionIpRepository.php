@@ -44,7 +44,7 @@ class CaptchaSessionIpRepository extends EntityRepository
             $new->setIp($ip);
             $new->setSessionId($sessionId);
             $this->_em->persist($new);
-            $this->_em->flush();
+            $this->_em->flush($new);
         }
     }
 

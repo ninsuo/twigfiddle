@@ -47,13 +47,13 @@ class CaptchaSessionHitRepository extends EntityRepository
             $new->setStrategy($strategy);
             $new->setHits(1);
             $this->_em->persist($new);
-            $this->_em->flush();
+            $this->_em->flush($new);
         }
         else
         {
             $entity->setHits($entity->getHits() + 1);
             $this->_em->persist($entity);
-            $this->_em->flush();
+            $this->_em->flush($entity);
         }
     }
 
@@ -78,7 +78,7 @@ class CaptchaSessionHitRepository extends EntityRepository
         {
             $entity->setHits(0);
             $this->_em->persist($entity);
-            $this->_em->flush();
+            $this->_em->flush($entity);
         }
     }
 

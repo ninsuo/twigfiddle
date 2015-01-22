@@ -71,7 +71,7 @@ class FiddleRepository extends EntityRepository
         if ($fiddle->getId())
         {
             $fiddle->setVisitsCount($fiddle->getVisitsCount() + 1);
-            $this->_em->flush();
+            $this->_em->flush($fiddle);
         }
     }
 
