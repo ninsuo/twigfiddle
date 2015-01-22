@@ -109,13 +109,11 @@ class FiddleController extends BaseController
 
                if (is_null($fiddle->getId()) || !$saveService->ownsFiddle($fiddle, $user))
                {
-                   $this->detachFiddle($fiddle);
                    $revision = 0;
                }
 
                if (!$revision && !$this->get('app.captcha')->check($request, 'save'))
                {
-                   $this->detachFiddle($fiddle);
                    $response['captcha'] = true;
                    return $response;
                }
@@ -127,7 +125,6 @@ class FiddleController extends BaseController
 
                if (!$saveService->validateHash($hash))
                {
-                   $this->detachFiddle($fiddle);
                    $hash = null;
                }
 
@@ -144,22 +141,6 @@ class FiddleController extends BaseController
                    return $response;
                }
            });
-    }
-
-    protected function detachFiddle(Fiddle $fiddle)
-    {
-        $em = $this->get('doctrine.orm.entity_manager');
-        $em->detach($fiddle);
-        if ($fiddle->getContext())
-        {
-            $em->detach($fiddle->getContext());
-        }
-        $em->detach($fiddle->getTemplates());
-        $em->detach($fiddle->getTags());
-        if ($fiddle->getUser() && $this->getUser() && !$fiddle->getUser()->isEqualTo($this->getUser()))
-        {
-            $em->detach($fiddle->getUser());
-        }
     }
 
     /**

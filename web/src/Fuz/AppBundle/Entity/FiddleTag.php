@@ -20,6 +20,7 @@ use Fuz\AppBundle\Api\TagInterface;
  *
  * @ORM\Table(name="fiddle_tag")
  * @ORM\Entity
+ * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  */
 class FiddleTag implements TagInterface
 {
