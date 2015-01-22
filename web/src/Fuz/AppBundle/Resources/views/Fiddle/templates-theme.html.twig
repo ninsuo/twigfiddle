@@ -30,10 +30,10 @@
             <div class="main-template-div col-md-3 col-sm-3  col-xs-8 text-center hide" aria-hidden="true">
                <button
                    title="Select this file as main template"
-                   class="btn {% if form.isMain.vars.data %}btn-tf-green{% else %}btn-default{% endif %} btn-sm btn-twigfiddle main-template"
+                   class="btn {% if form.main.vars.data %}btn-tf-green{% else %}btn-default{% endif %} btn-sm btn-twigfiddle main-template"
                    data-id="{{ form.content.vars.id }}"
                    type="button">
-                   <span class="glyphicon {% if form.isMain.vars.data %}glyphicon-check{% else %}glyphicon-unchecked{% endif %}"></span> Set as main template
+                   <span class="glyphicon {% if form.main.vars.data %}glyphicon-check{% else %}glyphicon-unchecked{% endif %}"></span> Set as main template
                </button>
             </div>
             <div class="delete-template-div col-md-2 col-sm-2  col-xs-4 text-right hide" aria-hidden="true">
@@ -49,7 +49,7 @@
         </div>
         <div class="hide">
             {{
-                form_widget(form.isMain, {
+                form_widget(form.main, {
                     'attr': {
                         'autocomplete': 'off',
                     }

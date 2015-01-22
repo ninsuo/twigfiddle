@@ -82,7 +82,7 @@ class Fiddle implements TagContainerInterface
      * fiddle.max_templates
      *
      * @ORM\OneToMany(targetEntity="FiddleTemplate", mappedBy="fiddle", cascade={"all"}, orphanRemoval=true)
-     * @ORM\OrderBy({"isMain" = "DESC"})
+     * @ORM\OrderBy({"main" = "DESC"})
      * @Assert\Count(min = 1, minMessage = "You need at least 1 template.")
      * @Assert\Count(max = 10, maxMessage = "You can't create more than 15 templates.")
      * @Assert\Valid()

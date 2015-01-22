@@ -15,7 +15,6 @@ if (!include __DIR__ . '/../../vendor/autoload.php')
 }
 
 use Symfony\Component\Filesystem\Filesystem;
-use Doctrine\Common\Collections\ArrayCollection;
 use Fuz\Component\SharedMemory\Storage\StorageFile;
 use Fuz\Component\SharedMemory\SharedMemory;
 use Fuz\AppBundle\Entity\Fiddle;
@@ -152,7 +151,7 @@ class DefaultEngineTest extends \PHPUnit_Framework_TestCase
         $fiddle->setContext($context);
 
         $template = new FiddleTemplate();
-        $template->setIsMain(true);
+        $template->setMain(true);
         $template->setFilename("template.twig");
         $template->setContent('Hello, {{ name }}!');
 

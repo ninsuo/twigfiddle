@@ -27,7 +27,7 @@ class FiddleTemplateType extends AbstractType
            ->add('content', 'textarea', array(
                    'required' => true,
            ))
-           ->add('isMain', 'checkbox', array(
+           ->add('main', 'checkbox', array(
                    'required' => false,
            ))
         ;

@@ -98,7 +98,7 @@ class ImportCommand extends ContainerAwareCommand
                 $template = new FiddleTemplate();
                 $template->setFilename($this->getFromArray($jsonTemplate, 'filename'));
                 $template->setContent($this->getFromArray($jsonTemplate, 'content'));
-                $template->setIsMain($this->getFromArray($jsonTemplate, 'is-main'));
+                $template->setMain($this->getFromArray($jsonTemplate, 'is-main'));
                 $fiddle->addTemplate($template);
             }
 

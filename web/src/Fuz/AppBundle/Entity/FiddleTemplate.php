@@ -62,7 +62,7 @@ class FiddleTemplate
      * @ORM\Column(name="is_main", type="boolean")
      * @Assert\Type(type="bool")
      */
-    protected $isMain = true;
+    protected $main = true;
 
     /**
      * Set fiddle
@@ -134,26 +134,26 @@ class FiddleTemplate
     }
 
     /**
-     * Set isMain
+     * Set main
      *
-     * @param boolean $isMain
+     * @param boolean $main
      * @return FiddleTemplate
      */
-    public function setIsMain($isMain)
+    public function setMain($main)
     {
-        $this->isMain = $isMain;
+        $this->main = $main;
 
         return $this;
     }
 
     /**
-     * Get isMain
+     * Get main
      *
      * @return boolean
      */
     public function isMain()
     {
-        return $this->isMain;
+        return $this->main;
     }
 
 }
