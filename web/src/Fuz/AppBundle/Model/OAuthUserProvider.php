@@ -56,13 +56,13 @@ class OAuthUserProvider extends BaseUserProvider
             $user->setUsername($name);
             $user->setSigninCount(1);
             $this->em->persist($user);
-            $this->em->flush();
+            $this->em->flush($user);
         }
         else
         {
             $user->setSigninCount($user->getSigninCount() + 1);
             $this->em->persist($user);
-            $this->em->flush();
+            $this->em->flush($user);
         }
 
         if ($this->session->has('recent-fiddles'))

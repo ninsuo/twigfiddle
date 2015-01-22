@@ -189,7 +189,7 @@ class FiddleController extends BaseController
         if ($old)
         {
             $em->remove($old);
-            $em->flush();
+            $em->flush($old);
             return new JsonResponse($response);
         }
 
@@ -221,7 +221,7 @@ class FiddleController extends BaseController
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($bookmark);
-        $em->flush();
+        $em->flush($bookmark);
 
         $response['isBookmarked'] = true;
         return new JsonResponse($response);

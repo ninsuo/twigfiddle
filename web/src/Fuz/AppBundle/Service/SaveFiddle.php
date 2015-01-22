@@ -189,7 +189,7 @@ class SaveFiddle
         $fiddle->setRevision(1);
 
         $this->em->persist($fiddle);
-        $this->em->flush();
+        $this->em->flush($fiddle);
 
         return $fiddle;
     }

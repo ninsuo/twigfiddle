@@ -52,7 +52,7 @@ class UserBookmarkSubscriber implements EventSubscriber
             }
             $object->setTags($this->tags);
 
-            $om->flush();
+            $om->flush($object);
         }
     }
 

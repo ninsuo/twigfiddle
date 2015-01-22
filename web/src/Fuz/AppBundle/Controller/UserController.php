@@ -113,7 +113,7 @@ class UserController extends BaseController
                 $user = $this->getUser();
                 $em = $this->get('doctrine.orm.entity_manager');
                 $em->remove($user);
-                $em->flush();
+                $em->flush($user);
                 return $this->forward('FuzAppBundle:User:logout');
             }
             return $this->goBack($request);
