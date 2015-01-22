@@ -19,6 +19,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="fiddle_template")
  * @ORM\Entity
+ * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  */
 class FiddleTemplate
 {

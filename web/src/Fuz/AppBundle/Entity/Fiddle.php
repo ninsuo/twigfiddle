@@ -26,6 +26,7 @@ use Fuz\AppBundle\Api\TagContainerInterface;
  * )
  * @ORM\Entity(repositoryClass="Fuz\AppBundle\Repository\FiddleRepository")
  * @ORM\HasLifecycleCallbacks
+ * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  */
 class Fiddle implements TagContainerInterface
 {
@@ -148,7 +149,7 @@ class Fiddle implements TagContainerInterface
     {
         $this->context = new FiddleContext();
         $this->templates = new ArrayCollection();
-        //$this->templates->add(new FiddleTemplate());
+        $this->templates->add(new FiddleTemplate());
         $this->tags = new ArrayCollection();
     }
 

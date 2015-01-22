@@ -155,7 +155,8 @@ class SaveFiddle
         }
         else if ($revision > 0)
         {
-            $this->em->flush();
+            $this->em->persist($fiddle);
+            $this->em->flush($fiddle);
         }
         else
         {

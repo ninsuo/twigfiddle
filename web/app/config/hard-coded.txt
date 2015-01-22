@@ -3,7 +3,7 @@ But for an easier maintenance, a string has been placed close to them.
 
 Purpose of this file is to list them with their default values for easier updates: just grep those strings within the app and you're done.
 
-fiddle.hash_regexp = ^[a-zA-Z0-9-]{1,32}$
+fiddle.hash_regexp = ^[a-zA-Z0-9-]{1,128}$
 fiddle.max_templates = 10
 fiddle.max_tags = 5
 
