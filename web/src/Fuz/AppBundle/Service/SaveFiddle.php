@@ -208,7 +208,7 @@ class SaveFiddle
         }
 
         $this->em->persist($clone);
-        $this->em->flush();
+        $this->em->flush($clone);
 
         return $clone;
     }

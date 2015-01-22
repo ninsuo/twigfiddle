@@ -61,9 +61,8 @@ class FiddleSubscriber implements EventSubscriber
 
             foreach ($this->templates as $template)
             {
-                $template->setFiddle($object);
-                $om->persist($template);
                 $object->addTemplate($template);
+                $om->persist($template);
             }
 
             foreach ($this->tags as $tag)

@@ -148,7 +148,7 @@ class Fiddle implements TagContainerInterface
     {
         $this->context = new FiddleContext();
         $this->templates = new ArrayCollection();
-        $this->templates->add(new FiddleTemplate());
+        //$this->templates->add(new FiddleTemplate());
         $this->tags = new ArrayCollection();
     }
 
@@ -549,6 +549,7 @@ class Fiddle implements TagContainerInterface
 
     public function __clone()
     {
+        $this->id = null;
         $this->user = null;
 
         if ($this->context)
@@ -559,21 +560,22 @@ class Fiddle implements TagContainerInterface
         if ($this->templates)
         {
             $templates = $this->templates;
-            $this->templates = new ArrayCollection();
+            $this->clearTemplates();
             foreach ($templates as $template)
             {
-                $this->templates->add(clone $template);
+                $this->addTemplate(clone $template);
             }
         }
 
         if ($this->tags)
         {
-            $tags = $this->tags;
-            $this->tags = new ArrayCollection();
-            foreach ($tags as $tag)
+            $oldTags = $this->tags;
+            $newTags = new ArrayCollection();
+            foreach ($oldTags as $tag)
             {
-                $this->tags->add(clone $tag);
+                $newTags->add(clone $tag);
             }
+            $this->setTags($newTags);
         }
 
         $this->visitsCount = 0;
