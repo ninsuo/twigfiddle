@@ -84,7 +84,7 @@ class ImportCommand extends ContainerAwareCommand
 
             foreach ($fiddle->getTemplates() as $template)
             {
-                if (\Doctrine\ORM\UnitOfWork::STATE_MANAGED === $em->getUnitOfWork()->getEntityState($template))
+                if ($fiddle->getId())
                 {
                     $em->remove($template);
                     $em->flush();
@@ -106,7 +106,7 @@ class ImportCommand extends ContainerAwareCommand
 
             foreach ($fiddle->getTags() as $tag)
             {
-                if (\Doctrine\ORM\UnitOfWork::STATE_MANAGED === $em->getUnitOfWork()->getEntityState($tag))
+                if ($fiddle->getId())
                 {
                     $em->remove($tag);
                     $em->flush();
@@ -130,7 +130,7 @@ class ImportCommand extends ContainerAwareCommand
             }
 
             $em->persist($fiddle);
-            $em->flush();
+            $em->flush($fiddle);
 
             $id = $fiddle->getId();
             $output->writeln("Imported: {$file} as fiddle ID = {$id}");

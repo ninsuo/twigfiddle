@@ -107,7 +107,7 @@ class Fiddle implements TagContainerInterface
     protected $title;
 
     /**
-     * @var boolean
+     * @var string
      *
      * @ORM\Column(name="visibility", type="string", length=16)
      */
@@ -154,8 +154,6 @@ class Fiddle implements TagContainerInterface
     }
 
     /**
-     * Get id
-     *
      * @return integer
      */
     public function getId()
@@ -164,8 +162,6 @@ class Fiddle implements TagContainerInterface
     }
 
     /**
-     * Set hash
-     *
      * @param string $hash
      * @return Fiddle
      */
@@ -177,8 +173,6 @@ class Fiddle implements TagContainerInterface
     }
 
     /**
-     * Get hash
-     *
      * @return string
      */
     public function getHash()
@@ -187,8 +181,6 @@ class Fiddle implements TagContainerInterface
     }
 
     /**
-     * Set revision
-     *
      * @param integer $revision
      * @return Fiddle
      */
@@ -200,8 +192,6 @@ class Fiddle implements TagContainerInterface
     }
 
     /**
-     * Get revision
-     *
      * @return integer
      */
     public function getRevision()
@@ -210,8 +200,6 @@ class Fiddle implements TagContainerInterface
     }
 
     /**
-     * Set user
-     *
      * @param User $user
      * @return Fiddle
      */
@@ -223,8 +211,6 @@ class Fiddle implements TagContainerInterface
     }
 
     /**
-     * Get user
-     *
      * @return User|null
      */
     public function getUser()
@@ -233,8 +219,6 @@ class Fiddle implements TagContainerInterface
     }
 
     /**
-     * Set context
-     *
      * @param FiddleContext|null $context
      * @return Fiddle
      */
@@ -251,8 +235,6 @@ class Fiddle implements TagContainerInterface
     }
 
     /**
-     * Get context
-     *
      * @return FiddleContext|null
      */
     public function getContext()
@@ -261,16 +243,16 @@ class Fiddle implements TagContainerInterface
     }
 
     /**
-     * Add template
-     *
      * @param FiddleTemplate $template
      * @return Fiddle
      */
     public function addTemplate(FiddleTemplate $template)
     {
-        $template->setFiddle($this);
-        $this->templates->add($template);
-
+        if (!$this->templates->contains($template))
+        {
+            $template->setFiddle($this);
+            $this->templates->add($template);
+        }
         return $this;
     }
 
@@ -282,7 +264,10 @@ class Fiddle implements TagContainerInterface
      */
     public function removeTemplate(FiddleTemplate $template)
     {
-        $this->templates->removeElement($template);
+        if ($this->templates->contains($template))
+        {
+            $this->templates->removeElement($template);
+        }
         return $this;
     }
 
@@ -298,9 +283,7 @@ class Fiddle implements TagContainerInterface
     }
 
     /**
-     * Get templates
-     *
-     * @return array[FiddleTemplate]
+     * @return FiddleTemplate[]
      */
     public function getTemplates()
     {
@@ -308,8 +291,6 @@ class Fiddle implements TagContainerInterface
     }
 
     /**
-     * Set twigVersion
-     *
      * @param string $twigVersion
      * @return Fiddle
      */
@@ -321,8 +302,6 @@ class Fiddle implements TagContainerInterface
     }
 
     /**
-     * Get twigVersion
-     *
      * @return string
      */
     public function getTwigVersion()
@@ -331,8 +310,6 @@ class Fiddle implements TagContainerInterface
     }
 
     /**
-     * Set title
-     *
      * @param string $title
      * @return Fiddle
      */
@@ -344,8 +321,6 @@ class Fiddle implements TagContainerInterface
     }
 
     /**
-     * Get title
-     *
      * @return string
      */
     public function getTitle()
@@ -354,9 +329,7 @@ class Fiddle implements TagContainerInterface
     }
 
     /**
-     * Set visibility
-     *
-     * @param boolean $visibility
+     * @param bool $visibility
      * @return Fiddle
      */
     public function setVisibility($visibility)
@@ -367,9 +340,7 @@ class Fiddle implements TagContainerInterface
     }
 
     /**
-     * Get visibility
-     *
-     * @return boolean
+     * @return bool
      */
     public function getVisibility()
     {
@@ -405,8 +376,6 @@ class Fiddle implements TagContainerInterface
     }
 
     /**
-     * Set creationTm
-     *
      * @param \DateTime $creationTm
      * @return Fiddle
      */
@@ -418,8 +387,6 @@ class Fiddle implements TagContainerInterface
     }
 
     /**
-     * Get creationTm
-     *
      * @return \DateTime
      */
     public function getCreationTm()
@@ -428,8 +395,6 @@ class Fiddle implements TagContainerInterface
     }
 
     /**
-     * Set updateTm
-     *
      * @param \DateTime $updateTm
      * @return Fiddle
      */
@@ -441,8 +406,6 @@ class Fiddle implements TagContainerInterface
     }
 
     /**
-     * Get updateTm
-     *
      * @return \DateTime
      */
     public function getUpdateTm()
@@ -451,8 +414,6 @@ class Fiddle implements TagContainerInterface
     }
 
     /**
-     * Set visitsCount
-     *
      * @param integer $visitsCount
      * @return Fiddle
      */
@@ -464,8 +425,6 @@ class Fiddle implements TagContainerInterface
     }
 
     /**
-     * Get visitsCount
-     *
      * @return integer
      */
     public function getVisitsCount()
