@@ -9,9 +9,17 @@ ask a question on the dedicated [mailing list](https://groups.google.com/forum/#
 
 The project is made of 2 applications:
 
-- the cli directory contains the fiddle runner, an application built to execute a fiddle.
+- resources directory contains specification documentations, logo source and original integrated design.
 
-- the web directory contains the web application, the website.
+- cli directory contains the fiddle runner, an application built using Symfony2 components to execute a fiddle.
+
+- web directory contains the web application, built using the Symfony2 framework
+
+- samples contains exported fiddles (see app/console custom commands)
+
+- environment is the default directory containing fiddles at runtime
+
+- debug is the default directory where crashed fiddles are stored
 
 # Installation
 
