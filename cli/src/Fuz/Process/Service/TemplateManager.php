@@ -16,6 +16,7 @@ use Fuz\Process\Agent\FiddleAgent;
 use Fuz\Process\Entity\Error;
 use Fuz\Process\Exception\StopExecutionException;
 use Fuz\Framework\Service\FileSystem;
+use Fuz\AppBundle\Entity\FiddleTemplate;
 
 class TemplateManager extends BaseService
 {
@@ -69,7 +70,7 @@ class TemplateManager extends BaseService
         }
 
         $templates = $collection->toArray();
-        usort($templates, function($a, $b)
+        usort($templates, function(FiddleTemplate $a, FiddleTemplate $b)
         {
             return $a->isMain() ? -1 : 1;
         });
@@ -94,7 +95,7 @@ class TemplateManager extends BaseService
 
             $file = $dir . DIRECTORY_SEPARATOR . $filename;
             $this->logger->debug("Writing template: {$file}.");
-            if (@file_put_contents($file, $template->getContent()) === false)
+            if (file_put_contents($file, $template->getContent()) === false)
             {
                 $agent->addError(Error::E_CANNOT_WRITE_TEMPLATE, array ('file' => $file));
                 throw new StopExecutionException();

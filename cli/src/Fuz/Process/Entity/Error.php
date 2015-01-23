@@ -106,12 +106,12 @@ class Error
 
     public function isDebug()
     {
-        return $this->isDebug;
+        return $this->debug;
     }
 
-    public function setIsDebug($isDebug)
+    public function setDebug($debug)
     {
-        $this->isDebug = $isDebug;
+        $this->debug = $debug;
         return $this;
     }
 

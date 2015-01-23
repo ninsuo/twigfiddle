@@ -39,7 +39,7 @@ class FiddleAgent
      *
      * @var bool
      */
-    protected $isDebug;
+    protected $debug;
 
     /**
      * Execution's environment directory
@@ -134,15 +134,15 @@ class FiddleAgent
         return $this->environmentId;
     }
 
-    public function setIsDebug($isDebug)
+    public function setDebug($debug)
     {
-        $this->isDebug = $isDebug;
+        $this->debug = $debug;
         return $this;
     }
 
     public function isDebug()
     {
-        return $this->isDebug;
+        return $this->debug;
     }
 
     public function setDirectory($directory)

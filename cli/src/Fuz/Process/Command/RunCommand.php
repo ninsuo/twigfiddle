@@ -99,7 +99,7 @@ class RunCommand extends BaseCommand
         $this->agent = $this->get('fiddle_agent');
         $this->agent
            ->setEnvironmentId($this->environmentId)
-           ->setIsDebug($this->isDebug)
+           ->setDebug($this->isDebug)
         ;
         return $this;
     }
