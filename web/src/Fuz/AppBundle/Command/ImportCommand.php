@@ -58,14 +58,14 @@ class ImportCommand extends ContainerAwareCommand
             $this->error = false;
             $this->file = $file;
 
-            $string = @file_get_contents($file);
+            $string = file_get_contents($file);
             if ($string === false)
             {
                 $output->writeln("<error>File {$file} does not exist or is not readable.</error>");
                 continue;
             }
 
-            $json = @json_decode($string, true);
+            $json = json_decode($string, true);
             if ($json === false)
             {
                 $output->writeln("<error>File {$file} does not contain a valid json string.</error>");

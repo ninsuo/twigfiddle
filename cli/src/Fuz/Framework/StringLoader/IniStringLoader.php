@@ -19,7 +19,7 @@ class IniStringLoader implements StringLoaderInterface
 
     public function load($stream)
     {
-        $array = @parse_ini_string($stream, true, INI_SCANNER_RAW);
+        $array = parse_ini_string($stream, true, INI_SCANNER_RAW);
         if ($array === false)
         {
             $error = error_get_last();
