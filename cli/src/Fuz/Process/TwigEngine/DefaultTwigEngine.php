@@ -67,7 +67,7 @@ class DefaultTwigEngine extends BaseService implements TwigEngineInterface
             {
                 continue;
             }
-            list($identifier, $string, $lineno) = $token;
+            list($identifier, $string) = $token;
             if ($identifier !== T_COMMENT)
             {
                 continue;

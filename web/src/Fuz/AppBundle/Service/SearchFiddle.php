@@ -105,8 +105,8 @@ class SearchFiddle
            ->having(
                $qb->expr()->andX(
                   $qb->expr()->eq(1, 1),
-                  $this->applyKeywordsFilter($criteria, $qb, $user),
-                  $this->applyTagsFilter($criteria, $qb, $user)
+                  $this->applyKeywordsFilter($criteria, $qb),
+                  $this->applyTagsFilter($criteria, $qb)
                )
            )
            ->orderBy('f.creationTm', 'DESC')
@@ -120,7 +120,7 @@ class SearchFiddle
         return $qb;
     }
 
-    public function applyKeywordsFilter(BrowseFilters $criteria, QueryBuilder $qb, User $user = null)
+    public function applyKeywordsFilter(BrowseFilters $criteria, QueryBuilder $qb)
     {
         $andF = $qb->expr()->andX();
         $andB = $qb->expr()->andX();
@@ -136,7 +136,7 @@ class SearchFiddle
         return $qb->expr()->orX($andF, $andB);
     }
 
-    public function applyTagsFilter(BrowseFilters $criteria, QueryBuilder $qb, User $user = null)
+    public function applyTagsFilter(BrowseFilters $criteria, QueryBuilder $qb)
     {
         $andF = $qb->expr()->andX();
         $andB = $qb->expr()->andX();
