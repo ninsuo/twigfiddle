@@ -84,6 +84,12 @@ class ErrorManager extends BaseService
                     'logger' => 'info',
                     'debug' => false,
             ),
+            Error::E_INVALID_CONTEXT_TYPE => array (
+                    'group' => Error::G_CONTEXT,
+                    'message' => "The Twig context should be convertible to an array.",
+                    'logger' => 'info',
+                    'debug' => false,
+            ),
             Error::E_NO_TEMPLATE => array (
                     'group' => Error::G_TEMPLATE,
                     'message' => "This fiddle does not contain any template.",

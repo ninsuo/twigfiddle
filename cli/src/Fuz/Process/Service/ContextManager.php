@@ -65,6 +65,12 @@ class ContextManager extends BaseService
             throw new StopExecutionException();
         }
 
+        if (!is_array($array))
+        {
+            $agent->addError(Error::E_INVALID_CONTEXT_TYPE, array('context' => $array));
+            throw new StopExecutionException();
+        }
+
         $this->logger->debug("Successfully extracted the context.", array ('context' => $array));
         $agent->setContext($array);
 
