@@ -72,7 +72,7 @@ class FiddleSubscriber implements EventSubscriber
             }
             $object->setTags($this->tags);
 
-            $om->flush($object);
+            $om->flush();
         }
     }
 
