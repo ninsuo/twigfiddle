@@ -9,11 +9,13 @@ ask a question on the dedicated [mailing list](https://groups.google.com/forum/#
 
 The project is made of 2 applications:
 
-- resources directory contains specification documentations, logo source and original integrated design.
-
 - cli directory contains the fiddle runner, an application built using Symfony2 components to execute a fiddle.
 
 - web directory contains the web application, built using the Symfony2 framework
+
+About the other directories:
+
+- resources directory contains specification documentations, logo source and original integrated design.
 
 - samples contains exported fiddles (see app/console custom commands)
 
