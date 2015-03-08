@@ -3,3 +3,4 @@
 !/environment/.gitkeep
 /debug/*
 !/debug/.gitkeep
+/notes
