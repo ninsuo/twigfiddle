@@ -30,6 +30,12 @@ class ErrorManager extends BaseService
                     'logger' => 'error',
                     'debug' => true,
             ),
+            Error::E_UNEXPECTED_NODEBUG => array (
+                    'group' => Error::G_GENERAL,
+                    'message' => "An unexpected error occured.",
+                    'logger' => 'error',
+                    'debug' => false,
+            ),
             Error::E_TIMEOUT => array (
                     'group' => Error::G_GENERAL,
                     'message' => "Maximum execution timeout was reached.",

@@ -23,6 +23,7 @@ class Error
     /* G_GENERAL */
     const E_UNKNOWN = 'UNKNOWN';
     const E_UNEXPECTED = 'UNEXPECTED';
+    const E_UNEXPECTED_NODEBUG = 'UNEXPECTED_NODEBUG';
     const E_TIMEOUT = 'TIMEOUT';
 
     /* G_ENVIRONMENT */

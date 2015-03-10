@@ -75,13 +75,25 @@ class RunCommand extends BaseCommand
             $this->memory = null;
             if ((!is_null($err = error_get_last())) && (!in_array($err['type'], array (E_NOTICE, E_WARNING))))
             {
-                // No need to debug main.twig if it contains {{ include('main.twig') }}
-                if (!strpos($err['message'], 'Allowed memory size')
-                   && !strpos($err['message'], 'Maximum function nesting level'))
+                // By default, unexpected exceptions leads to debug files given to developers for debugging purposes.
+                // But there are no need to require developer's attention if some main.twig contains {{ include('main.twig') }}
+                $ignores = array (
+                        'Allowed memory size',
+                        'Call to undefined method',
+                        'Maximum function nesting level',
+                );
+
+                $cnt = 0;
+                foreach ($ignores as $ignore)
                 {
-                    $this->agent->addError(Error::E_UNEXPECTED, $err);
-                    $this->finish();
+                    if (strpos($err['message'], $ignore) !== false)
+                    {
+                        $cnt++;
+                    }
                 }
+
+                $this->agent->addError($cnt ? Error::E_UNEXPECTED_NODEBUG : Error::E_UNEXPECTED, $err);
+                $this->finish();
             }
         });
         return $this;
