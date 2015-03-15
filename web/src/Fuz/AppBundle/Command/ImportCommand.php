@@ -87,7 +87,7 @@ class ImportCommand extends ContainerAwareCommand
                 if ($fiddle->getId())
                 {
                     $em->remove($template);
-                    $em->flush($template);
+                    $em->flush();
                 }
             }
 
@@ -109,7 +109,7 @@ class ImportCommand extends ContainerAwareCommand
                 if ($fiddle->getId())
                 {
                     $em->remove($tag);
-                    $em->flush($tag);
+                    $em->flush();
                 }
             }
 
