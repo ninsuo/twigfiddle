@@ -40,6 +40,11 @@ class BrowseController extends BaseController
     {
         list($data, $filters) = $this->createBrowseFilters($request, $tag);
 
+        if ($request->getMethod() === 'GET')
+        {
+            $this->get('app.paginator')->reset('browseFiddles');
+        }
+
         if ($filters->isSubmitted() && !$filters->isValid())
         {
             $data = new BrowseFilters();

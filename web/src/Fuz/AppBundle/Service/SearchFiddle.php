@@ -51,7 +51,7 @@ class SearchFiddle
         $qbResult->select('f.id, f.hash, f.revision');
         $this->createSearchQueryBuilder($qbResult, $criteria, $user);
 
-        $pagination = $this->paginator->paginate($request, $qbResult, $count);
+        $pagination = $this->paginator->paginate($request, $qbResult, $count, array('session_key' => 'browseFiddles'));
         $fiddles = $qbResult->getQuery()->getArrayResult();
 
         return array($pagination, $fiddles);
