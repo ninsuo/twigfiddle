@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Fuz\AppBundle\Service;
+namespace Fuz\AppBundle\Util;
 
 use Psr\Log\LoggerInterface;
 

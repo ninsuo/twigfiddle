@@ -18,6 +18,7 @@ use Symfony\Component\Routing\Router;
 use Fuz\AppBundle\Helper\DoctrineHelper;
 use Fuz\AppBundle\Entity\Fiddle;
 use Fuz\AppBundle\Entity\User;
+use Fuz\AppBundle\Util\Utilities;
 
 class SaveFiddle
 {

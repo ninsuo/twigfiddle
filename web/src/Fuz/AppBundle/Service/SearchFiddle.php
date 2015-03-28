@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Fuz\AppBundle\Entity\Fiddle;
 use Fuz\AppBundle\Entity\User;
 use Fuz\AppBundle\Entity\BrowseFilters;
-use Fuz\AppBundle\Service\Paginator;
+use Fuz\AppBundle\Util\Paginator;
 
 class SearchFiddle
 {

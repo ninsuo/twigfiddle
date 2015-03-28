@@ -14,7 +14,7 @@ namespace Fuz\AppBundle\Form;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Fuz\AppBundle\Service\ProcessConfiguration;
+use Fuz\AppBundle\Util\ProcessConfiguration;
 use Fuz\AppBundle\Transformer\FiddleTagTransformer;
 use Fuz\AppBundle\Entity\Fiddle;
 

@@ -12,10 +12,10 @@ parameters:
     app.subscriber.fiddle.class: Fuz\AppBundle\EventListener\FiddleSubscriber
     app.subscriber.user.class: Fuz\AppBundle\EventListener\UserSubscriber
     app.subscriber.user_bookmark.class: Fuz\AppBundle\EventListener\UserBookmarkSubscriber
-    app.utilities.class: Fuz\AppBundle\Service\Utilities
-    app.paginator.class: Fuz\AppBundle\Service\Paginator
-    app.captcha.class: Fuz\AppBundle\Service\Captcha
-    app.process_configuration.class: Fuz\AppBundle\Service\ProcessConfiguration
+    app.utilities.class: Fuz\AppBundle\Util\Utilities
+    app.paginator.class: Fuz\AppBundle\Util\Paginator
+    app.captcha.class: Fuz\AppBundle\Util\Captcha
+    app.process_configuration.class: Fuz\AppBundle\Util\ProcessConfiguration
     app.run_fiddle.class: Fuz\AppBundle\Service\RunFiddle
     app.save_fiddle.class: Fuz\AppBundle\Service\SaveFiddle
     app.search_fiddle.class: Fuz\AppBundle\Service\SearchFiddle
