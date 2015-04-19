@@ -372,6 +372,18 @@ $(document).ready(function() {
     });
 
     {#
+     # Twig Engine switcher
+     # Used in FuzAppBundle:Fiddle:version.html.twig
+     #}
+     $('body').on('change', '#{{ form.twigEngine.vars.id }}', function(e) {
+        var that = $(this);
+        var engines = that.data('twig-engines');
+        var selected = that.find(':selected').val();
+        selectTwigEngine(engines, selected);
+     });
+     selectTwigVersion();
+
+    {#
      #  Automatic run at startup if a saved fiddle was loaded
      #}
     {% if data.id %}
@@ -529,6 +541,44 @@ function displayRightVisibilityButton()
             that.addClass('hide');
             that.attr('aria-hidden', 'true');
         }
+    });
+}
+
+{#
+ #  Replaces the current list of twig versions by the ones supported by the selected engine.
+ #  Used in FuzAppBundle:Fiddle:visibility.html.twig
+ #}
+function selectTwigEngine(engines, selected) {
+    var list = engines[selected];
+    var select = $('#{{ form.twigVersion.vars.id }}');
+    select.empty();
+    $.each(list, function(key, value) {
+        select
+            .append(
+                $("<option></option>")
+                    .attr("value", $.symfony2.escape(value))
+                .text($.symfony2.escape(value))
+            );
+    });
+}
+
+{#
+ #  Dynamically selects the right engine using the selected Twig version.
+ #  Used in FuzAppBundle:Fiddle:visibility.html.twig
+ #}
+function selectTwigVersion() {
+    var engines = $('#{{ form.twigEngine.vars.id }}').data('twig-engines');
+    var curVersion = $('#{{ form.twigVersion.vars.id }}').val();
+    $.each(engines, function(name, list) {
+       $.each(list, function(i, testVersion) {
+           if (testVersion === curVersion) {
+               $('#{{ form.twigEngine.vars.id }}')
+                       .find('option[value="' + name + '"]')
+                       .prop('selected', true);
+               selectTwigEngine(engines, name);
+               return true;
+           }
+       });
     });
 }
 

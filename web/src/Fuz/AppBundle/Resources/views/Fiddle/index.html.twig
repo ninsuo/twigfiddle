@@ -49,13 +49,7 @@
 {% endblock %}
 
 {% block header_left %}
-
-{# Twig version #}
-<div class="form-group {% if form.twigVersion.vars.errors|length > 0 %}has-error{% endif %}">
-    {{ form_widget(form.twigVersion) }}
-    <div class="error-container" id="errors-{{ form.twigVersion.vars.id }}">{{ form_errors(form.twigVersion) }}</div>
-</div>
-
+    {{ include('FuzAppBundle:Fiddle:version.html.twig') }}
 {% endblock %}
 
 {% block header_middle %}
@@ -183,5 +177,5 @@
 {% endblock %}
 
 {% block script %}
-{{ include('FuzAppBundle:Fiddle:script.html.twig') }}
+    {{ include('FuzAppBundle:Fiddle:script.html.twig') }}
 {% endblock %}

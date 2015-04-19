@@ -97,15 +97,16 @@ class ProcessConfiguration
         $versions = array ();
 
         $engineServiceIds = $processContainer->findTaggedServiceIds('twig.engine');
+
         foreach ($engineServiceIds as $tags)
         {
             foreach ($tags as $tag)
             {
-                if (!array_key_exists('versions', $tag))
+                if (!array_key_exists('versions', $tag) || !array_key_exists('label', $tag))
                 {
                     continue;
                 }
-                $versions = array_merge($versions, array_map('trim', explode("/", $tag['versions'])));
+                $versions[$tag['label']] = explode("/", $tag['versions']);
             }
         }
 

@@ -280,6 +280,8 @@ class FiddleController extends BaseController
 
         $form = $this->createForm('FiddleType', $fiddle);
 
+        $processConfig = $this->get('app.process_configuration')->getProcessConfig();
+
         return array (
                 'form' => $form->createView(),
                 'data' => $fiddle,
@@ -288,6 +290,7 @@ class FiddleController extends BaseController
                 'canSave' => $this->get('app.save_fiddle')->canSaveFiddle($fiddle, $user),
                 'revisionBrowser' => $fiddleRepo->getRevisionList($fiddle, $user),
                 'bookmark' => $bookmark,
+                'twigEngines' => json_encode($processConfig['supported_versions']),
         );
     }
 

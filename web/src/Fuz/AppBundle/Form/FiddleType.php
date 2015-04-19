@@ -34,12 +34,9 @@ class FiddleType extends AbstractType
     {
         $transformer = new FiddleTagTransformer($options['data_object']);
 
+        $this->buildTwigVersionChoices($builder, $options);
+
         $builder
-           ->add('twigVersion', 'choice',
-              array (
-                   'choices' => array_combine($this->twigVersions, $this->twigVersions),
-                   'required' => true,
-           ))
            ->add('templates', 'collection',
               array (
                    'type' => new FiddleTemplateType(),
@@ -58,8 +55,7 @@ class FiddleType extends AbstractType
            ))
            ->add(
               $builder
-              ->create('tags', 'text',
-                 array (
+              ->create('tags', 'text', array (
                       'required' => false,
               ))
               ->addModelTransformer($transformer)
@@ -71,6 +67,40 @@ class FiddleType extends AbstractType
                            Fiddle::VISIBILITY_UNLISTED => 2,
                            Fiddle::VISIBILITY_PRIVATE => 3,
                    )
+           ))
+        ;
+    }
+
+    public function buildTwigVersionChoices(FormBuilderInterface $builder, array $options)
+    {
+        $fiddle = $options['data_object'];
+        $engine = key($this->twigVersions);
+        if (!is_null($fiddle))
+        {
+            foreach ($this->twigVersions as $twigEngine => $twigVersions)
+            {
+                if (in_array($fiddle->getTwigVersion(), $twigVersions))
+                {
+                    $engine = $twigEngine;
+                    break ;
+                }
+            }
+        }
+
+        $engines = array_keys($this->twigVersions);
+        $choices = call_user_func_array('array_merge', $this->twigVersions);
+
+        $builder
+           ->add('twigEngine', 'choice',
+              array (
+                   'choices' => array_combine($engines, $engines),
+                   'required' => true,
+                   'mapped' => false,
+           ))
+           ->add('twigVersion', 'choice',
+              array (
+                   'choices' => array_combine($choices, $choices),
+                   'required' => true,
            ))
         ;
     }

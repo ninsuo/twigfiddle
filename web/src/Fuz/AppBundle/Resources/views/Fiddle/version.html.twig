@@ -1,0 +1,25 @@
+{# FuzAppBundle:Fiddle:version.html.twig #}
+{# Included by: FuzAppBundle:Fiddle:index.html.twig #}
+
+{#
+ # This file is part of twigfiddle.com project.
+ #
+ # (c) Alain Tiemblo <alain@fuz.org>
+ #
+ # For the full copyright and license information, please view the LICENSE
+ # file that was distributed with this source code.
+ #}
+
+{# Twig version #}
+<div class="form-group form-inline {% if  form.twigEngine.vars.errors|length > 0 or form.twigVersion.vars.errors|length > 0 %}has-error{% endif %}">
+    {{
+        form_widget(form.twigEngine, {
+            'attr': {
+                'data-twig-engines': twigEngines,
+            }
+        })
+    }}
+    {{ form_widget(form.twigVersion) }}
+    <div class="error-container" id="errors-{{ form.twigEngine.vars.id }}">{{ form_errors(form.twigEngine) }}</div>
+    <div class="error-container" id="errors-{{ form.twigVersion.vars.id }}">{{ form_errors(form.twigVersion) }}</div>
+</div>

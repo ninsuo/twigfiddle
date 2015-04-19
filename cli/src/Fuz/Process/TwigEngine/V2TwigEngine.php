@@ -13,7 +13,7 @@ namespace Fuz\Process\TwigEngine;
 
 use Fuz\Framework\Base\BaseService;
 
-class DefaultTwigEngine extends BaseService implements TwigEngineInterface
+class V2TwigEngine extends BaseService implements TwigEngineInterface
 {
 
     /**
@@ -76,6 +76,11 @@ class DefaultTwigEngine extends BaseService implements TwigEngineInterface
             break;
         }
         return $templateName;
+    }
+
+    public function getName()
+    {
+        return 'Twig v2.x';
     }
 
 }
