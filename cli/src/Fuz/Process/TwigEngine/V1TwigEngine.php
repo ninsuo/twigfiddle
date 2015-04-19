@@ -11,9 +11,7 @@
 
 namespace Fuz\Process\TwigEngine;
 
-use Fuz\Framework\Base\BaseService;
-
-class V1TwigEngine extends BaseService implements TwigEngineInterface
+class V1TwigEngine extends AbstractTwigEngine
 {
 
     /**
@@ -47,35 +45,6 @@ class V1TwigEngine extends BaseService implements TwigEngineInterface
         $result = ob_get_clean();
 
         return $result;
-    }
-
-    /**
-     * The first coomment of all compiled twig file contains the twig file name since the very first Twig's version.
-     * This method just extracts it.
-     *
-     * @param string $cacheDirectory
-     * @param array $files
-     * @return array
-     */
-    public function extractTemplateName($content)
-    {
-        $templateName = null;
-        $tokens = token_get_all($content);
-        foreach ($tokens as $token)
-        {
-            if (!is_array($token))
-            {
-                continue;
-            }
-            list($identifier, $string) = $token;
-            if ($identifier !== T_COMMENT)
-            {
-                continue;
-            }
-            $templateName = trim(str_replace(array ('/*', '*/'), '', $string));
-            break;
-        }
-        return $templateName;
     }
 
     public function getName()

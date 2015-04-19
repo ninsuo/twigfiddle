@@ -106,7 +106,7 @@ class ProcessConfiguration
                 {
                     continue;
                 }
-                $versions[$tag['label']] = explode("/", $tag['versions']);
+                $versions[$tag['label']] = array_map('trim', explode("/", $tag['versions']));
             }
         }
 

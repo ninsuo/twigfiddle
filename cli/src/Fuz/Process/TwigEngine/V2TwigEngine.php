@@ -11,17 +11,13 @@
 
 namespace Fuz\Process\TwigEngine;
 
-use Fuz\Framework\Base\BaseService;
-
-class V2TwigEngine extends BaseService implements TwigEngineInterface
+class V2TwigEngine extends AbstractTwigEngine
 {
 
     /**
-     * From all released versions of Twig, there are backward compatibility to load a template.
-     *
-     * The only change was the way the cache directory is declared: at the very beginning, cache
-     * directory (in fact, compilation directory) were given in the twig loader. But now, the cache
-     * directory is given on Environment's options.
+     * Since Twig 2.x, there are no more built-in Twig autoloader. And cache directory
+     * is given using an option and no more a Twig_Loader_Filesystem's constructor
+     * parameter.
      *
      * @param string $sourceDirectory
      * @param string $cacheDirectory
@@ -31,13 +27,12 @@ class V2TwigEngine extends BaseService implements TwigEngineInterface
      */
     public function render($sourceDirectory, $cacheDirectory, $template, array $context = array ())
     {
-        require($sourceDirectory . DIRECTORY_SEPARATOR . '/lib/Twig/Autoloader.php');
-        \Twig_Autoloader::register();
+        $this->registerAutoloader($sourceDirectory);
 
         $executionDirectory = dirname($template);
         $mainTemplate = basename($template);
 
-        $twigLoader = new \Twig_Loader_Filesystem($executionDirectory, $cacheDirectory);
+        $twigLoader = new \Twig_Loader_Filesystem($executionDirectory);
         $twigEnvironment = new \Twig_Environment($twigLoader, array ('cache' => $cacheDirectory));
 
         $templateObject = $twigEnvironment->loadTemplate($mainTemplate);
@@ -50,32 +45,36 @@ class V2TwigEngine extends BaseService implements TwigEngineInterface
     }
 
     /**
-     * The first coomment of all compiled twig file contains the twig file name since the very first Twig's version.
-     * This method just extracts it.
+     * In Twig 2.x, there are no more custom Twig autoloader as Twig
+     * should be managed using Composer. But of course, twigfiddle
+     * cannot handle it using Composer as it need to support several
+     * Twig versions.
      *
-     * @param string $cacheDirectory
-     * @param array $files
-     * @return array
+     * This code is gently provided by @sarciszewski on GitHub:
+     * https://github.com/twigphp/Twig/issues/1646#issuecomment-78349076
+     *
+     * @param string $sourceDirectory
      */
-    public function extractTemplateName($content)
+    protected function registerAutoloader($sourceDirectory)
     {
-        $templateName = null;
-        $tokens = token_get_all($content);
-        foreach ($tokens as $token)
+        spl_autoload_register(function ($class) use ($sourceDirectory)
         {
-            if (!is_array($token))
+            $prefix = 'Twig';
+            $base_dir = $sourceDirectory . '/lib/Twig/';
+
+            $len = strlen($prefix);
+            if (strncmp($prefix, $class, $len) !== 0)
             {
-                continue;
+                return;
             }
-            list($identifier, $string) = $token;
-            if ($identifier !== T_COMMENT)
+
+            $relative_class = substr($class, $len);
+            $file = $base_dir . str_replace('_', '/', $relative_class) . '.php';
+            if (file_exists($file))
             {
-                continue;
+                require $file;
             }
-            $templateName = trim(str_replace(array ('/*', '*/'), '', $string));
-            break;
-        }
-        return $templateName;
+        });
     }
 
     public function getName()
