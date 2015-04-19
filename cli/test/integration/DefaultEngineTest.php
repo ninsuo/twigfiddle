@@ -69,6 +69,7 @@ class DefaultEngineTest extends \PHPUnit_Framework_TestCase
     public function versionProvider()
     {
         return array (
+                array ('Twig-1.18.1'),
                 array ('Twig-1.18.0'),
                 array ('Twig-1.17.0'),
                 array ('Twig-1.16.3'),
