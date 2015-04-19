@@ -576,6 +576,9 @@ function selectTwigVersion() {
                        .find('option[value="' + name + '"]')
                        .prop('selected', true);
                selectTwigEngine(engines, name);
+               $('#{{ form.twigVersion.vars.id }}')
+                       .find('option[value="' + curVersion + '"]')
+                       .prop('selected', true);
                return true;
            }
        });
