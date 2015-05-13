@@ -50,7 +50,7 @@ class UserPreference
      * Set user
      *
      * @param User $user
-     * @return UserFavorite
+     * @return UserPreference
      */
     public function setUser(User $user)
     {
