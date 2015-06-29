@@ -11,7 +11,7 @@
 
 namespace Fuz\AppBundle\Form;
 
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -33,7 +33,7 @@ class FiddleTemplateType extends AbstractType
         ;
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array (
                 'data_class' => 'Fuz\AppBundle\Entity\FiddleTemplate',

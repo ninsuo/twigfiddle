@@ -71,7 +71,7 @@ class ProcessConfiguration
 
         $this->logger->info("Reloading process configuration from {$configFile}");
 
-        $sluggedConfig = Yaml::parse($configFile);
+        $sluggedConfig = Yaml::parse(file_get_contents($configFile));
 
         $processContainer = new ContainerBuilder();
 
