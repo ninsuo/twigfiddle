@@ -73,20 +73,6 @@ class FiddleType extends AbstractType
 
     public function buildTwigVersionChoices(FormBuilderInterface $builder, array $options)
     {
-        $fiddle = $options['data_object'];
-        $engine = key($this->twigVersions);
-        if (!is_null($fiddle))
-        {
-            foreach ($this->twigVersions as $twigEngine => $twigVersions)
-            {
-                if (in_array($fiddle->getTwigVersion(), $twigVersions))
-                {
-                    $engine = $twigEngine;
-                    break ;
-                }
-            }
-        }
-
         $engines = array_keys($this->twigVersions);
         $choices = call_user_func_array('array_merge', $this->twigVersions);
 
