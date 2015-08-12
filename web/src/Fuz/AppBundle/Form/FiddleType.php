@@ -74,19 +74,21 @@ class FiddleType extends AbstractType
     public function buildTwigVersionChoices(FormBuilderInterface $builder, array $options)
     {
         $engines = array_keys($this->twigVersions);
-        $choices = call_user_func_array('array_merge', $this->twigVersions);
+        $versions = array_unique(call_user_func_array('array_merge', $this->twigVersions));
 
         $builder
            ->add('twigEngine', 'choice',
               array (
                    'choices' => array_combine($engines, $engines),
                    'required' => true,
-                   'mapped' => false,
            ))
            ->add('twigVersion', 'choice',
               array (
-                   'choices' => array_combine($choices, $choices),
+                   'choices' => array_combine($versions, $versions),
                    'required' => true,
+           ))
+           ->add('withCExtension', 'checkbox', array(
+                   'required' => false,
            ))
         ;
     }

@@ -22,4 +22,10 @@
     {{ form_widget(form.twigVersion) }}
     <div class="error-container" id="errors-{{ form.twigEngine.vars.id }}">{{ form_errors(form.twigEngine) }}</div>
     <div class="error-container" id="errors-{{ form.twigVersion.vars.id }}">{{ form_errors(form.twigVersion) }}</div>
+    <div class="checkbox white">
+        <label>
+            {{ form_widget(form.withCExtension) }} With C Extension
+        </label>
+    </div>
+    <div class="error-container" id="errors-{{ form.withCExtension.vars.id }}">{{ form_errors(form.withCExtension) }}</div>
 </div>

@@ -47,13 +47,14 @@ class ExecuteManager extends BaseService
         $engine = $this->engineManager->getEngineFromAgent($agent);
         $sourceDirectory = $agent->getSourceDirectory();
         $cacheDirectory = $this->createCacheDirectory($agent);
-        $context = $this->contextManager->getContextFromAgent($agent);
         $mainTemplate = $this->templateManager->getMainTemplateFromAgent($agent);
+        $context = $this->contextManager->getContextFromAgent($agent);
+        $withCExtension = $agent->getFiddle()->isWithCExtension();
 
         $this->logger->debug("Rendering fiddle's main template: {$mainTemplate}");
         try
         {
-            $rendered = $engine->render($sourceDirectory, $cacheDirectory, $mainTemplate, $context);
+            $rendered = $engine->render($sourceDirectory, $cacheDirectory, $mainTemplate, $context, $withCExtension);
             $this->logger->debug("Fiddle's rendered result: {$rendered}");
         }
         catch (\Exception $ex)
@@ -96,6 +97,8 @@ class ExecuteManager extends BaseService
     protected function treatError(FiddleAgent $agent, \Exception $ex)
     {
         $no = null;
+
+        $this->logger->log(200, 'xxx', array('ex'=> $ex));
 
         switch (get_class($ex))
         {

@@ -42,26 +42,28 @@ class EngineManager extends BaseService
             throw new \LogicException("You should load a fiddle before trying to prepare its twig engine.");
         }
 
+        $engine = $fiddle->getTwigEngine();
         $version = $fiddle->getTwigVersion();
-        $this->logger->debug("Loading Twig Engine version: {$version}\n");
-        $engine = $this->findRightEngine($version);
-        if (is_null($engine))
+
+        $this->logger->debug("Loading Twig Engine: {$engine}\n");
+        $engineService = $this->findRightEngine($engine, $version);
+        if (is_null($engineService))
         {
-            $agent->addError(Error::E_ENGINE_NOT_FOUND, array ('version' => $version));
+            $agent->addError(Error::E_ENGINE_NOT_FOUND, array ('engine' => $engine));
             throw new StopExecutionException();
         }
 
         $this->logger->debug(sprintf("Twig Engine %s loaded successfully.", get_class($engine)));
-        $agent->setEngine($engine);
+        $agent->setEngine($engineService);
 
         $sourceDirectory = $this->getTwigSourceDirectory($version);
-        $this->logger->debug(sprintf("Twig source for version %s is loacated at: %s.", $version, $sourceDirectory));
+        $this->logger->debug(sprintf("Twig engine for version %s is loacated at: %s.", $version, $sourceDirectory));
         $agent->setSourceDirectory($sourceDirectory);
 
         return $this;
     }
 
-    public function findRightEngine($expectedVersion)
+    public function findRightEngine($engine, $version)
     {
         $service = null;
         $engineServiceIds = $this->container->findTaggedServiceIds('twig.engine');
@@ -69,11 +71,15 @@ class EngineManager extends BaseService
         {
             foreach ($tags as $tag)
             {
+                if ((!array_key_exists('label', $tag)) || ($engine !== $tag['label']))
+                {
+                    continue ;
+                }
                 if (!array_key_exists('versions', $tag))
                 {
                     continue;
                 }
-                if (in_array(strtolower($expectedVersion),
+                if (in_array(strtolower($version),
                       array_map('trim', array_map('strtolower', explode("/", $tag['versions'])))))
                 {
                     $service = $this->container->get($serviceId);
@@ -87,7 +93,7 @@ class EngineManager extends BaseService
         }
         if (($service) && (!($service instanceof TwigEngineInterface)))
         {
-            throw new \LogicException("The Twig Engine version {$expectedVersion} has been found, but does not implement the TwigEngineInterface interface.");
+            throw new \LogicException("The Twig Engine {$engine} has been found, but does not implement the TwigEngineInterface interface.");
         }
         return $service;
     }

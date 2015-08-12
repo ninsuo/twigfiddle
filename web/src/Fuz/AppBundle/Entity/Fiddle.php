@@ -93,10 +93,25 @@ class Fiddle implements TagContainerInterface
     /**
      * @var string
      *
+     * @ORM\Column(name="twig_engine", type="string", length=32)
+     * @Assert\NotBlank
+     */
+    protected $twigEngine;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="twig_version", type="string", length=32)
      * @Assert\NotBlank
      */
     protected $twigVersion;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="with_c_extension", type="boolean")
+     */
+    protected $withCExtension = false;
 
     /**
      * @var string
@@ -291,6 +306,25 @@ class Fiddle implements TagContainerInterface
     }
 
     /**
+     * @param string $twigEngine
+     * @return Fiddle
+     */
+    public function setTwigEngine($twigEngine)
+    {
+        $this->twigEngine = $twigEngine;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTwigEngine()
+    {
+        return $this->twigEngine;
+    }
+
+    /**
      * @param string $twigVersion
      * @return Fiddle
      */
@@ -307,6 +341,25 @@ class Fiddle implements TagContainerInterface
     public function getTwigVersion()
     {
         return $this->twigVersion;
+    }
+
+    /**
+     * @param string $withCExtension
+     * @return Fiddle
+     */
+    public function setWithCExtension($withCExtension)
+    {
+        $this->withCExtension = $withCExtension;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function isWithCExtension()
+    {
+        return $this->withCExtension;
     }
 
     /**
