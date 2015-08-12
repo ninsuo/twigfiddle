@@ -41,14 +41,14 @@
                 {# Start Header #}
                 <div class="row" id="header">
                     <div class="col-md-2 col-sm-6 col-xs-6 logo"><a href="{{ path('fiddle') }}"><img src="{{ asset('bundles/fuzapp/img/logo_twig-fiddle.png') }}" alt="Twig Fiddle"></a></div>
-                    <div class="col-md-2 col-sm-6 col-xs-6 version">
+                    <div class="col-md-3 col-sm-6 col-xs-6 version">
                         {% block header_left %}&nbsp;{% endblock %}
                     </div>
                     <div class="clearfix hidden-md hidden-lg"></div>
                     <div id="actions" class="col-md-3 col-sm-6 col-xs-12 top-menu text-right">
                         {% block header_middle %}&nbsp;{% endblock %}
                     </div>
-                    <div class="col-md-5 col-sm-6 col-xs-12 user-menu text-right">
+                    <div class="col-md-4 col-sm-6 col-xs-12 user-menu text-right">
                         {% block header_right %}
 
                             {# Browse #}

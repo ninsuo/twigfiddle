@@ -128,7 +128,7 @@ class ErrorManager extends BaseService
             ),
             Error::E_ENGINE_NOT_FOUND => array (
                     'group' => Error::G_EXECUTION,
-                    'message' => "The Twig version you requested is not implemented.",
+                    'message' => "The Twig engine you requested is not implemented.",
                     'logger' => 'warning',
                     'debug' => false,
             ),

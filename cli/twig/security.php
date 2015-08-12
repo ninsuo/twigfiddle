@@ -2,6 +2,7 @@
 
 /*
  * Twigfiddle users were able to exploit a major security issue until 1.20.0
+ * http://symfony.com/blog/security-release-twig-1-20-0
  */
 
 $a = <<< 'EOT'

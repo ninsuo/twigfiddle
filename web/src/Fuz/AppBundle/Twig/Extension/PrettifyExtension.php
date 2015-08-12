@@ -94,7 +94,15 @@ class PrettifyExtension extends \Twig_Extension
             }
         }
 
-        $min = min($spaces);
+        if (0 === count($spaces))
+        {
+            $min = 0;
+        }
+        else
+        {
+            $min = min($spaces);
+        }
+
         foreach ($this->result as $index => $line)
         {
             $this->result[$index] = substr($line, $min);

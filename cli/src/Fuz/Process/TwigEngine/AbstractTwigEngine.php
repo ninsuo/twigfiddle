@@ -12,9 +12,19 @@
 namespace Fuz\Process\TwigEngine;
 
 use Fuz\Framework\Base\BaseService;
+use Fuz\Process\Agent\FiddleAgent;
 
 abstract class AbstractTwigEngine extends BaseService implements TwigEngineInterface
 {
+    /**
+     * @var FiddleAgent
+     */
+    protected $agent;
+
+    public function __construct(FiddleAgent $agent)
+    {
+        $this->agent = $agent;
+    }
 
     /**
      * The first coomment of all compiled twig file contains the twig file name since the very first Twig's version.
@@ -43,6 +53,37 @@ abstract class AbstractTwigEngine extends BaseService implements TwigEngineInter
             break;
         }
         return $templateName;
+    }
+
+    /**
+     * Loads the Twig C extension (until now, the extension is always located
+     * at the same place).
+     *
+     * @param string $sourceDirectory
+     * @throws \RuntimeException
+     */
+    protected function loadCExtension($sourceDirectory)
+    {
+        /*
+         * Can't overwrite extension_dir, need to add this as command-line argument
+         *
+        $oldExtensionDir = ini_get("extension_dir");
+        $newExtensionDir = "{$sourceDirectory}/ext/twig/.libs/";
+        $library = "{$newExtensionDir}/twig.so";
+
+        if (!file_exists($library) || !is_readable($library))
+        {
+            throw new \RuntimeException("The Twig engine you requested does not have a C extension.");
+        }
+         */
+
+        ini_set('extension_dir', $newExtensionDir);
+        if (!dl('twig.so'))
+        {
+            ini_set('extension_dir', $oldExtensionDir);
+            throw new \RuntimeException("Can't load the C extension {$library}. Is enable_dl set to On in php.ini?");
+        }
+        ini_set('extension_dir', $oldExtensionDir);
     }
 
 }

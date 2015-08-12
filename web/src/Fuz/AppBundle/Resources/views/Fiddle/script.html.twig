@@ -570,6 +570,7 @@ function selectTwigVersion() {
     var engines = $('#{{ form.twigEngine.vars.id }}').data('twig-engines');
     var curVersion = $('#{{ form.twigVersion.vars.id }}').val();
     $.each(engines, function(name, list) {
+       var flag = true;
        $.each(list, function(i, testVersion) {
            if (testVersion === curVersion) {
                $('#{{ form.twigEngine.vars.id }}')
@@ -579,9 +580,11 @@ function selectTwigVersion() {
                $('#{{ form.twigVersion.vars.id }}')
                        .find('option[value="' + curVersion + '"]')
                        .prop('selected', true);
+               flag = false;
                return true;
            }
        });
+       return flag;
     });
 }
 
