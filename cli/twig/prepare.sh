@@ -6,10 +6,10 @@ do
     tar xzfC $file uncompressed/;
 done
 
-# Applysing security patch
+# Applying security patch
 php security.php
 
-# Compilling all C extensions
+# Compiling all C extensions
 for c_ext in uncompressed/*/ext/twig;
 do
     if ! [ -f "$c_ext/modules/twig.so" ]
