@@ -139,7 +139,7 @@ class ErrorManager extends BaseService
         ),
         Error::E_C_UNABLE_TO_DL => array(
             'group' => Error::G_EXECUTION,
-            'message' => "Can't load the C extension. Is enable_dl set to 'On' in php.ini?",
+            'message' => "The C extension exists but is not loaded.",
             'logger' => 'error',
             'debug' => true,
         ),
