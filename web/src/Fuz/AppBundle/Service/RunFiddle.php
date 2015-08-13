@@ -103,11 +103,11 @@ class RunFiddle
             $extensionDir = implode(DIRECTORY_SEPARATOR, array(
                 $this->remoteConfig['twig_sources']['directory'],
                 str_replace(DIRECTORY_SEPARATOR, '', $fiddle->getTwigVersion()),
-                dirname($this->remoteConfig['twig_sources']['extension'])
+                $this->remoteConfig['twig_sources']['extension']
             ));
 
             $arguments = explode(' ', $command);
-            $arguments[] = "--c-extension-dir={$extensionDir}";
+            $arguments[] = "--c-extension={$extensionDir}";
         }
         else
         {
