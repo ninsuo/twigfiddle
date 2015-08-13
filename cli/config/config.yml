@@ -24,4 +24,4 @@ templates:
 
 twig_sources:
     directory: %root_dir%/twig/uncompressed
-    extension: ext/twig/.libs/twig.so
+    extension: ext/twig/modules/twig.so
