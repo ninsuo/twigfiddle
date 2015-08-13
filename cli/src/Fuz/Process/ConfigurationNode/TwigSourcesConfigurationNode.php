@@ -33,6 +33,9 @@ class TwigSourcesConfigurationNode implements ConfigurationNodeInterface
                         ->thenInvalid("Unable to find twig sources in %s: did you run the installation script?")
                     ->end()
                 ->end()
+                ->scalarNode("extension")
+                    ->isRequired()
+                ->end()
            ->end()
         ;
 

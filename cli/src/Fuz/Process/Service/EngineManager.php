@@ -60,6 +60,11 @@ class EngineManager extends BaseService
         $this->logger->debug(sprintf("Twig engine for version %s is loacated at: %s.", $version, $sourceDirectory));
         $agent->setSourceDirectory($sourceDirectory);
 
+        if ($fiddle->isWithCExtension())
+        {
+            $this->loadCExtension($agent, $version, $sourceDirectory);
+        }
+
         return $this;
     }
 
@@ -122,6 +127,25 @@ class EngineManager extends BaseService
             throw new \LogicException("Twig Engine has not been loaded in this fiddle.");
         }
         return $engine;
+    }
+
+    public function loadCExtension(FiddleAgent $agent, $version, $sourceDirectory)
+    {
+        $extension = "{$sourceDirectory}/ext/twig/.libs/twig.so";
+        if (!file_exists($extension) || !is_readable($extension))
+        {
+            $agent->addError(Error::E_C_NOT_SUPPORTED, array ('version' => $version));
+            throw new StopExecutionException();
+        }
+        if (!dl('twig.so'))
+        {
+            $agent->addError(Error::E_C_UNABLE_TO_DL, array (
+                'version'   => $version,
+                'extension' => $extension,
+            ));
+            throw new StopExecutionException();
+        }
+        $this->logger->debug("Successfully loaded C extension: {$extension}");
     }
 
 }

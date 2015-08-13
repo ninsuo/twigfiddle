@@ -49,12 +49,11 @@ class ExecuteManager extends BaseService
         $cacheDirectory = $this->createCacheDirectory($agent);
         $mainTemplate = $this->templateManager->getMainTemplateFromAgent($agent);
         $context = $this->contextManager->getContextFromAgent($agent);
-        $withCExtension = $agent->getFiddle()->isWithCExtension();
 
         $this->logger->debug("Rendering fiddle's main template: {$mainTemplate}");
         try
         {
-            $rendered = $engine->render($sourceDirectory, $cacheDirectory, $mainTemplate, $context, $withCExtension);
+            $rendered = $engine->render($sourceDirectory, $cacheDirectory, $mainTemplate, $context);
             $this->logger->debug("Fiddle's rendered result: {$rendered}");
         }
         catch (\Exception $ex)

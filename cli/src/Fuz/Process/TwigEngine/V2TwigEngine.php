@@ -25,13 +25,8 @@ class V2TwigEngine extends AbstractTwigEngine
      * @param array $context
      * @return string
      */
-    public function render($sourceDirectory, $cacheDirectory, $template, array $context = array (), $withCExtension = false)
+    public function render($sourceDirectory, $cacheDirectory, $template, array $context = array ())
     {
-        if ($withCExtension)
-        {
-            $this->loadCExtension($sourceDirectory);
-        }
-
         $this->registerAutoloader($sourceDirectory);
 
         $executionDirectory = dirname($template);
