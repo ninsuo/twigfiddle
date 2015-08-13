@@ -12,6 +12,7 @@
 namespace Fuz\Process\Command;
 
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\ProcessBuilder;
@@ -24,6 +25,7 @@ class RunTimeoutCommand extends BaseCommand
 
     protected $environmentId;
     protected $timeout;
+    protected $cExtensionDir;
     protected $process;
 
     protected function configure()
@@ -35,13 +37,15 @@ class RunTimeoutCommand extends BaseCommand
            ->addArgument('environment-id', InputArgument::REQUIRED,
               "Environment where the twigfiddle is stored and will be executed")
            ->addArgument('timeout', InputArgument::REQUIRED, "The fiddle's maximum execution time (seconds)")
+           ->addOption('c-extension-dir', 'c', \Symfony\Component\Console\Input\InputOption::VALUE_REQUIRED,
+              "C extension directory (to dl() twig.so if ticked)")
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this
-           ->initArguments($input)
+           ->initArgumentsOptions($input)
            ->initErrorHandler()
            ->initProcess()
            ->runProcess()
@@ -50,10 +54,11 @@ class RunTimeoutCommand extends BaseCommand
         $output->write('');
     }
 
-    protected function initArguments(InputInterface $input)
+    protected function initArgumentsOptions(InputInterface $input)
     {
         $this->environmentId = $input->getArgument('environment-id');
         $this->timeout = $input->getArgument('timeout');
+        $this->cExtensionDir = $input->getOption('c-extension-dir');
         return $this;
     }
 
@@ -71,12 +76,23 @@ class RunTimeoutCommand extends BaseCommand
 
     protected function initProcess()
     {
-        $command = array (
-                '/usr/bin/php',
-                $this->getParameter('root_dir') . '/run-' . $this->getParameter('env') . '.php',
-                'twigfiddle:run',
-                $this->environmentId,
+        $command = array(
+            '/usr/bin/php'
         );
+
+        if ($this->cExtensionDir)
+        {
+            $command = array_merge($command, array(
+                '-d',
+                "extension_dir={$this->cExtensionDir}",
+            ));
+        }
+
+        $command = array_merge($command, array(
+            $this->getParameter('root_dir').'/run-'.$this->getParameter('env').'.php',
+            'twigfiddle:run',
+            $this->environmentId,
+        ));
 
         $builder = new ProcessBuilder($command);
         $builder->setTimeout($this->timeout);

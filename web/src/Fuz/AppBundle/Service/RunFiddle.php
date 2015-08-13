@@ -54,7 +54,7 @@ class RunFiddle
         $this
            ->createEnvironment()
            ->createSharedObject($fiddle)
-           ->execute()
+           ->execute($fiddle)
            ->fetchResult($result)
            ->clearEnvironment()
         ;
@@ -95,10 +95,26 @@ class RunFiddle
         return $this;
     }
 
-    protected function execute()
+    protected function execute(Fiddle $fiddle)
     {
         $command = str_replace('<env_id>', $this->envId, $this->localConfig['command']);
-        $builder = new ProcessBuilder(explode(' ', $command));
+        if ($fiddle->isWithCExtension())
+        {
+            $extensionDir = implode(DIRECTORY_SEPARATOR, array(
+                $this->remoteConfig['twig_sources']['directory'],
+                str_replace(DIRECTORY_SEPARATOR, '', $fiddle->getTwigVersion()),
+                dirname($this->remoteConfig['twig_sources']['extension'])
+            ));
+
+            $arguments = explode(' ', $command);
+            $arguments[] = "--c-extension-dir={$extensionDir}";
+        }
+        else
+        {
+            $arguments = explode(' ', $command);
+        }
+
+        $builder = new ProcessBuilder($arguments);
 
         $this->process = $builder->getProcess();
         $commandLine = $this->process->getCommandLine();

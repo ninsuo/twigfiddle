@@ -27,13 +27,8 @@ class V1TwigEngine extends AbstractTwigEngine
      * @param array $context
      * @return string
      */
-    public function render($sourceDirectory, $cacheDirectory, $template, array $context = array (), $withCExtension = false)
+    public function render($sourceDirectory, $cacheDirectory, $template, array $context = array ())
     {
-        if ($withCExtension)
-        {
-            $this->loadCExtension($sourceDirectory);
-        }
-
         require($sourceDirectory . DIRECTORY_SEPARATOR . '/lib/Twig/Autoloader.php');
         \Twig_Autoloader::register();
 
