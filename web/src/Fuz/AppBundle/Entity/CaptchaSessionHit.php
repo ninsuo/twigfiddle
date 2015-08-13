@@ -14,7 +14,7 @@ namespace Fuz\AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * CaptchaSessionHit
+ * CaptchaSessionHit.
  *
  * @ORM\Entity(repositoryClass="Fuz\AppBundle\Repository\CaptchaSessionHitRepository")
  * @ORM\Table(name="captcha_session_hit")
@@ -22,7 +22,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class CaptchaSessionHit
 {
-
     /**
      * @var string
      *
@@ -113,5 +112,4 @@ class CaptchaSessionHit
     {
         $this->setCreationTm(new \DateTime());
     }
-
 }

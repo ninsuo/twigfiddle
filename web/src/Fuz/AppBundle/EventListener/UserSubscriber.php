@@ -18,10 +18,9 @@ use Fuz\AppBundle\Entity\Fiddle;
 
 class UserSubscriber implements EventSubscriber
 {
-
     public function getSubscribedEvents()
     {
-        return array (
+        return array(
                 'preRemove',
         );
     }
@@ -30,15 +29,14 @@ class UserSubscriber implements EventSubscriber
     {
         $om = $args->getObjectManager();
         $object = $args->getObject();
-        if ($object instanceof User)
-        {
+        if ($object instanceof User) {
             $query = $om->createQuery("
                 DELETE FROM Fuz\AppBundle\Entity\Fiddle f
                 WHERE f.user = :user
                 AND f.visibility = :private
             ");
 
-            $params = array (
+            $params = array(
                     'user' => $object->getId(),
                     'private' => Fiddle::VISIBILITY_PRIVATE,
             );
@@ -49,5 +47,4 @@ class UserSubscriber implements EventSubscriber
             ;
         }
     }
-
 }

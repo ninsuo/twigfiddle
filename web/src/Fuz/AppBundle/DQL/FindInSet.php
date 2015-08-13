@@ -1,7 +1,7 @@
 <?php
 
 /**
- * DoctrineExtensions Mysql Function Pack
+ * DoctrineExtensions Mysql Function Pack.
  *
  * LICENSE
  *
@@ -13,7 +13,6 @@
  *
  * @see https://github.com/beberlei/DoctrineExtensions
  */
-
 namespace Fuz\AppBundle\DQL;
 
 use Doctrine\ORM\Query\AST\Functions\FunctionNode;
@@ -21,7 +20,6 @@ use Doctrine\ORM\Query\Lexer;
 
 class FindInSet extends FunctionNode
 {
-
     public $needle = null;
     public $haystack = null;
 
@@ -37,10 +35,9 @@ class FindInSet extends FunctionNode
 
     public function getSql(\Doctrine\ORM\Query\SqlWalker $sqlWalker)
     {
-        return 'FIND_IN_SET(' .
-           $this->needle->dispatch($sqlWalker) . ', ' .
-           $this->haystack->dispatch($sqlWalker) .
+        return 'FIND_IN_SET('.
+           $this->needle->dispatch($sqlWalker).', '.
+           $this->haystack->dispatch($sqlWalker).
            ')';
     }
-
 }

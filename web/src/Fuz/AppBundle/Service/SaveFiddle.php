@@ -22,7 +22,6 @@ use Fuz\AppBundle\Util\Utilities;
 
 class SaveFiddle
 {
-
     /*
      * fiddle.hash_regexp
      *
@@ -51,21 +50,20 @@ class SaveFiddle
     }
 
     /**
-     * Checks whether user can save a fiddle
+     * Checks whether user can save a fiddle.
      *
      * @param Fiddle $fiddle
-     * @param User $user
+     * @param User   $user
+     *
      * @return bool
      */
     public function canSaveFiddle(Fiddle $fiddle, User $user = null)
     {
-        if (is_null($fiddle->getId()))
-        {
+        if (is_null($fiddle->getId())) {
             return true;
         }
 
-        if ($this->ownsFiddle($fiddle, $user))
-        {
+        if ($this->ownsFiddle($fiddle, $user)) {
             return true;
         }
 
@@ -76,19 +74,18 @@ class SaveFiddle
      * Checks whether user owns current fiddle's revision.
      *
      * @param Fiddle $fiddle
-     * @param User $user
+     * @param User   $user
+     *
      * @return bool
      */
     public function ownsFiddle(Fiddle $fiddle, User $user = null)
     {
-        if ($fiddle->getUser() && $user && $fiddle->getUser()->isEqualTo($user))
-        {
+        if ($fiddle->getUser() && $user && $fiddle->getUser()->isEqualTo($user)) {
             return true;
         }
 
         if ($this->session->has('recent-fiddles') &&
-           in_array($fiddle->getId(), $this->session->get('recent-fiddles')))
-        {
+           in_array($fiddle->getId(), $this->session->get('recent-fiddles'))) {
             return true;
         }
 
@@ -96,25 +93,23 @@ class SaveFiddle
     }
 
     /**
-     * Checks whether a hash can be used to reference a fiddle
+     * Checks whether a hash can be used to reference a fiddle.
      *
      * @param string|null $hash
+     *
      * @return bool
      */
     public function validateHash($hash)
     {
-        if (is_null($hash))
-        {
+        if (is_null($hash)) {
             return false;
         }
 
-        if (!preg_match(self::HASH_PATTERN, $hash))
-        {
+        if (!preg_match(self::HASH_PATTERN, $hash)) {
             return false;
         }
 
-        if ($this->isReservedRoute($hash))
-        {
+        if ($this->isReservedRoute($hash)) {
             return false;
         }
 
@@ -124,46 +119,36 @@ class SaveFiddle
     protected function isReservedRoute($hash)
     {
         $routes = $this->router->getRouteCollection();
-        $reserved = array ();
-        foreach ($routes->getIterator() as $route)
-        {
+        $reserved = array();
+        foreach ($routes->getIterator() as $route) {
             $path = substr($route->getPath(), 1);
-            if (false !== strpos($path, '/'))
-            {
+            if (false !== strpos($path, '/')) {
                 $path = substr($path, 0, strpos($path, '/'));
             }
-            if (!in_array($path, $reserved))
-            {
+            if (!in_array($path, $reserved)) {
                 $reserved[] = $path;
             }
         }
-        if (in_array($hash, $reserved))
-        {
+        if (in_array($hash, $reserved)) {
             return true;
         }
+
         return false;
     }
 
     public function save($hash, $revision, Fiddle $fiddle, User $user = null)
     {
-        if (is_null($hash))
-        {
+        if (is_null($hash)) {
             $fiddle = $this->doctrineHelper->lock($fiddle, DoctrineHelper::LOCK_READ,
-               function () use ($fiddle)
-            {
+               function () use ($fiddle) {
                 return $this->createRandomHash($fiddle);
             });
-        }
-        else if ($revision > 0)
-        {
+        } elseif ($revision > 0) {
             $this->em->persist($fiddle);
             $this->em->flush();
-        }
-        else
-        {
+        } else {
             $fiddle = $this->doctrineHelper->lock($fiddle, DoctrineHelper::LOCK_READ,
-               function () use ($fiddle, $user)
-            {
+               function () use ($fiddle, $user) {
                 return $this->createNewRevision($fiddle, $user);
             });
         }
@@ -175,14 +160,12 @@ class SaveFiddle
     {
         $repository = $this->em->getRepository('FuzAppBundle:Fiddle');
 
-        $this->logger->debug("Need to create a new hash.");
+        $this->logger->debug('Need to create a new hash.');
 
-        do
-        {
+        do {
             $hash = $this->utilities->randomString($this->webConfig['default_fiddle_hash_size'], 'abcdefghijklmnopqrstuvwxyz012345689');
             $this->logger->debug("Testing hash: {$hash}");
-        }
-        while ($repository->hashExists($hash));
+        } while ($repository->hashExists($hash));
 
         $this->logger->debug("Hash is empty: {$hash}.");
 
@@ -204,8 +187,7 @@ class SaveFiddle
         $clone->setHash(strtolower($clone->getHash()));
         $clone->setRevision($revision);
 
-        if ($user)
-        {
+        if ($user) {
             $clone->setUser($user);
         }
 
@@ -222,19 +204,14 @@ class SaveFiddle
      */
     public function saveFiddleToSession($id, User $user = null)
     {
-        if (!is_null($user))
-        {
+        if (!is_null($user)) {
             return;
         }
-        if (!$this->session->has('recent-fiddles'))
-        {
-            $this->session->set('recent-fiddles', array ($id));
-        }
-        else
-        {
-            $list = array_merge($this->session->get('recent-fiddles'), array ($id));
+        if (!$this->session->has('recent-fiddles')) {
+            $this->session->set('recent-fiddles', array($id));
+        } else {
+            $list = array_merge($this->session->get('recent-fiddles'), array($id));
             $this->session->set('recent-fiddles', array_slice($list, 0, $this->webConfig['max_fiddles_in_session']));
         }
     }
-
 }

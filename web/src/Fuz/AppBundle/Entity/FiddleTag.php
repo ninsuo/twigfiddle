@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Fuz\AppBundle\Api\TagInterface;
 
 /**
- * FiddleTag
+ * FiddleTag.
  *
  * @ORM\Table(name="fiddle_tag")
  * @ORM\Entity
@@ -24,7 +24,6 @@ use Fuz\AppBundle\Api\TagInterface;
  */
 class FiddleTag implements TagInterface
 {
-
     /**
      * @var Fiddle
      *
@@ -44,9 +43,10 @@ class FiddleTag implements TagInterface
     protected $tag;
 
     /**
-     * Set fiddle
+     * Set fiddle.
      *
      * @param Fiddle $fiddle
+     *
      * @return FiddleTag
      */
     public function setFiddle(Fiddle $fiddle)
@@ -57,7 +57,7 @@ class FiddleTag implements TagInterface
     }
 
     /**
-     * Get fiddle
+     * Get fiddle.
      *
      * @return Fiddle|null
      */
@@ -67,9 +67,10 @@ class FiddleTag implements TagInterface
     }
 
     /**
-     * Set tag
+     * Set tag.
      *
      * @param string $tag
+     *
      * @return FiddleTag
      */
     public function setTag($tag)
@@ -80,7 +81,7 @@ class FiddleTag implements TagInterface
     }
 
     /**
-     * Get tag
+     * Get tag.
      *
      * @return string
      */
@@ -88,5 +89,4 @@ class FiddleTag implements TagInterface
     {
         return $this->tag;
     }
-
 }

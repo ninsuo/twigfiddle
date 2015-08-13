@@ -17,7 +17,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class FiddleTemplateType extends AbstractType
 {
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -35,7 +34,7 @@ class FiddleTemplateType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array (
+        $resolver->setDefaults(array(
                 'data_class' => 'Fuz\AppBundle\Entity\FiddleTemplate',
         ));
     }
@@ -44,5 +43,4 @@ class FiddleTemplateType extends AbstractType
     {
         return 'FiddleTemplateType';
     }
-
 }

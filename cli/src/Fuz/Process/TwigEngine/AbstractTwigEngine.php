@@ -31,28 +31,26 @@ abstract class AbstractTwigEngine extends BaseService implements TwigEngineInter
      * This method just extracts it.
      *
      * @param string $cacheDirectory
-     * @param array $files
+     * @param array  $files
+     *
      * @return array
      */
     public function extractTemplateName($content)
     {
         $templateName = null;
         $tokens = token_get_all($content);
-        foreach ($tokens as $token)
-        {
-            if (!is_array($token))
-            {
+        foreach ($tokens as $token) {
+            if (!is_array($token)) {
                 continue;
             }
             list($identifier, $string) = $token;
-            if ($identifier !== T_COMMENT)
-            {
+            if ($identifier !== T_COMMENT) {
                 continue;
             }
-            $templateName = trim(str_replace(array ('/*', '*/'), '', $string));
+            $templateName = trim(str_replace(array('/*', '*/'), '', $string));
             break;
         }
+
         return $templateName;
     }
-
 }

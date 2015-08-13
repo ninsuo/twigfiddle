@@ -15,14 +15,13 @@ use Doctrine\ORM\Mapping as ORM;
 use Fuz\AppBundle\Api\TagInterface;
 
 /**
- * FiddleTag
+ * FiddleTag.
  *
  * @ORM\Table(name="user_bookmark_tag")
  * @ORM\Entity
  */
 class UserBookmarkTag implements TagInterface
 {
-
     /**
      * @var User
      *
@@ -41,9 +40,10 @@ class UserBookmarkTag implements TagInterface
     protected $tag;
 
     /**
-     * Set userBookmark
+     * Set userBookmark.
      *
      * @param UserBookmark $userBookmark
+     *
      * @return UserBookmarkTag
      */
     public function setUserBookmark(UserBookmark $userBookmark)
@@ -54,7 +54,7 @@ class UserBookmarkTag implements TagInterface
     }
 
     /**
-     * Get userBookmark
+     * Get userBookmark.
      *
      * @return UserBookmark
      */
@@ -64,9 +64,10 @@ class UserBookmarkTag implements TagInterface
     }
 
     /**
-     * Set tag
+     * Set tag.
      *
      * @param string $tag
+     *
      * @return UserTag
      */
     public function setTag($tag)
@@ -77,7 +78,7 @@ class UserBookmarkTag implements TagInterface
     }
 
     /**
-     * Get tag
+     * Get tag.
      *
      * @return string
      */
@@ -85,5 +86,4 @@ class UserBookmarkTag implements TagInterface
     {
         return $this->tag;
     }
-
 }

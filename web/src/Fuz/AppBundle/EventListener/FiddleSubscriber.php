@@ -18,14 +18,13 @@ use Fuz\AppBundle\Entity\Fiddle;
 
 class FiddleSubscriber implements EventSubscriber
 {
-
     protected $context;
     protected $templates;
     protected $tags;
 
     public function getSubscribedEvents()
     {
-        return array (
+        return array(
                 'prePersist',
                 'postPersist',
         );
@@ -34,10 +33,8 @@ class FiddleSubscriber implements EventSubscriber
     public function prePersist(LifecycleEventArgs $args)
     {
         $object = $args->getObject();
-        if ($object instanceof Fiddle)
-        {
-            if (is_null($object->getUser()))
-            {
+        if ($object instanceof Fiddle) {
+            if (is_null($object->getUser())) {
                 $object->setVisibility(Fiddle::VISIBILITY_PUBLIC);
             }
 
@@ -54,19 +51,16 @@ class FiddleSubscriber implements EventSubscriber
     {
         $om = $args->getObjectManager();
         $object = $args->getObject();
-        if ($object instanceof Fiddle)
-        {
+        if ($object instanceof Fiddle) {
             $this->context->setFiddle($object);
             $om->persist($this->context);
 
-            foreach ($this->templates as $template)
-            {
+            foreach ($this->templates as $template) {
                 $object->addTemplate($template);
                 $om->persist($template);
             }
 
-            foreach ($this->tags as $tag)
-            {
+            foreach ($this->tags as $tag) {
                 $tag->setFiddle($object);
                 $om->persist($tag);
             }
@@ -75,5 +69,4 @@ class FiddleSubscriber implements EventSubscriber
             $om->flush();
         }
     }
-
 }

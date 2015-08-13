@@ -14,19 +14,19 @@ namespace Fuz\AppBundle\Entity;
 use Fuz\Process\Entity\Result as FiddleResult;
 
 /**
- * Entity used to contain fiddle's result
+ * Entity used to contain fiddle's result.
  *
  * @see Fuz\AppBundle\Service\RunFiddle
  */
 class Result
 {
-
     protected $result = null;
     protected $duration = null;
 
     public function setResult(FiddleResult $result)
     {
         $this->result = $result;
+
         return $this;
     }
 
@@ -38,6 +38,7 @@ class Result
     public function setDuration($duration)
     {
         $this->duration = $duration;
+
         return $this;
     }
 
@@ -45,6 +46,4 @@ class Result
     {
         return $this->duration;
     }
-
 }
-

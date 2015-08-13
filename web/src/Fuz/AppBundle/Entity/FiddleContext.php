@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
- * FiddleContext
+ * FiddleContext.
  *
  * @ORM\Table(name="fiddle_context")
  * @ORM\Entity
@@ -24,7 +24,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class FiddleContext
 {
-
     const FORMAT_YAML = 'YAML';
     const FORMAT_XML = 'XML';
     const FORMAT_JSON = 'JSON';
@@ -56,9 +55,10 @@ class FiddleContext
     protected $content;
 
     /**
-     * Set fiddle
+     * Set fiddle.
      *
      * @param Fiddle $fiddle
+     *
      * @return FiddleTemplate
      */
     public function setFiddle(Fiddle $fiddle)
@@ -69,7 +69,7 @@ class FiddleContext
     }
 
     /**
-     * Get fiddle
+     * Get fiddle.
      *
      * @return Fiddle|null
      */
@@ -79,9 +79,10 @@ class FiddleContext
     }
 
     /**
-     * Set format
+     * Set format.
      *
      * @param string $format
+     *
      * @return FiddleContext
      */
     public function setFormat($format)
@@ -92,7 +93,7 @@ class FiddleContext
     }
 
     /**
-     * Get format
+     * Get format.
      *
      * @return string
      */
@@ -102,9 +103,10 @@ class FiddleContext
     }
 
     /**
-     * Set content
+     * Set content.
      *
      * @param string $content
+     *
      * @return FiddleContext
      */
     public function setContent($content)
@@ -115,7 +117,7 @@ class FiddleContext
     }
 
     /**
-     * Get content
+     * Get content.
      *
      * @return string
      */
@@ -129,8 +131,7 @@ class FiddleContext
      */
     public function validateFormat(ExecutionContextInterface $context)
     {
-        if (!in_array($this->format, $this->getSupportedFormats()))
-        {
+        if (!in_array($this->format, $this->getSupportedFormats())) {
             $context->buildViolation('Choose a supported context format.')
                ->atPath('format')
                ->addViolation()
@@ -140,12 +141,11 @@ class FiddleContext
 
     public static function getSupportedFormats()
     {
-        return array (
+        return array(
                 self::FORMAT_YAML,
                 self::FORMAT_XML,
                 self::FORMAT_JSON,
                 self::FORMAT_INI,
         );
     }
-
 }

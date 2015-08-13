@@ -19,7 +19,6 @@ use Fuz\Process\Exception\StopExecutionException;
 
 class EnvironmentManager extends BaseService
 {
-
     protected $fileSystem;
     protected $debugConfiguration;
     protected $environmentConfiguration;
@@ -51,55 +50,52 @@ class EnvironmentManager extends BaseService
         $elements = $this->fileSystem->getFilesAndDirectoriesOlderThan($directory, $timestamp);
         unset($elements[array_search('.gitkeep', $elements)]);
         $this->fileSystem->remove($elements);
-        $this->logger->debug(sprintf("Cleaned expired environments: %d environments removed.", count($elements)));
+        $this->logger->debug(sprintf('Cleaned expired environments: %d environments removed.', count($elements)));
+
         return $this;
     }
 
     protected function validateEnvironmentId(FiddleAgent $agent)
     {
         $env_id = $agent->getEnvironmentId();
-        if (!preg_match("/{$this->environmentConfiguration['validation']}/", $env_id))
-        {
-            $agent->addError(Error::E_INVALID_ENVIRONMENT_ID, array ('environment id' => $env_id));
+        if (!preg_match("/{$this->environmentConfiguration['validation']}/", $env_id)) {
+            $agent->addError(Error::E_INVALID_ENVIRONMENT_ID, array('environment id' => $env_id));
             throw new StopExecutionException();
         }
+
         return $this;
     }
 
     protected function deduceEnvironmentDirectory(FiddleAgent $agent)
     {
         $env_id = $agent->getEnvironmentId();
-        if ($agent->isDebug())
-        {
-            $path = $this->debugConfiguration['directory'] . DIRECTORY_SEPARATOR . $env_id;
-        }
-        else
-        {
-            $path = $this->environmentConfiguration['directory'] . DIRECTORY_SEPARATOR . $env_id;
+        if ($agent->isDebug()) {
+            $path = $this->debugConfiguration['directory'].DIRECTORY_SEPARATOR.$env_id;
+        } else {
+            $path = $this->environmentConfiguration['directory'].DIRECTORY_SEPARATOR.$env_id;
         }
 
         $realPath = realpath($path);
 
-        if (!is_dir($realPath))
-        {
-            $agent->addError(Error::E_UNEXISTING_ENVIRONMENT_ID, array ('environment id' => $env_id));
+        if (!is_dir($realPath)) {
+            $agent->addError(Error::E_UNEXISTING_ENVIRONMENT_ID, array('environment id' => $env_id));
             throw new StopExecutionException();
         }
 
         $this->logger->debug("Environment's path: {$realPath}");
 
         $agent->setDirectory($realPath);
+
         return $this;
     }
 
     public function checkFiddleEnvironmentAvailability(FiddleAgent $agent)
     {
         $dir = $agent->getDirectory();
-        if ((is_null($dir)) || (!is_dir($dir)) || (!is_writable($dir)))
-        {
+        if ((is_null($dir)) || (!is_dir($dir)) || (!is_writable($dir))) {
             throw new \LogicException("The fiddle's environment does not seem to be ready.");
         }
+
         return $dir;
     }
-
 }

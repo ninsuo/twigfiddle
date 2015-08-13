@@ -21,7 +21,6 @@ use Fuz\Process\Exception\StopExecutionException;
 
 class RunCommand extends BaseCommand
 {
-
     protected $environmentId;
     protected $isDebug;
     protected $agent;
@@ -31,10 +30,10 @@ class RunCommand extends BaseCommand
     {
         parent::configure();
         $this
-           ->setName("twigfiddle:run")
-           ->setDescription("Executes a twigfiddle (from already prepared environment)")
+           ->setName('twigfiddle:run')
+           ->setDescription('Executes a twigfiddle (from already prepared environment)')
            ->addArgument('environment-id', InputArgument::REQUIRED,
-              "Environment where the twigfiddle is stored and will be executed")
+              'Environment where the twigfiddle is stored and will be executed')
            ->addOption('debug', 'd', InputOption::VALUE_NONE,
               "If the debug option is set, you'll run an environment located in the debug directory.")
         ;
@@ -42,9 +41,8 @@ class RunCommand extends BaseCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->logger->info("Started execution.", $input->getArguments());
-        try
-        {
+        $this->logger->info('Started execution.', $input->getArguments());
+        try {
             $this
                ->initErrorHandler()
                ->initArguments($input)
@@ -52,17 +50,13 @@ class RunCommand extends BaseCommand
                ->initProcessor()
                ->process()
             ;
-        }
-        catch (StopExecutionException $ex)
-        {
-            $this->logger->debug("Execution interrupted (see previous errors).");
-        }
-        catch (\Exception $ex)
-        {
+        } catch (StopExecutionException $ex) {
+            $this->logger->debug('Execution interrupted (see previous errors).');
+        } catch (\Exception $ex) {
             $this->agent->addError(Error::E_UNEXPECTED, $ex);
         }
         $this->finish();
-        $this->logger->info("Ended execution.");
+        $this->logger->info('Ended execution.');
         $output->write('');
     }
 
@@ -70,25 +64,21 @@ class RunCommand extends BaseCommand
     {
         // This storage is freed on error (case of allowed memory exhausted)
         $this->memory = str_repeat('*', 1024 * 1024);
-        register_shutdown_function(function()
-        {
+        register_shutdown_function(function () {
             $this->memory = null;
-            if ((!is_null($err = error_get_last())) && (!in_array($err['type'], array (E_NOTICE, E_WARNING))))
-            {
+            if ((!is_null($err = error_get_last())) && (!in_array($err['type'], array(E_NOTICE, E_WARNING)))) {
                 // By default, unexpected exceptions leads to debug files given to developers for debugging purposes.
                 // But there are no need to require developer's attention if some main.twig contains {{ include('main.twig') }}
-                $ignores = array (
+                $ignores = array(
                         'Allowed memory size',
                         'Call to undefined method',
                         'Maximum function nesting level',
                 );
 
                 $cnt = 0;
-                foreach ($ignores as $ignore)
-                {
-                    if (strpos($err['message'], $ignore) !== false)
-                    {
-                        $cnt++;
+                foreach ($ignores as $ignore) {
+                    if (strpos($err['message'], $ignore) !== false) {
+                        ++$cnt;
                     }
                 }
 
@@ -96,6 +86,7 @@ class RunCommand extends BaseCommand
                 $this->finish();
             }
         });
+
         return $this;
     }
 
@@ -103,6 +94,7 @@ class RunCommand extends BaseCommand
     {
         $this->environmentId = $input->getArgument('environment-id');
         $this->isDebug = $input->getOption('debug');
+
         return $this;
     }
 
@@ -113,6 +105,7 @@ class RunCommand extends BaseCommand
            ->setEnvironmentId($this->environmentId)
            ->setDebug($this->isDebug)
         ;
+
         return $this;
     }
 
@@ -120,15 +113,16 @@ class RunCommand extends BaseCommand
     {
         $envId = $this->environmentId;
         $isDebug = $this->isDebug;
-        $this->container->pushProcessor(function($record) use ($envId, $isDebug)
-        {
+        $this->container->pushProcessor(function ($record) use ($envId, $isDebug) {
             $record['extra'] = array_merge($record['extra'],
-               array (
+               array(
                     'environment_id' => $envId,
                     'debug' => $isDebug,
             ));
+
             return $record;
         });
+
         return $this;
     }
 
@@ -141,6 +135,7 @@ class RunCommand extends BaseCommand
         $this->get('template_manager')->prepareTemplates($this->agent);
         $this->get('execute_manager')->executeFiddle($this->agent);
         $this->get('compiled_manager')->extractCompiledFiles($this->agent);
+
         return $this;
     }
 
@@ -148,7 +143,7 @@ class RunCommand extends BaseCommand
     {
         $this->get('shared_memory_manager')->saveResults($this->agent);
         $this->get('debug_manager')->backupIfDebugRequired($this->agent);
+
         return $this;
     }
-
 }

@@ -20,7 +20,6 @@ use Fuz\AppBundle\Entity\Fiddle;
 
 class FiddleType extends AbstractType
 {
-
     protected $twigVersions;
 
     public function __construct(ProcessConfiguration $processConfiguration)
@@ -38,7 +37,7 @@ class FiddleType extends AbstractType
 
         $builder
            ->add('templates', 'collection',
-              array (
+              array(
                    'type' => new FiddleTemplateType(),
                    'allow_add' => true,
                    'allow_delete' => true,
@@ -47,26 +46,26 @@ class FiddleType extends AbstractType
                    'by_reference' => false,
                    'required' => false,
            ))
-           ->add('context', new FiddleContextType(), array (
+           ->add('context', new FiddleContextType(), array(
                    'required' => false,
            ))
-           ->add('title', 'text', array (
+           ->add('title', 'text', array(
                    'required' => false,
            ))
            ->add(
               $builder
-              ->create('tags', 'text', array (
+              ->create('tags', 'text', array(
                       'required' => false,
               ))
               ->addModelTransformer($transformer)
            )
            ->add('visibility', 'choice',
-              array (
-                   'choices' => array (
+              array(
+                   'choices' => array(
                            Fiddle::VISIBILITY_PUBLIC => 1,
                            Fiddle::VISIBILITY_UNLISTED => 2,
                            Fiddle::VISIBILITY_PRIVATE => 3,
-                   )
+                   ),
            ))
         ;
     }
@@ -78,12 +77,12 @@ class FiddleType extends AbstractType
 
         $builder
            ->add('twigEngine', 'choice',
-              array (
+              array(
                    'choices' => array_combine($engines, $engines),
                    'required' => true,
            ))
            ->add('twigVersion', 'choice',
-              array (
+              array(
                    'choices' => array_combine($versions, $versions),
                    'required' => true,
            ))
@@ -95,7 +94,7 @@ class FiddleType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array (
+        $resolver->setDefaults(array(
                 'data_object' => null,
                 'data_class' => 'Fuz\AppBundle\Entity\Fiddle',
         ));
@@ -105,5 +104,4 @@ class FiddleType extends AbstractType
     {
         return 'FiddleType';
     }
-
 }

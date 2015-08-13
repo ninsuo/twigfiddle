@@ -16,7 +16,6 @@ use Fuz\AppBundle\Entity\UserBookmarkTag;
 
 class UserBookmarkTagTransformer extends AbstractTagTransformer
 {
-
     protected $bookmark;
 
     public function __construct(UserBookmark $bookmark = null)

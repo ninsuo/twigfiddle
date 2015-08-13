@@ -15,10 +15,9 @@ use Symfony\Component\Config\Loader\FileLoader;
 
 class PhpFileLoader extends FileLoader
 {
-
     public function load($resource, $type = null)
     {
-        return include ($resource);
+        return include $resource;
     }
 
     public function supports($resource, $type = null)
@@ -27,5 +26,4 @@ class PhpFileLoader extends FileLoader
               $resource, PATHINFO_EXTENSION
         );
     }
-
 }

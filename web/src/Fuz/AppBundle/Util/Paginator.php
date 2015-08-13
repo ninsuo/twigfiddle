@@ -19,7 +19,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class Paginator
 {
-
     protected $logger;
     protected $session;
     protected $user;
@@ -28,22 +27,21 @@ class Paginator
     {
         $this->logger = $logger;
         $this->session = $session;
-        if (!is_null($token->getToken()))
-        {
+        if (!is_null($token->getToken())) {
             $this->user = $token->getToken();
         }
     }
 
     public function getDefaultConfiguration()
     {
-        return array (
+        return array(
                 'session_key' => 'pagination',
                 'preference_prefix' => 'pagination.',
                 'page_query_string' => 'page',
                 'per_page_query_string' => 'per_page',
-                'per_page_list' => array (10, 25, 50, 75, 100),
+                'per_page_list' => array(10, 25, 50, 75, 100),
                 'displayed_links' => 7,
-                'session' => array (
+                'session' => array(
                         'current_page' => 1,
                         'current_per_page' => 10,
                 ),
@@ -52,10 +50,10 @@ class Paginator
 
     protected function getInternalConfiguration()
     {
-        return array (
+        return array(
                 'count_results' => -1,
                 'count_pages' => -1,
-                'page_list' => array (),
+                'page_list' => array(),
                 'display_first' => null,
                 'display_last' => null,
                 'dots_first' => null,
@@ -63,7 +61,7 @@ class Paginator
         );
     }
 
-    public function paginate(Request $request, QueryBuilder $query, $count, array $config = array ())
+    public function paginate(Request $request, QueryBuilder $query, $count, array $config = array())
     {
         $options = array_merge($this->getDefaultConfiguration(), $config, $this->getInternalConfiguration());
         $options['session'] = array_merge($options['session'], $this->session->get($options['session_key'], array()));
@@ -72,23 +70,19 @@ class Paginator
         $options['count_results'] = $count;
 
         $sess['current_per_page'] = $request->query->get($options['per_page_query_string'], $sess['current_per_page']);
-        if (!in_array($sess['current_per_page'], $options['per_page_list']))
-        {
+        if (!in_array($sess['current_per_page'], $options['per_page_list'])) {
             $sess['current_per_page'] = reset($options['per_page_list']);
         }
 
         $sess['current_page'] = $request->query->get($options['page_query_string'], $sess['current_page']);
-        if ($sess['current_page'] < 1)
-        {
+        if ($sess['current_page'] < 1) {
             $sess['current_page'] = 1;
         }
         $options['count_pages'] = floor($options['count_results'] / $sess['current_per_page']);
-        if (($options['count_results'] == 0) || ($options['count_results'] % $sess['current_per_page']) > 0)
-        {
+        if (($options['count_results'] == 0) || ($options['count_results'] % $sess['current_per_page']) > 0) {
             $options['count_pages'] += 1;
         }
-        if ($sess['current_page'] > $options['count_pages'])
-        {
+        if ($sess['current_page'] > $options['count_pages']) {
             $sess['current_page'] = 1;
         }
 
@@ -102,17 +96,12 @@ class Paginator
 
     protected function createContext(array $options)
     {
-        if ($options['session']['current_per_page'] > 0)
-        {
-            if ($options['count_results'] <= $options['session']['current_per_page'])
-            {
+        if ($options['session']['current_per_page'] > 0) {
+            if ($options['count_results'] <= $options['session']['current_per_page']) {
                 $options['page_list'][] = 1;
-            }
-            else
-            {
+            } else {
                 $options['page_list'] = range(1, ceil($options['count_results'] / $options['session']['current_per_page']));
-                if (($options['displayed_links'] = floor($options['displayed_links'] / 2) * 2 + 1) >= 1)
-                {
+                if (($options['displayed_links'] = floor($options['displayed_links'] / 2) * 2 + 1) >= 1) {
                     $min = min(
                        count($options['page_list']) - $options['displayed_links'],
                        intval($options['session']['current_page']) - ceil($options['displayed_links'] / 2)
@@ -134,5 +123,4 @@ class Paginator
     {
         $this->session->remove($key);
     }
-
 }

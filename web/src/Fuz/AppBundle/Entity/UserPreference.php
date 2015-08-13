@@ -14,14 +14,13 @@ namespace Fuz\AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * UserPreference
+ * UserPreference.
  *
  * @ORM\Table(name="user_preference")
  * @ORM\Entity
  */
 class UserPreference
 {
-
     /**
      * @var User
      *
@@ -47,9 +46,10 @@ class UserPreference
     private $value;
 
     /**
-     * Set user
+     * Set user.
      *
      * @param User $user
+     *
      * @return UserPreference
      */
     public function setUser(User $user)
@@ -60,7 +60,7 @@ class UserPreference
     }
 
     /**
-     * Get user
+     * Get user.
      *
      * @return User
      */
@@ -70,9 +70,10 @@ class UserPreference
     }
 
     /**
-     * Set hook
+     * Set hook.
      *
      * @param string $hook
+     *
      * @return UserPreference
      */
     public function setHook($hook)
@@ -83,7 +84,7 @@ class UserPreference
     }
 
     /**
-     * Get hook
+     * Get hook.
      *
      * @return string
      */
@@ -93,9 +94,10 @@ class UserPreference
     }
 
     /**
-     * Set value
+     * Set value.
      *
      * @param string $value
+     *
      * @return UserPreference
      */
     public function setValue($value)
@@ -106,7 +108,7 @@ class UserPreference
     }
 
     /**
-     * Get value
+     * Get value.
      *
      * @return string
      */
@@ -114,5 +116,4 @@ class UserPreference
     {
         return $this->value;
     }
-
 }

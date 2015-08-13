@@ -18,7 +18,6 @@ use Fuz\AppBundle\Entity\FiddleContext;
 
 class FiddleContextType extends AbstractType
 {
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -34,7 +33,7 @@ class FiddleContextType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array (
+        $resolver->setDefaults(array(
                 'data_object' => null,
                 'data_class' => 'Fuz\AppBundle\Entity\FiddleContext',
         ));
@@ -44,5 +43,4 @@ class FiddleContextType extends AbstractType
     {
         return 'FiddleContextType';
     }
-
 }

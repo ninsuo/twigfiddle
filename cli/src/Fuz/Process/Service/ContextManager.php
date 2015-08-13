@@ -19,7 +19,6 @@ use Fuz\Process\Agent\FiddleAgent;
 
 class ContextManager extends BaseService
 {
-
     protected $stringLoader;
 
     public function __construct(StringLoader $stringLoader)
@@ -30,48 +29,39 @@ class ContextManager extends BaseService
     public function extractContext(FiddleAgent $agent)
     {
         $fiddle = $agent->getFiddle();
-        if (is_null($fiddle))
-        {
-            throw new \LogicException("You should load a fiddle before trying to extract its context.");
+        if (is_null($fiddle)) {
+            throw new \LogicException('You should load a fiddle before trying to extract its context.');
         }
 
         $content = $fiddle->getContext()->getContent();
         $format = $fiddle->getContext()->getFormat();
 
-        if (strlen(str_replace(array (' ', "\n", "\r", "\t"), '', $content)) == 0)
-        {
-            $this->logger->debug("No context to extract.");
+        if (strlen(str_replace(array(' ', "\n", "\r", "\t"), '', $content)) == 0) {
+            $this->logger->debug('No context to extract.');
+
             return $this;
         }
 
         $this->logger->debug("Extracting Twig context from format: {$format}.");
-        try
-        {
+        try {
             $array = $this->stringLoader->load($content, $format);
-        }
-        catch (\InvalidArgumentException $ex)
-        {
-            $agent->addError(Error::E_UNKNOWN_CONTEXT_FORMAT, array ('format' => $format));
+        } catch (\InvalidArgumentException $ex) {
+            $agent->addError(Error::E_UNKNOWN_CONTEXT_FORMAT, array('format' => $format));
             throw new StopExecutionException();
-        }
-        catch (\LogicException $ex)
-        {
+        } catch (\LogicException $ex) {
             $agent->addError(Error::E_UNEXPECTED, $ex);
             throw new StopExecutionException();
-        }
-        catch (\Exception $ex)
-        {
+        } catch (\Exception $ex) {
             $agent->addError(Error::E_INVALID_CONTEXT_SYNTAX, $ex);
             throw new StopExecutionException();
         }
 
-        if (!is_array($array))
-        {
+        if (!is_array($array)) {
             $agent->addError(Error::E_INVALID_CONTEXT_TYPE, array('context' => $array));
             throw new StopExecutionException();
         }
 
-        $this->logger->debug("Successfully extracted the context.", array ('context' => $array));
+        $this->logger->debug('Successfully extracted the context.', array('context' => $array));
         $agent->setContext($array);
 
         return $this;
@@ -80,11 +70,10 @@ class ContextManager extends BaseService
     public function getContextFromAgent(FiddleAgent $agent)
     {
         $context = $agent->getContext();
-        if (is_null($context))
-        {
-            throw new \LogicException("Context has not been converted in this fiddle.");
+        if (is_null($context)) {
+            throw new \LogicException('Context has not been converted in this fiddle.');
         }
+
         return $context;
     }
-
 }

@@ -17,7 +17,6 @@ use Fuz\AppBundle\Base\BaseController;
 
 class ArticleController extends BaseController
 {
-
     /**
      * @Route("/about", name="about")
      * @Route("/help", name="help")
@@ -25,7 +24,6 @@ class ArticleController extends BaseController
      */
     public function aboutAction()
     {
-        return array ();
+        return array();
     }
-
 }

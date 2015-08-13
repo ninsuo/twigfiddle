@@ -21,7 +21,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class BrowseFilters
 {
-
     /**
      * @var array
      *
@@ -65,6 +64,7 @@ class BrowseFilters
     public function setKeywords($keywords)
     {
         $this->keywords = $keywords;
+
         return $this;
     }
 
@@ -76,6 +76,7 @@ class BrowseFilters
     public function setTags(array $tags)
     {
         $this->tags = $tags;
+
         return $this;
     }
 
@@ -87,6 +88,7 @@ class BrowseFilters
     public function setBookmark($bookmark)
     {
         $this->bookmark = $bookmark;
+
         return $this;
     }
 
@@ -98,6 +100,7 @@ class BrowseFilters
     public function setMine($mine)
     {
         $this->mine = $mine;
+
         return $this;
     }
 
@@ -117,16 +120,14 @@ class BrowseFilters
     public function validateVisibility(ExecutionContextInterface $context)
     {
         if ($this->visibility && !in_array($this->visibility,
-              array (
+              array(
                    Fiddle::VISIBILITY_PUBLIC,
                    Fiddle::VISIBILITY_UNLISTED,
                    Fiddle::VISIBILITY_PRIVATE,
-           )))
-        {
+           ))) {
             $context->buildViolation('You should choose a valid visibility.')
                ->atPath('visibility')
                ->addViolation();
         }
     }
-
 }

@@ -17,16 +17,15 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Fuz\AppBundle\Api\TagContainerInterface;
 
 /**
- * UserBookmark
+ * UserBookmark.
  *
  * @ORM\Table(name="user_bookmark")
  * @ORM\Entity(repositoryClass="Fuz\AppBundle\Repository\UserBookmarkRepository")
  */
 class UserBookmark implements TagContainerInterface
 {
-
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -35,7 +34,7 @@ class UserBookmark implements TagContainerInterface
     protected $id;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="cascade")
@@ -75,7 +74,7 @@ class UserBookmark implements TagContainerInterface
     }
 
     /**
-     * Get id
+     * Get id.
      *
      * @return int
      */
@@ -85,9 +84,10 @@ class UserBookmark implements TagContainerInterface
     }
 
     /**
-     * Set user
+     * Set user.
      *
      * @param User $user
+     *
      * @return UserBookmark
      */
     public function setUser(User $user)
@@ -98,7 +98,7 @@ class UserBookmark implements TagContainerInterface
     }
 
     /**
-     * Get user
+     * Get user.
      *
      * @return User
      */
@@ -108,9 +108,10 @@ class UserBookmark implements TagContainerInterface
     }
 
     /**
-     * Set fiddle
+     * Set fiddle.
      *
      * @param Fiddle $fiddle
+     *
      * @return UserBookmark
      */
     public function setFiddle(Fiddle $fiddle)
@@ -121,7 +122,7 @@ class UserBookmark implements TagContainerInterface
     }
 
     /**
-     * Get fiddle
+     * Get fiddle.
      *
      * @return Fiddle
      */
@@ -131,9 +132,10 @@ class UserBookmark implements TagContainerInterface
     }
 
     /**
-     * Set title
+     * Set title.
      *
      * @param string $title
+     *
      * @return UserBookmark
      */
     public function setTitle($title)
@@ -144,7 +146,7 @@ class UserBookmark implements TagContainerInterface
     }
 
     /**
-     * Get title
+     * Get title.
      *
      * @return string
      */
@@ -154,15 +156,15 @@ class UserBookmark implements TagContainerInterface
     }
 
     /**
-     * Set tags
+     * Set tags.
      *
      * @param ArrayCollection[UserBookmarkTag] $tags
+     *
      * @return UserBookmark
      */
     public function setTags(ArrayCollection $tags)
     {
-        foreach ($tags as $tag)
-        {
+        foreach ($tags as $tag) {
             $tag->setUserBookmark($this);
         }
 
@@ -172,7 +174,7 @@ class UserBookmark implements TagContainerInterface
     }
 
     /**
-     * Get tags
+     * Get tags.
      *
      * @return ArrayCollection[UserBookmarkTag]
      */
@@ -186,8 +188,7 @@ class UserBookmark implements TagContainerInterface
         $this->setTitle($fiddle->getTitle());
 
         $tags = new ArrayCollection();
-        foreach ($fiddle->getTags() as $fiddleTag)
-        {
+        foreach ($fiddle->getTags() as $fiddleTag) {
             $tag = new UserBookmarkTag();
             $tag->setTag($fiddleTag->getTag());
             $tags->add($tag);
@@ -196,5 +197,4 @@ class UserBookmark implements TagContainerInterface
 
         return $this;
     }
-
 }

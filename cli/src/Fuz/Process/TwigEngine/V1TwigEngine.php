@@ -13,7 +13,6 @@ namespace Fuz\Process\TwigEngine;
 
 class V1TwigEngine extends AbstractTwigEngine
 {
-
     /**
      * From all released versions of Twig, there are backward compatibility to load a template.
      *
@@ -24,19 +23,20 @@ class V1TwigEngine extends AbstractTwigEngine
      * @param string $sourceDirectory
      * @param string $cacheDirectory
      * @param string $template
-     * @param array $context
+     * @param array  $context
+     *
      * @return string
      */
-    public function render($sourceDirectory, $cacheDirectory, $template, array $context = array ())
+    public function render($sourceDirectory, $cacheDirectory, $template, array $context = array())
     {
-        require($sourceDirectory . DIRECTORY_SEPARATOR . '/lib/Twig/Autoloader.php');
+        require $sourceDirectory.DIRECTORY_SEPARATOR.'/lib/Twig/Autoloader.php';
         \Twig_Autoloader::register();
 
         $executionDirectory = dirname($template);
         $mainTemplate = basename($template);
 
         $twigLoader = new \Twig_Loader_Filesystem($executionDirectory, $cacheDirectory);
-        $twigEnvironment = new \Twig_Environment($twigLoader, array ('cache' => $cacheDirectory));
+        $twigEnvironment = new \Twig_Environment($twigLoader, array('cache' => $cacheDirectory));
 
         $templateObject = $twigEnvironment->loadTemplate($mainTemplate);
 
@@ -51,5 +51,4 @@ class V1TwigEngine extends AbstractTwigEngine
     {
         return 'Twig v1.x';
     }
-
 }

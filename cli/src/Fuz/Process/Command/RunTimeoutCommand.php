@@ -21,7 +21,6 @@ use Fuz\Process\Exception\StopExecutionException;
 
 class RunTimeoutCommand extends BaseCommand
 {
-
     protected $environmentId;
     protected $timeout;
     protected $cExtension;
@@ -31,13 +30,13 @@ class RunTimeoutCommand extends BaseCommand
     {
         parent::configure();
         $this
-           ->setName("twigfiddle:run:timeout")
-           ->setDescription("Executes a twigfiddle (from already prepared environment) with a timeout")
+           ->setName('twigfiddle:run:timeout')
+           ->setDescription('Executes a twigfiddle (from already prepared environment) with a timeout')
            ->addArgument('environment-id', InputArgument::REQUIRED,
-              "Environment where the twigfiddle is stored and will be executed")
+              'Environment where the twigfiddle is stored and will be executed')
            ->addArgument('timeout', InputArgument::REQUIRED, "The fiddle's maximum execution time (seconds)")
            ->addOption('c-extension', 'c', \Symfony\Component\Console\Input\InputOption::VALUE_REQUIRED,
-              "C extension directory (to dl() twig.so if ticked)")
+              'C extension directory (to dl() twig.so if ticked)')
         ;
     }
 
@@ -58,29 +57,28 @@ class RunTimeoutCommand extends BaseCommand
         $this->environmentId = $input->getArgument('environment-id');
         $this->timeout = $input->getArgument('timeout');
         $this->cExtension = $input->getOption('c-extension');
+
         return $this;
     }
 
     protected function initErrorHandler()
     {
-        register_shutdown_function(function()
-        {
-            if ((!is_null($err = error_get_last())) && (!in_array($err['type'], array (E_NOTICE, E_WARNING))))
-            {
+        register_shutdown_function(function () {
+            if ((!is_null($err = error_get_last())) && (!in_array($err['type'], array(E_NOTICE, E_WARNING)))) {
                 $this->saveError(Error::E_UNEXPECTED, $err);
             }
         });
+
         return $this;
     }
 
     protected function initProcess()
     {
         $command = array(
-            '/usr/bin/php'
+            '/usr/bin/php',
         );
 
-        if ($this->cExtension)
-        {
+        if ($this->cExtension) {
             $command = array_merge($command, array(
                 '-d',
                 "extension={$this->cExtension}",
@@ -105,22 +103,17 @@ class RunTimeoutCommand extends BaseCommand
     protected function runProcess()
     {
         $this->process->start();
-        try
-        {
-            while ($this->process->isRunning())
-            {
+        try {
+            while ($this->process->isRunning()) {
                 $this->process->checkTimeout();
                 usleep(200000);
             }
-        }
-        catch (\RuntimeException $e)
-        {
+        } catch (\RuntimeException $e) {
             $this->saveError(Error::E_TIMEOUT, $e);
-        }
-        catch (StopExecutionException $e)
-        {
+        } catch (StopExecutionException $e) {
             $this->saveError(Error::E_UNEXPECTED, $e);
         }
+
         return $this;
     }
 
@@ -139,5 +132,4 @@ class RunTimeoutCommand extends BaseCommand
            ->recoverSharedMemory($agent, false)
            ->saveResults($agent);
     }
-
 }

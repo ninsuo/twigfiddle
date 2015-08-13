@@ -17,10 +17,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class AccountConnect implements AccountConnectorInterface
 {
-
     public function connect(UserInterface $user, UserResponseInterface $response)
     {
-
     }
-
 }

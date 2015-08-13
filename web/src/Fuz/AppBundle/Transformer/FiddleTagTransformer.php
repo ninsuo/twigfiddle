@@ -16,7 +16,6 @@ use Fuz\AppBundle\Entity\FiddleTag;
 
 class FiddleTagTransformer extends AbstractTagTransformer
 {
-
     protected $fiddle;
 
     public function __construct(Fiddle $fiddle = null)
@@ -31,5 +30,4 @@ class FiddleTagTransformer extends AbstractTagTransformer
 
         return parent::reverseTransformHelper($this->fiddle, $empty, $tags);
     }
-
 }

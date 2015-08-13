@@ -16,7 +16,6 @@ use Fuz\Framework\Api\ConfigurationNodeInterface;
 
 class DebugConfigurationNode implements ConfigurationNodeInterface
 {
-
     public function getConfigurationNode()
     {
         $treeBuilder = new TreeBuilder();
@@ -24,22 +23,22 @@ class DebugConfigurationNode implements ConfigurationNodeInterface
 
         $rootNode
            ->children()
-                ->booleanNode("allowed")
+                ->booleanNode('allowed')
                     ->defaultValue(true)
                 ->end()
-                ->scalarNode("directory")
+                ->scalarNode('directory')
                     ->isRequired()
                     ->validate()
-                        ->ifTrue(function($dir) {
+                        ->ifTrue(function ($dir) {
                             return !is_dir($dir) || !is_writeable($dir);
                         })
                         ->thenInvalid("Debug's directory does not exist or is not writeable: %s")
                     ->end()
                 ->end()
-                ->scalarNode("context_file")
+                ->scalarNode('context_file')
                     ->defaultValue('context.srz')
                     ->validate()
-                        ->ifTrue(function($file) {
+                        ->ifTrue(function ($file) {
                             return strpos($file, '/') !== false;
                         })
                         ->thenInvalid("The context file name can't contain a slash ( / ): %s")
@@ -53,5 +52,4 @@ class DebugConfigurationNode implements ConfigurationNodeInterface
 
         return $rootNode;
     }
-
 }

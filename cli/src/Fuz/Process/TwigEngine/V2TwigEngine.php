@@ -13,7 +13,6 @@ namespace Fuz\Process\TwigEngine;
 
 class V2TwigEngine extends AbstractTwigEngine
 {
-
     /**
      * Since Twig 2.x, there are no more built-in Twig autoloader. And cache directory
      * is given using an option and no more a Twig_Loader_Filesystem's constructor
@@ -22,10 +21,11 @@ class V2TwigEngine extends AbstractTwigEngine
      * @param string $sourceDirectory
      * @param string $cacheDirectory
      * @param string $template
-     * @param array $context
+     * @param array  $context
+     *
      * @return string
      */
-    public function render($sourceDirectory, $cacheDirectory, $template, array $context = array ())
+    public function render($sourceDirectory, $cacheDirectory, $template, array $context = array())
     {
         $this->registerAutoloader($sourceDirectory);
 
@@ -33,7 +33,7 @@ class V2TwigEngine extends AbstractTwigEngine
         $mainTemplate = basename($template);
 
         $twigLoader = new \Twig_Loader_Filesystem($executionDirectory);
-        $twigEnvironment = new \Twig_Environment($twigLoader, array ('cache' => $cacheDirectory));
+        $twigEnvironment = new \Twig_Environment($twigLoader, array('cache' => $cacheDirectory));
 
         $templateObject = $twigEnvironment->loadTemplate($mainTemplate);
 
@@ -57,21 +57,18 @@ class V2TwigEngine extends AbstractTwigEngine
      */
     protected function registerAutoloader($sourceDirectory)
     {
-        spl_autoload_register(function ($class) use ($sourceDirectory)
-        {
+        spl_autoload_register(function ($class) use ($sourceDirectory) {
             $prefix = 'Twig';
-            $base_dir = $sourceDirectory . '/lib/Twig/';
+            $base_dir = $sourceDirectory.'/lib/Twig/';
 
             $len = strlen($prefix);
-            if (strncmp($prefix, $class, $len) !== 0)
-            {
+            if (strncmp($prefix, $class, $len) !== 0) {
                 return;
             }
 
             $relative_class = substr($class, $len);
-            $file = $base_dir . str_replace('_', '/', $relative_class) . '.php';
-            if (file_exists($file))
-            {
+            $file = $base_dir.str_replace('_', '/', $relative_class).'.php';
+            if (file_exists($file)) {
                 require $file;
             }
         });
@@ -81,5 +78,4 @@ class V2TwigEngine extends AbstractTwigEngine
     {
         return 'Twig v2.x';
     }
-
 }

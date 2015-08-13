@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Fuz\AppBundle\Api\TagContainerInterface;
 
 /**
- * Fiddle
+ * Fiddle.
  *
  * @ORM\Table(
  *      name="fiddle",
@@ -30,13 +30,12 @@ use Fuz\AppBundle\Api\TagContainerInterface;
  */
 class Fiddle implements TagContainerInterface
 {
-
     const VISIBILITY_PUBLIC = 'public';
     const VISIBILITY_UNLISTED = 'unlisted';
     const VISIBILITY_PRIVATE = 'private';
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -54,7 +53,7 @@ class Fiddle implements TagContainerInterface
     protected $hash;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="revision", type="integer")
      */
@@ -154,7 +153,7 @@ class Fiddle implements TagContainerInterface
     protected $updateTm;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="visits_count", type="integer")
      */
@@ -169,7 +168,7 @@ class Fiddle implements TagContainerInterface
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -178,6 +177,7 @@ class Fiddle implements TagContainerInterface
 
     /**
      * @param string $hash
+     *
      * @return Fiddle
      */
     public function setHash($hash)
@@ -196,7 +196,8 @@ class Fiddle implements TagContainerInterface
     }
 
     /**
-     * @param integer $revision
+     * @param int $revision
+     *
      * @return Fiddle
      */
     public function setRevision($revision)
@@ -207,7 +208,7 @@ class Fiddle implements TagContainerInterface
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getRevision()
     {
@@ -216,6 +217,7 @@ class Fiddle implements TagContainerInterface
 
     /**
      * @param User $user
+     *
      * @return Fiddle
      */
     public function setUser(User $user)
@@ -235,12 +237,12 @@ class Fiddle implements TagContainerInterface
 
     /**
      * @param FiddleContext|null $context
+     *
      * @return Fiddle
      */
     public function setContext(FiddleContext $context = null)
     {
-        if (!is_null($context))
-        {
+        if (!is_null($context)) {
             $context->setFiddle($this);
         }
 
@@ -259,41 +261,44 @@ class Fiddle implements TagContainerInterface
 
     /**
      * @param FiddleTemplate $template
+     *
      * @return Fiddle
      */
     public function addTemplate(FiddleTemplate $template)
     {
-        if (!$this->templates->contains($template))
-        {
+        if (!$this->templates->contains($template)) {
             $template->setFiddle($this);
             $this->templates->add($template);
         }
+
         return $this;
     }
 
     /**
-     * Remove template
+     * Remove template.
      *
      * @param FiddleTemplate $template
+     *
      * @return Fiddle
      */
     public function removeTemplate(FiddleTemplate $template)
     {
-        if ($this->templates->contains($template))
-        {
+        if ($this->templates->contains($template)) {
             $this->templates->removeElement($template);
         }
+
         return $this;
     }
 
     /**
-     * Clear templates
+     * Clear templates.
      *
      * @return Fiddle
      */
     public function clearTemplates()
     {
         $this->templates = new ArrayCollection();
+
         return $this;
     }
 
@@ -307,6 +312,7 @@ class Fiddle implements TagContainerInterface
 
     /**
      * @param string $twigEngine
+     *
      * @return Fiddle
      */
     public function setTwigEngine($twigEngine)
@@ -326,6 +332,7 @@ class Fiddle implements TagContainerInterface
 
     /**
      * @param string $twigVersion
+     *
      * @return Fiddle
      */
     public function setTwigVersion($twigVersion)
@@ -345,6 +352,7 @@ class Fiddle implements TagContainerInterface
 
     /**
      * @param string $withCExtension
+     *
      * @return Fiddle
      */
     public function setWithCExtension($withCExtension)
@@ -364,6 +372,7 @@ class Fiddle implements TagContainerInterface
 
     /**
      * @param string $title
+     *
      * @return Fiddle
      */
     public function setTitle($title)
@@ -383,6 +392,7 @@ class Fiddle implements TagContainerInterface
 
     /**
      * @param bool $visibility
+     *
      * @return Fiddle
      */
     public function setVisibility($visibility)
@@ -401,15 +411,15 @@ class Fiddle implements TagContainerInterface
     }
 
     /**
-     * Set tags
+     * Set tags.
      *
      * @param ArrayCollection[FiddleTag]
+     *
      * @return Fiddle
      */
     public function setTags(ArrayCollection $tags)
     {
-        foreach ($tags as $tag)
-        {
+        foreach ($tags as $tag) {
             $tag->setFiddle($this);
         }
 
@@ -419,7 +429,7 @@ class Fiddle implements TagContainerInterface
     }
 
     /**
-     * Get tags
+     * Get tags.
      *
      * @return ArrayCollection[FiddleTag]
      */
@@ -430,6 +440,7 @@ class Fiddle implements TagContainerInterface
 
     /**
      * @param \DateTime $creationTm
+     *
      * @return Fiddle
      */
     public function setCreationTm($creationTm)
@@ -449,6 +460,7 @@ class Fiddle implements TagContainerInterface
 
     /**
      * @param \DateTime $updateTm
+     *
      * @return Fiddle
      */
     public function setUpdateTm($updateTm)
@@ -467,7 +479,8 @@ class Fiddle implements TagContainerInterface
     }
 
     /**
-     * @param integer $visitsCount
+     * @param int $visitsCount
+     *
      * @return Fiddle
      */
     public function setVisitsCount($visitsCount)
@@ -478,7 +491,7 @@ class Fiddle implements TagContainerInterface
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getVisitsCount()
     {
@@ -508,20 +521,17 @@ class Fiddle implements TagContainerInterface
     public function validateTemplates(ExecutionContextInterface $context)
     {
         $isMainCount = 0;
-        foreach ($this->templates as $template)
-        {
+        foreach ($this->templates as $template) {
             $isMainCount += (int) $template->isMain();
         }
 
-        if ($isMainCount == 0)
-        {
+        if ($isMainCount == 0) {
             $context->buildViolation('You need to set a main template.')
                ->atPath('templates')
                ->addViolation();
         }
 
-        if ($isMainCount >= 2)
-        {
+        if ($isMainCount >= 2) {
             $context->buildViolation('You need to set only one main template.')
                ->atPath('templates')
                ->addViolation();
@@ -534,12 +544,11 @@ class Fiddle implements TagContainerInterface
     public function validateVisibility(ExecutionContextInterface $context)
     {
         if (!in_array($this->visibility,
-              array (
+              array(
                    self::VISIBILITY_PUBLIC,
                    self::VISIBILITY_UNLISTED,
                    self::VISIBILITY_PRIVATE,
-           )))
-        {
+           ))) {
             $context->buildViolation('You should choose a valid visibility.')
                ->atPath('visibility')
                ->addViolation();
@@ -550,13 +559,13 @@ class Fiddle implements TagContainerInterface
     {
         $this->setTitle($bookmark->getTitle());
         $collection = new ArrayCollection();
-        foreach ($bookmark->getTags() as $tag)
-        {
+        foreach ($bookmark->getTags() as $tag) {
             $tagObj = new FiddleTag();
             $tagObj->setTag($tag->getTag());
             $collection->add($tagObj);
         }
         $this->setTags($collection);
+
         return $this;
     }
 
@@ -565,27 +574,22 @@ class Fiddle implements TagContainerInterface
         $this->id = null;
         $this->user = null;
 
-        if ($this->context)
-        {
+        if ($this->context) {
             $this->context = clone $this->context;
         }
 
-        if ($this->templates)
-        {
+        if ($this->templates) {
             $templates = $this->templates;
             $this->clearTemplates();
-            foreach ($templates as $template)
-            {
+            foreach ($templates as $template) {
                 $this->addTemplate(clone $template);
             }
         }
 
-        if ($this->tags)
-        {
+        if ($this->tags) {
             $oldTags = $this->tags;
             $newTags = new ArrayCollection();
-            foreach ($oldTags as $tag)
-            {
+            foreach ($oldTags as $tag) {
                 $newTags->add(clone $tag);
             }
             $this->setTags($newTags);
@@ -593,5 +597,4 @@ class Fiddle implements TagContainerInterface
 
         $this->visitsCount = 0;
     }
-
 }

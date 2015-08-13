@@ -18,19 +18,18 @@ use Fuz\AppBundle\Transformer\UserBookmarkTagTransformer;
 
 class UserBookmarkType extends AbstractType
 {
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $transformer = new UserBookmarkTagTransformer($options['data_object']);
 
         $builder
-           ->add('title', 'text', array (
+           ->add('title', 'text', array(
                    'required' => false,
            ))
            ->add(
               $builder
               ->create('tags', 'text',
-                 array (
+                 array(
                       'required' => false,
               ))
               ->addModelTransformer($transformer)
@@ -40,7 +39,7 @@ class UserBookmarkType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array (
+        $resolver->setDefaults(array(
                 'data_object' => null,
                 'data_class' => 'Fuz\AppBundle\Entity\UserBookmark',
         ));
@@ -56,5 +55,4 @@ class UserBookmarkType extends AbstractType
     {
         return 'FiddleType';
     }
-
 }

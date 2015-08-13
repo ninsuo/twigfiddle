@@ -14,7 +14,7 @@ namespace Fuz\AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * CaptchaIpLimit
+ * CaptchaIpLimit.
  *
  * @ORM\Entity(repositoryClass="Fuz\AppBundle\Repository\CaptchaIpLimitRepository")
  * @ORM\Table(name="captcha_ip_limit")
@@ -22,7 +22,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class CaptchaIpLimit
 {
-
     /**
      * @var int
      *
@@ -89,5 +88,4 @@ class CaptchaIpLimit
     {
         $this->setUpdateTm(new \DateTime());
     }
-
 }

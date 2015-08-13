@@ -16,15 +16,13 @@ use Fuz\AppBundle\Entity\Fiddle;
 use Fuz\AppBundle\Entity\User;
 
 /**
- * UserBookmarkRepository
+ * UserBookmarkRepository.
  */
 class UserBookmarkRepository extends EntityRepository
 {
-
     public function getBookmark(Fiddle $fiddle, User $user = null)
     {
-        if ((is_null($user)) || (is_null($fiddle->getId())))
-        {
+        if ((is_null($user)) || (is_null($fiddle->getId()))) {
             return false;
         }
 
@@ -35,7 +33,7 @@ class UserBookmarkRepository extends EntityRepository
             AND ub.user = :user
         ");
 
-        $params = array (
+        $params = array(
                 'fiddle' => $fiddle,
                 'user' => $user,
         );
@@ -47,5 +45,4 @@ class UserBookmarkRepository extends EntityRepository
 
         return $userBookmark;
     }
-
 }

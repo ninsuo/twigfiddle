@@ -19,7 +19,6 @@ use Sensio\Bundle\DistributionBundle\Composer\ScriptHandler as SymfonyScriptHand
  */
 class ScriptHandler extends SymfonyScriptHandler
 {
-
     /**
      * Clears the APC/Opcache cache.
      *
@@ -35,30 +34,25 @@ class ScriptHandler extends SymfonyScriptHandler
         }
 
         $opcode = '';
-        if (array_key_exists('ornicar-apc-opcode', $options))
-        {
+        if (array_key_exists('ornicar-apc-opcode', $options)) {
             $opcode .= ' --opcode';
         }
 
         $user = '';
-        if (array_key_exists('ornicar-apc-user', $options))
-        {
+        if (array_key_exists('ornicar-apc-user', $options)) {
             $user .= ' --user';
         }
 
         $cli = '';
-        if (array_key_exists('ornicar-apc-cli', $options))
-        {
+        if (array_key_exists('ornicar-apc-cli', $options)) {
             $cli .= ' --cli';
         }
 
         $auth = '';
-        if (array_key_exists('ornicar-apc-auth', $options))
-        {
-            $auth .= ' --auth '.  escapeshellarg($options['ornicar-apc-auth']);
+        if (array_key_exists('ornicar-apc-auth', $options)) {
+            $auth .= ' --auth '.escapeshellarg($options['ornicar-apc-auth']);
         }
 
         static::executeCommand($event, $consoleDir, 'apc:clear'.$opcode.$user.$cli.$auth, $options['process-timeout']);
     }
-
 }

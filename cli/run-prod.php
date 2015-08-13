@@ -10,12 +10,11 @@
  * file that was distributed with this source code.
  */
 
-if (!include __DIR__ . '/vendor/autoload.php')
-{
-    echo 'You must set up the project dependencies.' . PHP_EOL;
+if (!include __DIR__.'/vendor/autoload.php') {
+    echo 'You must set up the project dependencies.'.PHP_EOL;
+
     return;
 }
 
 $app = new Fuz\Framework\Application('prod');
 $app->run();
-

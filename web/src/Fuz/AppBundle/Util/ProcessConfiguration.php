@@ -20,7 +20,6 @@ use Psr\Log\LoggerInterface;
 
 class ProcessConfiguration
 {
-
     protected $logger;
     protected $localConfig;
     protected $environment;
@@ -36,27 +35,20 @@ class ProcessConfiguration
 
     public function getProcessConfig()
     {
-        if (!is_null($this->remoteConfig))
-        {
+        if (!is_null($this->remoteConfig)) {
             return $this->remoteConfig;
         }
 
-        if ($this->environment === 'prod')
-        {
+        if ($this->environment === 'prod') {
             $apc = new ApcCache();
             $id = $this->localConfig['apc_cache_key'];
-            if ($apc->contains($id))
-            {
+            if ($apc->contains($id)) {
                 $this->remoteConfig = $apc->fetch($id);
-            }
-            else
-            {
+            } else {
                 $this->remoteConfig = $this->loadRemoteConfig();
                 $apc->save($id, $this->remoteConfig);
             }
-        }
-        else
-        {
+        } else {
             $this->remoteConfig = $this->loadRemoteConfig();
         }
 
@@ -75,8 +67,7 @@ class ProcessConfiguration
 
         $processContainer = new ContainerBuilder();
 
-        foreach ($containerFiles as $containerFile)
-        {
+        foreach ($containerFiles as $containerFile) {
             $locator = new FileLocator(dirname($containerFile));
             $loader = new Loader\YamlFileLoader($processContainer, $locator);
             $loader->load(basename($containerFile));
@@ -89,28 +80,25 @@ class ProcessConfiguration
         $config['supported_versions'] = $this->getSupportedTwigVersions($processContainer);
 
         $this->remoteConfig = $config;
+
         return $config;
     }
 
     protected function getSupportedTwigVersions(ContainerBuilder $processContainer)
     {
-        $versions = array ();
+        $versions = array();
 
         $engineServiceIds = $processContainer->findTaggedServiceIds('twig.engine');
 
-        foreach ($engineServiceIds as $tags)
-        {
-            foreach ($tags as $tag)
-            {
-                if (!array_key_exists('versions', $tag) || !array_key_exists('label', $tag))
-                {
+        foreach ($engineServiceIds as $tags) {
+            foreach ($tags as $tag) {
+                if (!array_key_exists('versions', $tag) || !array_key_exists('label', $tag)) {
                     continue;
                 }
-                $versions[$tag['label']] = array_map('trim', explode("/", $tag['versions']));
+                $versions[$tag['label']] = array_map('trim', explode('/', $tag['versions']));
             }
         }
 
         return $versions;
     }
-
 }

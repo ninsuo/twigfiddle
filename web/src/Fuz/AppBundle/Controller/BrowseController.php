@@ -23,9 +23,8 @@ use Fuz\AppBundle\Form\UserBookmarkType;
 
 class BrowseController extends BaseController
 {
-
     /**
-     * Searches for results
+     * Searches for results.
      *
      * @Route(
      *      "/search/{tag}",
@@ -40,32 +39,26 @@ class BrowseController extends BaseController
     {
         list($data, $filters) = $this->createBrowseFilters($request, $tag);
 
-        if ($request->getMethod() === 'GET')
-        {
+        if ($request->getMethod() === 'GET') {
             $this->get('app.paginator')->reset('browseFiddles');
         }
 
-        if ($filters->isSubmitted() && !$filters->isValid())
-        {
+        if ($filters->isSubmitted() && !$filters->isValid()) {
             $data = new BrowseFilters();
         }
 
         list($pagination, $fiddles) = $this->get('app.search_fiddle')->search($request, $data, $this->getUser());
 
-        $list_left = $list_right = array ();
-        foreach ($fiddles as $key => $fiddle)
-        {
-            if ($key % 2)
-            {
+        $list_left = $list_right = array();
+        foreach ($fiddles as $key => $fiddle) {
+            if ($key % 2) {
                 $list_right[] = $fiddle;
-            }
-            else
-            {
+            } else {
                 $list_left[] = $fiddle;
             }
         }
 
-        return array (
+        return array(
                 'tag' => $tag,
                 'filters' => $filters->createView(),
                 'list_left' => $list_left,
@@ -77,17 +70,17 @@ class BrowseController extends BaseController
     protected function createBrowseFilters(Request $request, $tag)
     {
         $data = new BrowseFilters();
-        if (!is_null($tag))
-        {
-            $data->setTags(array ($tag));
+        if (!is_null($tag)) {
+            $data->setTags(array($tag));
         }
         $filters = $this->createForm(new BrowseFiltersType(), $data);
         $filters->handleRequest($request);
-        return array ($data, $filters);
+
+        return array($data, $filters);
     }
 
     /**
-     * Displays a fiddle widget
+     * Displays a fiddle widget.
      *
      * fiddle.hash_regexp
      *
@@ -106,8 +99,7 @@ class BrowseController extends BaseController
         $fiddle = $this->getFiddle($hash, $revision);
 
         $bookmark = $this->getUserBookmark($fiddle);
-        if ($bookmark)
-        {
+        if ($bookmark) {
             $fiddle->mapBookmark($bookmark);
         }
 
@@ -116,7 +108,7 @@ class BrowseController extends BaseController
 
         $form = $this->createForm(new UserBookmarkType(), $bookmarkData)->createView();
 
-        return array (
+        return array(
                 'fiddle' => $fiddle,
                 'form' => $form,
                 'bookmark' => $bookmark,
@@ -125,7 +117,7 @@ class BrowseController extends BaseController
     }
 
     /**
-     * Loads fiddle's browser
+     * Loads fiddle's browser.
      *
      * @Route(
      *      "/{tag}",
@@ -141,10 +133,9 @@ class BrowseController extends BaseController
     {
         list($data) = $this->createBrowseFilters($request, $tag);
 
-        return array (
+        return array(
                 'tag' => $tag,
                 'data' => $data,
         );
     }
-
 }

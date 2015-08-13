@@ -13,10 +13,9 @@ namespace Fuz\AppBundle\Twig\Extension;
 
 class DebugExtension extends \Twig_Extension
 {
-
     public function getFunctions()
     {
-        return array (
+        return array(
               new \Twig_SimpleFunction('dump', array('Symfony\Component\VarDumper\VarDumper', 'dump')),
         );
     }
@@ -25,5 +24,4 @@ class DebugExtension extends \Twig_Extension
     {
         return 'FuzAppBundle:Debug';
     }
-
 }

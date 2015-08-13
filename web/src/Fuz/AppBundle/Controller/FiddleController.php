@@ -25,9 +25,8 @@ use Fuz\AppBundle\Form\UserBookmarkType;
 
 class FiddleController extends BaseController
 {
-
     /**
-     * Runs a fiddle
+     * Runs a fiddle.
      *
      * @Route(
      *      "/run",
@@ -38,13 +37,12 @@ class FiddleController extends BaseController
     public function runAction(Request $request)
     {
         return $this->validateAjaxFiddle($request, new Fiddle(),
-              function(Fiddle $fiddle) use ($request)
-           {
-               $response = array ();
+              function (Fiddle $fiddle) use ($request) {
+               $response = array();
 
-               if (!$this->get('app.captcha')->check($request, 'run'))
-               {
+               if (!$this->get('app.captcha')->check($request, 'run')) {
                    $response['captcha'] = true;
+
                    return $response;
                }
 
@@ -52,14 +50,13 @@ class FiddleController extends BaseController
 
                $response['result'] = $this
                   ->get('templating')
-                  ->render('FuzAppBundle:Fiddle:result.html.twig', array ('data' => $result))
+                  ->render('FuzAppBundle:Fiddle:result.html.twig', array('data' => $result))
                ;
 
-               if ($result->getResult() && $result->getResult()->getContext())
-               {
+               if ($result->getResult() && $result->getResult()->getContext()) {
                    $response['context'] = $this
                       ->get('templating')
-                      ->render('FuzAppBundle:Fiddle:result-context.html.twig', array ('data' => $result))
+                      ->render('FuzAppBundle:Fiddle:result-context.html.twig', array('data' => $result))
                    ;
                }
 
@@ -68,7 +65,7 @@ class FiddleController extends BaseController
     }
 
     /**
-     * Saves a fiddle
+     * Saves a fiddle.
      *
      * fiddle.hash_regexp
      *
@@ -90,41 +87,35 @@ class FiddleController extends BaseController
     {
         $fiddle = $this->getFiddle($hash, $revision);
 
-        if ($revision > 0)
-        {
+        if ($revision > 0) {
             $bookmark = $this->getUserBookmark($fiddle);
-            if ($bookmark)
-            {
+            if ($bookmark) {
                 return $this->saveUserBookmark($request, $bookmark);
             }
         }
 
         return $this->validateAjaxFiddle($request, $fiddle,
-              function (Fiddle $fiddle) use ($request, $hash, $revision)
-           {
-               $response = array ();
+              function (Fiddle $fiddle) use ($request, $hash, $revision) {
+               $response = array();
 
                $user = $this->getUser();
                $saveService = $this->get('app.save_fiddle');
 
-               if (is_null($fiddle->getId()) || !$saveService->ownsFiddle($fiddle, $user))
-               {
+               if (is_null($fiddle->getId()) || !$saveService->ownsFiddle($fiddle, $user)) {
                    $revision = 0;
                }
 
-               if (!$revision && !$this->get('app.captcha')->check($request, 'save'))
-               {
+               if (!$revision && !$this->get('app.captcha')->check($request, 'save')) {
                    $response['captcha'] = true;
+
                    return $response;
                }
 
-               if ($fiddle->getId())
-               {
+               if ($fiddle->getId()) {
                    $hash = $fiddle->getHash();
                }
 
-               if (!$saveService->validateHash($hash))
-               {
+               if (!$saveService->validateHash($hash)) {
                    $hash = null;
                }
 
@@ -133,10 +124,9 @@ class FiddleController extends BaseController
                $saved = $saveService->save($hash, $revision, $fiddle, $user);
                $saveService->saveFiddleToSession($saved->getId(), $user);
 
-               if ($originalId !== $saved->getId())
-               {
+               if ($originalId !== $saved->getId()) {
                    $response['relocate'] = $this->generateUrl('fiddle',
-                      array ('hash' => $saved->getHash(), 'revision' => $saved->getRevision()));
+                      array('hash' => $saved->getHash(), 'revision' => $saved->getRevision()));
 
                    return $response;
                }
@@ -144,7 +134,7 @@ class FiddleController extends BaseController
     }
 
     /**
-     * Bookmark / Unbookmark a fiddle
+     * Bookmark / Unbookmark a fiddle.
      *
      * fiddle.hash_regexp
      *
@@ -160,21 +150,19 @@ class FiddleController extends BaseController
      */
     public function bookmarkAction(Request $request, $hash, $revision)
     {
-        $response = array (
+        $response = array(
                 'isBookmarked' => false,
         );
 
         $user = $this->getUser();
 
-        if ((!$request->isXmlHttpRequest()) || (is_null($user)))
-        {
+        if ((!$request->isXmlHttpRequest()) || (is_null($user))) {
             return new RedirectResponse($this->generateUrl('fiddle', $response, Response::HTTP_PRECONDITION_REQUIRED));
         }
 
         $fiddle = $this->getFiddle($hash, $revision);
 
-        if ($this->get('app.save_fiddle')->ownsFiddle($fiddle, $user))
-        {
+        if ($this->get('app.save_fiddle')->ownsFiddle($fiddle, $user)) {
             return new JsonResponse($response);
         }
 
@@ -186,10 +174,10 @@ class FiddleController extends BaseController
         $em = $this->getDoctrine()->getManager();
 
         $old = $bookmarkRepo->getBookmark($fiddle, $user);
-        if ($old)
-        {
+        if ($old) {
             $em->remove($old);
             $em->flush($old);
+
             return new JsonResponse($response);
         }
 
@@ -202,20 +190,20 @@ class FiddleController extends BaseController
 
     protected function saveUserBookmark(Request $request, UserBookmark $bookmark)
     {
-        $response = array (
+        $response = array(
                 'isBookmarked' => false,
         );
 
         $form = $this->createForm(new UserBookmarkType(), $bookmark,
-           array (
+           array(
                 'data_object' => $bookmark,
         ));
 
         $form->handleRequest($request);
 
-        if (!$form->isValid())
-        {
+        if (!$form->isValid()) {
             $response['errors'] = $this->getErrorMessagesAjaxFormat($form);
+
             return new JsonResponse($response);
         }
 
@@ -224,11 +212,12 @@ class FiddleController extends BaseController
         $em->flush($bookmark);
 
         $response['isBookmarked'] = true;
+
         return new JsonResponse($response);
     }
 
     /**
-     * Fiddle's samples
+     * Fiddle's samples.
      *
      * @Template()
      */
@@ -236,13 +225,13 @@ class FiddleController extends BaseController
     {
         $webConfig = $this->container->getParameter('web');
 
-        return array (
+        return array(
                 'categories' => $webConfig['samples'],
         );
     }
 
     /**
-     * Displays twigfiddle's editor
+     * Displays twigfiddle's editor.
      *
      * fiddle.hash_regexp
      *
@@ -273,8 +262,7 @@ class FiddleController extends BaseController
         $fiddleRepo->incrementVisitCount($fiddle);
 
         $bookmark = $this->getUserBookmark($fiddle);
-        if ($bookmark)
-        {
+        if ($bookmark) {
             $fiddle->mapBookmark($bookmark);
         }
 
@@ -282,7 +270,7 @@ class FiddleController extends BaseController
 
         $processConfig = $this->get('app.process_configuration')->getProcessConfig();
 
-        return array (
+        return array(
                 'form' => $form->createView(),
                 'data' => $fiddle,
                 'hash' => $hash,
@@ -295,42 +283,37 @@ class FiddleController extends BaseController
     }
 
     /**
-     * Performs a callback if Fiddle's form is properly submitted and valid
+     * Performs a callback if Fiddle's form is properly submitted and valid.
      *
-     * @param Request $request
+     * @param Request     $request
      * @param Fiddle|null $fiddle
-     * @param callable $onValid
+     * @param callable    $onValid
+     *
      * @return RedirectResponse|JsonResponse
      */
     protected function validateAjaxFiddle(Request $request, $fiddle, $onValid)
     {
-        $response = array ();
+        $response = array();
 
-        if (!$request->isXmlHttpRequest())
-        {
+        if (!$request->isXmlHttpRequest()) {
             return new RedirectResponse($this->generateUrl('fiddle', $response, Response::HTTP_PRECONDITION_REQUIRED));
         }
 
-        $form = $this->createForm('FiddleType', $fiddle, array (
+        $form = $this->createForm('FiddleType', $fiddle, array(
                 'data_object' => $fiddle,
         ));
         $form->handleRequest($request);
 
-        if ($form->isValid())
-        {
+        if ($form->isValid()) {
             $result = $onValid($fiddle);
-            if (is_array($result))
-            {
+            if (is_array($result)) {
                 $response = array_merge($response, $result);
             }
-        }
-        else
-        {
+        } else {
             $errors = $this->getErrorMessagesAjaxFormat($form);
-            if (!array_key_exists('#', $errors))
-            {
+            if (!array_key_exists('#', $errors)) {
                 $plurial = count($errors) > 1 ? 's' : '';
-                $errors['#'] = array (
+                $errors['#'] = array(
                         "Form contains error{$plurial}, please check messages below involved field{$plurial}.",
                 );
             }
@@ -339,5 +322,4 @@ class FiddleController extends BaseController
 
         return new JsonResponse($response);
     }
-
 }

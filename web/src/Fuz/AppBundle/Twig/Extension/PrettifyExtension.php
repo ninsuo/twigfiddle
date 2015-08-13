@@ -15,19 +15,18 @@ namespace Fuz\AppBundle\Twig\Extension;
  * This extension makes results more human-readable:
  * - replaces multiple newlines by at last double newlines
  * - remove blank space at the top, left, bottom
- * - indents result with regular number of spaces
+ * - indents result with regular number of spaces.
  */
 class PrettifyExtension extends \Twig_Extension
 {
-
     const INDENT = '    ';
 
     protected $result;
 
     public function getFilters()
     {
-        return array (
-                new \Twig_SimpleFilter('prettify', array ($this, 'prettify')),
+        return array(
+                new \Twig_SimpleFilter('prettify', array($this, 'prettify')),
         );
     }
 
@@ -40,6 +39,7 @@ class PrettifyExtension extends \Twig_Extension
         ;
         $prettyResult = implode("\n", $this->result);
         $this->result = null;
+
         return $prettyResult;
     }
 
@@ -48,32 +48,23 @@ class PrettifyExtension extends \Twig_Extension
         $blank = 0;
         $top = true;
 
-        foreach ($this->result as $index => $line)
-        {
-            if (strlen(str_replace(array (" ", "\t", "\n", "\r"), '', $line)) == 0)
-            {
+        foreach ($this->result as $index => $line) {
+            if (strlen(str_replace(array(' ', "\t", "\n", "\r"), '', $line)) == 0) {
                 $this->result[$index] = '';
-                $blank++;
-                if (($top) || ($blank > 1))
-                {
+                ++$blank;
+                if (($top) || ($blank > 1)) {
                     unset($this->result[$index]);
                 }
-            }
-            else
-            {
+            } else {
                 $blank = 0;
                 $top = false;
             }
         }
 
-        foreach (array_reverse($this->result, true) as $index => $line)
-        {
-            if (strlen(str_replace(array (" ", "\t", "\n", "\r"), '', $line)) == 0)
-            {
+        foreach (array_reverse($this->result, true) as $index => $line) {
+            if (strlen(str_replace(array(' ', "\t", "\n", "\r"), '', $line)) == 0) {
                 unset($this->result[$index]);
-            }
-            else
-            {
+            } else {
                 break;
             }
         }
@@ -83,38 +74,30 @@ class PrettifyExtension extends \Twig_Extension
 
     protected function prettifyHorizontalSpace()
     {
-        $spaces = array ();
-        foreach ($this->result as $index => $line)
-        {
-            if (strlen($line))
-            {
-                $matches = array ();
+        $spaces = array();
+        foreach ($this->result as $index => $line) {
+            if (strlen($line)) {
+                $matches = array();
                 preg_match("/^\s*/", $line, $matches);
                 $spaces[$index] = strlen(reset($matches));
             }
         }
 
-        if (0 === count($spaces))
-        {
+        if (0 === count($spaces)) {
             $min = 0;
-        }
-        else
-        {
+        } else {
             $min = min($spaces);
         }
 
-        foreach ($this->result as $index => $line)
-        {
+        foreach ($this->result as $index => $line) {
             $this->result[$index] = substr($line, $min);
         }
 
         asort($spaces);
         $deeps = array_values(array_unique($spaces));
 
-        foreach ($this->result as $index => $line)
-        {
-            if (strlen($line))
-            {
+        foreach ($this->result as $index => $line) {
+            if (strlen($line)) {
                 $deep = array_search($spaces[$index], $deeps);
                 $this->result[$index] = preg_replace("/^\s*/", str_repeat(self::INDENT, $deep), $line);
             }
@@ -127,5 +110,4 @@ class PrettifyExtension extends \Twig_Extension
     {
         return 'FuzAppBundle:Prettify';
     }
-
 }

@@ -18,7 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class Captcha
 {
-
     protected $logger;
     protected $session;
     protected $sessionIpRepo;
@@ -38,25 +37,23 @@ class Captcha
 
     public function check(Request $request, $strategy)
     {
-        if (!array_key_exists($strategy, $this->config['strategies']))
-        {
+        if (!array_key_exists($strategy, $this->config['strategies'])) {
             throw new \LogicException("Unknown strategy given: {$strategy}.");
         }
 
         $this->clearExpiredInformation($strategy);
 
-        $ip = ip2long($request->getClientIp()) ? : ip2long('127.0.0.1');
+        $ip = ip2long($request->getClientIp()) ?: ip2long('127.0.0.1');
         $sessionId = $this->session->getId();
 
-        if ($this->validateCaptcha($request))
-        {
+        if ($this->validateCaptcha($request)) {
             $this->ipLimitRepo->increaseLimit($ip, $this->config['sessions_per_ip']['max']);
             $this->sessionHitRepo->resetHits($sessionId, $strategy);
+
             return true;
         }
 
-        if ($this->hasReachedLimits($ip, $sessionId, $strategy))
-        {
+        if ($this->hasReachedLimits($ip, $sessionId, $strategy)) {
             return false;
         }
 
@@ -70,17 +67,16 @@ class Captcha
     public function validateCaptcha(Request $request)
     {
         $response = $request->request->get($this->config['post_param']);
-        if ($response)
-        {
+        if ($response) {
             $ip = ip2long($request->getClientIp()) ? $request->getClientIp() : '127.0.0.1';
 
-            $parameters = array (
+            $parameters = array(
                     'secret' => $this->config['secret_key'],
                     'response' => $response,
                     'remoteip' => $ip,
             );
 
-            $query = $this->config['check_url'] . '?' . http_build_query($parameters);
+            $query = $this->config['check_url'].'?'.http_build_query($parameters);
             $json = json_decode(file_get_contents($query));
 
             return $json->success;
@@ -109,17 +105,14 @@ class Captcha
     {
         $sessionsPerIp = $this->ipLimitRepo->findOneByIp($ip);
         $sessionsCount = $this->sessionIpRepo->count($ip);
-        if ($sessionsPerIp && $sessionsCount >= $sessionsPerIp->getLimit())
-        {
+        if ($sessionsPerIp && $sessionsCount >= $sessionsPerIp->getLimit()) {
             return true;
         }
 
-        if ($this->sessionHitRepo->getHits($sessionId, $strategy) >= $this->config['strategies'][$strategy]['hits'])
-        {
+        if ($this->sessionHitRepo->getHits($sessionId, $strategy) >= $this->config['strategies'][$strategy]['hits']) {
             return true;
         }
 
         return false;
     }
-
 }

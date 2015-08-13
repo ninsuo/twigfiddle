@@ -19,7 +19,6 @@ use Fuz\Process\Agent\FiddleAgent;
 
 class ExecuteManager extends BaseService
 {
-
     protected $fileSystem;
     protected $environmentManager;
     protected $engineManager;
@@ -51,36 +50,35 @@ class ExecuteManager extends BaseService
         $context = $this->contextManager->getContextFromAgent($agent);
 
         $this->logger->debug("Rendering fiddle's main template: {$mainTemplate}");
-        try
-        {
+        try {
             $rendered = $engine->render($sourceDirectory, $cacheDirectory, $mainTemplate, $context);
             $this->logger->debug("Fiddle's rendered result: {$rendered}");
-        }
-        catch (\Exception $ex)
-        {
+        } catch (\Exception $ex) {
             $this->treatError($agent, $ex);
             throw new StopExecutionException();
         }
 
         $agent->setRendered($rendered);
+
         return $this;
     }
 
     protected function checkNoTwigEnvironmentLoaded()
     {
-        if (class_exists("\Twig_Environment"))
-        {
-            throw new \LogicException("A twig environment has already been loaded.");
+        if (class_exists("\Twig_Environment")) {
+            throw new \LogicException('A twig environment has already been loaded.');
         }
+
         return $this;
     }
 
     protected function createCacheDirectory(FiddleAgent $agent)
     {
         $dir = $agent->getDirectory();
-        $cacheDirectory = $dir . DIRECTORY_SEPARATOR . $this->fiddleConfiguration['compiled_dir'];
+        $cacheDirectory = $dir.DIRECTORY_SEPARATOR.$this->fiddleConfiguration['compiled_dir'];
         $this->logger->debug("Creating cache directory: {$cacheDirectory}");
         $this->fileSystem->mkdir($cacheDirectory);
+
         return $cacheDirectory;
     }
 
@@ -90,17 +88,17 @@ class ExecuteManager extends BaseService
      * just thrown \Twig_Error.
      *
      * @param FiddleAgent $agent
-     * @param \Exception $ex
+     * @param \Exception  $ex
+     *
      * @return \Fuz\Process\Service\ExecuteManager
      */
     protected function treatError(FiddleAgent $agent, \Exception $ex)
     {
         $no = null;
 
-        $this->logger->log(200, 'xxx', array('ex'=> $ex));
+        $this->logger->log(200, 'xxx', array('ex' => $ex));
 
-        switch (get_class($ex))
-        {
+        switch (get_class($ex)) {
             case 'Twig_Error_Loader':
                 $no = Error::E_TWIG_LOADER_ERROR;
                 break;
@@ -119,5 +117,4 @@ class ExecuteManager extends BaseService
 
         return $this;
     }
-
 }

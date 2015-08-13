@@ -17,7 +17,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 
 /**
- * User
+ * User.
  *
  * @ORM\Table(
  *      name="user",
@@ -30,9 +30,8 @@ use Symfony\Component\Security\Core\User\EquatableInterface;
  */
 class User implements UserInterface, EquatableInterface
 {
-
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -69,7 +68,7 @@ class User implements UserInterface, EquatableInterface
     protected $lastSeen;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="signin_count", type="integer")
      */
@@ -88,9 +87,9 @@ class User implements UserInterface, EquatableInterface
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -98,9 +97,10 @@ class User implements UserInterface, EquatableInterface
     }
 
     /**
-     * Set resourceOwner
+     * Set resourceOwner.
      *
      * @param string $resourceOwner
+     *
      * @return User
      */
     public function setResourceOwner($resourceOwner)
@@ -111,7 +111,7 @@ class User implements UserInterface, EquatableInterface
     }
 
     /**
-     * Get resourceOwner
+     * Get resourceOwner.
      *
      * @return string
      */
@@ -121,9 +121,10 @@ class User implements UserInterface, EquatableInterface
     }
 
     /**
-     * Set resourceOwnerId
+     * Set resourceOwnerId.
      *
      * @param string $resourceOwnerId
+     *
      * @return User
      */
     public function setResourceOwnerId($resourceOwnerId)
@@ -134,7 +135,7 @@ class User implements UserInterface, EquatableInterface
     }
 
     /**
-     * Get resourceOwnerId
+     * Get resourceOwnerId.
      *
      * @return string
      */
@@ -144,9 +145,10 @@ class User implements UserInterface, EquatableInterface
     }
 
     /**
-     * Set username
+     * Set username.
      *
      * @param string $username
+     *
      * @return User
      */
     public function setUsername($username)
@@ -157,7 +159,7 @@ class User implements UserInterface, EquatableInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getUsername()
     {
@@ -165,9 +167,10 @@ class User implements UserInterface, EquatableInterface
     }
 
     /**
-     * Set lastSeen
+     * Set lastSeen.
      *
      * @param \DateTime $lastSeen
+     *
      * @return User
      */
     public function setLastSeen($lastSeen)
@@ -178,7 +181,7 @@ class User implements UserInterface, EquatableInterface
     }
 
     /**
-     * Get lastSeen
+     * Get lastSeen.
      *
      * @return \DateTime
      */
@@ -188,9 +191,10 @@ class User implements UserInterface, EquatableInterface
     }
 
     /**
-     * Set signinCount
+     * Set signinCount.
      *
-     * @param integer $signinCount
+     * @param int $signinCount
+     *
      * @return User
      */
     public function setSigninCount($signinCount)
@@ -201,9 +205,9 @@ class User implements UserInterface, EquatableInterface
     }
 
     /**
-     * Get signinCount
+     * Get signinCount.
      *
-     * @return integer
+     * @return int
      */
     public function getSigninCount()
     {
@@ -211,9 +215,10 @@ class User implements UserInterface, EquatableInterface
     }
 
     /**
-     * Set preferences
+     * Set preferences.
      *
      * @param ArrayCollection[UserPreference] $preferences
+     *
      * @return User
      */
     public function setPreferences(ArrayCollection $preferences)
@@ -224,7 +229,7 @@ class User implements UserInterface, EquatableInterface
     }
 
     /**
-     * Get preferences
+     * Get preferences.
      *
      * @return ArrayCollection[UserPreference]
      */
@@ -250,31 +255,31 @@ class User implements UserInterface, EquatableInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getRoles()
     {
-        return array ('ROLE_USER');
+        return array('ROLE_USER');
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getPassword()
     {
-        return null;
+        return;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getSalt()
     {
-        return null;
+        return;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function eraseCredentials()
     {
@@ -282,16 +287,14 @@ class User implements UserInterface, EquatableInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function isEqualTo(UserInterface $user)
     {
-        if ((int) $this->getId() === $user->getId())
-        {
+        if ((int) $this->getId() === $user->getId()) {
             return true;
         }
 
         return false;
     }
-
 }

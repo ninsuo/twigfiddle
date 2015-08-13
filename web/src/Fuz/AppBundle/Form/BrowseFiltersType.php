@@ -19,7 +19,6 @@ use Fuz\AppBundle\Entity\Fiddle;
 
 class BrowseFiltersType extends AbstractType
 {
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -56,7 +55,7 @@ class BrowseFiltersType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array (
+        $resolver->setDefaults(array(
                 'data_class' => 'Fuz\AppBundle\Entity\BrowseFilters',
         ));
     }
@@ -65,5 +64,4 @@ class BrowseFiltersType extends AbstractType
     {
         return 'BrowseFiltersType';
     }
-
 }

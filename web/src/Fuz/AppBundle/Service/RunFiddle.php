@@ -24,7 +24,6 @@ use Fuz\AppBundle\Util\ProcessConfiguration;
 
 class RunFiddle
 {
-
     const ENV_NAME_LENGTH = 16;
 
     protected $logger;
@@ -64,22 +63,20 @@ class RunFiddle
 
     protected function createEnvironment()
     {
-        $this->logger->debug("Creating a new environment");
+        $this->logger->debug('Creating a new environment');
 
         $envRoot = $this->remoteConfig['environment']['directory'];
-        if (!is_dir($envRoot))
-        {
+        if (!is_dir($envRoot)) {
             throw new IOException("Environment directory {$envRoot} does not exist.");
         }
-        do
-        {
+        do {
             $env = $this->utilities->randomString(self::ENV_NAME_LENGTH);
-        }
-        while (is_dir("{$envRoot}/{$env}"));
+        } while (is_dir("{$envRoot}/{$env}"));
 
         $this->envId = $env;
         $this->envPath = "{$envRoot}/{$env}";
         $this->filesystem->mkdir($this->envPath);
+
         return $this;
     }
 
@@ -98,19 +95,16 @@ class RunFiddle
     protected function execute(Fiddle $fiddle)
     {
         $command = str_replace('<env_id>', $this->envId, $this->localConfig['command']);
-        if ($fiddle->isWithCExtension())
-        {
+        if ($fiddle->isWithCExtension()) {
             $extensionDir = implode(DIRECTORY_SEPARATOR, array(
                 $this->remoteConfig['twig_sources']['directory'],
                 str_replace(DIRECTORY_SEPARATOR, '', $fiddle->getTwigVersion()),
-                $this->remoteConfig['twig_sources']['extension']
+                $this->remoteConfig['twig_sources']['extension'],
             ));
 
             $arguments = explode(' ', $command);
             $arguments[] = "--c-extension={$extensionDir}";
-        }
-        else
-        {
+        } else {
             $arguments = explode(' ', $command);
         }
 
@@ -130,22 +124,18 @@ class RunFiddle
 
     protected function fetchResult(Result $result)
     {
-        list($start, $end) = array ($this->sharedObject->begin_tm, $this->sharedObject->finish_tm);
-        if (!is_null($start) && !is_null($end))
-        {
+        list($start, $end) = array($this->sharedObject->begin_tm, $this->sharedObject->finish_tm);
+        if (!is_null($start) && !is_null($end)) {
             $diff = $end - $start;
             $sec = intval($diff);
             $micro = $diff - $sec;
-            $result->setDuration(strftime('%T', mktime(0, 0, $sec)) . str_replace('0.', '.', sprintf('%.3f', $micro)));
+            $result->setDuration(strftime('%T', mktime(0, 0, $sec)).str_replace('0.', '.', sprintf('%.3f', $micro)));
         }
 
         $fiddleResult = $this->sharedObject->result;
-        if (is_null($fiddleResult))
-        {
+        if (is_null($fiddleResult)) {
             $this->logger->error("Fiddle {$this->envId} did not returned any result.");
-        }
-        else
-        {
+        } else {
             $result->setResult($fiddleResult);
         }
 
@@ -154,13 +144,11 @@ class RunFiddle
 
     protected function clearEnvironment()
     {
-        if (!is_null($this->envPath))
-        {
+        if (!is_null($this->envPath)) {
             $this->filesystem->remove($this->envPath);
             list($this->envId, $this->envPath, $this->sharedObject) = null;
         }
 
         return $this;
     }
-
 }

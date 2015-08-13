@@ -18,12 +18,11 @@ use Fuz\AppBundle\Entity\UserBookmark;
 
 class UserBookmarkSubscriber implements EventSubscriber
 {
-
     protected $tags;
 
     public function getSubscribedEvents()
     {
-        return array (
+        return array(
                 'prePersist',
                 'postPersist',
         );
@@ -32,8 +31,7 @@ class UserBookmarkSubscriber implements EventSubscriber
     public function prePersist(LifecycleEventArgs $args)
     {
         $object = $args->getObject();
-        if ($object instanceof UserBookmark)
-        {
+        if ($object instanceof UserBookmark) {
             $this->tags = $object->getTags();
             $object->setTags(new ArrayCollection());
         }
@@ -43,10 +41,8 @@ class UserBookmarkSubscriber implements EventSubscriber
     {
         $om = $args->getObjectManager();
         $object = $args->getObject();
-        if ($object instanceof UserBookmark)
-        {
-            foreach ($this->tags as $tag)
-            {
+        if ($object instanceof UserBookmark) {
+            foreach ($this->tags as $tag) {
                 $tag->setUserBookmark($object);
                 $om->persist($tag);
             }
@@ -55,5 +51,4 @@ class UserBookmarkSubscriber implements EventSubscriber
             $om->flush($object);
         }
     }
-
 }

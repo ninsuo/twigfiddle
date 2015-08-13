@@ -16,7 +16,6 @@ use Fuz\Framework\Api\ConfigurationNodeInterface;
 
 class EnvironmentConfigurationNode implements ConfigurationNodeInterface
 {
-
     public function getConfigurationNode()
     {
         $treeBuilder = new TreeBuilder();
@@ -24,22 +23,22 @@ class EnvironmentConfigurationNode implements ConfigurationNodeInterface
 
         $rootNode
            ->children()
-                ->scalarNode("directory")
+                ->scalarNode('directory')
                     ->isRequired()
                     ->validate()
-                        ->ifTrue(function($dir) {
+                        ->ifTrue(function ($dir) {
                             return !is_dir($dir) || !is_writeable($dir);
                         })
                         ->thenInvalid("Environment's directory does not exist or is not writeable: %s")
                     ->end()
                 ->end()
-                ->scalarNode("validation")
+                ->scalarNode('validation')
                     ->defaultValue('^[a-zA-Z0-9-]{4,16}$')
                     ->validate()
-                        ->ifTrue(function($expr) {
+                        ->ifTrue(function ($expr) {
                             return preg_match("/{$expr}/", '/') === true;
                         })
-                        ->thenInvalid("Environment validation must reject names containing slashs ( / ): current expresion %s is too permissive.")
+                        ->thenInvalid('Environment validation must reject names containing slashs ( / ): current expresion %s is too permissive.')
                     ->end()
                 ->end()
                 ->integerNode('expiry')
@@ -50,5 +49,4 @@ class EnvironmentConfigurationNode implements ConfigurationNodeInterface
 
         return $rootNode;
     }
-
 }

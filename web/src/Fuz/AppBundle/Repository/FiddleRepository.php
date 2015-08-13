@@ -16,27 +16,25 @@ use Fuz\AppBundle\Entity\Fiddle;
 use Fuz\AppBundle\Entity\User;
 
 /**
- * FiddleRepository
+ * FiddleRepository.
  */
 class FiddleRepository extends EntityRepository
 {
-
     public function getEmptyFiddle(User $user = null, $hash = null)
     {
         $fiddle = new Fiddle();
         $fiddle->setHash($hash);
         $fiddle->setRevision(0);
-        if ($user)
-        {
+        if ($user) {
             $fiddle->setUser($user);
         }
+
         return $fiddle;
     }
 
     public function getFiddle($hash, $revision, User $user = null)
     {
-        if (is_null($hash))
-        {
+        if (is_null($hash)) {
             return $this->getEmptyFiddle($user);
         }
 
@@ -51,9 +49,9 @@ class FiddleRepository extends EntityRepository
             )
         ");
 
-        $params = array (
+        $params = array(
                 'hash' => $hash,
-                'revision' => $revision <= 0 ? : $revision,
+                'revision' => $revision <= 0 ?: $revision,
                 'private' => Fiddle::VISIBILITY_PRIVATE,
                 'user' => $user ? $user->getId() : -1,
         );
@@ -63,13 +61,12 @@ class FiddleRepository extends EntityRepository
            ->getOneOrNullResult()
         ;
 
-        return $fiddle ? : $this->getEmptyFiddle($user, $hash);
+        return $fiddle ?: $this->getEmptyFiddle($user, $hash);
     }
 
     public function incrementVisitCount(Fiddle $fiddle)
     {
-        if ($fiddle->getId())
-        {
+        if ($fiddle->getId()) {
             $fiddle->setVisitsCount($fiddle->getVisitsCount() + 1);
             $this->_em->flush($fiddle);
         }
@@ -83,7 +80,7 @@ class FiddleRepository extends EntityRepository
             WHERE f.hash = :hash
         ");
 
-        $params = array (
+        $params = array(
                 'hash' => $hash,
         );
 
@@ -103,7 +100,7 @@ class FiddleRepository extends EntityRepository
             WHERE f.hash = :hash
         ");
 
-        $params = array (
+        $params = array(
                 'hash' => $hash,
         );
 
@@ -123,7 +120,7 @@ class FiddleRepository extends EntityRepository
             WHERE f.id IN (:fiddle_ids)
         ");
 
-        $params = array (
+        $params = array(
                 'user' => $user->getId(),
                 'fiddle_ids' => $fiddleIds,
         );
@@ -136,8 +133,7 @@ class FiddleRepository extends EntityRepository
 
     public function getRevisionList(Fiddle $fiddle, User $user = null)
     {
-        if (is_null($fiddle->getId()))
-        {
+        if (is_null($fiddle->getId())) {
             return array();
         }
 
@@ -152,7 +148,7 @@ class FiddleRepository extends EntityRepository
             ORDER BY f.revision ASC
         ");
 
-        $params = array (
+        $params = array(
                 'hash' => $fiddle->getHash(),
                 'private' => Fiddle::VISIBILITY_PRIVATE,
                 'user' => $user ? $user->getId() : -1,
@@ -165,5 +161,4 @@ class FiddleRepository extends EntityRepository
 
         return $revisions;
     }
-
 }

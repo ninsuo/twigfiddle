@@ -16,7 +16,6 @@ use Fuz\AppBundle\Entity\CaptchaIpLimit;
 
 class CaptchaIpLimitRepository extends EntityRepository
 {
-
     public function deleteExpired(\DateTime $expiry)
     {
         $query = $this->_em->createQuery("
@@ -24,7 +23,7 @@ class CaptchaIpLimitRepository extends EntityRepository
             WHERE cil.updateTm < :expiry
         ");
 
-        $params = array (
+        $params = array(
                 'expiry' => $expiry,
         );
 
@@ -34,8 +33,7 @@ class CaptchaIpLimitRepository extends EntityRepository
     public function record($ip, $limit)
     {
         $entity = $this->findOneByIp($ip);
-        if (!$entity)
-        {
+        if (!$entity) {
             $new = new CaptchaIpLimit();
             $new->setIp($ip);
             $new->setLimit($limit);
@@ -47,12 +45,10 @@ class CaptchaIpLimitRepository extends EntityRepository
     public function increaseLimit($ip, $toAdd)
     {
         $entity = $this->findOneByIp($ip);
-        if ($entity)
-        {
+        if ($entity) {
             $entity->setLimit($entity->getLimit() + $toAdd);
             $this->_em->persist($entity);
             $this->_em->flush($entity);
         }
     }
-
 }

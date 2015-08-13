@@ -15,7 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * FiddleTemplate
+ * FiddleTemplate.
  *
  * @ORM\Table(name="fiddle_template")
  * @ORM\Entity
@@ -23,7 +23,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class FiddleTemplate
 {
-
     /**
      * @var Fiddle
      *
@@ -58,7 +57,7 @@ class FiddleTemplate
     protected $content = '';
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="is_main", type="boolean")
      * @Assert\Type(type="bool")
@@ -66,9 +65,10 @@ class FiddleTemplate
     protected $main = true;
 
     /**
-     * Set fiddle
+     * Set fiddle.
      *
      * @param Fiddle $fiddle
+     *
      * @return FiddleTemplate
      */
     public function setFiddle(Fiddle $fiddle)
@@ -79,7 +79,7 @@ class FiddleTemplate
     }
 
     /**
-     * Get fiddle
+     * Get fiddle.
      *
      * @return Fiddle|null
      */
@@ -89,9 +89,10 @@ class FiddleTemplate
     }
 
     /**
-     * Set filename
+     * Set filename.
      *
      * @param string $filename
+     *
      * @return FiddleTemplate
      */
     public function setFilename($filename)
@@ -102,7 +103,7 @@ class FiddleTemplate
     }
 
     /**
-     * Get filename
+     * Get filename.
      *
      * @return string
      */
@@ -112,9 +113,10 @@ class FiddleTemplate
     }
 
     /**
-     * Set content
+     * Set content.
      *
      * @param string $content
+     *
      * @return FiddleTemplate
      */
     public function setContent($content)
@@ -125,7 +127,7 @@ class FiddleTemplate
     }
 
     /**
-     * Get content
+     * Get content.
      *
      * @return string
      */
@@ -135,9 +137,10 @@ class FiddleTemplate
     }
 
     /**
-     * Set main
+     * Set main.
      *
-     * @param boolean $main
+     * @param bool $main
+     *
      * @return FiddleTemplate
      */
     public function setMain($main)
@@ -148,13 +151,12 @@ class FiddleTemplate
     }
 
     /**
-     * Get main
+     * Get main.
      *
-     * @return boolean
+     * @return bool
      */
     public function isMain()
     {
         return $this->main;
     }
-
 }
