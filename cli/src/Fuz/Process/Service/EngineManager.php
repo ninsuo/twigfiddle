@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of twigfiddle.com project.
  *
@@ -20,7 +21,6 @@ use Fuz\Process\Agent\FiddleAgent;
 
 class EngineManager extends BaseService
 {
-
     protected $container;
     protected $fiddleConfiguration;
     protected $twigSourceConfiguration;
@@ -28,8 +28,8 @@ class EngineManager extends BaseService
     public function __construct(ContainerInterface $container, array $fiddleConfiguration,
        array $twigSourceConfiguration)
     {
-        $this->container               = $container;
-        $this->fiddleConfiguration     = $fiddleConfiguration;
+        $this->container = $container;
+        $this->fiddleConfiguration = $fiddleConfiguration;
         $this->twigSourceConfiguration = $twigSourceConfiguration;
     }
 
@@ -40,7 +40,7 @@ class EngineManager extends BaseService
             throw new \LogicException('You should load a fiddle before trying to prepare its twig engine.');
         }
 
-        $engine  = $fiddle->getTwigEngine();
+        $engine = $fiddle->getTwigEngine();
         $version = $fiddle->getTwigVersion();
 
         $this->logger->debug("Loading Twig Engine: {$engine}\n");
@@ -66,7 +66,7 @@ class EngineManager extends BaseService
 
     public function findRightEngine($engine, $version)
     {
-        $service          = null;
+        $service = null;
         $engineServiceIds = $this->container->findTaggedServiceIds('twig.engine');
         foreach ($engineServiceIds as $serviceId => $tags) {
             foreach ($tags as $tag) {
@@ -125,12 +125,11 @@ class EngineManager extends BaseService
         }
         if (!extension_loaded('twig')) {
             $agent->addError(Error::E_C_UNABLE_TO_DL, array(
-                'version'   => $version,
+                'version' => $version,
                 'extension' => $extension,
             ));
             throw new StopExecutionException();
         }
         $this->logger->debug("Successfully loaded C extension: {$extension}");
     }
-
 }

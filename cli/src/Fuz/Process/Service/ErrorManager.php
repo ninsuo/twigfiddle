@@ -139,7 +139,7 @@ class ErrorManager extends BaseService
         ),
         Error::E_C_UNABLE_TO_DL => array(
             'group' => Error::G_EXECUTION,
-            'message' => "The C extension exists but is not loaded.",
+            'message' => 'The C extension exists but is not loaded.',
             'logger' => 'error',
             'debug' => true,
         ),
