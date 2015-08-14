@@ -1,5 +1,4 @@
 <?php
-
 /*
  * This file is part of twigfiddle.com project.
  *
@@ -16,14 +15,14 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Fuz\AppBundle\Entity\FiddleTemplate;
-use Fuz\AppBundle\Entity\FiddleTag;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 class ImportCommand extends ContainerAwareCommand
 {
+
     protected $output;
-    protected $error = false;
-    protected $file;
 
     protected function configure()
     {
@@ -37,7 +36,7 @@ class ImportCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $files = $input->getArgument('files');
+        $files        = $input->getArgument('files');
         $this->output = $output;
 
         $em = $this
@@ -53,8 +52,6 @@ class ImportCommand extends ContainerAwareCommand
         ;
 
         foreach ($files as $file) {
-            $this->error = false;
-            $this->file = $file;
 
             $string = file_get_contents($file);
             if ($string === false) {
@@ -62,90 +59,105 @@ class ImportCommand extends ContainerAwareCommand
                 continue;
             }
 
-            $json = json_decode($string, true);
-            if ($json === false) {
+            $import = json_decode($string, true);
+            if ($import === false) {
                 $output->writeln("<error>File {$file} does not contain a valid json string.</error>");
                 continue;
             }
 
-            $hash = $this->getFromArray($json, 'hash');
-            $revision = $this->getFromArray($json, 'revision');
+            if (4 !== count($import)) {
+                $output->writeln("<error>File {$file} does not contain a valid fiddle representation.</error>");
+                continue;
+            }
 
-            $fiddle = $fiddleRepo->getFiddle($hash, $revision);
-            $fiddle->setHash($hash);
-            $fiddle->setRevision($revision);
-            $fiddle->setTwigVersion($this->getFromArray($json, 'twig-version'));
-            $fiddle->getContext()->setFormat($this->getFromArray($json, 'context', 'format'));
-            $fiddle->getContext()->setContent($this->getFromArray($json, 'context', 'content'));
+            list($fiddleJson, $contextJson, $templatesJson, $tagsJson) = $import;
 
+            $newFiddle = $this->deserialize($fiddleJson, 'Fuz\AppBundle\Entity\Fiddle');
+
+            $fiddle = $fiddleRepo->getFiddle($newFiddle->getHash(), $newFiddle->getRevision());
             foreach ($fiddle->getTemplates() as $template) {
                 if ($fiddle->getId()) {
                     $em->remove($template);
                     $em->flush($template);
                 }
             }
-
             $fiddle->clearTemplates();
-            $jsonTemplates = $this->getFromArray($json, 'templates') ?: array();
-            foreach ($jsonTemplates as $jsonTemplate) {
-                $template = new FiddleTemplate();
-                $template->setFilename($this->getFromArray($jsonTemplate, 'filename'));
-                $template->setContent($this->getFromArray($jsonTemplate, 'content'));
-                $template->setMain($this->getFromArray($jsonTemplate, 'is-main'));
-                $fiddle->addTemplate($template);
-            }
-
-            $fiddle->setTitle($this->getFromArray($json, 'title'));
-
             foreach ($fiddle->getTags() as $tag) {
                 if ($fiddle->getId()) {
                     $em->remove($tag);
                     $em->flush($tag);
                 }
             }
+            $fiddle->setTags(new ArrayCollection());
 
-            $tags = new ArrayCollection();
-            $jsonTags = $this->getFromArray($json, 'tags');
-            foreach ($jsonTags as $jsonTag) {
-                $tag = new FiddleTag();
-                $tag->setTag($jsonTag);
-                $tags->add($tag);
-            }
-            $fiddle->setTags($tags);
+            // todo:
+            // - map newFiddle in fiddle
+            // - decode all sub-enttities
+            // - map all sub-entities on Fiddle
+            // - persist all sub-entities
 
-            if ($this->error) {
-                $em->detach($fiddle);
-                continue;
-            }
+
+
+//
+//
+//            $json = json_decode($string, true);
+//            if ($json === false) {
+//                $output->writeln("<error>File {$file} does not contain a valid json string.</error>");
+//                continue;
+//            }
+//
+//            $hash     = $this->getFromArray($json, 'hash');
+//            $revision = $this->getFromArray($json, 'revision');
+//
+//            $fiddle = $fiddleRepo->getFiddle($hash, $revision);
+//            $fiddle->setHash($hash);
+//            $fiddle->setRevision($revision);
+//            $fiddle->setTwigVersion($this->getFromArray($json, 'twig-version'));
+//            $fiddle->getContext()->setFormat($this->getFromArray($json, 'context', 'format'));
+//            $fiddle->getContext()->setContent($this->getFromArray($json, 'context', 'content'));
+//
+//            $jsonTemplates = $this->getFromArray($json, 'templates') ? : array();
+//            foreach ($jsonTemplates as $jsonTemplate) {
+//                $template = new FiddleTemplate();
+//                $template->setFilename($this->getFromArray($jsonTemplate, 'filename'));
+//                $template->setContent($this->getFromArray($jsonTemplate, 'content'));
+//                $template->setMain($this->getFromArray($jsonTemplate, 'is-main'));
+//                $fiddle->addTemplate($template);
+//            }
+//
+//            $fiddle->setTitle($this->getFromArray($json, 'title'));
+//
+//
+//
+//            $tags     = new ArrayCollection();
+//            $jsonTags = $this->getFromArray($json, 'tags');
+//            foreach ($jsonTags as $jsonTag) {
+//                $tag = new FiddleTag();
+//                $tag->setTag($jsonTag);
+//                $tags->add($tag);
+//            }
+//            $fiddle->setTags($tags);
+//
+//            if ($this->error) {
+//                $em->detach($fiddle);
+//                continue;
+//            }
 
             $em->persist($fiddle);
+            $em->flush();
 
             $id = $fiddle->getId();
             $output->writeln("Imported: {$file} as fiddle ID = {$id}");
         }
-
-        $em->flush();
     }
 
-    protected function getFromArray(array $array)
+    protected function deserialize($object, $type)
     {
-        $ref = &$array;
-        $keys = array_slice(func_get_args(), 1);
-        $keys_string = implode(' > ', $keys);
-        $keys_count = count($keys);
-        foreach ($keys as $index => $key) {
-            if (!array_key_exists($key, $ref)) {
-                $this->output->writeln("<error>JSON contained in {$this->file} does not contain a value at {$keys_string}.</error>");
-                $this->error = true;
-
-                return;
-            }
-
-            if (($index + 1) == $keys_count) {
-                return $ref[$key];
-            }
-
-            $ref = &$ref[$key];
-        }
+        $normalizer = new ObjectNormalizer();
+        $encoder    = new JsonEncoder();
+        $serializer = new Serializer(array($normalizer), array($encoder));
+        $json       = $serializer->deserialize($object, $type, 'json');
+        return $json;
     }
+
 }

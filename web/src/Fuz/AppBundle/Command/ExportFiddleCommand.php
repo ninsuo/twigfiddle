@@ -1,5 +1,4 @@
 <?php
-
 /*
  * This file is part of twigfiddle.com project.
  *
@@ -15,11 +14,13 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Fuz\AppBundle\Entity\FiddleTemplate;
-use Fuz\AppBundle\Entity\FiddleTag;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 class ExportFiddleCommand extends ContainerAwareCommand
 {
+
     protected function configure()
     {
         parent::configure();
@@ -33,7 +34,7 @@ class ExportFiddleCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $hash = $input->getArgument('hash');
+        $hash     = $input->getArgument('hash');
         $revision = $input->getArgument('revision');
 
         $fiddle = $this
@@ -49,29 +50,36 @@ class ExportFiddleCommand extends ContainerAwareCommand
             return 1;
         }
 
-        $json = array(
-                'hash' => $hash,
-                'revision' => $revision,
-                'twig-version' => $fiddle->getTwigVersion(),
-                'context' => array(
-                        'format' => $fiddle->getContext() ? $fiddle->getContext()->getFormat() : null,
-                        'content' => $fiddle->getContext() ? $fiddle->getContext()->getContent() : null,
-                ),
-                'templates' => array_map(function (FiddleTemplate $template) {
-                    return array(
-                            'filename' => $template->getFilename(),
-                            'content' => $template->getContent(),
-                            'is-main' => $template->isMain(),
-                    );
-                }, $fiddle->getTemplates()->toArray()),
-                'title' => $fiddle->getTitle(),
-                'tags' => array_map(function (FiddleTag $tag) {
-                    return $tag->getTag();
-                }, $fiddle->getTags()->toArray()),
-        );
+        $fiddleJson = $this->serialize($fiddle, array('id', 'user', 'context', 'templates', 'tags', 'creationTm', 'updateTm'));
+        $contextJson = $this->serialize($fiddle->getContext(), array('fiddle'));
+        $templatesJson = array();
+        foreach ($fiddle->getTemplates() as $template) {
+            $templatesJson[] = $this->serialize($template, array('fiddle'));
+        }
+        $tagsJson = array();
+        foreach ($fiddle->getTags() as $tag) {
+            $tagsJson[] = $this->serialize($tag, array('fiddle'));
+        }
 
-        $output->writeln(json_encode($json));
+        $export = array($fiddleJson, $contextJson, $templatesJson, $tagsJson);
+
+        $encoder = new JsonEncoder();
+        $serializer = new Serializer(array(), array($encoder));
+        $json       = $serializer->encode($export, 'json');
+
+        $output->writeln($json);
 
         return 0;
     }
+
+    protected function serialize($object, $ignoredAttributes)
+    {
+        $normalizer = new ObjectNormalizer();
+        $normalizer->setIgnoredAttributes($ignoredAttributes);
+        $encoder    = new JsonEncoder();
+        $serializer = new Serializer(array($normalizer), array($encoder));
+        $json       = $serializer->serialize($object, 'json');
+        return $json;
+    }
+
 }
