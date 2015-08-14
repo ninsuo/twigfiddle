@@ -50,22 +50,7 @@ class ExportFiddleCommand extends ContainerAwareCommand
             return 1;
         }
 
-        $fiddleJson = $this->serialize($fiddle, array('id', 'user', 'context', 'templates', 'tags', 'creationTm', 'updateTm'));
-        $contextJson = $this->serialize($fiddle->getContext(), array('fiddle'));
-        $templatesJson = array();
-        foreach ($fiddle->getTemplates() as $template) {
-            $templatesJson[] = $this->serialize($template, array('fiddle'));
-        }
-        $tagsJson = array();
-        foreach ($fiddle->getTags() as $tag) {
-            $tagsJson[] = $this->serialize($tag, array('fiddle'));
-        }
-
-        $export = array($fiddleJson, $contextJson, $templatesJson, $tagsJson);
-
-        $encoder = new JsonEncoder();
-        $serializer = new Serializer(array(), array($encoder));
-        $json       = $serializer->encode($export, 'json');
+        $json = $this->serialize($fiddle, array('id', 'user', 'creationTm', 'updateTm', 'fiddle'));
 
         $output->writeln($json);
 
@@ -78,7 +63,7 @@ class ExportFiddleCommand extends ContainerAwareCommand
         $normalizer->setIgnoredAttributes($ignoredAttributes);
         $encoder    = new JsonEncoder();
         $serializer = new Serializer(array($normalizer), array($encoder));
-        $json       = $serializer->serialize($object, 'json');
+        $json       = $serializer->serialize($object, 'json', array('json_encode_options' => JSON_PRETTY_PRINT));
         return $json;
     }
 

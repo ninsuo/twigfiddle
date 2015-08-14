@@ -1,1 +1,32 @@
-["{\"hash\":\"hello\",\"revision\":1,\"twigEngine\":\"Twig 1.x\",\"twigVersion\":\"Twig-1.17.0\",\"withCExtension\":false,\"title\":\"Twig's Hello, world!\",\"visibility\":\"public\",\"visitsCount\":4}","{\"format\":\"YAML\",\"content\":\"name: Fabien\",\"supportedFormats\":[\"YAML\",\"XML\",\"JSON\",\"INI\"]}",["{\"filename\":\"main.twig\",\"content\":\"Hello, {{ name }}!\",\"main\":true}"],["{\"tag\":\"sample\"}"]]
+{
+    "hash": "hello",
+    "revision": 1,
+    "context": {
+        "format": "YAML",
+        "content": "name: Fabien",
+        "supportedFormats": [
+            "YAML",
+            "XML",
+            "JSON",
+            "INI"
+        ]
+    },
+    "templates": [
+        {
+            "filename": "main.twig",
+            "content": "Hello, {{ name }}!",
+            "main": true
+        }
+    ],
+    "twigEngine": "Twig 1.x",
+    "twigVersion": "Twig-1.17.0",
+    "withCExtension": false,
+    "title": "Twig's Hello, world!",
+    "visibility": "public",
+    "tags": [
+        {
+            "tag": "sample"
+        }
+    ],
+    "visitsCount": 4
+}

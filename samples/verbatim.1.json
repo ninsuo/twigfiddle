@@ -1,1 +1,32 @@
-["{\"hash\":\"verbatim\",\"revision\":1,\"twigEngine\":\"Twig 1.x\",\"twigVersion\":\"Twig-1.17.0\",\"withCExtension\":false,\"title\":\"Twig's verbatim overview\",\"visibility\":\"public\",\"visitsCount\":1}","{\"format\":\"YAML\",\"content\":null,\"supportedFormats\":[\"YAML\",\"XML\",\"JSON\",\"INI\"]}",["{\"filename\":\"main.twig\",\"content\":\"{#\\n # Twig verbatim\\n # http:\\\/\\\/twig.sensiolabs.org\\\/doc\\\/tags\\\/verbatim.html\\n #\\n # Verbatim let you write twig code inside twig files\\n #}\\n \\nTo loop over an array in Twig, you should use:\\n \\n{% verbatim %}\\n \\n{% for key, value in array %}\\n   {{ key }} = {{ value }}\\n{% endfor %}\\n \\n{% endverbatim %}\",\"main\":true}"],["{\"tag\":\"sample\"}"]]
+{
+    "hash": "verbatim",
+    "revision": 1,
+    "context": {
+        "format": "YAML",
+        "content": null,
+        "supportedFormats": [
+            "YAML",
+            "XML",
+            "JSON",
+            "INI"
+        ]
+    },
+    "templates": [
+        {
+            "filename": "main.twig",
+            "content": "{#\n # Twig verbatim\n # http:\/\/twig.sensiolabs.org\/doc\/tags\/verbatim.html\n #\n # Verbatim let you write twig code inside twig files\n #}\n \nTo loop over an array in Twig, you should use:\n \n{% verbatim %}\n \n{% for key, value in array %}\n   {{ key }} = {{ value }}\n{% endfor %}\n \n{% endverbatim %}",
+            "main": true
+        }
+    ],
+    "twigEngine": "Twig 1.x",
+    "twigVersion": "Twig-1.17.0",
+    "withCExtension": false,
+    "title": "Twig's verbatim overview",
+    "visibility": "public",
+    "tags": [
+        {
+            "tag": "sample"
+        }
+    ],
+    "visitsCount": 1
+}

@@ -53,26 +53,26 @@ class ImportCommand extends ContainerAwareCommand
 
         foreach ($files as $file) {
 
-            $string = file_get_contents($file);
-            if ($string === false) {
+            $json = file_get_contents($file);
+            if ($json === false) {
                 $output->writeln("<error>File {$file} does not exist or is not readable.</error>");
                 continue;
             }
 
-            $import = json_decode($string, true);
-            if ($import === false) {
-                $output->writeln("<error>File {$file} does not contain a valid json string.</error>");
-                continue;
-            }
+            $normalizer = new ObjectNormalizer();
+            $normalizer->setCallbacks(array(
+                'context' => function($attributeValue) {
+                    // transform attributeValue (array) to FiddleContext
+                },
+                'templates' => function($attributeValue) {
+                    // transform attributeValue (array) to an ArrayCollection of FiddleTemplate
+                },
+                'tags' => function($attributeValue) {
+                    // transform attributeValue (array) to an ArrayCollection of FiddleTag
+                },
+            ));
 
-            if (4 !== count($import)) {
-                $output->writeln("<error>File {$file} does not contain a valid fiddle representation.</error>");
-                continue;
-            }
-
-            list($fiddleJson, $contextJson, $templatesJson, $tagsJson) = $import;
-
-            $newFiddle = $this->deserialize($fiddleJson, 'Fuz\AppBundle\Entity\Fiddle');
+            $newFiddle = $this->deserialize($json, 'Fuz\AppBundle\Entity\Fiddle', $normalizer);
 
             $fiddle = $fiddleRepo->getFiddle($newFiddle->getHash(), $newFiddle->getRevision());
             foreach ($fiddle->getTemplates() as $template) {
@@ -90,14 +90,10 @@ class ImportCommand extends ContainerAwareCommand
             }
             $fiddle->setTags(new ArrayCollection());
 
-            // todo:
-            // - map newFiddle in fiddle
-            // - decode all sub-enttities
-            // - map all sub-entities on Fiddle
+            // todo
+            // - decode fiddle
             // - persist all sub-entities
-
-
-
+            // - persist fiddle
 //
 //
 //            $json = json_decode($string, true);
@@ -151,13 +147,12 @@ class ImportCommand extends ContainerAwareCommand
         }
     }
 
-    protected function deserialize($object, $type)
+    protected function deserialize($object, $type, $normalizer)
     {
-        $normalizer = new ObjectNormalizer();
         $encoder    = new JsonEncoder();
         $serializer = new Serializer(array($normalizer), array($encoder));
-        $json       = $serializer->deserialize($object, $type, 'json');
-        return $json;
+        $fiddle     = $serializer->deserialize($object, $type, 'json');
+        return $fiddle;
     }
 
 }

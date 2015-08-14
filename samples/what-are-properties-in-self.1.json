@@ -1,1 +1,33 @@
-["{\"hash\":\"what-are-properties-in-self\",\"revision\":1,\"twigEngine\":\"Twig 1.x\",\"twigVersion\":\"Twig-1.17.0\",\"withCExtension\":false,\"title\":null,\"visibility\":\"public\",\"visitsCount\":0}","{\"format\":\"YAML\",\"content\":null,\"supportedFormats\":[\"YAML\",\"XML\",\"JSON\",\"INI\"]}",["{\"filename\":\"main.twig\",\"content\":\"{#\\n # What properties are available inside a compiled twig template?\\n #}\\n\\n{% extends 'base.twig' %}\\n\\n{% block content %}\\n\\nIn the child template:\\n\\n- Template name = {{ _self.templateName }}\\n- Is it the parent template ? {{ _self.parent ? 'no' : 'yes' }}\\n- blocks available in the template : {{ _self.blocks|keys|join(', ') }}\\n\\nAnything else? Check it yourself by clicking the \\\"Show compiled template\\\" link below the result!\\n\\n{% endblock %}\\n\\n{% block child_a %}{% endblock %}\\n{% block child_b %}{% endblock %}\",\"main\":true}","{\"filename\":\"base.twig\",\"content\":\"In the parent template:\\n\\n- Template name = {{ _self.templateName }}\\n- Is it the parent template ? {{ _self.parent ? 'no' : 'yes' }}\\n- blocks available in the template : {{ _self.blocks|keys|join(', ') }}\\n\\n{% block content %}{% endblock %}\\n\\n{% block parent_a %}{% endblock %}\\n{% block parent_b %}{% endblock %}\",\"main\":false}"],[]]
+{
+    "hash": "what-are-properties-in-self",
+    "revision": 1,
+    "context": {
+        "format": "YAML",
+        "content": null,
+        "supportedFormats": [
+            "YAML",
+            "XML",
+            "JSON",
+            "INI"
+        ]
+    },
+    "templates": [
+        {
+            "filename": "main.twig",
+            "content": "{#\n # What properties are available inside a compiled twig template?\n #}\n\n{% extends 'base.twig' %}\n\n{% block content %}\n\nIn the child template:\n\n- Template name = {{ _self.templateName }}\n- Is it the parent template ? {{ _self.parent ? 'no' : 'yes' }}\n- blocks available in the template : {{ _self.blocks|keys|join(', ') }}\n\nAnything else? Check it yourself by clicking the \"Show compiled template\" link below the result!\n\n{% endblock %}\n\n{% block child_a %}{% endblock %}\n{% block child_b %}{% endblock %}",
+            "main": true
+        },
+        {
+            "filename": "base.twig",
+            "content": "In the parent template:\n\n- Template name = {{ _self.templateName }}\n- Is it the parent template ? {{ _self.parent ? 'no' : 'yes' }}\n- blocks available in the template : {{ _self.blocks|keys|join(', ') }}\n\n{% block content %}{% endblock %}\n\n{% block parent_a %}{% endblock %}\n{% block parent_b %}{% endblock %}",
+            "main": false
+        }
+    ],
+    "twigEngine": "Twig 1.x",
+    "twigVersion": "Twig-1.17.0",
+    "withCExtension": false,
+    "title": null,
+    "visibility": "public",
+    "tags": [],
+    "visitsCount": 0
+}
