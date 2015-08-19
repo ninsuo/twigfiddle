@@ -13,6 +13,7 @@ namespace Fuz\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * FiddleTemplate.
@@ -20,6 +21,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="fiddle_template")
  * @ORM\Entity
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
+ * @Serializer\ExclusionPolicy("NONE")
  */
 class FiddleTemplate
 {
@@ -29,6 +31,7 @@ class FiddleTemplate
      * @ORM\ManyToOne(targetEntity="Fiddle", inversedBy="templates")
      * @ORM\JoinColumn(name="fiddle_id", referencedColumnName="id", onDelete="cascade")
      * @ORM\Id
+     * @Serializer\Exclude
      */
     protected $fiddle;
 
@@ -44,6 +47,7 @@ class FiddleTemplate
      *      "/(?!\.)^[A-Za-z0-9-_\.]+$/",
      *      message = "Your template name must be composed of alphanumeric, _ and - characters."
      * )
+     * @Serializer\Type("string")
      */
     protected $filename = 'main.twig';
 
@@ -53,6 +57,7 @@ class FiddleTemplate
      * @ORM\Column(name="content", type="text")
      * @Assert\Length(max = 8192)
      * @Assert\NotBlank
+     * @Serializer\Type("string")
      */
     protected $content = '';
 
@@ -61,6 +66,7 @@ class FiddleTemplate
      *
      * @ORM\Column(name="is_main", type="boolean")
      * @Assert\Type(type="bool")
+     * @Serializer\Type("boolean")
      */
     protected $main = true;
 

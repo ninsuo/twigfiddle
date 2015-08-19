@@ -1,16 +1,1 @@
-{
-    "hash": "hello",
-    "revision": 1,
-    "twig-version": "Twig-1.17.0",
-    "context": {
-        "format": "YAML",
-        "content": "name: Fabien"
-    },
-    "templates": [{
-            "filename": "main.twig",
-            "content": "Hello, {{ name }}!",
-            "is-main": true
-        }],
-    "title": "Twig's Hello, world!",
-    "tags": ["sample"]
-}
+{"hash":"hello","revision":1,"context":{"format":"YAML","content":"name: Fabien"},"templates":[{"filename":"main.twig","content":"Hello, {{ name }}!","main":true}],"twig_engine":"Twig 1.x","twig_version":"Twig-1.16.3","with_c_extension":false,"title":"Twig's Hello, world!","visibility":"public","tags":[{"tag":"sample"}]}

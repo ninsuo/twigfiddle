@@ -16,6 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Fuz\AppBundle\Api\TagContainerInterface;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Fiddle.
@@ -27,6 +28,7 @@ use Fuz\AppBundle\Api\TagContainerInterface;
  * @ORM\Entity(repositoryClass="Fuz\AppBundle\Repository\FiddleRepository")
  * @ORM\HasLifecycleCallbacks
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
+ * @Serializer\ExclusionPolicy("NONE")
  */
 class Fiddle implements TagContainerInterface
 {
@@ -40,6 +42,7 @@ class Fiddle implements TagContainerInterface
      * @ORM\Column(name="id", type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Id
+     * @Serializer\Exclude
      */
     protected $id;
 
@@ -49,6 +52,7 @@ class Fiddle implements TagContainerInterface
      * fiddle.hash_regexp
      *
      * @ORM\Column(name="hash", type="string", length=128)
+     * @Serializer\Type("string")
      */
     protected $hash;
 
@@ -56,6 +60,7 @@ class Fiddle implements TagContainerInterface
      * @var int
      *
      * @ORM\Column(name="revision", type="integer")
+     * @Serializer\Type("integer")
      */
     protected $revision = 1;
 
@@ -64,6 +69,7 @@ class Fiddle implements TagContainerInterface
      *
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     * @Serializer\Exclude
      */
     protected $user = null;
 
@@ -73,6 +79,7 @@ class Fiddle implements TagContainerInterface
      * @ORM\OneToOne(targetEntity="FiddleContext", mappedBy="fiddle", cascade={"all"})
      * @Assert\Type(type="Fuz\AppBundle\Entity\FiddleContext")
      * @Assert\Valid()
+     * @Serializer\Type("Fuz\AppBundle\Entity\FiddleContext")
      */
     protected $context;
 
@@ -86,6 +93,7 @@ class Fiddle implements TagContainerInterface
      * @Assert\Count(min = 1, minMessage = "You need at least 1 template.")
      * @Assert\Count(max = 10, maxMessage = "You can't create more than 15 templates.")
      * @Assert\Valid()
+     * @Serializer\Type("ArrayCollection<Fuz\AppBundle\Entity\FiddleTemplate>")
      */
     protected $templates;
 
@@ -94,6 +102,7 @@ class Fiddle implements TagContainerInterface
      *
      * @ORM\Column(name="twig_engine", type="string", length=32)
      * @Assert\NotBlank
+     * @Serializer\Type("string")
      */
     protected $twigEngine;
 
@@ -102,6 +111,7 @@ class Fiddle implements TagContainerInterface
      *
      * @ORM\Column(name="twig_version", type="string", length=32)
      * @Assert\NotBlank
+     * @Serializer\Type("string")
      */
     protected $twigVersion;
 
@@ -109,6 +119,7 @@ class Fiddle implements TagContainerInterface
      * @var int
      *
      * @ORM\Column(name="with_c_extension", type="boolean")
+     * @Serializer\Type("boolean")
      */
     protected $withCExtension = false;
 
@@ -117,6 +128,7 @@ class Fiddle implements TagContainerInterface
      *
      * @ORM\Column(name="title", type="string", length=255, nullable=true)
      * @Assert\Length(max = 255)
+     * @Serializer\Type("string")
      */
     protected $title;
 
@@ -124,6 +136,7 @@ class Fiddle implements TagContainerInterface
      * @var string
      *
      * @ORM\Column(name="visibility", type="string", length=16)
+     * @Serializer\Type("string")
      */
     protected $visibility = self::VISIBILITY_PUBLIC;
 
@@ -135,6 +148,7 @@ class Fiddle implements TagContainerInterface
      * @ORM\OneToMany(targetEntity="FiddleTag", mappedBy="fiddle", cascade={"all"}, orphanRemoval=true)
      * @Assert\Count(max = 5, maxMessage = "You can't set more than 5 tags.")
      * @Assert\Valid()
+     * @Serializer\Type("ArrayCollection<Fuz\AppBundle\Entity\FiddleTag>")
      */
     protected $tags;
 
@@ -142,6 +156,7 @@ class Fiddle implements TagContainerInterface
      * @var \DateTime
      *
      * @ORM\Column(name="creation_tm", type="datetime")
+     * @Serializer\Exclude
      */
     protected $creationTm;
 
@@ -149,6 +164,7 @@ class Fiddle implements TagContainerInterface
      * @var \DateTime
      *
      * @ORM\Column(name="update_tm", type="datetime")
+     * @Serializer\Exclude
      */
     protected $updateTm;
 
@@ -156,6 +172,7 @@ class Fiddle implements TagContainerInterface
      * @var int
      *
      * @ORM\Column(name="visits_count", type="integer")
+     * @Serializer\Exclude
      */
     protected $visitsCount = 0;
 
