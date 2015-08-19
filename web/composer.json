@@ -24,7 +24,8 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "hwi/oauth-bundle": "0.4.*@dev",
         "ornicar/apc-bundle": "~1.0",
-        "ninsuo/php-shared-memory": "dev-master"
+        "ninsuo/php-shared-memory": "dev-master",
+        "jms/serializer": "^1.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

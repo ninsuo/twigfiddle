@@ -14,6 +14,7 @@ namespace Fuz\AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * FiddleContext.
@@ -21,6 +22,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  * @ORM\Table(name="fiddle_context")
  * @ORM\Entity
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
+ * @Serializer\ExclusionPolicy("NONE")
  */
 class FiddleContext
 {
@@ -35,6 +37,7 @@ class FiddleContext
      * @ORM\OneToOne(targetEntity="Fiddle", inversedBy="context")
      * @ORM\JoinColumn(name="fiddle_id", referencedColumnName="id", onDelete="cascade")
      * @ORM\Id
+     * @Serializer\Exclude
      */
     protected $fiddle;
 
@@ -43,6 +46,7 @@ class FiddleContext
      *
      * @ORM\Column(name="format", type="string", length=8)
      * @Assert\NotBlank
+     * @Serializer\Type("string")
      */
     protected $format = self::FORMAT_YAML;
 
@@ -51,6 +55,7 @@ class FiddleContext
      *
      * @ORM\Column(name="content", type="text", nullable=true)
      * @Assert\Length(max = 8192)
+     * @Serializer\Type("string")
      */
     protected $content;
 

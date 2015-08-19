@@ -14,6 +14,7 @@ namespace Fuz\AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Fuz\AppBundle\Api\TagInterface;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * FiddleTag.
@@ -21,6 +22,7 @@ use Fuz\AppBundle\Api\TagInterface;
  * @ORM\Table(name="fiddle_tag")
  * @ORM\Entity
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
+ * @Serializer\ExclusionPolicy("NONE")
  */
 class FiddleTag implements TagInterface
 {
@@ -30,6 +32,7 @@ class FiddleTag implements TagInterface
      * @ORM\ManyToOne(targetEntity="Fiddle", inversedBy="tags")
      * @ORM\JoinColumn(name="fiddle_id", referencedColumnName="id", onDelete="cascade")
      * @ORM\Id
+     * @Serializer\Exclude
      */
     protected $fiddle;
 
@@ -39,6 +42,7 @@ class FiddleTag implements TagInterface
      * @ORM\Column(name="tag", type="string", length=32)
      * @ORM\Id
      * @Assert\NotBlank()
+     * @Serializer\Type("string")
      */
     protected $tag;
 

@@ -14,9 +14,6 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 class ExportFiddleCommand extends ContainerAwareCommand
 {
@@ -50,21 +47,12 @@ class ExportFiddleCommand extends ContainerAwareCommand
             return 1;
         }
 
-        $json = $this->serialize($fiddle, array('id', 'user', 'creationTm', 'updateTm', 'fiddle'));
+        $serializer = \JMS\Serializer\SerializerBuilder::create()->build();
+        $json       = $serializer->serialize($fiddle, 'json');
 
         $output->writeln($json);
 
         return 0;
-    }
-
-    protected function serialize($object, $ignoredAttributes)
-    {
-        $normalizer = new ObjectNormalizer();
-        $normalizer->setIgnoredAttributes($ignoredAttributes);
-        $encoder    = new JsonEncoder();
-        $serializer = new Serializer(array($normalizer), array($encoder));
-        $json       = $serializer->serialize($object, 'json', array('json_encode_options' => JSON_PRETTY_PRINT));
-        return $json;
     }
 
 }
