@@ -27,12 +27,29 @@
                 </div>
                 <div class="error-container" id="errors-{{ form.context.format.vars.id }}">{{ form_errors(form.context.format) }}</div>
             </div>
+
+            {% set placeholder %}
+Enter your context here...
+
+Example (YAML):
+name: Fabien
+
+Example (XML):
+<name>Fabien</name>
+
+Example (JSON):
+{"name": "Fabien"}
+
+Example (INI):
+name = Fabien
+            {%- endset %}
+
             {{
                 form_widget(form.context.content, {
                     'attr': {
                         'class': 'codemirror-context',
                         'data-format-id': form.context.format.vars.id,
-                        'placeholder': 'Type your context here...',
+                        'placeholder': placeholder,
                     }
                 })
             }}

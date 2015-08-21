@@ -56,11 +56,18 @@
                 })
             }}
         </div>
+
+            {% set placeholder %}
+Type your Twig template here...
+
+Example:
+Hello, {% verbatim %}{{ name }}{% endverbatim %}!
+            {%- endset %}
          {{
             form_widget(form.content, {
                 'attr': {
                     'class': 'codemirror-template',
-                    'placeholder': 'Type your Twig template here...',
+                    'placeholder': placeholder,
                 },
             })
          }}
