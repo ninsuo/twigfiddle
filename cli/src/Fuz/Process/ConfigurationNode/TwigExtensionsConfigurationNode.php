@@ -14,12 +14,12 @@ namespace Fuz\Process\ConfigurationNode;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Fuz\Framework\Api\ConfigurationNodeInterface;
 
-class TwigSourcesConfigurationNode implements ConfigurationNodeInterface
+class TwigExtensionsConfigurationNode implements ConfigurationNodeInterface
 {
     public function getConfigurationNode()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('twig_sources');
+        $rootNode = $treeBuilder->root('twig_extensions');
 
         $rootNode
            ->children()
@@ -29,11 +29,11 @@ class TwigSourcesConfigurationNode implements ConfigurationNodeInterface
                         ->ifTrue(function ($dir) {
                             return !is_dir($dir) || !is_readable($dir) || 0 === count(glob("{$dir}/*"));
                         })
-                        ->thenInvalid('Unable to find twig sources in %s: did you run the installation script?')
+                        ->thenInvalid('Unable to find twig extensions in %s: did you run the installation script?')
                     ->end()
                 ->end()
-                ->scalarNode('extension')
-                    ->isRequired()
+                ->scalarNode('apc_cache_key')
+                    ->defaultValue('twigfiddle.twig_extensions')
                 ->end()
            ->end()
         ;

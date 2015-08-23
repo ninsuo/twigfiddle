@@ -21,16 +21,25 @@
 
     <div class="text-left">
 
+        {# Non-native extensions #}
+        <div class="control-group">
+            <label class="control-label" for="selectbasic">
+                Enable non-native Twig extensions
+                (<a class="dark" href="http://twig.sensiolabs.org/doc/extensions/index.html" target="_blank">read more</a>)
+            </label>
+            <div class="controls">
+                {{ form_widget(form.twigExtension) }}
+            </div>
+            <div class="error-container" id="errors-{{ form.twigExtension.vars.id }}">{{ form_errors(form.twigExtension) }}</div>
+        </div>
+
         {# C extension #}
         <div class="checkbox">
-            <label>
+            <label class="control-label">
                 {{ form_widget(form.withCExtension) }} Enable the C extension (optimizes <code>Twig_Template::getAttribute()</code>'s perfs)
             </label>
         </div>
         <div class="error-container" id="errors-{{ form.withCExtension.vars.id }}">{{ form_errors(form.withCExtension) }}</div>
-
-        {# Non-native extensions #}
-        
 
     </div>
 

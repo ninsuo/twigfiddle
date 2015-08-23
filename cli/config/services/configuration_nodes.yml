@@ -4,6 +4,7 @@ parameters:
     fiddle.configuration_node.class: Fuz\Process\ConfigurationNode\FiddleConfigurationNode
     templates.configuration_node.class: Fuz\Process\ConfigurationNode\TemplatesConfigurationNode
     twig_sources.configuration_node.class: Fuz\Process\ConfigurationNode\TwigSourcesConfigurationNode
+    twig_extensions.configuration_node.class: Fuz\Process\ConfigurationNode\TwigExtensionsConfigurationNode
 
 services:
 
@@ -33,6 +34,12 @@ services:
 
     twig_sources.configuration_node:
         class: %twig_sources.configuration_node.class%
+        arguments: []
+        tags:
+         - { name: configuration.node }
+
+    twig_extensions.configuration_node:
+        class: %twig_extensions.configuration_node.class%
         arguments: []
         tags:
          - { name: configuration.node }

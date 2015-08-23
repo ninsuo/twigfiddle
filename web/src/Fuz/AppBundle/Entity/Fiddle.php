@@ -1,5 +1,4 @@
 <?php
-
 /*
  * This file is part of twigfiddle.com project.
  *
@@ -32,9 +31,10 @@ use JMS\Serializer\Annotation as Serializer;
  */
 class Fiddle implements TagContainerInterface
 {
-    const VISIBILITY_PUBLIC = 'public';
+
+    const VISIBILITY_PUBLIC   = 'public';
     const VISIBILITY_UNLISTED = 'unlisted';
-    const VISIBILITY_PRIVATE = 'private';
+    const VISIBILITY_PRIVATE  = 'private';
 
     /**
      * @var int
@@ -116,12 +116,20 @@ class Fiddle implements TagContainerInterface
     protected $twigVersion;
 
     /**
-     * @var int
+     * @var boolean
      *
      * @ORM\Column(name="with_c_extension", type="boolean")
      * @Serializer\Type("boolean")
      */
     protected $withCExtension = false;
+
+    /**
+     * @ORM\Column(name="twig_extension", type="string", length=32, nullable=true)
+     * @Serializer\Type("string")
+     *
+     * @var string
+     */
+    protected $twigExtension;
 
     /**
      * @var string
@@ -178,10 +186,10 @@ class Fiddle implements TagContainerInterface
 
     public function __construct()
     {
-        $this->context = new FiddleContext();
+        $this->context   = new FiddleContext();
         $this->templates = new ArrayCollection();
         $this->templates->add(new FiddleTemplate());
-        $this->tags = new ArrayCollection();
+        $this->tags      = new ArrayCollection();
     }
 
     /**
@@ -368,7 +376,7 @@ class Fiddle implements TagContainerInterface
     }
 
     /**
-     * @param string $withCExtension
+     * @param boolean $withCExtension
      *
      * @return Fiddle
      */
@@ -380,11 +388,31 @@ class Fiddle implements TagContainerInterface
     }
 
     /**
-     * @return string
+     * @return boolean
      */
     public function isWithCExtension()
     {
         return $this->withCExtension;
+    }
+
+    /**
+     * @param string $twigExtension
+     *
+     * @return Fiddle
+     */
+    public function setTwigExtension($twigExtension)
+    {
+        $this->twigExtension = $twigExtension;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTwigExtension()
+    {
+        return $this->twigExtension;
     }
 
     /**
@@ -560,11 +588,10 @@ class Fiddle implements TagContainerInterface
      */
     public function validateVisibility(ExecutionContextInterface $context)
     {
-        if (!in_array($this->visibility,
-              array(
-                   self::VISIBILITY_PUBLIC,
-                   self::VISIBILITY_UNLISTED,
-                   self::VISIBILITY_PRIVATE,
+        if (!in_array($this->visibility, array(
+               self::VISIBILITY_PUBLIC,
+               self::VISIBILITY_UNLISTED,
+               self::VISIBILITY_PRIVATE,
            ))) {
             $context->buildViolation('You should choose a valid visibility.')
                ->atPath('visibility')
@@ -588,7 +615,7 @@ class Fiddle implements TagContainerInterface
 
     public function __clone()
     {
-        $this->id = null;
+        $this->id   = null;
         $this->user = null;
 
         if ($this->context) {
@@ -614,4 +641,5 @@ class Fiddle implements TagContainerInterface
 
         $this->visitsCount = 0;
     }
+
 }
