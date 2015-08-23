@@ -51,7 +51,8 @@ class ExecuteManager extends BaseService
 
         $this->logger->debug("Rendering fiddle's main template: {$mainTemplate}");
         try {
-            $rendered = $engine->render($sourceDirectory, $cacheDirectory, $mainTemplate, $context);
+            $engine->load($sourceDirectory);
+            $rendered = $engine->render($cacheDirectory, $mainTemplate, $context);
             $this->logger->debug("Fiddle's rendered result: {$rendered}");
         } catch (\Exception $ex) {
             $this->treatError($agent, $ex);
