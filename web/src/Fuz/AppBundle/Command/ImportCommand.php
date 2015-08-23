@@ -47,7 +47,6 @@ class ImportCommand extends ContainerAwareCommand
         ;
 
         foreach ($files as $file) {
-
             $json = file_get_contents($file);
             if ($json === false) {
                 $output->writeln("<error>File {$file} does not exist or is not readable.</error>");
@@ -84,5 +83,4 @@ class ImportCommand extends ContainerAwareCommand
             $output->writeln("Imported: {$file} as fiddle ID = {$id}");
         }
     }
-
 }

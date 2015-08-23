@@ -29,4 +29,3 @@ services:
         arguments: []
         tags:
          - { name: string.loader, supports: INI }
-

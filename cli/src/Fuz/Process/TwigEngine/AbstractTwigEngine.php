@@ -30,8 +30,8 @@ abstract class AbstractTwigEngine extends BaseService implements TwigEngineInter
      * From all released versions of Twig, there are backward compatibility to render a template.
      *
      * @param \Twig_Environment $environment
-     * @param string $template
-     * @param array  $context
+     * @param string            $template
+     * @param array             $context
      *
      * @return string
      */
@@ -75,5 +75,4 @@ abstract class AbstractTwigEngine extends BaseService implements TwigEngineInter
     }
 
     abstract public function getName();
-
 }

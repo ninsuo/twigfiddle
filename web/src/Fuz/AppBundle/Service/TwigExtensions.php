@@ -16,7 +16,6 @@ use Doctrine\Common\Cache\ApcCache;
 
 class TwigExtensions
 {
-
     protected $logger;
     protected $remoteConfig;
     protected $environment;
@@ -38,6 +37,7 @@ class TwigExtensions
             } else {
                 $versions = $this->fetchAvailableTwigExtensions();
                 $apc->save($id, $versions);
+
                 return $versions;
             }
         }
@@ -54,7 +54,7 @@ class TwigExtensions
         }
 
         usort($available, 'version_compare');
+
         return array_reverse($available);
     }
-
 }

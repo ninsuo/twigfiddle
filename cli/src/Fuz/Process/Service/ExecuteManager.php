@@ -18,7 +18,6 @@ use Fuz\Process\Agent\FiddleAgent;
 
 class ExecuteManager extends BaseService
 {
-
     protected $fileSystem;
     protected $environmentManager;
     protected $engineManager;
@@ -129,5 +128,4 @@ class ExecuteManager extends BaseService
 
         return $this;
     }
-
 }

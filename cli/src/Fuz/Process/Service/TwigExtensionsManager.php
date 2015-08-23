@@ -17,7 +17,6 @@ use Fuz\Process\Agent\FiddleAgent;
 
 class TwigExtensionsManager extends BaseService
 {
-
     protected $twigExtensionsConfiguration;
 
     public function __construct(array $twigExtensionsConfiguration)
@@ -32,6 +31,7 @@ class TwigExtensionsManager extends BaseService
         $extension = $agent->getFiddle()->getTwigExtension();
         if (!$extension) {
             $this->logger->debug("No twig extensions requested.");
+
             return;
         }
 
@@ -48,7 +48,7 @@ class TwigExtensionsManager extends BaseService
             throw new StopExecutionException();
         }
 
-        require($autoloader);
+        require $autoloader;
         \Twig_Extensions_Autoloader::register();
         $this->registerAllExtensions($environment);
 
@@ -70,9 +70,8 @@ class TwigExtensionsManager extends BaseService
         foreach ($extensions as $extension) {
             $class = "\Twig_Extensions_Extension_{$extension}";
             if (class_exists($class)) {
-                $environment->addExtension(new $class);
+                $environment->addExtension(new $class());
             }
         }
     }
-
 }

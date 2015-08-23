@@ -31,7 +31,6 @@ use JMS\Serializer\Annotation as Serializer;
  */
 class Fiddle implements TagContainerInterface
 {
-
     const VISIBILITY_PUBLIC   = 'public';
     const VISIBILITY_UNLISTED = 'unlisted';
     const VISIBILITY_PRIVATE  = 'private';
@@ -641,5 +640,4 @@ class Fiddle implements TagContainerInterface
 
         $this->visitsCount = 0;
     }
-
 }

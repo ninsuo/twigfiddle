@@ -12,7 +12,6 @@ namespace Fuz\Process\TwigEngine;
 
 class V1TwigEngine extends AbstractTwigEngine
 {
-
     /**
      * Loads Twig using 1.x autoloader.
      *
@@ -22,9 +21,9 @@ class V1TwigEngine extends AbstractTwigEngine
      * directory (in fact, compilation directory) were given in the twig loader. But now, the cache
      * directory is given on Environment's options.
      *
-     * @param string $sourceDirectory Twig's source directory
-     * @param string $cacheDirectory Cache directory where compiled templates should go
-     * @param string $executionDirectory Template's directory
+     * @param  string            $sourceDirectory    Twig's source directory
+     * @param  string            $cacheDirectory     Cache directory where compiled templates should go
+     * @param  string            $executionDirectory Template's directory
      * @return \Twig_Environment
      */
     public function load($sourceDirectory, $cacheDirectory, $executionDirectory)
@@ -42,5 +41,4 @@ class V1TwigEngine extends AbstractTwigEngine
     {
         return 'Twig v1.x';
     }
-
 }

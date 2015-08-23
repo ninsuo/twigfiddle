@@ -15,7 +15,6 @@ use Fuz\Process\Entity\Error;
 
 class ErrorManager extends BaseService
 {
-
     protected $errors = array(
         Error::E_UNKNOWN                   => array(
             'group'   => Error::G_GENERAL,
@@ -220,5 +219,4 @@ class ErrorManager extends BaseService
 
         return $error;
     }
-
 }

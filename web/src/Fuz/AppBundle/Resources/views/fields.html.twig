@@ -55,4 +55,3 @@
     {% set attr = attr|merge({'rows':15})|merge(orig) %}
     <textarea class="form-control {% if attr.class|default(null) != null %}{{ attr.class }}{% set attr = attr|merge({'class': false}) %}{% endif %}" {{ block('widget_attributes') }}>{{ value }}</textarea>
 {%- endblock textarea_widget %}
-

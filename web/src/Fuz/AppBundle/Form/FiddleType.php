@@ -20,7 +20,6 @@ use Fuz\AppBundle\Entity\Fiddle;
 
 class FiddleType extends AbstractType
 {
-
     protected $twigVersions;
     protected $twigExtensions;
 
@@ -107,5 +106,4 @@ class FiddleType extends AbstractType
     {
         return 'FiddleType';
     }
-
 }
