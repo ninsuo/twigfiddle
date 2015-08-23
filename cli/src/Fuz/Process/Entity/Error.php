@@ -18,6 +18,7 @@ class Error
     const G_CONTEXT = 'CONTEXT';
     const G_TEMPLATE = 'TEMPLATE';
     const G_EXECUTION = 'EXECUTION';
+    const G_OPTION = 'OPTION';
 
     /* G_GENERAL */
     const E_UNKNOWN = 'UNKNOWN';
@@ -47,14 +48,17 @@ class Error
 
     /* EXECUTION */
     const E_ENGINE_NOT_FOUND = 'ENGINE_NOT_FOUND';
-    const E_C_NOT_SUPPORTED = 'E_C_NOT_SUPPORTED';
-    const E_C_UNABLE_TO_DL = 'E_C_UNABLE_TO_DL';
     const E_TWIG_LOADER_ERROR = 'TWIG_LOADER_ERROR';
     const E_TWIG_SYNTAX_ERROR = 'TWIG_SYNTAX_ERROR';
     const E_TWIG_RUNTIME_ERROR = 'TWIG_RUNTIME_ERROR';
     const E_EXECUTION_FAILURE = 'EXECUTION_FAILURE';
     const E_UNKNOWN_COMPILED_FILE = 'UNKNOWN_COMPILED_FILE';
     const E_UNEXPECTED_COMPILED_FILE = 'UNEXPECTED_COMPILED_FILE';
+
+    /* OPTION */
+    const E_C_NOT_SUPPORTED = 'E_C_NOT_SUPPORTED';
+    const E_C_UNABLE_TO_DL = 'E_C_UNABLE_TO_DL';
+    const E_UNKNOWN_TWIG_EXTENSION = 'UNKNOWN_TWIG_EXTENSION';
 
     protected $no;
     protected $group;

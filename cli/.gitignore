@@ -5,3 +5,5 @@ logs/*
 !logs/.gitkeep
 twig/uncompressed/*
 !twig/uncompressed/.gitkeep
+twig/extension/uncompressed/*
+!twig/extension/uncompressed/.gitkeep

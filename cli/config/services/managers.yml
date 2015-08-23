@@ -9,6 +9,7 @@ parameters:
     template_manager.class: Fuz\Process\Service\TemplateManager
     execute_manager.class: Fuz\Process\Service\ExecuteManager
     compiled_manager.class: Fuz\Process\Service\CompiledManager
+    twig_extensions_manager.class: Fuz\Process\Service\TwigExtensionsManager
 
 services:
 
@@ -47,8 +48,12 @@ services:
 
     execute_manager:
         class: %execute_manager.class%
-        arguments: [@file_system, @environment_manager, @engine_manager, @context_manager, @template_manager, %config.fiddle%]
+        arguments: [@file_system, @environment_manager, @engine_manager, @context_manager, @template_manager, @twig_exensions_manager, %config.fiddle%]
 
     compiled_manager:
         class: %compiled_manager.class%
         arguments: [@file_system, @environment_manager, %config.fiddle%]
+
+    twig_exensions_manager:
+        class: %twig_extensions_manager.class%
+        arguments: [%config.twig_extensions%]

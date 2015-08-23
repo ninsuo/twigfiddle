@@ -19,6 +19,7 @@ parameters:
     app.run_fiddle.class: Fuz\AppBundle\Service\RunFiddle
     app.save_fiddle.class: Fuz\AppBundle\Service\SaveFiddle
     app.search_fiddle.class: Fuz\AppBundle\Service\SearchFiddle
+    app.twig_extensions.class: Fuz\AppBundle\Service\TwigExtensions
 
 services:
 
@@ -31,7 +32,7 @@ services:
 
     app.form.fiddle:
          class: %app.form.fiddle.class%
-         arguments: [@app.process_configuration]
+         arguments: [@app.process_configuration, @app.twig_extensions]
          tags:
             - { name: form.type, alias: FiddleType }
 
@@ -131,3 +132,9 @@ services:
          arguments: [@logger, @doctrine.orm.entity_manager, @app.paginator, %web%]
          tags:
              - { name: monolog.logger, channel: service.search_fiddle }
+
+    app.twig_extensions:
+        class: %app.twig_extensions.class%
+        arguments: [@logger, @app.process_configuration, %kernel.environment%]
+        tags:
+            - { name: monolog.logger, channel: service.twig_extensions }

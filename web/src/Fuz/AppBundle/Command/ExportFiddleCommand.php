@@ -17,7 +17,6 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 
 class ExportFiddleCommand extends ContainerAwareCommand
 {
-
     protected function configure()
     {
         parent::configure();
@@ -54,5 +53,4 @@ class ExportFiddleCommand extends ContainerAwareCommand
 
         return 0;
     }
-
 }

@@ -1,5 +1,4 @@
 <?php
-
 /*
  * This file is part of twigfiddle.com project.
  *
@@ -17,173 +16,179 @@ use Fuz\Process\Entity\Error;
 class ErrorManager extends BaseService
 {
     protected $errors = array(
-        Error::E_UNKNOWN => array(
-            'group' => Error::G_GENERAL,
+        Error::E_UNKNOWN                   => array(
+            'group'   => Error::G_GENERAL,
             'message' => 'An unknwon error occured.',
-            'logger' => 'error',
-            'debug' => true,
+            'logger'  => 'error',
+            'debug'   => true,
         ),
-        Error::E_UNEXPECTED => array(
-            'group' => Error::G_GENERAL,
+        Error::E_UNEXPECTED                => array(
+            'group'   => Error::G_GENERAL,
             'message' => 'An unexpected error occured.',
-            'logger' => 'error',
-            'debug' => true,
+            'logger'  => 'error',
+            'debug'   => true,
         ),
-        Error::E_UNEXPECTED_NODEBUG => array(
-            'group' => Error::G_GENERAL,
+        Error::E_UNEXPECTED_NODEBUG        => array(
+            'group'   => Error::G_GENERAL,
             'message' => 'An unexpected error occured.',
-            'logger' => 'error',
-            'debug' => false,
+            'logger'  => 'error',
+            'debug'   => false,
         ),
-        Error::E_TIMEOUT => array(
-            'group' => Error::G_GENERAL,
+        Error::E_TIMEOUT                   => array(
+            'group'   => Error::G_GENERAL,
             'message' => 'Maximum execution timeout was reached.',
-            'logger' => 'info',
-            'debug' => false,
+            'logger'  => 'info',
+            'debug'   => false,
         ),
-        Error::E_INVALID_ENVIRONMENT_ID => array(
-            'group' => Error::G_ENVIRONMENT,
+        Error::E_INVALID_ENVIRONMENT_ID    => array(
+            'group'   => Error::G_ENVIRONMENT,
             'message' => 'The given environment ID does not match with the expected format.',
-            'logger' => 'warning',
-            'debug' => false,
+            'logger'  => 'warning',
+            'debug'   => false,
         ),
         Error::E_UNEXISTING_ENVIRONMENT_ID => array(
-            'group' => Error::G_ENVIRONMENT,
+            'group'   => Error::G_ENVIRONMENT,
             'message' => 'The given environment ID does not have an associated directory.',
-            'logger' => 'warning',
-            'debug' => false,
+            'logger'  => 'warning',
+            'debug'   => false,
         ),
-        Error::E_UNEXISTING_SHARED_MEMORY => array(
-            'group' => Error::G_ENVIRONMENT,
+        Error::E_UNEXISTING_SHARED_MEMORY  => array(
+            'group'   => Error::G_ENVIRONMENT,
             'message' => "The envrionment's shared memory does not exist.",
-            'logger' => 'warning',
-            'debug' => false,
+            'logger'  => 'warning',
+            'debug'   => false,
         ),
-        Error::E_UNREADABLE_SHARED_MEMORY => array(
-            'group' => Error::G_ENVIRONMENT,
+        Error::E_UNREADABLE_SHARED_MEMORY  => array(
+            'group'   => Error::G_ENVIRONMENT,
             'message' => "The envrionment's shared memory is not readable.",
-            'logger' => 'error',
-            'debug' => false,
+            'logger'  => 'error',
+            'debug'   => false,
         ),
-        Error::E_FIDDLE_ALREADY_RUN => array(
-            'group' => Error::G_ENVIRONMENT,
+        Error::E_FIDDLE_ALREADY_RUN        => array(
+            'group'   => Error::G_ENVIRONMENT,
             'message' => 'This fiddle has already been started.',
-            'logger' => 'info',
-            'debug' => false,
+            'logger'  => 'info',
+            'debug'   => false,
         ),
-        Error::E_FIDDLE_NOT_STORED => array(
-            'group' => Error::G_ENVIRONMENT,
+        Error::E_FIDDLE_NOT_STORED         => array(
+            'group'   => Error::G_ENVIRONMENT,
             'message' => 'Fiddle not found in the shared object.',
-            'logger' => 'error',
-            'debug' => false,
+            'logger'  => 'error',
+            'debug'   => false,
         ),
-        Error::E_UNKNOWN_CONTEXT_FORMAT => array(
-            'group' => Error::G_CONTEXT,
+        Error::E_UNKNOWN_CONTEXT_FORMAT    => array(
+            'group'   => Error::G_CONTEXT,
             'message' => 'The given context format is not supported.',
-            'logger' => 'error',
-            'debug' => true,
+            'logger'  => 'error',
+            'debug'   => true,
         ),
-        Error::E_INVALID_CONTEXT_SYNTAX => array(
-            'group' => Error::G_CONTEXT,
+        Error::E_INVALID_CONTEXT_SYNTAX    => array(
+            'group'   => Error::G_CONTEXT,
             'message' => 'Unable to convert the given twig context to an array.',
-            'logger' => 'info',
-            'debug' => false,
+            'logger'  => 'info',
+            'debug'   => false,
         ),
-        Error::E_INVALID_CONTEXT_TYPE => array(
-            'group' => Error::G_CONTEXT,
+        Error::E_INVALID_CONTEXT_TYPE      => array(
+            'group'   => Error::G_CONTEXT,
             'message' => 'The Twig context should be convertible to an array.',
-            'logger' => 'info',
-            'debug' => false,
+            'logger'  => 'info',
+            'debug'   => false,
         ),
-        Error::E_NO_TEMPLATE => array(
-            'group' => Error::G_TEMPLATE,
+        Error::E_NO_TEMPLATE               => array(
+            'group'   => Error::G_TEMPLATE,
             'message' => 'This fiddle does not contain any template.',
-            'logger' => 'warning',
-            'debug' => false,
+            'logger'  => 'warning',
+            'debug'   => false,
         ),
-        Error::E_NO_MAIN_TEMPLATE => array(
-            'group' => Error::G_TEMPLATE,
+        Error::E_NO_MAIN_TEMPLATE          => array(
+            'group'   => Error::G_TEMPLATE,
             'message' => 'This fiddle does not have a main template.',
-            'logger' => 'warning',
-            'debug' => false,
+            'logger'  => 'warning',
+            'debug'   => false,
         ),
-        Error::E_SEVERAL_MAIN_TEMPLATES => array(
-            'group' => Error::G_TEMPLATE,
+        Error::E_SEVERAL_MAIN_TEMPLATES    => array(
+            'group'   => Error::G_TEMPLATE,
             'message' => 'This fiddle has several main templates.',
-            'logger' => 'warning',
-            'debug' => false,
+            'logger'  => 'warning',
+            'debug'   => false,
         ),
-        Error::E_INVALID_TEMPLATE_NAME => array(
-            'group' => Error::G_TEMPLATE,
+        Error::E_INVALID_TEMPLATE_NAME     => array(
+            'group'   => Error::G_TEMPLATE,
             'message' => 'Invalid template name.',
-            'logger' => 'warning',
-            'debug' => false,
+            'logger'  => 'warning',
+            'debug'   => false,
         ),
-        Error::E_CANNOT_WRITE_TEMPLATE => array(
-            'group' => Error::G_TEMPLATE,
+        Error::E_CANNOT_WRITE_TEMPLATE     => array(
+            'group'   => Error::G_TEMPLATE,
             'message' => 'Unable to write template.',
-            'logger' => 'error',
-            'debug' => true,
+            'logger'  => 'error',
+            'debug'   => true,
         ),
-        Error::E_ENGINE_NOT_FOUND => array(
-            'group' => Error::G_EXECUTION,
+        Error::E_ENGINE_NOT_FOUND          => array(
+            'group'   => Error::G_EXECUTION,
             'message' => 'The Twig engine you requested is not implemented.',
-            'logger' => 'warning',
-            'debug' => false,
+            'logger'  => 'warning',
+            'debug'   => false,
         ),
-        Error::E_C_NOT_SUPPORTED => array(
-            'group' => Error::G_EXECUTION,
-            'message' => 'The Twig version you requested does not have a C extension.',
-            'logger' => 'info',
-            'debug' => false,
-        ),
-        Error::E_C_UNABLE_TO_DL => array(
-            'group' => Error::G_EXECUTION,
-            'message' => 'The C extension exists but is not loaded.',
-            'logger' => 'error',
-            'debug' => true,
-        ),
-        Error::E_EXECUTION_FAILURE => array(
-            'group' => Error::G_EXECUTION,
+        Error::E_EXECUTION_FAILURE         => array(
+            'group'   => Error::G_EXECUTION,
             'message' => 'The fiddle execution failed.',
-            'logger' => 'info',
-            'debug' => false,
+            'logger'  => 'info',
+            'debug'   => false,
         ),
-        Error::E_TWIG_LOADER_ERROR => array(
-            'group' => Error::G_EXECUTION,
+        Error::E_TWIG_LOADER_ERROR         => array(
+            'group'   => Error::G_EXECUTION,
             'message' => 'The Twig Loader thrown an exception.',
-            'logger' => 'info',
-            'debug' => false,
+            'logger'  => 'info',
+            'debug'   => false,
         ),
-        Error::E_TWIG_SYNTAX_ERROR => array(
-            'group' => Error::G_EXECUTION,
+        Error::E_TWIG_SYNTAX_ERROR         => array(
+            'group'   => Error::G_EXECUTION,
             'message' => 'The given Twig code contains syntax error(s).',
-            'logger' => 'info',
-            'debug' => false,
+            'logger'  => 'info',
+            'debug'   => false,
         ),
-        Error::E_TWIG_RUNTIME_ERROR => array(
-            'group' => Error::G_EXECUTION,
+        Error::E_TWIG_RUNTIME_ERROR        => array(
+            'group'   => Error::G_EXECUTION,
             'message' => "A Twig's runtime exception has been trown.",
-            'logger' => 'info',
-            'debug' => false,
+            'logger'  => 'info',
+            'debug'   => false,
         ),
-        Error::E_UNKNOWN_COMPILED_FILE => array(
-            'group' => Error::G_EXECUTION,
+        Error::E_UNKNOWN_COMPILED_FILE     => array(
+            'group'   => Error::G_EXECUTION,
             'message' => "Can't get template name from a compiled file.",
-            'logger' => 'error',
-            'debug' => true,
+            'logger'  => 'error',
+            'debug'   => true,
         ),
-        Error::E_UNEXPECTED_COMPILED_FILE => array(
-            'group' => Error::G_EXECUTION,
+        Error::E_UNEXPECTED_COMPILED_FILE  => array(
+            'group'   => Error::G_EXECUTION,
             'message' => 'Got an unexpected template name.',
-            'logger' => 'error',
-            'debug' => true,
+            'logger'  => 'error',
+            'debug'   => true,
+        ),
+        Error::E_C_NOT_SUPPORTED           => array(
+            'group'   => Error::G_OPTION,
+            'message' => 'The Twig version you requested does not have a C extension.',
+            'logger'  => 'info',
+            'debug'   => false,
+        ),
+        Error::E_C_UNABLE_TO_DL            => array(
+            'group'   => Error::G_OPTION,
+            'message' => 'The C extension exists but has not been loaded successfully.',
+            'logger'  => 'error',
+            'debug'   => true,
+        ),
+        Error::E_UNKNOWN_TWIG_EXTENSION    => array(
+            'group'   => Error::G_OPTION,
+            'message' => 'The requested Twig extension version is not supported.',
+            'logger'  => 'warning',
+            'debug'   => false,
         ),
     );
 
     public function getError($no, $context = array())
     {
-        $trace = array_slice(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2), 1);
+        $trace  = array_slice(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2), 1);
         $caller = $trace[0]['file'].':'.$trace[0]['line'];
 
         if (!array_key_exists($no, $this->errors)) {
@@ -193,9 +198,9 @@ class ErrorManager extends BaseService
 
         if ((is_object($context) && ($context instanceof \Exception))) {
             $context = array(
-                    'type' => get_class($context),
-                    'message' => $context->getMessage(),
-                    'at' => $context->getFile().':'.$context->getLine(),
+                'type'    => get_class($context),
+                'message' => $context->getMessage(),
+                'at'      => $context->getFile().':'.$context->getLine(),
             );
         }
 
