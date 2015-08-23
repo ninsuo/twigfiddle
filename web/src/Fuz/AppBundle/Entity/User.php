@@ -12,7 +12,6 @@
 namespace Fuz\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 
@@ -73,18 +72,6 @@ class User implements UserInterface, EquatableInterface
      * @ORM\Column(name="signin_count", type="integer")
      */
     protected $signinCount = 0;
-
-    /**
-     * @var ArrayCollection[UserPreference]
-     *
-     * @ORM\OneToMany(targetEntity="UserPreference", mappedBy="user", cascade={"all"})
-     */
-    protected $preferences;
-
-    public function __construct()
-    {
-        $this->preferences = new ArrayCollection();
-    }
 
     /**
      * Get id.
@@ -212,30 +199,6 @@ class User implements UserInterface, EquatableInterface
     public function getSigninCount()
     {
         return $this->signinCount;
-    }
-
-    /**
-     * Set preferences.
-     *
-     * @param ArrayCollection[UserPreference] $preferences
-     *
-     * @return User
-     */
-    public function setPreferences(ArrayCollection $preferences)
-    {
-        $this->preferences = $preferences;
-
-        return $this;
-    }
-
-    /**
-     * Get preferences.
-     *
-     * @return ArrayCollection[UserPreference]
-     */
-    public function getPreferences()
-    {
-        return $this->preferences;
     }
 
     /**
