@@ -1,5 +1,4 @@
 <?php
-
 /*
  * This file is part of twigfiddle.com project.
  *
@@ -19,22 +18,25 @@ use Fuz\Process\Agent\FiddleAgent;
 
 class ExecuteManager extends BaseService
 {
+
     protected $fileSystem;
     protected $environmentManager;
     protected $engineManager;
     protected $contextManager;
     protected $templateManager;
+    protected $twigExtensions;
     protected $fiddleConfiguration;
 
     public function __construct(FileSystem $fileSystem, EnvironmentManager $environmentManager,
        EngineManager $engineManager, ContextManager $contextManager, TemplateManager $templateManager,
-       array $fiddleConfiguration)
+       TwigExtensionsManager $twigExtensions, array $fiddleConfiguration)
     {
-        $this->fileSystem = $fileSystem;
-        $this->environmentManager = $environmentManager;
-        $this->engineManager = $engineManager;
-        $this->contextManager = $contextManager;
-        $this->templateManager = $templateManager;
+        $this->fileSystem          = $fileSystem;
+        $this->environmentManager  = $environmentManager;
+        $this->engineManager       = $engineManager;
+        $this->contextManager      = $contextManager;
+        $this->templateManager     = $templateManager;
+        $this->twigExtensions      = $twigExtensions;
         $this->fiddleConfiguration = $fiddleConfiguration;
     }
 
@@ -43,17 +45,28 @@ class ExecuteManager extends BaseService
         $this->checkNoTwigEnvironmentLoaded();
         $this->environmentManager->checkFiddleEnvironmentAvailability($agent);
 
-        $engine = $this->engineManager->getEngineFromAgent($agent);
-        $sourceDirectory = $agent->getSourceDirectory();
-        $cacheDirectory = $this->createCacheDirectory($agent);
-        $mainTemplate = $this->templateManager->getMainTemplateFromAgent($agent);
-        $context = $this->contextManager->getContextFromAgent($agent);
+        $engine             = $this->engineManager->getEngineFromAgent($agent);
+        $sourceDirectory    = $agent->getSourceDirectory();
+        $cacheDirectory     = $this->createCacheDirectory($agent);
+        $mainTemplate       = $this->templateManager->getMainTemplateFromAgent($agent);
+        $executionDirectory = dirname($mainTemplate);
+        $template           = basename($mainTemplate);
+        $context            = $this->contextManager->getContextFromAgent($agent);
 
-        $this->logger->debug("Rendering fiddle's main template: {$mainTemplate}");
         try {
-            $engine->load($sourceDirectory);
-            $rendered = $engine->render($cacheDirectory, $mainTemplate, $context);
+            $this->logger->debug("Loading Twig sources: {$sourceDirectory}");
+            $environment = $engine->load($sourceDirectory, $cacheDirectory, $executionDirectory);
+
+            if ($agent->getFiddle()->getTwigExtension()) {
+                $this->logger->debug("Loading non built-in Twig extensions");
+                $this->twigExtensions->loadTwigExtensions($agent, $environment);
+            }
+
+            $this->logger->debug("Rendering fiddle's main template: {$mainTemplate}");
+            $rendered = $engine->render($environment, $template, $context);
             $this->logger->debug("Fiddle's rendered result: {$rendered}");
+        } catch (StopExecutionException $ex) {
+            throw $ex;
         } catch (\Exception $ex) {
             $this->treatError($agent, $ex);
             throw new StopExecutionException();
@@ -75,7 +88,7 @@ class ExecuteManager extends BaseService
 
     protected function createCacheDirectory(FiddleAgent $agent)
     {
-        $dir = $agent->getDirectory();
+        $dir            = $agent->getDirectory();
         $cacheDirectory = $dir.DIRECTORY_SEPARATOR.$this->fiddleConfiguration['compiled_dir'];
         $this->logger->debug("Creating cache directory: {$cacheDirectory}");
         $this->fileSystem->mkdir($cacheDirectory);
@@ -97,8 +110,6 @@ class ExecuteManager extends BaseService
     {
         $no = null;
 
-        $this->logger->log(200, 'xxx', array('ex' => $ex));
-
         switch (get_class($ex)) {
             case 'Twig_Error_Loader':
                 $no = Error::E_TWIG_LOADER_ERROR;
@@ -118,4 +129,5 @@ class ExecuteManager extends BaseService
 
         return $this;
     }
+
 }

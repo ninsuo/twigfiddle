@@ -50,7 +50,7 @@ class TwigExtensions
         $available = array();
         $dir       = $this->remoteConfig['twig_extensions']['directory'];
         foreach (glob("{$dir}/*") as $extension) {
-            $available[] = basename($extension);
+            $available[] = str_replace('Twig-extensions-', '', basename($extension));
         }
 
         usort($available, 'version_compare');

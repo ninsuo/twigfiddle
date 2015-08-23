@@ -1,5 +1,4 @@
 <?php
-
 /*
  * This file is part of twigfiddle.com project.
  *
@@ -15,48 +14,33 @@ class V1TwigEngine extends AbstractTwigEngine
 {
 
     /**
-     * Loads Twig using 1.x autoloader
+     * Loads Twig using 1.x autoloader.
      *
-     * @param string $sourceDirectory
-     */
-    public function load($sourceDirectory)
-    {
-        require $sourceDirectory.DIRECTORY_SEPARATOR.'/lib/Twig/Autoloader.php';
-        \Twig_Autoloader::register();
-    }
-
-    /**
-     * From all released versions of Twig, there are backward compatibility to load a template.
+     * The environment is loaded about the same way in all 1.x Twig versions.
      *
      * The only change was the way the cache directory is declared: at the very beginning, cache
      * directory (in fact, compilation directory) were given in the twig loader. But now, the cache
      * directory is given on Environment's options.
      *
-     * @param string $cacheDirectory
-     * @param string $template
-     * @param array  $context
-     *
-     * @return string
+     * @param string $sourceDirectory Twig's source directory
+     * @param string $cacheDirectory Cache directory where compiled templates should go
+     * @param string $executionDirectory Template's directory
+     * @return \Twig_Environment
      */
-    public function render($cacheDirectory, $template, array $context = array())
+    public function load($sourceDirectory, $cacheDirectory, $executionDirectory)
     {
-        $executionDirectory = dirname($template);
-        $mainTemplate = basename($template);
+        require $sourceDirectory.DIRECTORY_SEPARATOR.'/lib/Twig/Autoloader.php';
+        \Twig_Autoloader::register();
 
-        $twigLoader = new \Twig_Loader_Filesystem($executionDirectory, $cacheDirectory);
+        $twigLoader      = new \Twig_Loader_Filesystem($executionDirectory, $cacheDirectory);
         $twigEnvironment = new \Twig_Environment($twigLoader, array('cache' => $cacheDirectory));
 
-        $templateObject = $twigEnvironment->loadTemplate($mainTemplate);
-
-        ob_start();
-        $templateObject->display($context);
-        $result = ob_get_clean();
-
-        return $result;
+        return $twigEnvironment;
     }
 
     public function getName()
     {
         return 'Twig v1.x';
     }
+
 }

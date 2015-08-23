@@ -13,9 +13,9 @@ namespace Fuz\Process\TwigEngine;
 
 interface TwigEngineInterface
 {
-    public function load($sourceDirectory);
+    public function load($sourceDirectory, $cacheDirectory, $executionDirectory);
 
-    public function render($cacheDirectory, $template, array $context = array());
+    public function render(\Twig_Environment $environment, $template, array $context = array());
 
     public function extractTemplateName($cacheDirectory);
 

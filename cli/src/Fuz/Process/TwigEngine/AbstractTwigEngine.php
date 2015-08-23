@@ -27,6 +27,26 @@ abstract class AbstractTwigEngine extends BaseService implements TwigEngineInter
     }
 
     /**
+     * From all released versions of Twig, there are backward compatibility to render a template.
+     *
+     * @param \Twig_Environment $environment
+     * @param string $template
+     * @param array  $context
+     *
+     * @return string
+     */
+    public function render(\Twig_Environment $twigEnvironment, $template, array $context = array())
+    {
+        $templateObject = $twigEnvironment->loadTemplate($template);
+
+        ob_start();
+        $templateObject->display($context);
+        $result = ob_get_clean();
+
+        return $result;
+    }
+
+    /**
      * The first coomment of all compiled twig file contains the twig file name since the very first Twig's version.
      * This method just extracts it.
      *
@@ -53,4 +73,7 @@ abstract class AbstractTwigEngine extends BaseService implements TwigEngineInter
 
         return $templateName;
     }
+
+    abstract public function getName();
+
 }
