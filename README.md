@@ -80,6 +80,8 @@ php app/check.php
 
 # Configure external services
 
+Don't panic, that's optional.
+
 - Google Login: https://console.developers.google.com/project
 - Facebook Login: https://developers.facebook.com/apps/
 - Twitter Login: https://apps.twitter.com/

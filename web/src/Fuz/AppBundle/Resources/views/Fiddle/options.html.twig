@@ -33,13 +33,21 @@
             <div class="error-container" id="errors-{{ form.twigExtension.vars.id }}">{{ form_errors(form.twigExtension) }}</div>
         </div>
 
+        <br/>
+
         {# C extension #}
-        <div class="checkbox">
-            <label class="control-label">
-                {{ form_widget(form.withCExtension) }} Enable the C extension (optimizes <code>Twig_Template::getAttribute()</code>'s perfs)
-            </label>
+        <div class="form-group full-width">
+            <div class="input-group">
+                <div class="input-group-addon">{{ form_widget(form.withCExtension) }}</div>
+                <div class="form-control">
+                    <label for="{{ form.withCExtension.vars.id }}">
+                        Enable the C extension
+                        (<a class="dark" href="http://twig.sensiolabs.org/doc/installation.html#installing-the-c-extension" target="_blank">read more</a>)
+                    </label>
+                </div>
+            </div>
+            <div class="error-container" id="errors-{{ form.withCExtension.vars.id }}">{{ form_errors(form.withCExtension) }}</div>
         </div>
-        <div class="error-container" id="errors-{{ form.withCExtension.vars.id }}">{{ form_errors(form.withCExtension) }}</div>
 
     </div>
 

@@ -1,5 +1,4 @@
 <?php
-
 /*
  * This file is part of twigfiddle.com project.
  *
@@ -21,6 +20,7 @@ use Fuz\Process\Exception\StopExecutionException;
 
 class RunCommand extends BaseCommand
 {
+
     protected $environmentId;
     protected $isDebug;
     protected $agent;
@@ -32,10 +32,8 @@ class RunCommand extends BaseCommand
         $this
            ->setName('twigfiddle:run')
            ->setDescription('Executes a twigfiddle (from already prepared environment)')
-           ->addArgument('environment-id', InputArgument::REQUIRED,
-              'Environment where the twigfiddle is stored and will be executed')
-           ->addOption('debug', 'd', InputOption::VALUE_NONE,
-              "If the debug option is set, you'll run an environment located in the debug directory.")
+           ->addArgument('environment-id', InputArgument::REQUIRED, 'Environment where the twigfiddle is stored and will be executed')
+           ->addOption('debug', 'd', InputOption::VALUE_NONE, "If the debug option is set, you'll run an environment located in the debug directory.")
         ;
     }
 
@@ -66,13 +64,14 @@ class RunCommand extends BaseCommand
         $this->memory = str_repeat('*', 1024 * 1024);
         register_shutdown_function(function () {
             $this->memory = null;
-            if ((!is_null($err = error_get_last())) && (!in_array($err['type'], array(E_NOTICE, E_WARNING, E_USER_DEPRECATED)))) {
+            if ((!is_null($err          = error_get_last())) && (!in_array($err['type'], array(E_NOTICE, E_WARNING, E_USER_DEPRECATED)))) {
                 // By default, unexpected exceptions leads to debug files given to developers for debugging purposes.
                 // But there are no need to require developer's attention if some main.twig contains {{ include('main.twig') }}
                 $ignores = array(
-                        'Allowed memory size',
-                        'Call to undefined method',
-                        'Maximum function nesting level',
+                    'Allowed memory size',
+                    'Call to undefined method',
+                    'Maximum function nesting level',
+                    'Object of class',
                 );
 
                 $cnt = 0;
@@ -93,7 +92,7 @@ class RunCommand extends BaseCommand
     public function initArguments(InputInterface $input)
     {
         $this->environmentId = $input->getArgument('environment-id');
-        $this->isDebug = $input->getOption('debug');
+        $this->isDebug       = $input->getOption('debug');
 
         return $this;
     }
@@ -111,13 +110,12 @@ class RunCommand extends BaseCommand
 
     public function initProcessor()
     {
-        $envId = $this->environmentId;
+        $envId   = $this->environmentId;
         $isDebug = $this->isDebug;
         $this->container->pushProcessor(function ($record) use ($envId, $isDebug) {
-            $record['extra'] = array_merge($record['extra'],
-               array(
-                    'environment_id' => $envId,
-                    'debug' => $isDebug,
+            $record['extra'] = array_merge($record['extra'], array(
+                'environment_id' => $envId,
+                'debug'          => $isDebug,
             ));
 
             return $record;
@@ -146,4 +144,5 @@ class RunCommand extends BaseCommand
 
         return $this;
     }
+
 }
