@@ -50,7 +50,7 @@ class EngineManager extends BaseService
             throw new StopExecutionException();
         }
 
-        $this->logger->debug(sprintf('Twig Engine %s loaded successfully.', get_class($engine)));
+        $this->logger->debug(sprintf('Twig Engine %s loaded successfully.', get_class($engineService)));
         $agent->setEngine($engineService);
 
         $sourceDirectory = $this->getTwigSourceDirectory($version);

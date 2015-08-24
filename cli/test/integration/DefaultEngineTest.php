@@ -1,5 +1,4 @@
 <?php
-
 /*
  * This file is part of twigfiddle.com project.
  *
@@ -22,6 +21,7 @@ use Fuz\AppBundle\Entity\FiddleTemplate;
 
 class DefaultEngineTest extends \PHPUnit_Framework_TestCase
 {
+
     const PHP_PATH = '/usr/bin/php';
 
     protected $fs;
@@ -33,9 +33,9 @@ class DefaultEngineTest extends \PHPUnit_Framework_TestCase
     public function __construct($name = null, array $data = array(), $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
-        $this->fs = new Filesystem();
-        $this->envId = 'test';
-        $this->envDir = __DIR__.'/../environment';
+        $this->fs      = new Filesystem();
+        $this->envId   = 'test';
+        $this->envDir  = __DIR__.'/../environment';
         $this->rootDir = __DIR__.'/../..';
     }
 
@@ -55,10 +55,10 @@ class DefaultEngineTest extends \PHPUnit_Framework_TestCase
      *
      * @dataProvider versionProvider
      */
-    public function testVersion($version)
+    public function testVersion($engine, $version)
     {
         $this
-           ->prepareFiddle($version)
+           ->prepareFiddle($engine, $version)
            ->runFiddle()
            ->checkFiddle()
         ;
@@ -67,89 +67,91 @@ class DefaultEngineTest extends \PHPUnit_Framework_TestCase
     public function versionProvider()
     {
         return array(
-                // 2.x
-                array('Twig-master'),
+            // 2.x
+            array('Twig 2.x', 'Twig-master'),
 
-                // 1.x
-                array('Twig-1.20.0'),
-                array('Twig-1.19.0'),
-                array('Twig-1.18.2'),
-                array('Twig-1.18.1'),
-                array('Twig-1.18.0'),
-                array('Twig-1.17.0'),
-                array('Twig-1.16.3'),
-                array('Twig-1.16.2'),
-                array('Twig-1.16.1'),
-                array('Twig-1.16.0'),
-                array('Twig-1.15.1'),
-                array('Twig-1.15.0'),
-                array('Twig-1.14.2'),
-                array('Twig-1.14.1'),
-                array('Twig-1.14.0'),
-                array('Twig-1.13.2'),
-                array('Twig-1.13.1'),
-                array('Twig-1.13.0'),
-                array('Twig-1.12.3'),
-                array('Twig-1.12.2'),
-                array('Twig-1.12.1'),
-                array('Twig-1.12.0-RC1'),
-                array('Twig-1.12.0'),
-                array('Twig-1.11.1'),
-                array('Twig-1.11.0'),
-                array('Twig-1.10.3'),
-                array('Twig-1.10.2'),
-                array('Twig-1.10.1'),
-                array('Twig-1.10.0'),
-                array('Twig-1.9.2'),
-                array('Twig-1.9.1'),
-                array('Twig-1.9.0'),
-                array('Twig-1.8.3'),
-                array('Twig-1.8.2'),
-                array('Twig-1.8.1'),
-                array('Twig-1.8.0'),
-                array('Twig-1.7.0'),
-                array('Twig-1.6.5'),
-                array('Twig-1.6.4'),
-                array('Twig-1.6.3'),
-                array('Twig-1.6.2'),
-                array('Twig-1.6.1'),
-                array('Twig-1.6.0'),
-                array('Twig-1.5.1'),
-                array('Twig-1.5.0-RC2'),
-                array('Twig-1.5.0-RC1'),
-                array('Twig-1.5.0'),
-                array('Twig-1.4.0-RC2'),
-                array('Twig-1.4.0-RC1'),
-                array('Twig-1.4.0'),
-                array('Twig-1.3.0-RC1'),
-                array('Twig-1.3.0'),
-                array('Twig-1.2.0-RC1'),
-                array('Twig-1.2.0'),
-                array('Twig-1.1.2'),
-                array('Twig-1.1.1'),
-                array('Twig-1.1.0-RC3'),
-                array('Twig-1.1.0-RC2'),
-                array('Twig-1.1.0-RC1'),
-                array('Twig-1.1.0'),
-                array('Twig-1.0.0-RC2'),
-                array('Twig-1.0.0-RC1'),
-                array('Twig-1.0.0'),
-                array('Twig-0.9.10'),
-                array('Twig-0.9.9'),
-                array('Twig-0.9.8'),
-                array('Twig-0.9.7'),
-                array('Twig-0.9.6'),
-                array('Twig-0.9.5'),
-                array('Twig-0.9.4'),
-                array('Twig-0.9.2'),
-                array('Twig-0.9.1'),
-                array('Twig-0.9.0'),
+            // 1.x
+            array('Twig 1.x', 'Twig-1.21.0'),
+            array('Twig 1.x', 'Twig-1.20.0'),
+            array('Twig 1.x', 'Twig-1.19.0'),
+            array('Twig 1.x', 'Twig-1.18.2'),
+            array('Twig 1.x', 'Twig-1.18.1'),
+            array('Twig 1.x', 'Twig-1.18.0'),
+            array('Twig 1.x', 'Twig-1.17.0'),
+            array('Twig 1.x', 'Twig-1.16.3'),
+            array('Twig 1.x', 'Twig-1.16.2'),
+            array('Twig 1.x', 'Twig-1.16.1'),
+            array('Twig 1.x', 'Twig-1.16.0'),
+            array('Twig 1.x', 'Twig-1.15.1'),
+            array('Twig 1.x', 'Twig-1.15.0'),
+            array('Twig 1.x', 'Twig-1.14.2'),
+            array('Twig 1.x', 'Twig-1.14.1'),
+            array('Twig 1.x', 'Twig-1.14.0'),
+            array('Twig 1.x', 'Twig-1.13.2'),
+            array('Twig 1.x', 'Twig-1.13.1'),
+            array('Twig 1.x', 'Twig-1.13.0'),
+            array('Twig 1.x', 'Twig-1.12.3'),
+            array('Twig 1.x', 'Twig-1.12.2'),
+            array('Twig 1.x', 'Twig-1.12.1'),
+            array('Twig 1.x', 'Twig-1.12.0-RC1'),
+            array('Twig 1.x', 'Twig-1.12.0'),
+            array('Twig 1.x', 'Twig-1.11.1'),
+            array('Twig 1.x', 'Twig-1.11.0'),
+            array('Twig 1.x', 'Twig-1.10.3'),
+            array('Twig 1.x', 'Twig-1.10.2'),
+            array('Twig 1.x', 'Twig-1.10.1'),
+            array('Twig 1.x', 'Twig-1.10.0'),
+            array('Twig 1.x', 'Twig-1.9.2'),
+            array('Twig 1.x', 'Twig-1.9.1'),
+            array('Twig 1.x', 'Twig-1.9.0'),
+            array('Twig 1.x', 'Twig-1.8.3'),
+            array('Twig 1.x', 'Twig-1.8.2'),
+            array('Twig 1.x', 'Twig-1.8.1'),
+            array('Twig 1.x', 'Twig-1.8.0'),
+            array('Twig 1.x', 'Twig-1.7.0'),
+            array('Twig 1.x', 'Twig-1.6.5'),
+            array('Twig 1.x', 'Twig-1.6.4'),
+            array('Twig 1.x', 'Twig-1.6.3'),
+            array('Twig 1.x', 'Twig-1.6.2'),
+            array('Twig 1.x', 'Twig-1.6.1'),
+            array('Twig 1.x', 'Twig-1.6.0'),
+            array('Twig 1.x', 'Twig-1.5.1'),
+            array('Twig 1.x', 'Twig-1.5.0-RC2'),
+            array('Twig 1.x', 'Twig-1.5.0-RC1'),
+            array('Twig 1.x', 'Twig-1.5.0'),
+            array('Twig 1.x', 'Twig-1.4.0-RC2'),
+            array('Twig 1.x', 'Twig-1.4.0-RC1'),
+            array('Twig 1.x', 'Twig-1.4.0'),
+            array('Twig 1.x', 'Twig-1.3.0-RC1'),
+            array('Twig 1.x', 'Twig-1.3.0'),
+            array('Twig 1.x', 'Twig-1.2.0-RC1'),
+            array('Twig 1.x', 'Twig-1.2.0'),
+            array('Twig 1.x', 'Twig-1.1.2'),
+            array('Twig 1.x', 'Twig-1.1.1'),
+            array('Twig 1.x', 'Twig-1.1.0-RC3'),
+            array('Twig 1.x', 'Twig-1.1.0-RC2'),
+            array('Twig 1.x', 'Twig-1.1.0-RC1'),
+            array('Twig 1.x', 'Twig-1.1.0'),
+            array('Twig 1.x', 'Twig-1.0.0-RC2'),
+            array('Twig 1.x', 'Twig-1.0.0-RC1'),
+            array('Twig 1.x', 'Twig-1.0.0'),
+            array('Twig 1.x', 'Twig-0.9.10'),
+            array('Twig 1.x', 'Twig-0.9.9'),
+            array('Twig 1.x', 'Twig-0.9.8'),
+            array('Twig 1.x', 'Twig-0.9.7'),
+            array('Twig 1.x', 'Twig-0.9.6'),
+            array('Twig 1.x', 'Twig-0.9.5'),
+            array('Twig 1.x', 'Twig-0.9.4'),
+            array('Twig 1.x', 'Twig-0.9.2'),
+            array('Twig 1.x', 'Twig-0.9.1'),
+            array('Twig 1.x', 'Twig-0.9.0'),
         );
     }
 
-    protected function prepareFiddle($version)
+    protected function prepareFiddle($engine, $version)
     {
         $fiddle = new Fiddle();
+        $fiddle->setTwigEngine($engine);
         $fiddle->setTwigVersion($version);
 
         $context = new FiddleContext();
@@ -165,13 +167,13 @@ class DefaultEngineTest extends \PHPUnit_Framework_TestCase
         $fiddle->clearTemplates();
         $fiddle->addTemplate($template);
 
-        $storage = new StorageFile("{$this->envDir}/{$this->envId}/fiddle.shr");
+        $storage      = new StorageFile("{$this->envDir}/{$this->envId}/fiddle.shr");
         $this->shared = new SharedMemory($storage);
 
-        $this->shared->fiddle = $fiddle;
-        $this->shared->begin_tm = null;
+        $this->shared->fiddle    = $fiddle;
+        $this->shared->begin_tm  = null;
         $this->shared->finish_tm = null;
-        $this->shared->result = null;
+        $this->shared->result    = null;
 
         return $this;
     }
@@ -181,12 +183,10 @@ class DefaultEngineTest extends \PHPUnit_Framework_TestCase
         $oldDir = getcwd();
         chdir(__DIR__);
 
-        $command = self::PHP_PATH.' '.implode(' ',
-              array_map('escapeshellarg',
-                 array(
-                   $this->rootDir.'/run-test.php',
-                   'twigfiddle:run',
-                   $this->envId,
+        $command = self::PHP_PATH.' '.implode(' ', array_map('escapeshellarg', array(
+               $this->rootDir.'/run-test.php',
+               'twigfiddle:run',
+               $this->envId,
         )));
 
         $out = exec("{$command} 2>&1");
@@ -216,4 +216,5 @@ class DefaultEngineTest extends \PHPUnit_Framework_TestCase
 
         return $this;
     }
+
 }
