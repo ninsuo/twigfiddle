@@ -64,7 +64,7 @@ class RunCommand extends BaseCommand
         $this->memory = str_repeat('*', 1024 * 1024);
         register_shutdown_function(function () {
             $this->memory = null;
-            if ((!is_null($err          = error_get_last())) && (!in_array($err['type'], array(E_NOTICE, E_WARNING, E_USER_DEPRECATED)))) {
+            if ((!is_null($err = error_get_last())) && (!in_array($err['type'], array(E_NOTICE, E_WARNING, E_USER_DEPRECATED)))) {
                 // By default, unexpected exceptions leads to debug files given to developers for debugging purposes.
                 // But there are no need to require developer's attention if some main.twig contains {{ include('main.twig') }}
                 $ignores = array(
