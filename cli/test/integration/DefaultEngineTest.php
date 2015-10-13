@@ -71,6 +71,7 @@ class DefaultEngineTest extends \PHPUnit_Framework_TestCase
             array('Twig 2.x', 'Twig-master'),
 
             // 1.x
+            array('Twig 1.x', 'Twig-1.22.3'),
             array('Twig 1.x', 'Twig-1.22.2'),
             array('Twig 1.x', 'Twig-1.22.1'),
             array('Twig 1.x', 'Twig-1.22.0'),
@@ -194,7 +195,12 @@ class DefaultEngineTest extends \PHPUnit_Framework_TestCase
                $this->envId,
         )));
 
-        $out = exec("{$command} 2>&1");
+	$output = array();
+        $out = exec("{$command} 2>&1", $output);
+        if (count($output)) {
+	   echo implode("\n", $output), PHP_EOL;
+        }
+
         $this->assertEmpty($out);
 
         chdir($oldDir);
