@@ -91,6 +91,9 @@ class FiddleType extends AbstractType
                'required' => false,
                'choices'  => array_combine($this->twigExtensions, $this->twigExtensions),
            ))
+           ->add('compiledExpended', 'checkbox', array(
+               'required' => false,
+           ))
         ;
     }
 

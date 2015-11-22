@@ -131,6 +131,14 @@ class Fiddle implements TagContainerInterface
     protected $twigExtension;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="compiled_expended", type="boolean")
+     * @Serializer\Type("boolean")
+     */
+    protected $compiledExpended = false;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255, nullable=true)
@@ -412,6 +420,26 @@ class Fiddle implements TagContainerInterface
     public function getTwigExtension()
     {
         return $this->twigExtension;
+    }
+
+    /**
+     * @param boolean $compiledExpended
+     *
+     * @return Fiddle
+     */
+    public function setCompiledExpended($compiledExpended)
+    {
+        $this->compiledExpended = $compiledExpended;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getCompiledExpended()
+    {
+        return $this->compiledExpended;
     }
 
     /**
