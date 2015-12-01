@@ -1,45 +1,45 @@
 parameters:
-    environment.configuration_node.class: Fuz\Process\ConfigurationNode\EnvironmentConfigurationNode
-    debug.configuration_node.class: Fuz\Process\ConfigurationNode\DebugConfigurationNode
-    fiddle.configuration_node.class: Fuz\Process\ConfigurationNode\FiddleConfigurationNode
-    templates.configuration_node.class: Fuz\Process\ConfigurationNode\TemplatesConfigurationNode
-    twig_sources.configuration_node.class: Fuz\Process\ConfigurationNode\TwigSourcesConfigurationNode
-    twig_extensions.configuration_node.class: Fuz\Process\ConfigurationNode\TwigExtensionsConfigurationNode
+    environment.configuration_node.class: 'Fuz\Process\ConfigurationNode\EnvironmentConfigurationNode'
+    debug.configuration_node.class: 'Fuz\Process\ConfigurationNode\DebugConfigurationNode'
+    fiddle.configuration_node.class: 'Fuz\Process\ConfigurationNode\FiddleConfigurationNode'
+    templates.configuration_node.class: 'Fuz\Process\ConfigurationNode\TemplatesConfigurationNode'
+    twig_sources.configuration_node.class: 'Fuz\Process\ConfigurationNode\TwigSourcesConfigurationNode'
+    twig_extensions.configuration_node.class: 'Fuz\Process\ConfigurationNode\TwigExtensionsConfigurationNode'
 
 services:
 
     environment.configuration_node:
-        class: %environment.configuration_node.class%
+        class: '%environment.configuration_node.class%'
         arguments: []
         tags:
          - { name: configuration.node }
 
     debug.configuration_node:
-        class: %debug.configuration_node.class%
+        class: '%debug.configuration_node.class%'
         arguments: []
         tags:
          - { name: configuration.node }
 
     fiddle.configuration_node:
-        class: %fiddle.configuration_node.class%
+        class: '%fiddle.configuration_node.class%'
         arguments: []
         tags:
          - { name: configuration.node }
 
     templates.configuration_node:
-        class: %templates.configuration_node.class%
+        class: '%templates.configuration_node.class%'
         arguments: []
         tags:
          - { name: configuration.node }
 
     twig_sources.configuration_node:
-        class: %twig_sources.configuration_node.class%
+        class: '%twig_sources.configuration_node.class%'
         arguments: []
         tags:
          - { name: configuration.node }
 
     twig_extensions.configuration_node:
-        class: %twig_extensions.configuration_node.class%
+        class: '%twig_extensions.configuration_node.class%'
         arguments: []
         tags:
          - { name: configuration.node }

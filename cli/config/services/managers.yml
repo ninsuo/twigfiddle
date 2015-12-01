@@ -1,59 +1,58 @@
 parameters:
-    fiddle_agent.class: Fuz\Process\Agent\FiddleAgent
-    error_manager.class: Fuz\Process\Service\ErrorManager
-    debug_manager.class: Fuz\Process\Service\DebugManager
-    environment_manager.class: Fuz\Process\Service\EnvironmentManager
-    shared_memory_manager.class: Fuz\Process\Service\SharedMemoryManager
-    engine_manager.class: Fuz\Process\Service\EngineManager
-    context_manager.class: Fuz\Process\Service\ContextManager
-    template_manager.class: Fuz\Process\Service\TemplateManager
-    execute_manager.class: Fuz\Process\Service\ExecuteManager
-    compiled_manager.class: Fuz\Process\Service\CompiledManager
-    twig_extensions_manager.class: Fuz\Process\Service\TwigExtensionsManager
+    fiddle_agent.class: 'Fuz\Process\Agent\FiddleAgent'
+    error_manager.class: 'Fuz\Process\Service\ErrorManager'
+    debug_manager.class: 'Fuz\Process\Service\DebugManager'
+    environment_manager.class: 'Fuz\Process\Service\EnvironmentManager'
+    shared_memory_manager.class: 'Fuz\Process\Service\SharedMemoryManager'
+    engine_manager.class: 'Fuz\Process\Service\EngineManager'
+    context_manager.class: 'Fuz\Process\Service\ContextManager'
+    template_manager.class: 'Fuz\Process\Service\TemplateManager'
+    execute_manager.class: 'Fuz\Process\Service\ExecuteManager'
+    compiled_manager.class: 'Fuz\Process\Service\CompiledManager'
+    twig_extensions_manager.class: 'Fuz\Process\Service\TwigExtensionsManager'
 
 services:
 
     fiddle_agent:
-        class: %fiddle_agent.class%
-        arguments: [@error_manager]
-        scope: prototype
+        class: '%fiddle_agent.class%'
+        arguments: ['@error_manager']
 
     error_manager:
-        class: %error_manager.class%
+        class: '%error_manager.class%'
         arguments: []
 
     debug_manager:
-        class: %debug_manager.class%
-        arguments: [@file_system, %config.debug%, %config.environment%]
+        class: '%debug_manager.class%'
+        arguments: ['@file_system', '%config.debug%', '%config.environment%']
 
     environment_manager:
-        class: %environment_manager.class%
-        arguments: [@file_system, %config.debug%, %config.environment%, %config.fiddle%]
+        class: '%environment_manager.class%'
+        arguments: ['@file_system', '%config.debug%', '%config.environment%', '%config.fiddle%']
 
     shared_memory_manager:
-        class: %shared_memory_manager.class%
-        arguments: [@environment_manager, %config.fiddle%]
+        class: '%shared_memory_manager.class%'
+        arguments: ['@environment_manager', '%config.fiddle%']
 
     engine_manager:
-        class: %engine_manager.class%
-        arguments: [@service_container, %config.fiddle%, %config.twig_sources%]
+        class: '%engine_manager.class%'
+        arguments: ['@service_container', '%config.fiddle%', '%config.twig_sources%']
 
     context_manager:
-        class: %context_manager.class%
-        arguments: [@string_loader]
+        class: '%context_manager.class%'
+        arguments: ['@string_loader']
 
     template_manager:
-        class: %template_manager.class%
-        arguments: [@file_system, %config.fiddle%, %config.templates%]
+        class: '%template_manager.class%'
+        arguments: ['@file_system', '%config.fiddle%', '%config.templates%']
 
     execute_manager:
-        class: %execute_manager.class%
-        arguments: [@file_system, @environment_manager, @engine_manager, @context_manager, @template_manager, @twig_exensions_manager, %config.fiddle%]
+        class: '%execute_manager.class%'
+        arguments: ['@file_system', '@environment_manager', '@engine_manager', '@context_manager', '@template_manager', '@twig_exensions_manager', '%config.fiddle%']
 
     compiled_manager:
-        class: %compiled_manager.class%
-        arguments: [@file_system, @environment_manager, %config.fiddle%]
+        class: '%compiled_manager.class%'
+        arguments: ['@file_system', '@environment_manager', '%config.fiddle%']
 
     twig_exensions_manager:
-        class: %twig_extensions_manager.class%
-        arguments: [%config.twig_extensions%]
+        class: '%twig_extensions_manager.class%'
+        arguments: ['%config.twig_extensions%']

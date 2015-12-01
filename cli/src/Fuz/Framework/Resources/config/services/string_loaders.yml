@@ -1,31 +1,31 @@
 parameters:
-    yaml.string_loader.class: Fuz\Framework\StringLoader\YamlStringLoader
-    xml.string_loader.class: Fuz\Framework\StringLoader\XmlStringLoader
-    json.string_loader.class: Fuz\Framework\StringLoader\JsonStringLoader
-    ini.string_loader.class: Fuz\Framework\StringLoader\IniStringLoader
+    yaml.string_loader.class: 'Fuz\Framework\StringLoader\YamlStringLoader'
+    xml.string_loader.class: 'Fuz\Framework\StringLoader\XmlStringLoader'
+    json.string_loader.class: 'Fuz\Framework\StringLoader\JsonStringLoader'
+    ini.string_loader.class: 'Fuz\Framework\StringLoader\IniStringLoader'
 
 services:
 
     yaml.string_loader:
-        class: %yaml.string_loader.class%
+        class: '%yaml.string_loader.class%'
         arguments: []
         tags:
          - { name: string.loader, supports: YML/YAML }
 
     xml.string_loader:
-        class: %xml.string_loader.class%
+        class: '%xml.string_loader.class%'
         arguments: []
         tags:
          - { name: string.loader, supports: XML }
 
     json.string_loader:
-        class: %json.string_loader.class%
+        class: '%json.string_loader.class%'
         arguments: []
         tags:
          - { name: string.loader, supports: JSON }
 
     ini.string_loader:
-        class: %ini.string_loader.class%
+        class: '%ini.string_loader.class%'
         arguments: []
         tags:
          - { name: string.loader, supports: INI }

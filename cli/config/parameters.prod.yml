@@ -1,4 +1,4 @@
 parameters:
-    environment_directory: %root_dir%/../environment/
+    environment_directory: '%root_dir%/../environment/'
     debug_allowed: true
     logger_level: INFO

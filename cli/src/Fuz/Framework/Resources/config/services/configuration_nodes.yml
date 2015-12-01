@@ -1,10 +1,10 @@
 parameters:
-    logger_configuration_node.class: Fuz\Framework\ConfigurationNode\LoggerConfigurationNode
+    logger_configuration_node.class: 'Fuz\Framework\ConfigurationNode\LoggerConfigurationNode'
 
 services:
 
     logger_configuration_node:
-        class: %logger_configuration_node.class%
+        class: '%logger_configuration_node.class%'
         arguments: []
         tags:
          - { name: configuration.node }

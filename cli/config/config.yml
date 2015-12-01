@@ -1,16 +1,16 @@
 logger:
-    level: %logger_level%
+    level: '%logger_level%'
     max_files: 30
-    name: %env%.log
+    name: '%env%.log'
 
 environment:
-    directory: %environment_directory%
-    validation: ^[a-zA-Z0-9-]{4,16}$
+    directory: '%environment_directory%'
+    validation: '^[a-zA-Z0-9-]{4,16}$'
     expiry: 24
 
 debug:
-    allowed: %debug_allowed%
-    directory: %root_dir%/../debug/
+    allowed: '%debug_allowed%'
+    directory: '%root_dir%/../debug/'
     expiry: 720
     context_file: context.srz
 
@@ -20,12 +20,12 @@ fiddle:
     compiled_dir: php
 
 templates:
-    validation: ^(?!\.)[A-Za-z0-9-_.]{1,16}\.[tT][wW][iI][gG]$
+    validation: '^(?!\.)[A-Za-z0-9-_.]{1,16}\.[tT][wW][iI][gG]$'
 
 twig_sources:
-    directory: %root_dir%/twig/uncompressed
+    directory: '%root_dir%/twig/uncompressed'
     extension: ext/twig/modules/twig.so
 
 twig_extensions:
-    directory: %root_dir%/twig/extension/uncompressed
+    directory: '%root_dir%/twig/extension/uncompressed'
     apc_cache_key: twigfiddle.twig_extensions

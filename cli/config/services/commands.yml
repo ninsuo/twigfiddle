@@ -1,17 +1,17 @@
 parameters:
-    run.command.class: Fuz\Process\Command\RunCommand
-    run.timeout.command.class: Fuz\Process\Command\RunTimeoutCommand
+    run.command.class: 'Fuz\Process\Command\RunCommand'
+    run.timeout.command.class: 'Fuz\Process\Command\RunTimeoutCommand'
 
 services:
 
     run.command:
-        class: %run.command.class%
+        class: '%run.command.class%'
         arguments: []
         tags:
             - { name: command }
 
     run.timout.command:
-        class: %run.timeout.command.class%
+        class: '%run.timeout.command.class%'
         arguments: []
         tags:
             - { name: command }

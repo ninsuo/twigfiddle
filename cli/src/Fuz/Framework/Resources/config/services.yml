@@ -3,20 +3,20 @@ imports:
     - { resource: services/string_loaders.yml }
 
 parameters:
-    file_loader.class: Fuz\Framework\Service\FileLoader
-    string_loader.class: Fuz\Framework\Service\StringLoader
-    file_system.class: Fuz\Framework\Service\FileSystem
+    file_loader.class: 'Fuz\Framework\Service\FileLoader'
+    string_loader.class: 'Fuz\Framework\Service\StringLoader'
+    file_system.class: 'Fuz\Framework\Service\FileSystem'
 
 services:
 
     file_loader:
-        class: %file_loader.class%
+        class: '%file_loader.class%'
         arguments: []
 
     string_loader:
-        class: %string_loader.class%
-        arguments: [@service_container]
+        class: '%string_loader.class%'
+        arguments: ['@service_container']
 
     file_system:
-        class: %file_system.class%
+        class: '%file_system.class%'
         arguments: []
