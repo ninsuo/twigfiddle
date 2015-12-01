@@ -16,6 +16,7 @@ services:
     fiddle_agent:
         class: '%fiddle_agent.class%'
         arguments: ['@error_manager']
+        shared: false
 
     error_manager:
         class: '%error_manager.class%'
