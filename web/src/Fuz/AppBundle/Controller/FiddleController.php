@@ -50,13 +50,18 @@ class FiddleController extends BaseController
 
                $response['result'] = $this
                   ->get('templating')
-                  ->render('FuzAppBundle:Fiddle:result.html.twig', array('data' => $result))
+                  ->render('FuzAppBundle:Fiddle:result.html.twig', array(
+                      'fiddle' => $fiddle,
+                      'data' => $result,
+                  ))
                ;
 
                if ($result->getResult() && $result->getResult()->getContext()) {
                    $response['context'] = $this
                       ->get('templating')
-                      ->render('FuzAppBundle:Fiddle:result-context.html.twig', array('data' => $result))
+                      ->render('FuzAppBundle:Fiddle:result-context.html.twig', array(
+                          'data' => $result,
+                      ))
                    ;
                }
 

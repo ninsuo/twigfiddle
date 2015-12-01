@@ -353,14 +353,17 @@ $(document).ready(function() {
         e.preventDefault();
         var link = $(this);
         var compiled = $('#result-compiled-container');
+        var expended = $('#{{ form.compiledExpended.vars.id }}');
         if (compiled.is(':visible')) {
             link.html('Show compiled template' + link.data('plur'));
             compiled.addClass('hide');
             compiled.attr('aria-hidden', 'true');
+            expended.prop('checked', false);
         } else {
             link.html('Hide compiled template' + link.data('plur'));
             compiled.removeClass('hide');
             compiled.removeAttr('aria-label');
+            expended.prop('checked', true);
         }
     });
 
