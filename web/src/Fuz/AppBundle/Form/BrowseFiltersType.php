@@ -44,10 +44,11 @@ class BrowseFiltersType extends AbstractType
            ))
            ->add('visibility', Type\ChoiceType::class, array(
                'choices'  => array(
-                   Fiddle::VISIBILITY_PUBLIC   => ucfirst(Fiddle::VISIBILITY_PUBLIC),
-                   Fiddle::VISIBILITY_UNLISTED => ucfirst(Fiddle::VISIBILITY_UNLISTED),
-                   Fiddle::VISIBILITY_PRIVATE  => ucfirst(Fiddle::VISIBILITY_PRIVATE),
+                   ucfirst(Fiddle::VISIBILITY_PUBLIC)   => Fiddle::VISIBILITY_PUBLIC,
+                   ucfirst(Fiddle::VISIBILITY_UNLISTED) => Fiddle::VISIBILITY_UNLISTED,
+                   ucfirst(Fiddle::VISIBILITY_PRIVATE)  => Fiddle::VISIBILITY_PRIVATE,
                ),
+               'choices_as_values' => true,
                'required' => false,
            ))
         ;

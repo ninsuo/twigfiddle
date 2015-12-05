@@ -21,6 +21,7 @@ use Fuz\AppBundle\Entity\Fiddle;
 
 class FiddleType extends AbstractType
 {
+
     protected $twigVersions;
     protected $twigExtensions;
 
@@ -62,11 +63,12 @@ class FiddleType extends AbstractType
               ->addModelTransformer($transformer)
            )
            ->add('visibility', Type\ChoiceType::class, array(
-               'choices' => array(
-                   Fiddle::VISIBILITY_PUBLIC   => 1,
-                   Fiddle::VISIBILITY_UNLISTED => 2,
-                   Fiddle::VISIBILITY_PRIVATE  => 3,
+               'choices'           => array(
+                   1 => Fiddle::VISIBILITY_PUBLIC,
+                   2 => Fiddle::VISIBILITY_UNLISTED,
+                   3 => Fiddle::VISIBILITY_PRIVATE,
                ),
+               'choices_as_values' => true,
            ))
         ;
     }
@@ -78,19 +80,22 @@ class FiddleType extends AbstractType
 
         $builder
            ->add('twigEngine', Type\ChoiceType::class, array(
-               'choices'  => array_combine($engines, $engines),
-               'required' => true,
+               'choices'           => array_combine($engines, $engines),
+               'required'          => true,
+               'choices_as_values' => true,
            ))
            ->add('twigVersion', Type\ChoiceType::class, array(
-               'choices'  => array_combine($versions, $versions),
-               'required' => true,
+               'choices'           => array_combine($versions, $versions),
+               'required'          => true,
+               'choices_as_values' => true,
            ))
            ->add('withCExtension', Type\CheckboxType::class, array(
                'required' => false,
            ))
            ->add('twigExtension', Type\ChoiceType::class, array(
-               'required' => false,
-               'choices'  => array_combine($this->twigExtensions, $this->twigExtensions),
+               'required'          => false,
+               'choices'           => array_combine($this->twigExtensions, $this->twigExtensions),
+               'choices_as_values' => true,
            ))
            ->add('compiledExpended', Type\CheckboxType::class, array(
                'required' => false,

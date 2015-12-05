@@ -10,6 +10,8 @@
  # file that was distributed with this source code.
  #}
 
+{% import _self as macros %}
+
 {{
     form_start(filters, {
         'attr': {
@@ -55,7 +57,7 @@
                 })
             }}
         </div>
-        {{ _self.display_submit(filters) }}
+        {{ macros.display_submit(filters) }}
         <div class="error-container">{{ form_errors(filters.keywords) }}</div>
     </div>
 
@@ -77,7 +79,7 @@
                 })
             }}
         </div>
-        {{ _self.display_submit(filters) }}
+        {{ macros.display_submit(filters) }}
        <div class="error-container">{{ form_errors(filters.tags) }}</div>
     </div>
 
@@ -110,7 +112,7 @@
                 Search in bookmarks
             </label>
 
-            {{ _self.display_submit(filters) }}
+            {{ macros.display_submit(filters) }}
 
         </div>
 
@@ -124,7 +126,7 @@
                 <label class="sr-only">Fiddle's visibility</label>
                 {{ form_widget(filters.visibility) }}
             </div>
-            {{ _self.display_submit(filters) }}
+            {{ macros.display_submit(filters) }}
         </div>
        <div class="error-container">{{ form_errors(filters.visibility) }}</div>
 

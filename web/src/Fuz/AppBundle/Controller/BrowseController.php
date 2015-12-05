@@ -73,7 +73,7 @@ class BrowseController extends BaseController
         if (!is_null($tag)) {
             $data->setTags(array($tag));
         }
-        $filters = $this->createForm(new BrowseFiltersType(), $data);
+        $filters = $this->createForm(BrowseFiltersType::class, $data);
         $filters->handleRequest($request);
 
         return array($data, $filters);
@@ -106,7 +106,7 @@ class BrowseController extends BaseController
         $bookmarkData = new UserBookmark();
         $bookmarkData->mapFiddle($fiddle);
 
-        $form = $this->createForm(new UserBookmarkType(), $bookmarkData)->createView();
+        $form = $this->createForm(UserBookmarkType::class, $bookmarkData)->createView();
 
         return array(
                 'fiddle' => $fiddle,

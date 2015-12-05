@@ -9,6 +9,8 @@
  # file that was distributed with this source code.
  #}
 
+{% import _self as macros %}
+
 {% macro attributes(attr, key, value) %}
     {% spaceless %}
 
@@ -35,7 +37,7 @@
                     {% else %}
                         <a
                             title="Go to previous page, page {{ (pagination.session.current_page - 1) }}"
-                            {{ _self.attributes(linksAttr, pagination.page_query_string, (pagination.session.current_page - 1)) }}>
+                            {{ macros.attributes(linksAttr, pagination.page_query_string, (pagination.session.current_page - 1)) }}>
                             <span aria-hidden="true">«</span>
                         </a>
                     {% endif %}
@@ -45,7 +47,7 @@
                     <li>
                         <a
                             title="Go to first page"
-                            {{ _self.attributes(linksAttr, pagination.page_query_string, 1) }}>
+                            {{ macros.attributes(linksAttr, pagination.page_query_string, 1) }}>
                             <span>1</span>
                         </a>
                     </li>
@@ -63,7 +65,7 @@
                         {% else %}
                             <a
                                 title="Go to page {{ page }}"
-                                {{ _self.attributes(linksAttr, pagination.page_query_string, page) }}>{{ page }}</a>
+                                {{ macros.attributes(linksAttr, pagination.page_query_string, page) }}>{{ page }}</a>
                         {% endif %}
                     </li>
                 {% endfor %}
@@ -76,7 +78,7 @@
                     <li>
                         <a
                             title="Go to last page, page {{ pagination.count_pages }}"
-                            {{ _self.attributes(linksAttr, pagination.page_query_string, pagination.count_pages) }}>
+                            {{ macros.attributes(linksAttr, pagination.page_query_string, pagination.count_pages) }}>
                             <span>{{ pagination.count_pages }}</span>
                         </a>
                     </li>
@@ -91,7 +93,7 @@
                     {% else %}
                         <a
                             title="Go to next page, page {{ (pagination.session.current_page + 1) }}"
-                            {{ _self.attributes(linksAttr, pagination.page_query_string, pagination.session.current_page + 1) }}>
+                            {{ macros.attributes(linksAttr, pagination.page_query_string, pagination.session.current_page + 1) }}>
                             <span aria-hidden="true">»</span>
                         </a>
                     {% endif %}
@@ -117,7 +119,7 @@
                         {% else %}
                             <a
                                 title="Show {{ per_page }} results per page"
-                                {{ _self.attributes(linksAttr, pagination.per_page_query_string, per_page) }}>{{ per_page }}</a>
+                                {{ macros.attributes(linksAttr, pagination.per_page_query_string, per_page) }}>{{ per_page }}</a>
                         {% endif %}
                     </li>
 
@@ -143,7 +145,7 @@
                 <input placeholder="" name="{{ pagination.page_query_string }}" class="form-control-static" style="width: 50px;">
                 &nbsp;
                 <button
-                    title="Go to the given page" {{ _self.attributes(submitAttr, '', '') }}
+                    title="Go to the given page" {{ macros.attributes(submitAttr, '', '') }}
                     type="submit">OK</button>
         </div>
     </form>

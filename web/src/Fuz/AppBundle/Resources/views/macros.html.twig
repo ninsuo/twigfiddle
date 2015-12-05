@@ -102,9 +102,10 @@
 {% endmacro %}
 
 {% macro me() %}
+    {% import _self as macros %}
     {% spaceless %}
         {% if is_granted('ROLE_USER') %}
-            {{ _self.user('', app.user) }}
+            {{ macros.user('', app.user) }}
         {% else %}
             Guest
         {% endif %}
@@ -122,6 +123,7 @@
 {% endmacro %}
 
 {% macro fiddle(fiddle, showVisits) %}
+    {% import _self as macros %}
     {% spaceless -%}
         {% if fiddle.id %}
             {% set isMyFiddle = (is_granted('ROLE_USER') and fiddle.user|default(null) and app.user.isEqualTo(fiddle.user)) %}
@@ -133,7 +135,7 @@
                class="green">{{ fiddle.hash }} {% if fiddle.revision > 1 %}v{{ fiddle.revision }}{% endif %}</a>
              created on {{ fiddle.creationTm|date }}
            {% if fiddle.user|default(null) %}
-               {% if isMyFiddle %}by <i>yourself</i>{% else %}{{ _self.user('by', fiddle.user|default(null)) }}{% endif %}
+               {% if isMyFiddle %}by <i>yourself</i>{% else %}{{ macros.user('by', fiddle.user|default(null)) }}{% endif %}
            {% endif %}
            {% if showVisits %}
                 and visited {{ fiddle.visitsCount }} time{% if fiddle.visitsCount != 1 %}s{% endif %}

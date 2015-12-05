@@ -25,6 +25,7 @@ class FiddleContextType extends AbstractType
            ->add('format', Type\ChoiceType::class, array(
                    'choices' => array_combine(FiddleContext::getSupportedFormats(), FiddleContext::getSupportedFormats()),
                    'required' => true,
+                   'choices_as_values' => true,
            ))
            ->add('content', Type\TextareaType::class, array(
                    'required' => false,

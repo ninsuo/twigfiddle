@@ -10,6 +10,8 @@
  # file that was distributed with this source code.
  #}
 
+{% import _self as macros %}
+
 {% macro list_fiddles(list) %}
     {% for index, fiddle in list %}
         <div
@@ -29,14 +31,14 @@
 
     {# Left side #}
     <div class="col-md-6">
-        {{ _self.list_fiddles(list_left) }}
+        {{ macros.list_fiddles(list_left) }}
     </div>
 
     <div class="clearfix hidden-md hidden-lg">&nbsp;</div>
 
     {# Right side #}
     <div class="col-md-6">
-        {{ _self.list_fiddles(list_right) }}
+        {{ macros.list_fiddles(list_right) }}
     </div>
 
 </div>
