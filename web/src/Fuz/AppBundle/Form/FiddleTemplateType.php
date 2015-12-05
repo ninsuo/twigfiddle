@@ -14,19 +14,20 @@ namespace Fuz\AppBundle\Form;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type;
 
 class FiddleTemplateType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-           ->add('filename', 'text', array(
+           ->add('filename', Type\TextType::class, array(
                    'required' => true,
            ))
-           ->add('content', 'textarea', array(
+           ->add('content', Type\TextareaType::class, array(
                    'required' => true,
            ))
-           ->add('main', 'checkbox', array(
+           ->add('main', Type\CheckboxType::class, array(
                    'required' => false,
            ))
         ;
@@ -39,7 +40,7 @@ class FiddleTemplateType extends AbstractType
         ));
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'FiddleTemplateType';
     }

@@ -14,6 +14,7 @@ namespace Fuz\AppBundle\Form;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type;
 use Fuz\AppBundle\Transformer\UserBookmarkTagTransformer;
 
 class UserBookmarkType extends AbstractType
@@ -23,12 +24,12 @@ class UserBookmarkType extends AbstractType
         $transformer = new UserBookmarkTagTransformer($options['data_object']);
 
         $builder
-           ->add('title', 'text', array(
+           ->add('title', Type\TextType::class, array(
                    'required' => false,
            ))
            ->add(
               $builder
-              ->create('tags', 'text',
+              ->create('tags', Type\TextType::class,
                  array(
                       'required' => false,
               ))
@@ -51,7 +52,7 @@ class UserBookmarkType extends AbstractType
      *
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'FiddleType';
     }

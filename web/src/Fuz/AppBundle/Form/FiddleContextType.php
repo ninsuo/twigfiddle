@@ -14,6 +14,7 @@ namespace Fuz\AppBundle\Form;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type;
 use Fuz\AppBundle\Entity\FiddleContext;
 
 class FiddleContextType extends AbstractType
@@ -21,11 +22,11 @@ class FiddleContextType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-           ->add('format', 'choice', array(
+           ->add('format', Type\ChoiceType::class, array(
                    'choices' => array_combine(FiddleContext::getSupportedFormats(), FiddleContext::getSupportedFormats()),
                    'required' => true,
            ))
-           ->add('content', 'textarea', array(
+           ->add('content', Type\TextareaType::class, array(
                    'required' => false,
            ))
         ;
@@ -39,7 +40,7 @@ class FiddleContextType extends AbstractType
         ));
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'FiddleContextType';
     }

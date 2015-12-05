@@ -1,5 +1,4 @@
 <?php
-
 /*
  * This file is part of twigfiddle.com project.
  *
@@ -14,6 +13,7 @@ namespace Fuz\AppBundle\Form;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type;
 use Fuz\AppBundle\Transformer\ArrayTransformer;
 use Fuz\AppBundle\Entity\Fiddle;
 
@@ -23,32 +23,32 @@ class BrowseFiltersType extends AbstractType
     {
         $builder
            ->add(
-                    $builder
-                        ->create('keywords', 'text', array(
-                                'required' => false,
-                        ))
-                        ->addModelTransformer(new ArrayTransformer(' '))
+              $builder
+              ->create('keywords', Type\TextType::class, array(
+                  'required' => false,
+              ))
+              ->addModelTransformer(new ArrayTransformer(' '))
            )
            ->add(
-                    $builder
-                        ->create('tags', 'text', array(
-                                'required' => false,
-                        ))
-                        ->addModelTransformer(new ArrayTransformer(','))
+              $builder
+              ->create('tags', Type\TextType::class, array(
+                  'required' => false,
+              ))
+              ->addModelTransformer(new ArrayTransformer(','))
            )
-           ->add('bookmark', 'checkbox', array(
-                   'required' => false,
+           ->add('bookmark', Type\CheckboxType::class, array(
+               'required' => false,
            ))
-           ->add('mine', 'checkbox', array(
-                   'required' => false,
+           ->add('mine', Type\CheckboxType::class, array(
+               'required' => false,
            ))
-           ->add('visibility', 'choice', array(
-                   'choices' => array(
-                        Fiddle::VISIBILITY_PUBLIC => ucfirst(Fiddle::VISIBILITY_PUBLIC),
-                        Fiddle::VISIBILITY_UNLISTED => ucfirst(Fiddle::VISIBILITY_UNLISTED),
-                        Fiddle::VISIBILITY_PRIVATE => ucfirst(Fiddle::VISIBILITY_PRIVATE),
-                   ),
-                   'required' => false,
+           ->add('visibility', Type\ChoiceType::class, array(
+               'choices'  => array(
+                   Fiddle::VISIBILITY_PUBLIC   => ucfirst(Fiddle::VISIBILITY_PUBLIC),
+                   Fiddle::VISIBILITY_UNLISTED => ucfirst(Fiddle::VISIBILITY_UNLISTED),
+                   Fiddle::VISIBILITY_PRIVATE  => ucfirst(Fiddle::VISIBILITY_PRIVATE),
+               ),
+               'required' => false,
            ))
         ;
     }
@@ -56,11 +56,11 @@ class BrowseFiltersType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-                'data_class' => 'Fuz\AppBundle\Entity\BrowseFilters',
+            'data_class' => 'Fuz\AppBundle\Entity\BrowseFilters',
         ));
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'BrowseFiltersType';
     }

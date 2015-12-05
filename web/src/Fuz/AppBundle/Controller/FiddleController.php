@@ -21,6 +21,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Fuz\AppBundle\Base\BaseController;
 use Fuz\AppBundle\Entity\Fiddle;
 use Fuz\AppBundle\Entity\UserBookmark;
+use Fuz\AppBundle\Form\FiddleType;
 use Fuz\AppBundle\Form\UserBookmarkType;
 
 class FiddleController extends BaseController
@@ -199,7 +200,7 @@ class FiddleController extends BaseController
                 'isBookmarked' => false,
         );
 
-        $form = $this->createForm(new UserBookmarkType(), $bookmark,
+        $form = $this->createForm(UserBookmarkType::class, $bookmark,
            array(
                 'data_object' => $bookmark,
         ));
@@ -271,7 +272,7 @@ class FiddleController extends BaseController
             $fiddle->mapBookmark($bookmark);
         }
 
-        $form = $this->createForm('FiddleType', $fiddle);
+        $form = $this->createForm(FiddleType::class, $fiddle);
 
         $processConfig = $this->get('app.process_configuration')->getProcessConfig();
 
@@ -304,7 +305,7 @@ class FiddleController extends BaseController
             return new RedirectResponse($this->generateUrl('fiddle', $response, Response::HTTP_PRECONDITION_REQUIRED));
         }
 
-        $form = $this->createForm('FiddleType', $fiddle, array(
+        $form = $this->createForm(FiddleType::class, $fiddle, array(
                 'data_object' => $fiddle,
         ));
         $form->handleRequest($request);

@@ -34,7 +34,7 @@ services:
          class: %app.form.fiddle.class%
          arguments: [@app.process_configuration, @app.twig_extensions]
          tags:
-            - { name: form.type, alias: FiddleType }
+            - { name: form.type }
 
     app.twig.debug_extension:
          class: %app.twig.debug_extension.class%

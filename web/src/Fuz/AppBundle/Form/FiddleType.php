@@ -13,6 +13,7 @@ namespace Fuz\AppBundle\Form;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type;
 use Fuz\AppBundle\Service\TwigExtensions;
 use Fuz\AppBundle\Util\ProcessConfiguration;
 use Fuz\AppBundle\Transformer\FiddleTagTransformer;
@@ -38,8 +39,8 @@ class FiddleType extends AbstractType
         $this->buildFiddleOptions($builder, $options);
 
         $builder
-           ->add('templates', 'collection', array(
-               'type'           => new FiddleTemplateType(),
+           ->add('templates', Type\CollectionType::class, array(
+               'entry_type'     => FiddleTemplateType::class,
                'allow_add'      => true,
                'allow_delete'   => true,
                'prototype'      => true,
@@ -47,20 +48,20 @@ class FiddleType extends AbstractType
                'by_reference'   => false,
                'required'       => false,
            ))
-           ->add('context', new FiddleContextType(), array(
+           ->add('context', FiddleContextType::class, array(
                'required' => false,
            ))
-           ->add('title', 'text', array(
+           ->add('title', Type\TextType::class, array(
                'required' => false,
            ))
            ->add(
               $builder
-              ->create('tags', 'text', array(
+              ->create('tags', Type\TextType::class, array(
                   'required' => false,
               ))
               ->addModelTransformer($transformer)
            )
-           ->add('visibility', 'choice', array(
+           ->add('visibility', Type\ChoiceType::class, array(
                'choices' => array(
                    Fiddle::VISIBILITY_PUBLIC   => 1,
                    Fiddle::VISIBILITY_UNLISTED => 2,
@@ -76,22 +77,22 @@ class FiddleType extends AbstractType
         $versions = array_unique(call_user_func_array('array_merge', $this->twigVersions));
 
         $builder
-           ->add('twigEngine', 'choice', array(
+           ->add('twigEngine', Type\ChoiceType::class, array(
                'choices'  => array_combine($engines, $engines),
                'required' => true,
            ))
-           ->add('twigVersion', 'choice', array(
+           ->add('twigVersion', Type\ChoiceType::class, array(
                'choices'  => array_combine($versions, $versions),
                'required' => true,
            ))
-           ->add('withCExtension', 'checkbox', array(
+           ->add('withCExtension', Type\CheckboxType::class, array(
                'required' => false,
            ))
-           ->add('twigExtension', 'choice', array(
+           ->add('twigExtension', Type\ChoiceType::class, array(
                'required' => false,
                'choices'  => array_combine($this->twigExtensions, $this->twigExtensions),
            ))
-           ->add('compiledExpended', 'checkbox', array(
+           ->add('compiledExpended', Type\CheckboxType::class, array(
                'required' => false,
            ))
         ;
@@ -105,7 +106,7 @@ class FiddleType extends AbstractType
         ));
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'FiddleType';
     }
