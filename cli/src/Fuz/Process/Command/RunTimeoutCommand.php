@@ -11,13 +11,13 @@
 
 namespace Fuz\Process\Command;
 
+use Fuz\Framework\Base\BaseCommand;
+use Fuz\Process\Entity\Error;
+use Fuz\Process\Exception\StopExecutionException;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\ProcessBuilder;
-use Fuz\Framework\Base\BaseCommand;
-use Fuz\Process\Entity\Error;
-use Fuz\Process\Exception\StopExecutionException;
 
 class RunTimeoutCommand extends BaseCommand
 {

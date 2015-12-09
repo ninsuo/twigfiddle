@@ -11,9 +11,9 @@
 
 namespace Fuz\Framework\ConfigurationNode;
 
-use Symfony\Component\Config\Definition\Builder\TreeBuilder;
-use Monolog\Logger;
 use Fuz\Framework\Api\ConfigurationNodeInterface;
+use Monolog\Logger;
+use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
 class LoggerConfigurationNode implements ConfigurationNodeInterface
 {

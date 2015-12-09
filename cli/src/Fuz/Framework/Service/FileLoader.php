@@ -11,13 +11,13 @@
 
 namespace Fuz\Framework\Service;
 
-use Symfony\Component\Config\FileLocator;
-use Symfony\Component\Config\Loader\LoaderResolver;
-use Symfony\Component\Config\Loader\DelegatingLoader;
-use Fuz\Framework\FileLoader\YamlFileLoader;
-use Fuz\Framework\FileLoader\XmlFileLoader;
 use Fuz\Framework\FileLoader\JsonFileLoader;
 use Fuz\Framework\FileLoader\PhpFileLoader;
+use Fuz\Framework\FileLoader\XmlFileLoader;
+use Fuz\Framework\FileLoader\YamlFileLoader;
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\Config\Loader\DelegatingLoader;
+use Symfony\Component\Config\Loader\LoaderResolver;
 
 class FileLoader
 {

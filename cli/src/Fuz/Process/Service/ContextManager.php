@@ -13,9 +13,9 @@ namespace Fuz\Process\Service;
 
 use Fuz\Framework\Base\BaseService;
 use Fuz\Framework\Service\StringLoader;
+use Fuz\Process\Agent\FiddleAgent;
 use Fuz\Process\Entity\Error;
 use Fuz\Process\Exception\StopExecutionException;
-use Fuz\Process\Agent\FiddleAgent;
 
 class ContextManager extends BaseService
 {

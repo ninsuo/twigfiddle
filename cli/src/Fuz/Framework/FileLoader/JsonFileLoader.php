@@ -11,8 +11,8 @@
 
 namespace Fuz\Framework\FileLoader;
 
-use Symfony\Component\Config\Loader\FileLoader;
 use Fuz\Framework\StringLoader\JsonStringLoader;
+use Symfony\Component\Config\Loader\FileLoader;
 
 class JsonFileLoader extends FileLoader
 {

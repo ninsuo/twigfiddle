@@ -10,12 +10,12 @@
 
 namespace Fuz\AppBundle\Form;
 
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\Extension\Core\Type;
-use Fuz\AppBundle\Transformer\ArrayTransformer;
 use Fuz\AppBundle\Entity\Fiddle;
+use Fuz\AppBundle\Transformer\ArrayTransformer;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class BrowseFiltersType extends AbstractType
 {
@@ -43,10 +43,10 @@ class BrowseFiltersType extends AbstractType
                'required' => false,
            ))
            ->add('visibility', Type\ChoiceType::class, array(
-               'choices'  => array(
-                   ucfirst(Fiddle::VISIBILITY_PUBLIC)   => Fiddle::VISIBILITY_PUBLIC,
+               'choices' => array(
+                   ucfirst(Fiddle::VISIBILITY_PUBLIC) => Fiddle::VISIBILITY_PUBLIC,
                    ucfirst(Fiddle::VISIBILITY_UNLISTED) => Fiddle::VISIBILITY_UNLISTED,
-                   ucfirst(Fiddle::VISIBILITY_PRIVATE)  => Fiddle::VISIBILITY_PRIVATE,
+                   ucfirst(Fiddle::VISIBILITY_PRIVATE) => Fiddle::VISIBILITY_PRIVATE,
                ),
                'choices_as_values' => true,
                'required' => false,

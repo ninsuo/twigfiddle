@@ -11,8 +11,8 @@
 
 namespace Fuz\Process\ConfigurationNode;
 
-use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Fuz\Framework\Api\ConfigurationNodeInterface;
+use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
 class TwigSourcesConfigurationNode implements ConfigurationNodeInterface
 {

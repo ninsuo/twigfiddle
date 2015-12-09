@@ -12,11 +12,11 @@
 namespace Fuz\AppBundle\Util;
 
 use Doctrine\Common\Cache\ApcCache;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\Yaml\Yaml;
-use Psr\Log\LoggerInterface;
 
 class ProcessConfiguration
 {

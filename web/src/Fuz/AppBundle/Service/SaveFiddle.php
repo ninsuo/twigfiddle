@@ -11,14 +11,14 @@
 
 namespace Fuz\AppBundle\Service;
 
-use Psr\Log\LoggerInterface;
 use Doctrine\ORM\EntityManager;
-use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\Routing\Router;
-use Fuz\AppBundle\Helper\DoctrineHelper;
 use Fuz\AppBundle\Entity\Fiddle;
 use Fuz\AppBundle\Entity\User;
+use Fuz\AppBundle\Helper\DoctrineHelper;
 use Fuz\AppBundle\Util\Utilities;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Routing\Router;
 
 class SaveFiddle
 {

@@ -14,9 +14,9 @@ namespace Fuz\Process\Service;
 use Fuz\Component\SharedMemory\SharedMemory;
 use Fuz\Component\SharedMemory\Storage\StorageFile;
 use Fuz\Framework\Base\BaseService;
+use Fuz\Process\Agent\FiddleAgent;
 use Fuz\Process\Entity\Error;
 use Fuz\Process\Entity\Result;
-use Fuz\Process\Agent\FiddleAgent;
 use Fuz\Process\Exception\StopExecutionException;
 
 class SharedMemoryManager extends BaseService

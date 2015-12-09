@@ -12,10 +12,10 @@ namespace Fuz\AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Fuz\AppBundle\Api\TagContainerInterface;
 use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * Fiddle.
@@ -31,9 +31,9 @@ use JMS\Serializer\Annotation as Serializer;
  */
 class Fiddle implements TagContainerInterface
 {
-    const VISIBILITY_PUBLIC   = 'public';
+    const VISIBILITY_PUBLIC = 'public';
     const VISIBILITY_UNLISTED = 'unlisted';
-    const VISIBILITY_PRIVATE  = 'private';
+    const VISIBILITY_PRIVATE = 'private';
 
     /**
      * @var int
@@ -115,7 +115,7 @@ class Fiddle implements TagContainerInterface
     protected $twigVersion;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="with_c_extension", type="boolean")
      * @Serializer\Type("boolean")
@@ -131,7 +131,7 @@ class Fiddle implements TagContainerInterface
     protected $twigExtension;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="compiled_expended", type="boolean")
      * @Serializer\Type("boolean")
@@ -193,10 +193,10 @@ class Fiddle implements TagContainerInterface
 
     public function __construct()
     {
-        $this->context   = new FiddleContext();
+        $this->context = new FiddleContext();
         $this->templates = new ArrayCollection();
         $this->templates->add(new FiddleTemplate());
-        $this->tags      = new ArrayCollection();
+        $this->tags = new ArrayCollection();
     }
 
     /**
@@ -383,7 +383,7 @@ class Fiddle implements TagContainerInterface
     }
 
     /**
-     * @param boolean $withCExtension
+     * @param bool $withCExtension
      *
      * @return Fiddle
      */
@@ -395,7 +395,7 @@ class Fiddle implements TagContainerInterface
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isWithCExtension()
     {
@@ -423,7 +423,7 @@ class Fiddle implements TagContainerInterface
     }
 
     /**
-     * @param boolean $compiledExpended
+     * @param bool $compiledExpended
      *
      * @return Fiddle
      */
@@ -435,7 +435,7 @@ class Fiddle implements TagContainerInterface
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getCompiledExpended()
     {
@@ -642,7 +642,7 @@ class Fiddle implements TagContainerInterface
 
     public function __clone()
     {
-        $this->id   = null;
+        $this->id = null;
         $this->user = null;
 
         if ($this->context) {

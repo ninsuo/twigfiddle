@@ -10,17 +10,16 @@
 
 namespace Fuz\Process\Command;
 
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
 use Fuz\Framework\Base\BaseCommand;
 use Fuz\Process\Entity\Error;
 use Fuz\Process\Exception\StopExecutionException;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class RunCommand extends BaseCommand
 {
-
     protected $environmentId;
     protected $isDebug;
     protected $agent;
@@ -92,7 +91,7 @@ class RunCommand extends BaseCommand
     public function initArguments(InputInterface $input)
     {
         $this->environmentId = $input->getArgument('environment-id');
-        $this->isDebug       = $input->getOption('debug');
+        $this->isDebug = $input->getOption('debug');
 
         return $this;
     }
@@ -110,12 +109,12 @@ class RunCommand extends BaseCommand
 
     public function initProcessor()
     {
-        $envId   = $this->environmentId;
+        $envId = $this->environmentId;
         $isDebug = $this->isDebug;
         $this->container->pushProcessor(function ($record) use ($envId, $isDebug) {
             $record['extra'] = array_merge($record['extra'], array(
                 'environment_id' => $envId,
-                'debug'          => $isDebug,
+                'debug' => $isDebug,
             ));
 
             return $record;
@@ -144,5 +143,4 @@ class RunCommand extends BaseCommand
 
         return $this;
     }
-
 }

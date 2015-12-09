@@ -11,8 +11,8 @@
 
 namespace Fuz\Framework\Service;
 
-use Symfony\Component\Filesystem\Filesystem as SymfonyFileSystem;
 use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\Filesystem\Filesystem as SymfonyFileSystem;
 
 class FileSystem extends SymfonyFileSystem
 {

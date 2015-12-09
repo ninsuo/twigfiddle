@@ -11,16 +11,16 @@
 
 namespace Fuz\Framework;
 
-use Symfony\Component\Config\FileLocator;
-use Symfony\Component\Config\Definition\Processor;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
-use Symfony\Component\Console\Application as Console;
-use Monolog\Logger;
-use Monolog\Handler\RotatingFileHandler;
 use Fuz\Framework\Api\ConfigurationNodeInterface;
 use Fuz\Framework\Configuration\ApplicationConfiguration;
 use Fuz\Framework\Core\MonologContainer;
+use Monolog\Handler\RotatingFileHandler;
+use Monolog\Logger;
+use Symfony\Component\Config\Definition\Processor;
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\Console\Application as Console;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 class Application
 {

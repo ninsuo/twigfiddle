@@ -11,9 +11,9 @@
 namespace Fuz\Process\Service;
 
 use Fuz\Framework\Base\BaseService;
+use Fuz\Process\Agent\FiddleAgent;
 use Fuz\Process\Entity\Error;
 use Fuz\Process\Exception\StopExecutionException;
-use Fuz\Process\Agent\FiddleAgent;
 
 class TwigExtensionsManager extends BaseService
 {
@@ -30,7 +30,7 @@ class TwigExtensionsManager extends BaseService
 
         $extension = $agent->getFiddle()->getTwigExtension();
         if (!$extension) {
-            $this->logger->debug("No twig extensions requested.");
+            $this->logger->debug('No twig extensions requested.');
 
             return;
         }
@@ -42,7 +42,7 @@ class TwigExtensionsManager extends BaseService
 
         if (!is_file($autoloader)) {
             $agent->addError(Error::E_UNKNOWN_TWIG_EXTENSION, array(
-                'extension'  => $extension,
+                'extension' => $extension,
                 'autoloader' => $autoloader,
             ));
             throw new StopExecutionException();

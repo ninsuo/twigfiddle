@@ -11,12 +11,12 @@
 
 namespace Fuz\Framework\Core;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Monolog\Handler\HandlerInterface;
 use Monolog\Logger;
 use Psr\Log\LoggerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class MonologContainer extends ContainerBuilder
 {

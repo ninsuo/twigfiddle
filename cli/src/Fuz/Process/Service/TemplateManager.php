@@ -11,12 +11,12 @@
 
 namespace Fuz\Process\Service;
 
+use Fuz\AppBundle\Entity\FiddleTemplate;
 use Fuz\Framework\Base\BaseService;
+use Fuz\Framework\Service\FileSystem;
 use Fuz\Process\Agent\FiddleAgent;
 use Fuz\Process\Entity\Error;
 use Fuz\Process\Exception\StopExecutionException;
-use Fuz\Framework\Service\FileSystem;
-use Fuz\AppBundle\Entity\FiddleTemplate;
 
 class TemplateManager extends BaseService
 {

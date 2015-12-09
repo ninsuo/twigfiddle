@@ -11,9 +11,9 @@
 
 namespace Fuz\AppBundle\Model;
 
-use HWI\Bundle\OAuthBundle\Security\Core\User\OAuthUserProvider as BaseUserProvider;
-use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
 use Fuz\AppBundle\Entity\User;
+use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
+use HWI\Bundle\OAuthBundle\Security\Core\User\OAuthUserProvider as BaseUserProvider;
 
 class OAuthUserProvider extends BaseUserProvider
 {

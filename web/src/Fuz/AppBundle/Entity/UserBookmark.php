@@ -11,10 +11,10 @@
 
 namespace Fuz\AppBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\ORM\Mapping as ORM;
 use Fuz\AppBundle\Api\TagContainerInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * UserBookmark.

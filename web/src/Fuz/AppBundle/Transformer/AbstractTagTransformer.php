@@ -11,9 +11,9 @@
 
 namespace Fuz\AppBundle\Transformer;
 
-use Symfony\Component\Form\DataTransformerInterface;
-use Fuz\AppBundle\Api\TagInterface;
 use Fuz\AppBundle\Api\TagContainerInterface;
+use Fuz\AppBundle\Api\TagInterface;
+use Symfony\Component\Form\DataTransformerInterface;
 
 abstract class AbstractTagTransformer implements DataTransformerInterface
 {

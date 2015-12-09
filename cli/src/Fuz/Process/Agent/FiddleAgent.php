@@ -11,8 +11,8 @@
 
 namespace Fuz\Process\Agent;
 
-use Fuz\Component\SharedMemory\SharedMemory;
 use Fuz\AppBundle\Entity\Fiddle;
+use Fuz\Component\SharedMemory\SharedMemory;
 use Fuz\Process\Entity\Error;
 use Fuz\Process\Service\ErrorManager;
 use Fuz\Process\TwigEngine\TwigEngineInterface;

@@ -11,8 +11,8 @@
 
 namespace Fuz\Framework\Service;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Fuz\Framework\StringLoader\StringLoaderInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class StringLoader
 {

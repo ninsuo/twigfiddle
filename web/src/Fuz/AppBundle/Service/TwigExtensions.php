@@ -10,9 +10,9 @@
 
 namespace Fuz\AppBundle\Service;
 
+use Doctrine\Common\Cache\ApcCache;
 use Fuz\AppBundle\Util\ProcessConfiguration;
 use Psr\Log\LoggerInterface;
-use Doctrine\Common\Cache\ApcCache;
 
 class TwigExtensions
 {
@@ -22,16 +22,16 @@ class TwigExtensions
 
     public function __construct(LoggerInterface $logger, ProcessConfiguration $processConfiguration, $environment)
     {
-        $this->logger       = $logger;
+        $this->logger = $logger;
         $this->remoteConfig = $processConfiguration->getProcessConfig();
-        $this->environment  = $environment;
+        $this->environment = $environment;
     }
 
     public function getAvailableTwigExtensions()
     {
         if ($this->environment === 'prod') {
             $apc = new ApcCache();
-            $id  = $this->remoteConfig['twig_extensions']['apc_cache_key'];
+            $id = $this->remoteConfig['twig_extensions']['apc_cache_key'];
             if ($apc->contains($id)) {
                 return $apc->fetch($id);
             } else {
@@ -48,7 +48,7 @@ class TwigExtensions
     protected function fetchAvailableTwigExtensions()
     {
         $available = array();
-        $dir       = $this->remoteConfig['twig_extensions']['directory'];
+        $dir = $this->remoteConfig['twig_extensions']['directory'];
         foreach (glob("{$dir}/*") as $extension) {
             $available[] = str_replace('Twig-extensions-', '', basename($extension));
         }

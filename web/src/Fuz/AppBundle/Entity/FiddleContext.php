@@ -12,9 +12,9 @@
 namespace Fuz\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
-use JMS\Serializer\Annotation as Serializer;
 
 /**
  * FiddleContext.

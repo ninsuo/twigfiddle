@@ -21,9 +21,10 @@ class V1TwigEngine extends AbstractTwigEngine
      * directory (in fact, compilation directory) were given in the twig loader. But now, the cache
      * directory is given on Environment's options.
      *
-     * @param  string            $sourceDirectory    Twig's source directory
-     * @param  string            $cacheDirectory     Cache directory where compiled templates should go
-     * @param  string            $executionDirectory Template's directory
+     * @param string $sourceDirectory    Twig's source directory
+     * @param string $cacheDirectory     Cache directory where compiled templates should go
+     * @param string $executionDirectory Template's directory
+     *
      * @return \Twig_Environment
      */
     public function load($sourceDirectory, $cacheDirectory, $executionDirectory)
@@ -31,7 +32,7 @@ class V1TwigEngine extends AbstractTwigEngine
         require $sourceDirectory.DIRECTORY_SEPARATOR.'/lib/Twig/Autoloader.php';
         \Twig_Autoloader::register();
 
-        $twigLoader      = new \Twig_Loader_Filesystem($executionDirectory, $cacheDirectory);
+        $twigLoader = new \Twig_Loader_Filesystem($executionDirectory, $cacheDirectory);
         $twigEnvironment = new \Twig_Environment($twigLoader, array('cache' => $cacheDirectory));
 
         return $twigEnvironment;

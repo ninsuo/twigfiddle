@@ -11,12 +11,12 @@
 
 namespace Fuz\AppBundle\Base;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\VarDumper\VarDumper;
-use Symfony\Component\Form\Form;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Fuz\AppBundle\Entity\Fiddle;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\VarDumper\VarDumper;
 
 class BaseController extends Controller
 {

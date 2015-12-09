@@ -22,9 +22,10 @@ class V2TwigEngine extends AbstractTwigEngine
      * This autloader is gently provided by @sarciszewski on GitHub:
      * https://github.com/twigphp/Twig/issues/1646#issuecomment-78349076
      *
-     * @param  string            $sourceDirectory    Twig's source directory
-     * @param  string            $cacheDirectory     Cache directory where compiled templates should go
-     * @param  string            $executionDirectory Template's directory
+     * @param string $sourceDirectory    Twig's source directory
+     * @param string $cacheDirectory     Cache directory where compiled templates should go
+     * @param string $executionDirectory Template's directory
+     *
      * @return \Twig_Environment
      */
     public function load($sourceDirectory, $cacheDirectory, $executionDirectory)

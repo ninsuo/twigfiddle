@@ -11,16 +11,16 @@
 
 namespace Fuz\AppBundle\Service;
 
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Exception\IOException;
-use Symfony\Component\Process\ProcessBuilder;
-use Psr\Log\LoggerInterface;
 use Fuz\AppBundle\Entity\Fiddle;
 use Fuz\AppBundle\Entity\Result;
-use Fuz\Component\SharedMemory\Storage\StorageFile;
-use Fuz\Component\SharedMemory\SharedMemory;
-use Fuz\AppBundle\Util\Utilities;
 use Fuz\AppBundle\Util\ProcessConfiguration;
+use Fuz\AppBundle\Util\Utilities;
+use Fuz\Component\SharedMemory\SharedMemory;
+use Fuz\Component\SharedMemory\Storage\StorageFile;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Process\ProcessBuilder;
 
 class RunFiddle
 {

@@ -11,15 +11,15 @@
 
 namespace Fuz\AppBundle\Service;
 
-use Psr\Log\LoggerInterface;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Query\Expr;
-use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\QueryBuilder;
+use Fuz\AppBundle\Entity\BrowseFilters;
 use Fuz\AppBundle\Entity\Fiddle;
 use Fuz\AppBundle\Entity\User;
-use Fuz\AppBundle\Entity\BrowseFilters;
 use Fuz\AppBundle\Util\Paginator;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class SearchFiddle
 {

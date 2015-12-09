@@ -13,8 +13,8 @@ namespace Fuz\AppBundle\EventListener;
 
 use Doctrine\Common\EventSubscriber;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
-use Fuz\AppBundle\Entity\User;
 use Fuz\AppBundle\Entity\Fiddle;
+use Fuz\AppBundle\Entity\User;
 
 class UserSubscriber implements EventSubscriber
 {

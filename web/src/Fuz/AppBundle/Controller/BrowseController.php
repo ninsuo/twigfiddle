@@ -11,15 +11,15 @@
 
 namespace Fuz\AppBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\HttpFoundation\Request;
 use Fuz\AppBundle\Base\BaseController;
 use Fuz\AppBundle\Entity\BrowseFilters;
-use Fuz\AppBundle\Form\BrowseFiltersType;
 use Fuz\AppBundle\Entity\UserBookmark;
+use Fuz\AppBundle\Form\BrowseFiltersType;
 use Fuz\AppBundle\Form\UserBookmarkType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Request;
 
 class BrowseController extends BaseController
 {

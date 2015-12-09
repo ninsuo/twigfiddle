@@ -10,10 +10,10 @@
 
 namespace Fuz\AppBundle\Command;
 
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 
 class ExportFiddleCommand extends ContainerAwareCommand
 {
@@ -30,7 +30,7 @@ class ExportFiddleCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $hash     = $input->getArgument('hash');
+        $hash = $input->getArgument('hash');
         $revision = $input->getArgument('revision');
 
         $fiddle = $this
@@ -47,7 +47,7 @@ class ExportFiddleCommand extends ContainerAwareCommand
         }
 
         $serializer = \JMS\Serializer\SerializerBuilder::create()->build();
-        $json       = $serializer->serialize($fiddle, 'json');
+        $json = $serializer->serialize($fiddle, 'json');
 
         $output->writeln($json);
 

@@ -11,10 +11,10 @@
 
 namespace Fuz\AppBundle\Util;
 
-use Psr\Log\LoggerInterface;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Doctrine\ORM\EntityManager;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class Captcha
 {
