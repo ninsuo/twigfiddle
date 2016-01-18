@@ -59,7 +59,7 @@ composer update
 
 # If you want to use SensioLabs Connect, you need to patch HWIOAuthBundle
 # See https://github.com/hwi/HWIOAuthBundle/pull/657
-patch -p9 vendor/hwi/oauth-bundle/HWI/Bundle/OAuthBundle/OAuth/ResourceOwner/AbstractResourceOwner.php < ../install/HWIOAuthBundle_AbstractResourceOwner.patch
+patch -p9 vendor/hwi/oauth-bundle/OAuth/ResourceOwner/AbstractResourceOwner.php < ../install/HWIOAuthBundle_AbstractResourceOwner.patch
 
 # Install the database
 # You should create it yourself, from mysql, type:
