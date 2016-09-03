@@ -29,15 +29,6 @@ class BrowseFilters
     protected $keywords = array();
 
     /**
-     * @var array
-     *
-     * fiddle.max_tags
-     *
-     * @Assert\Count(max = 5, maxMessage = "Fiddles contains at last 5 tags.")
-     */
-    protected $tags = array();
-
-    /**
      * @var bool
      *
      * @Assert\Choice(choices = {0, 1})
@@ -64,18 +55,6 @@ class BrowseFilters
     public function setKeywords($keywords)
     {
         $this->keywords = $keywords;
-
-        return $this;
-    }
-
-    public function getTags()
-    {
-        return $this->tags;
-    }
-
-    public function setTags(array $tags)
-    {
-        $this->tags = $tags;
 
         return $this;
     }

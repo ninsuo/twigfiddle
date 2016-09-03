@@ -134,7 +134,7 @@ class RunFiddle
 
         $fiddleResult = $this->sharedObject->result;
         if (is_null($fiddleResult)) {
-            $this->logger->error("Fiddle {$this->envId} did not returned any result.");
+            $this->logger->error("Fiddle {$this->envId} did not return any result.");
         } else {
             $result->setResult($fiddleResult);
         }
