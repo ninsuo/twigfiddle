@@ -27,6 +27,8 @@ parameters:
     twitter_secret: <your secret>
     sensio_client_id: <your client id>
     sensio_secret: <your secret>
+    github_client_id: <your client id>
+    github_secret: <your secret>
 
     twigfiddle_url: http://twigfiddle.com
     twigfiddle_process_root_dir: %kernel.root_dir%/../../cli

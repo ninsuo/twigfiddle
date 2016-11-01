@@ -16,6 +16,7 @@ security:
                     facebook: "/login/check-facebook"
                     twitter: "/login/check-twitter"
                     sensio_connect: "/login/check-sensio-connect"
+                    github: "/login/check-github"
                 login_path: /login
                 failure_path: /login
                 default_target_path: /welcome
@@ -64,3 +65,8 @@ hwi_oauth:
             client_id: %sensio_client_id%
             client_secret: %sensio_secret%
             scope: "SCOPE_PUBLIC"
+        github:
+            type: github
+            client_id: %github_client_id%
+            client_secret: %github_secret%
+            scope: ""

@@ -54,9 +54,21 @@
                 aria-label="Login using your Google account"
                 href="{{ hwi_oauth_login_url('google') }}"
                 class="black">
-                <div class="oauth col-md-4">
+                <div class="oauth col-md-3">
                     <img src="{{ asset('bundles/fuzapp/img/oauth/google.png') }}" alt="Google"/>
                     <p>Login using Google</p>
+                </div>
+            </a>
+
+            {# GitHub #}
+            <a
+                title="Login using your GitHub account"
+                aria-label="Login using your GitHub account"
+                href="{{ hwi_oauth_login_url('github') }}"
+                class="black">
+                <div class="oauth col-md-3">
+                    <img src="{{ asset('bundles/fuzapp/img/oauth/github.png') }}" alt="GitHub"/>
+                    <p>Login using GitHub</p>
                 </div>
             </a>
 
@@ -66,7 +78,7 @@
                 aria-label="Login using your Facebook account"
                 href="{{ hwi_oauth_login_url('facebook') }}"
                 class="black">
-                <div class="oauth col-md-4">
+                <div class="oauth col-md-3">
                     <img src="{{ asset('bundles/fuzapp/img/oauth/facebook.png') }}" alt="Facebook"/>
                     <p>Login using Facebook</p>
                 </div>
@@ -78,7 +90,7 @@
                 aria-label="Login using your Twitter account"
                 href="{{ hwi_oauth_login_url('twitter') }}"
                 class="black">
-                <div class="oauth col-md-4">
+                <div class="oauth col-md-3">
                     <img src="{{ asset('bundles/fuzapp/img/oauth/twitter.png') }}" alt="Twitter"/>
                     <p>Login using Twitter</p>
                 </div>

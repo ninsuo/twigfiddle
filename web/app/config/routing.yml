@@ -24,6 +24,9 @@ twitter_login:
 sensio_login:
     path: /login/check-sensio-connect
 
+github_login:
+    path: /login/check-github
+
 fuz_app_browse:
     resource: "@FuzAppBundle/Controller/BrowseController.php"
     type:     annotation

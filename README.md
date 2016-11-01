@@ -86,5 +86,6 @@ Don't panic, that's optional.
 - Facebook Login: https://developers.facebook.com/apps/
 - Twitter Login: https://apps.twitter.com/
 - SensioLabs Connect Login: https://connect.sensiolabs.com/account/apps
+- GitHub Login: https://github.com/settings/developers
 - reCaptcha: https://www.google.com/recaptcha/admin
 - Google Analytics: https://www.google.com/analytics/web/

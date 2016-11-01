@@ -87,6 +87,9 @@ class OAuthUserProvider extends BaseUserProvider
             case 'sensio_connect':
                 $name = $response->getNickname();
                 break;
+            case 'github':
+                $name = $response->getNickname();
+                break;
             default:
                 break;
         }
