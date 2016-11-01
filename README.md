@@ -2,7 +2,7 @@
 
 This is the project's repository, come here if you found a bug, if you want to request new features or if you want to contribute.
 
-If you need help to use twigfiddle, please read the twigfiddle's [help page](http://localhost/twigfiddle.com/web/web/app_dev.php/about) or
+If you need help to use twigfiddle, please read the twigfiddle's [help page](https://wigfiddle.com/about) or
 ask a question on the dedicated [mailing list](https://groups.google.com/forum/#!forum/twigfiddle).
 
 # Some words about the project
