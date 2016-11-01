@@ -117,7 +117,7 @@
         {% if user != null %}
             {{ prefix }}
            <img class="user-image" src="{{ asset('bundles/fuzapp/img/oauth/' ~ user.resourceOwner ~ '-small.png') }}" alt=""/>
-           {{ user.username }}
+           {{ user.nickname }}
         {% endif %}
     {% endspaceless -%}
 {% endmacro %}

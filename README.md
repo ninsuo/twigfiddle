@@ -78,6 +78,16 @@ composer update
 php app/check.php
 ```
 
+# Upgrade for installs before 01/11/2016
+
+User provider have been refactored ( see #18 ), you need to run the following queries to upgrade twigfiddle schema.
+
+```sql
+alter table user add column nickname varchar(255) not null after username;
+update user set nickname = username;
+update user set username = concat('["', resource_owner, '","', resource_owner_id, '"]');
+```
+
 # Configure external services
 
 Don't panic, that's optional.

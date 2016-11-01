@@ -25,7 +25,7 @@ services:
 
     app.oauth_user_provider:
         class: %app.oauth_user_provider.class%
-        arguments: [@session, @doctrine.orm.entity_manager]
+        arguments: [@doctrine.orm.entity_manager]
 
     hwi_oauth.account.connector:
         class: %hwi_oauth.account.connector%

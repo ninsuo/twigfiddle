@@ -60,6 +60,13 @@ class User implements UserInterface, EquatableInterface
     protected $username;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="nickname", type="string", length=255)
+     */
+    protected $nickname;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="last_seen", type="datetime")
@@ -151,6 +158,28 @@ class User implements UserInterface, EquatableInterface
     public function getUsername()
     {
         return $this->username;
+    }
+
+    /**
+     * Set nickname.
+     *
+     * @param string $nickname
+     *
+     * @return User
+     */
+    public function setNickname($nickname)
+    {
+        $this->nickname = $nickname;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getNickname()
+    {
+        return $this->nickname;
     }
 
     /**
