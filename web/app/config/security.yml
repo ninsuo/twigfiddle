@@ -25,6 +25,8 @@ security:
             anonymous: ~
 
     access_control:
+        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https, host: 'twigfiddle\.com$' }
+        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: http, host: '127.0.0.1' }
         - { path: ^/login, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/connect, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/user, role: ROLE_USER }
