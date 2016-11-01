@@ -48,7 +48,12 @@ class SearchFiddle
 
         $qbResult = $this->em->createQueryBuilder();
         $qbResult->select('f.id, f.hash, f.revision');
-        $this->createSearchQueryBuilder($qbResult, $criteria, $user);
+
+        if ($user) {
+            $this->createSearchQueryBuilder($qbResult, $criteria, $user);
+        } else {
+            $this->createSimpleSearchQueryBuilder($qbResult, $criteria);
+        }
 
         $pagination = $this->paginator->paginate($request, $qbResult, $count, array('session_key' => 'browseFiddles'));
         $fiddles = $qbResult->getQuery()->getArrayResult();
@@ -60,7 +65,12 @@ class SearchFiddle
     {
         $qbIn = $this->em->createQueryBuilder();
         $qbIn->select('f.id');
-        $this->createSearchQueryBuilder($qbIn, $criteria, $user);
+
+        if ($user) {
+            $this->createSearchQueryBuilder($qbIn, $criteria, $user);
+        } else {
+            $this->createSimpleSearchQueryBuilder($qbIn, $criteria);
+        }
 
         $qb = $this->em->createQueryBuilder();
 
@@ -76,6 +86,35 @@ class SearchFiddle
         ;
 
         return $count;
+    }
+
+    public function createSimpleSearchQueryBuilder(QueryBuilder $qb, BrowseFilters $criteria)
+    {
+        $qb
+           ->from('Fuz\AppBundle\Entity\Fiddle', 'f')
+           ->where(
+               $qb->expr()->eq('f.visibility', ':public')
+           )
+        ;
+
+        foreach ($criteria->getKeywords() as $key => $keyword) {
+            if (strlen($keyword) > 0) {
+                $qb
+                   ->andWhere(
+                        $qb->expr()->like("GROUP_CONCAT(f.title SEPARATOR ' ')", ":keyword_{$key}")
+                   )
+                   ->setParameter("keyword_{$key}", $keyword)
+                ;
+            }
+        }
+
+        $qb
+           ->groupBy('f.id')
+           ->orderBy('f.creationTm', 'DESC')
+           ->setParameter('public', Fiddle::VISIBILITY_PUBLIC)
+        ;
+
+        return $qb;
     }
 
     public function createSearchQueryBuilder(QueryBuilder $qb, BrowseFilters $criteria, User $user = null)

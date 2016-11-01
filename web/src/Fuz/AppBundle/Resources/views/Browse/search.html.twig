@@ -14,9 +14,11 @@
 
 {% block content %}
 
+    {% if app.user %}
     <div id="filters-container">
         {{ include('FuzAppBundle:Browse:filters.html.twig') }}
     </div>
+    {% endif %}
 
     <div id="result-container">
 
