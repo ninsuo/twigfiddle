@@ -2,16 +2,16 @@
 
 This is the project's repository, come here if you found a bug, if you want to request new features or if you want to contribute.
 
-If you need help to use twigfiddle, please read the twigfiddle's [help page](https://wigfiddle.com/about) or
+If you need help to use twigfiddle, please read the twigfiddle's [help page](https://twigfiddle.com/about) or
 ask a question on the dedicated [mailing list](https://groups.google.com/forum/#!forum/twigfiddle).
 
 # Some words about the project
 
 The project is made of 2 applications:
 
-- cli directory contains the fiddle runner, an application built using Symfony2 components to execute a fiddle.
+- cli directory contains the fiddle runner, an application built using Symfony components to execute a fiddle.
 
-- web directory contains the web application, built using the Symfony2 framework
+- web directory contains the web application, built using the Symfony framework
 
 About the other directories:
 
