@@ -32,8 +32,11 @@ class V1TwigEngine extends AbstractTwigEngine
         require $sourceDirectory.DIRECTORY_SEPARATOR.'/lib/Twig/Autoloader.php';
         \Twig_Autoloader::register();
 
-        $twigLoader = new \Twig_Loader_Filesystem($executionDirectory, $cacheDirectory);
-        $twigEnvironment = new \Twig_Environment($twigLoader, array('cache' => $cacheDirectory));
+        $twigLoader      = new \Twig_Loader_Filesystem($executionDirectory, $cacheDirectory);
+        $twigEnvironment = new \Twig_Environment($twigLoader, array(
+            'cache'            => $cacheDirectory,
+            'strict_variables' => $this->agent->getFiddle()->isWithStrictVariables(),
+        ));
 
         return $twigEnvironment;
     }

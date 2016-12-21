@@ -91,6 +91,9 @@ class FiddleType extends AbstractType
            ->add('withCExtension', Type\CheckboxType::class, array(
                'required' => false,
            ))
+           ->add('withStrictVariables', Type\CheckboxType::class, array(
+               'required' => false,
+           ))
            ->add('twigExtension', Type\ChoiceType::class, array(
                'required' => false,
                'choices' => array_combine($this->twigExtensions, $this->twigExtensions),
