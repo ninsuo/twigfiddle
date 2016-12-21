@@ -75,7 +75,7 @@ class RunTimeoutCommand extends BaseCommand
     protected function initProcess()
     {
         $command = array(
-            '/usr/bin/php',
+            $this->getParameter('php_path'),
         );
 
         if ($this->cExtension) {

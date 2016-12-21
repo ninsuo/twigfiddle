@@ -2,3 +2,4 @@ parameters:
     environment_directory: '%root_dir%/../environment/'
     debug_allowed: true
     logger_level: DEBUG
+    php_path: /usr/local/bin/php
