@@ -123,6 +123,14 @@ class Fiddle implements TagContainerInterface
     protected $withCExtension = false;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="with_strict_variables", type="boolean")
+     * @Serializer\Type("boolean")
+     */
+    protected $withStrictVariables = false;
+
+    /**
      * @ORM\Column(name="twig_extension", type="string", length=32, nullable=true)
      * @Serializer\Type("string")
      *
@@ -400,6 +408,26 @@ class Fiddle implements TagContainerInterface
     public function isWithCExtension()
     {
         return $this->withCExtension;
+    }
+
+    /**
+     * @param bool $withStrictVariables
+     *
+     * @return Fiddle
+     */
+    public function setWithStrictVariables($withStrictVariables)
+    {
+        $this->withStrictVariables = $withStrictVariables;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isWithStrictVariables()
+    {
+        return $this->withStrictVariables;
     }
 
     /**
