@@ -2,4 +2,4 @@ parameters:
     environment_directory: '%root_dir%/../environment/'
     debug_allowed: true
     logger_level: INFO
-    php_path: /usr/bin/php
+    php_path: /opt/plesk/php/7.0/bin/php
