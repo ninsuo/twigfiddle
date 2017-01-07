@@ -32,7 +32,7 @@ services:
 
     app.form.fiddle:
          class: %app.form.fiddle.class%
-         arguments: [@app.process_configuration, @app.twig_extensions]
+         arguments: [@app.process_configuration, @app.twig_extensions, '%kernel.environment%']
          tags:
             - { name: form.type }
 

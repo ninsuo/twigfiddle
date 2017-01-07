@@ -21,6 +21,23 @@
 
     <div class="text-left">
 
+        {# Debug Mode (stateless option, will dump Result object in the right pane #}
+        {% if 'dev' == app.environment %}
+            <div class="form-group full-width">
+                <div class="input-group full-width">
+                    <div class="input-group-addon" style="width: 37px;">{{ form_widget(form.debug) }}</div>
+                    <div class="form-control">
+                        <label for="{{ form.debug.vars.id }}">
+                            Enable Debug Mode (development environment only)
+                        </label>
+                    </div>
+                </div>
+                <div class="error-container" id="errors-{{ form.debug.vars.id }}">{{ form_errors(form.debug) }}</div>
+            </div>
+        {% endif %}
+
+        <hr/>
+
         {# Non-native extensions #}
         <div class="control-group">
             <label class="control-label" for="selectbasic">
@@ -47,7 +64,10 @@
                 </div>
             </div>
             <div class="error-container" id="errors-{{ form.withCExtension.vars.id }}">{{ form_errors(form.withCExtension) }}</div>
+        </div>
 
+        {# Strict Variables mode #}
+        <div class="form-group full-width">
             <div class="input-group full-width">
                 <div class="input-group-addon" style="width: 37px;">{{ form_widget(form.withStrictVariables) }}</div>
                 <div class="form-control">

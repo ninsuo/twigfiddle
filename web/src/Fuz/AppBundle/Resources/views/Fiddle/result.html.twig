@@ -34,6 +34,11 @@
         {{ include("FuzAppBundle:Fiddle:result-compiled.html.twig") }}
     {% endif %}
 
+    {# Debug Mode enabled #}
+    {% if fiddle.debug %}
+        {{ include("FuzAppBundle:Fiddle:result-debug.html.twig") }}
+    {% endif %}
+
     {# Duration #}
     {% if data.duration %}
         {{ include("FuzAppBundle:Fiddle:result-duration.html.twig") }}

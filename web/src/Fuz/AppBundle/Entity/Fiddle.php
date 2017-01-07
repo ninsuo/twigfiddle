@@ -199,6 +199,11 @@ class Fiddle implements TagContainerInterface
      */
     protected $visitsCount = 0;
 
+    /**
+     * @var bool
+     */
+    protected $debug = false;
+
     public function __construct()
     {
         $this->context = new FiddleContext();
@@ -596,6 +601,26 @@ class Fiddle implements TagContainerInterface
     public function getVisitsCount()
     {
         return $this->visitsCount;
+    }
+
+    /**
+     * @param bool $debug
+     *
+     * @return Fiddle
+     */
+    public function setDebug($debug)
+    {
+        $this->debug = $debug;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDebug()
+    {
+        return $this->debug;
     }
 
     /**
