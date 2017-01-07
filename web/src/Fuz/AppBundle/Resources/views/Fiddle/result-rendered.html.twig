@@ -60,6 +60,20 @@
 
             {% endif %}
 
+            {% set deprecations = data.result.deprecations|length %}
+            {% if deprecations %}
+
+                <a
+                    id="go-to-deprecations"
+                    class="btn btn-default btn-sm btn-twigfiddle"
+                    style="margin-top: 5px;"
+                    href="#deprecations"
+                    aria-hidden="true"
+                    title="Go to the deprecation notices">
+                    <span class="glyphicon glyphicon-warning-sign"></span> {{ deprecations }} deprecation{{ deprecations > 0 ? 's' : '' }}
+                </a>
+
+            {% endif %}
 
         </div>
     </div>
