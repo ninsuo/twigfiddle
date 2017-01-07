@@ -13,6 +13,7 @@ namespace Fuz\Process\Agent;
 
 use Fuz\AppBundle\Entity\Fiddle;
 use Fuz\Component\SharedMemory\SharedMemory;
+use Fuz\Process\Entity\Deprecation;
 use Fuz\Process\Entity\Error;
 use Fuz\Process\Service\ErrorManager;
 use Fuz\Process\TwigEngine\TwigEngineInterface;
@@ -60,6 +61,13 @@ class FiddleAgent
      * @var Error[]
      */
     protected $errors = array();
+
+    /**
+     * Deprecation notices.
+     *
+     * @var array[]
+     */
+    protected $deprecations = array();
 
     /**
      * File that contains the shared memory.
@@ -187,6 +195,22 @@ class FiddleAgent
     public function getErrors()
     {
         return $this->errors;
+    }
+
+    public function addDeprecation($message, $file, $line)
+    {
+        $deprecation = new Deprecation($message, $file, $line);
+
+        if (!$deprecation->isIgnored()) {
+            $this->deprecations[] = $deprecation;
+        }
+
+        return $this;
+    }
+
+    public function getDeprecations()
+    {
+        return $this->deprecations;
     }
 
     public function setStorageName($storageName)

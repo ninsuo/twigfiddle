@@ -34,6 +34,11 @@
         {{ include("FuzAppBundle:Fiddle:result-compiled.html.twig") }}
     {% endif %}
 
+    {# Deprecation notices #}
+    {% if data.result.deprecations %}
+        {{ include("FuzAppBundle:Fiddle:result-deprecation.html.twig") }}
+    {% endif %}
+
     {# Debug Mode enabled #}
     {% if fiddle.debug %}
         {{ include("FuzAppBundle:Fiddle:result-debug.html.twig") }}
