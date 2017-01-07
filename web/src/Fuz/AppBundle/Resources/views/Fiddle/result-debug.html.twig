@@ -1,0 +1,28 @@
+{# FuzAppBundle:Fiddle:result-context.html.twig #}
+{# Included by: FuzAppBundle:Fiddle:result.html.twig #}
+
+{#
+ # This file is part of twigfiddle.com project.
+ #
+ # (c) Alain Tiemblo <alain@fuz.org>
+ #
+ # For the full copyright and license information, please view the LICENSE
+ # file that was distributed with this source code.
+ #}
+
+<div class="result-container">
+    <div id="result-debug" class="form-group">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon">Debug Mode</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="debug-content">
+            {{ dump(data) }}
+        </div>
+    </div>
+</div>

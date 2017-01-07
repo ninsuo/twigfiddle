@@ -23,13 +23,15 @@ class FiddleType extends AbstractType
 {
     protected $twigVersions;
     protected $twigExtensions;
+    protected $environment;
 
-    public function __construct(ProcessConfiguration $processConfiguration, TwigExtensions $twigExtensions)
+    public function __construct(ProcessConfiguration $processConfiguration, TwigExtensions $twigExtensions, $environment)
     {
         $cfg = $processConfiguration->getProcessConfig();
 
         $this->twigVersions = $cfg['supported_versions'];
         $this->twigExtensions = $twigExtensions->getAvailableTwigExtensions();
+        $this->environment = $environment;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -103,6 +105,14 @@ class FiddleType extends AbstractType
                'required' => false,
            ))
         ;
+
+        if ('dev' === $this->environment) {
+            $builder
+               ->add('debug', Type\CheckboxType::class, array(
+                   'required' => false,
+               ))
+            ;
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver)
