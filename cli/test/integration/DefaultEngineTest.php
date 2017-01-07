@@ -21,7 +21,6 @@ use Fuz\AppBundle\Entity\FiddleTemplate;
 
 class DefaultEngineTest extends \PHPUnit_Framework_TestCase
 {
-
     const PHP_PATH = '/usr/bin/php';
 
     protected $fs;
@@ -33,9 +32,9 @@ class DefaultEngineTest extends \PHPUnit_Framework_TestCase
     public function __construct($name = null, array $data = array(), $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
-        $this->fs      = new Filesystem();
-        $this->envId   = 'test';
-        $this->envDir  = __DIR__.'/../environment';
+        $this->fs = new Filesystem();
+        $this->envId = 'test';
+        $this->envDir = __DIR__.'/../environment';
         $this->rootDir = __DIR__.'/../..';
     }
 
@@ -189,13 +188,13 @@ class DefaultEngineTest extends \PHPUnit_Framework_TestCase
         $fiddle->clearTemplates();
         $fiddle->addTemplate($template);
 
-        $storage      = new StorageFile("{$this->envDir}/{$this->envId}/fiddle.shr");
+        $storage = new StorageFile("{$this->envDir}/{$this->envId}/fiddle.shr");
         $this->shared = new SharedMemory($storage);
 
-        $this->shared->fiddle    = $fiddle;
-        $this->shared->begin_tm  = null;
+        $this->shared->fiddle = $fiddle;
+        $this->shared->begin_tm = null;
         $this->shared->finish_tm = null;
-        $this->shared->result    = null;
+        $this->shared->result = null;
 
         return $this;
     }
@@ -211,10 +210,10 @@ class DefaultEngineTest extends \PHPUnit_Framework_TestCase
                $this->envId,
         )));
 
-	$output = array();
+        $output = array();
         $out = exec("{$command} 2>&1", $output);
         if (count($output)) {
-	   echo implode("\n", $output), PHP_EOL;
+            echo implode("\n", $output), PHP_EOL;
         }
 
         $this->assertEmpty($out);
@@ -243,5 +242,4 @@ class DefaultEngineTest extends \PHPUnit_Framework_TestCase
 
         return $this;
     }
-
 }

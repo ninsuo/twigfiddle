@@ -18,6 +18,7 @@
  * obtain it through the world-wide-web, please send an email
  * to kontakt@beberlei.de so I can send you a copy immediately.
  */
+
 namespace Fuz\AppBundle\DQL;
 
 use Doctrine\ORM\Query\AST\Functions\FunctionNode;

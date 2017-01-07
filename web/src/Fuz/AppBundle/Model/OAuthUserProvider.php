@@ -36,11 +36,11 @@ class OAuthUserProvider extends BaseUserProvider
 
     public function loadUserByOAuthUserResponse(UserResponseInterface $response)
     {
-        $resourceOwner   = $response->getResourceOwner()->getName();
+        $resourceOwner = $response->getResourceOwner()->getName();
         $resourceOwnerId = $response->getUsername();
-        $name            = $this->getNameToDisplay($resourceOwner, $response);
-        $json            = json_encode([$resourceOwner, $resourceOwnerId]);
-        $user            = $this->loadUserByUsername($json);
+        $name = $this->getNameToDisplay($resourceOwner, $response);
+        $json = json_encode([$resourceOwner, $resourceOwnerId]);
+        $user = $this->loadUserByUsername($json);
 
         $reload = false;
         if (is_null($user)) {

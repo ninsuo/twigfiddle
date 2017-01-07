@@ -13,6 +13,7 @@
  *
  * @see https://github.com/beberlei/DoctrineExtensions
  */
+
 namespace Fuz\AppBundle\DQL;
 
 use Doctrine\ORM\Query\AST\Functions\FunctionNode;
