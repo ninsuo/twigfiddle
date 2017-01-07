@@ -17,6 +17,7 @@ class Result
     protected $rendered;
     protected $compiled;
     protected $errors;
+    protected $deprecations;
 
     public function setContext(array $context)
     {
@@ -62,5 +63,17 @@ class Result
     public function getErrors()
     {
         return $this->errors;
+    }
+
+    public function setDeprecations(array $deprecations)
+    {
+        $this->deprecations = $deprecations;
+
+        return $this;
+    }
+
+    public function getDeprecations()
+    {
+        return $this->deprecations;
     }
 }

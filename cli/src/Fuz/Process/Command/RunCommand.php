@@ -59,6 +59,12 @@ class RunCommand extends BaseCommand
 
     public function initErrorHandler()
     {
+        set_error_handler(function ($errno, $errstr, $errfile, $errline, array $errcontext) {
+            if (E_USER_DEPRECATED === $errno) {
+                $this->agent->addDeprecation($errstr, $errfile, $errline);
+            }
+        });
+
         // This storage is freed on error (case of allowed memory exhausted)
         $this->memory = str_repeat('*', 1024 * 1024);
         register_shutdown_function(function () {

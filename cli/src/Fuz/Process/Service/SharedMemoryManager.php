@@ -100,6 +100,7 @@ class SharedMemoryManager extends BaseService
         $result->setRendered($agent->getRendered());
         $result->setCompiled($agent->getCompiled());
         $result->setErrors($agent->getErrors());
+        $result->setDeprecations($agent->getDeprecations());
 
         $sharedMemory->result = $result;
         $sharedMemory->finish_tm = microtime(true);
