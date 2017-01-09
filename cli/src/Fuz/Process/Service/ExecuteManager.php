@@ -68,7 +68,6 @@ class ExecuteManager extends BaseService
             throw $ex;
         } catch (\Exception $ex) {
             $this->treatError($agent, $ex);
-            throw new StopExecutionException();
         }
 
         $agent->setRendered($rendered);
