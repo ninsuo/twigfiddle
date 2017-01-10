@@ -14,6 +14,8 @@ namespace Fuz\Process\TwigEngine;
 class V2TwigEngine extends AbstractTwigEngine
 {
     /**
+     * Loads Twig using a custom autoloader.
+     *
      * In Twig 2.x, there are no more custom Twig autoloader as Twig
      * should be managed using Composer. But of course, twigfiddle
      * cannot handle it using Composer as it need to support several
