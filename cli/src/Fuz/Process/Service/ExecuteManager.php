@@ -52,6 +52,7 @@ class ExecuteManager extends BaseService
         $template = basename($mainTemplate);
         $context = $this->contextManager->getContextFromAgent($agent);
 
+        $rendered = null;
         try {
             $this->logger->debug("Loading Twig sources: {$sourceDirectory}");
             $environment = $engine->load($sourceDirectory, $cacheDirectory, $executionDirectory);
