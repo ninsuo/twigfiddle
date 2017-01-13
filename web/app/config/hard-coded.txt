@@ -5,5 +5,4 @@ Purpose of this file is to list them with their default values for easier update
 
 fiddle.hash_regexp = ^[a-zA-Z0-9-]{1,128}$
 fiddle.max_templates = 10
-fiddle.max_tags = 5
 

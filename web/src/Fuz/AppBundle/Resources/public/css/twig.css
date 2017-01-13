@@ -267,24 +267,9 @@ pre.compiled-code {
 #select-result-rendered, #show-raw-result {
     margin-top: 5px;
 }
-div.tagsinput span.tag {
-    padding: 2px 5px;
-    margin-top: -1px;
-}
 .visibility-button button {
     width: 100%;
     text-align: left;
-}
-.tags .tagsinput {
-    height:34px !important;
-    overflow-x: hidden;
-    overflow-y: hidden;
-}
-div.tagsinput {
-    width: 100% !important;
-}
-.tags .tagsinput input {
-    min-width:100px !important;
 }
 .fiddle-owner {
     margin-top: 10px;

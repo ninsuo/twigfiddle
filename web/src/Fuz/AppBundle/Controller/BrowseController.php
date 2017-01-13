@@ -27,17 +27,14 @@ class BrowseController extends BaseController
      * Searches for results.
      *
      * @Route(
-     *      "/search/{tag}",
-     *      name = "browse_search",
-     *      defaults = {
-     *          "tag" = null,
-     *      }
+     *      "/search",
+     *      name = "browse_search"
      * )
      * @Template()
      */
-    public function searchAction(Request $request, $tag)
+    public function searchAction(Request $request)
     {
-        list($data, $filters) = $this->createBrowseFilters($request, $tag);
+        list($data, $filters) = $this->createBrowseFilters($request);
 
         if ($request->getMethod() === 'GET') {
             $this->get('app.paginator')->reset('browseFiddles');
@@ -59,7 +56,6 @@ class BrowseController extends BaseController
         }
 
         return array(
-                'tag' => $tag,
                 'filters' => $filters->createView(),
                 'list_left' => $list_left,
                 'list_right' => $list_right,
@@ -67,12 +63,9 @@ class BrowseController extends BaseController
         );
     }
 
-    protected function createBrowseFilters(Request $request, $tag)
+    protected function createBrowseFilters(Request $request)
     {
         $data = new BrowseFilters();
-        if (!is_null($tag)) {
-            $data->setTags(array($tag));
-        }
         $filters = $this->createForm(BrowseFiltersType::class, $data);
         $filters->handleRequest($request);
 
@@ -119,22 +112,15 @@ class BrowseController extends BaseController
     /**
      * Loads fiddle's browser.
      *
-     * @Route(
-     *      "/{tag}",
-     *      name = "browse",
-     *      defaults = {
-     *          "tag" = null,
-     *      }
-     * )
+     * @Route("/", name = "browse")
      * @Method({"GET"})
      * @Template()
      */
-    public function indexAction(Request $request, $tag)
+    public function indexAction(Request $request)
     {
-        list($data) = $this->createBrowseFilters($request, $tag);
+        list($data) = $this->createBrowseFilters($request);
 
         return array(
-                'tag' => $tag,
                 'data' => $data,
         );
     }

@@ -12,7 +12,6 @@ namespace Fuz\AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Fuz\AppBundle\Api\TagContainerInterface;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
@@ -29,7 +28,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  * @Serializer\ExclusionPolicy("NONE")
  */
-class Fiddle implements TagContainerInterface
+class Fiddle
 {
     const VISIBILITY_PUBLIC = 'public';
     const VISIBILITY_UNLISTED = 'unlisted';
@@ -164,18 +163,6 @@ class Fiddle implements TagContainerInterface
     protected $visibility = self::VISIBILITY_PUBLIC;
 
     /**
-     * @var ArrayCollection[FiddleTag]
-     *
-     * fiddle.max_tags
-     *
-     * @ORM\OneToMany(targetEntity="FiddleTag", mappedBy="fiddle", cascade={"all"}, orphanRemoval=true)
-     * @Assert\Count(max = 5, maxMessage = "You can't set more than 5 tags.")
-     * @Assert\Valid()
-     * @Serializer\Type("ArrayCollection<Fuz\AppBundle\Entity\FiddleTag>")
-     */
-    protected $tags;
-
-    /**
      * @var \DateTime
      *
      * @ORM\Column(name="creation_tm", type="datetime")
@@ -209,7 +196,6 @@ class Fiddle implements TagContainerInterface
         $this->context = new FiddleContext();
         $this->templates = new ArrayCollection();
         $this->templates->add(new FiddleTemplate());
-        $this->tags = new ArrayCollection();
     }
 
     /**
@@ -516,34 +502,6 @@ class Fiddle implements TagContainerInterface
     }
 
     /**
-     * Set tags.
-     *
-     * @param ArrayCollection[FiddleTag]
-     *
-     * @return Fiddle
-     */
-    public function setTags(ArrayCollection $tags)
-    {
-        foreach ($tags as $tag) {
-            $tag->setFiddle($this);
-        }
-
-        $this->tags = $tags;
-
-        return $this;
-    }
-
-    /**
-     * Get tags.
-     *
-     * @return ArrayCollection[FiddleTag]
-     */
-    public function getTags()
-    {
-        return $this->tags;
-    }
-
-    /**
      * @param \DateTime $creationTm
      *
      * @return Fiddle
@@ -682,13 +640,6 @@ class Fiddle implements TagContainerInterface
     public function mapBookmark(UserBookmark $bookmark)
     {
         $this->setTitle($bookmark->getTitle());
-        $collection = new ArrayCollection();
-        foreach ($bookmark->getTags() as $tag) {
-            $tagObj = new FiddleTag();
-            $tagObj->setTag($tag->getTag());
-            $collection->add($tagObj);
-        }
-        $this->setTags($collection);
 
         return $this;
     }
@@ -708,15 +659,6 @@ class Fiddle implements TagContainerInterface
             foreach ($templates as $template) {
                 $this->addTemplate(clone $template);
             }
-        }
-
-        if ($this->tags) {
-            $oldTags = $this->tags;
-            $newTags = new ArrayCollection();
-            foreach ($oldTags as $tag) {
-                $newTags->add(clone $tag);
-            }
-            $this->setTags($newTags);
         }
 
         $this->visitsCount = 0;

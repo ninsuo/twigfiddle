@@ -12,7 +12,6 @@ namespace Fuz\AppBundle\Form;
 
 use Fuz\AppBundle\Entity\Fiddle;
 use Fuz\AppBundle\Service\TwigExtensions;
-use Fuz\AppBundle\Transformer\FiddleTagTransformer;
 use Fuz\AppBundle\Util\ProcessConfiguration;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type;
@@ -36,8 +35,6 @@ class FiddleType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $transformer = new FiddleTagTransformer($options['data_object']);
-
         $this->buildFiddleOptions($builder, $options);
 
         $builder
@@ -56,13 +53,6 @@ class FiddleType extends AbstractType
            ->add('title', Type\TextType::class, array(
                'required' => false,
            ))
-           ->add(
-              $builder
-              ->create('tags', Type\TextType::class, array(
-                  'required' => false,
-              ))
-              ->addModelTransformer($transformer)
-           )
            ->add('visibility', Type\ChoiceType::class, array(
                'choices' => array(
                    1 => Fiddle::VISIBILITY_PUBLIC,

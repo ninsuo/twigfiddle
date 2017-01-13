@@ -78,27 +78,7 @@
             <div id="error-{{ form.title.vars.id ~ '_' ~ index }}" class="error-container">{{ form_errors(form.title) }}</div>
         </div>
 
-        {# Tags #}
-        <div>
-            <p class="ro-{{ index }} {% if fiddle.tags|length == 0 %}hide{% endif %}" {% if fiddle.tags|length == 0 %}aria-hidden="true"{% endif %}>
-                {% for tag in fiddle.tags %}
-                    <span class="static-tag"><span>{{ tag.tag }}</span></span>
-                {% endfor %}
-            </p>
-            <p class="input-{{ index }} hide tags" aria-hidden="true">
-                {{
-                    form_widget(form.tags, {
-                        'attr': {
-                            'class': 'tags-input',
-                         },
-                         'id': form.tags.vars.id ~ '_' ~ index,
-                    })
-                }}
-            </p>
-            <div id="error-{{ index }}" class="error-container">{{ form_errors(form.tags) }}</div>
-        </div>
-
-         {# Visits #}
+        {# Visits #}
         <p class="clear">
             Visited {{ fiddle.visitsCount }} time{% if fiddle.visitsCount != 1 %}s{% endif %}{% if fiddle.visitsCount > 0 %}, last one on  {{ fiddle.updateTm|date }}{% endif %}
         </p>
@@ -183,18 +163,4 @@
 
 </div>
 
-{% endblock %}
-
-{% block script %}
-    {% if isAjax %}
-
-    <script type="text/javascript">
-
-        $(document).ready(function() {
-           putTagStyle();
-        });
-
-    </script>
-
-    {% endif %}
 {% endblock %}

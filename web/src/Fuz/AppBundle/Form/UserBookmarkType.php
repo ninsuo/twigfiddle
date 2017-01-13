@@ -11,7 +11,6 @@
 
 namespace Fuz\AppBundle\Form;
 
-use Fuz\AppBundle\Transformer\UserBookmarkTagTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -21,20 +20,10 @@ class UserBookmarkType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $transformer = new UserBookmarkTagTransformer($options['data_object']);
-
         $builder
            ->add('title', Type\TextType::class, array(
                    'required' => false,
            ))
-           ->add(
-              $builder
-              ->create('tags', Type\TextType::class,
-                 array(
-                      'required' => false,
-              ))
-              ->addModelTransformer($transformer)
-           )
         ;
     }
 

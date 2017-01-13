@@ -14,10 +14,6 @@
 
 {% block browse %}{% endblock %}
 
-{% block extra_css %}
-<link rel="stylesheet" href="{{ asset('bundles/fuzapp/jquery-tagsinput/jquery.tagsinput.css') }}">
-{% endblock %}
-
 {% block header_middle %}
 
     {# Create new fiddle #}
@@ -34,15 +30,14 @@
 {% block content %}
 
     <div id="search-container">
-        {{ render(controller('FuzAppBundle:Browse:search', {'tag': tag})) }}
+        {{ render(controller('FuzAppBundle:Browse:search')) }}
     </div>
 
 {% endblock %}
 
- {% block extra_js %}
+{% block extra_js %}
 <script type="text/javascript" src="{{ asset('bundles/fuzapp/js/jquery.domajax.js') }}"></script>
-<script type="text/javascript" src="{{ asset('bundles/fuzapp/jquery-tagsinput/jquery.tagsinput.js') }}"></script>
- {% endblock %}
+{% endblock %}
 
 {% block script %}
 {{ include('FuzAppBundle:Browse:script.html.twig') }}
