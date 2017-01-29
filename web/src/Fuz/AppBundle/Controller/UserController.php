@@ -42,7 +42,7 @@ class UserController extends BaseController
      */
     public function logoutAction(Request $request)
     {
-        $this->container->get('security.context')->setToken(null);
+        $this->container->get('security.token_storage')->setToken(null);
 
         return $this->goBack($request);
     }
