@@ -41,7 +41,7 @@
 <div class="row" id="search">
 
     {# Keywords filter #}
-    <div class="{% if is_granted('ROLE_USER') %}col-md-3{% else %}col-md-6{% endif %} col-sm-6 col-xs-12">
+    <div class="{% if is_granted('ROLE_USER') %}col-md-6{% else %}col-md-12{% endif %} col-sm-12 col-xs-12">
         <div class="form-group">
             <label class="sr-only">Keywords</label>
             <p class="form-control-static">Keywords</p>
@@ -59,28 +59,6 @@
         </div>
         {{ macros.display_submit(filters) }}
         <div class="error-container">{{ form_errors(filters.keywords) }}</div>
-    </div>
-
-    {# Tags filter #}
-    <div class="{% if is_granted('ROLE_USER') %}col-md-3{% else %}col-md-6{% endif %} col-sm-6 col-xs-12">
-        <div class="form-group">
-            <label class="sr-only">Tags</label>
-            <p class="form-control-static">Tags</p>
-        </div>
-        <div class="form-group tags">
-            <label class="sr-only">Filter Tags...</label>
-            {{
-                form_widget(filters.tags, {
-                    'attr': {
-                        'placeholder': 'Filter tags...',
-                        'class': 'tags-input',
-                        'autocomplete': 'off',
-                    }
-                })
-            }}
-        </div>
-        {{ macros.display_submit(filters) }}
-       <div class="error-container">{{ form_errors(filters.tags) }}</div>
     </div>
 
     <div class="clearfix hidden-md hidden-lg">&nbsp;</div>

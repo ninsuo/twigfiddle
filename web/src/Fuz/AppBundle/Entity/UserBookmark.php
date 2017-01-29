@@ -13,7 +13,6 @@ namespace Fuz\AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Fuz\AppBundle\Api\TagContainerInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -22,7 +21,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="user_bookmark")
  * @ORM\Entity(repositoryClass="Fuz\AppBundle\Repository\UserBookmarkRepository")
  */
-class UserBookmark implements TagContainerInterface
+class UserBookmark
 {
     /**
      * @var int
@@ -56,17 +55,6 @@ class UserBookmark implements TagContainerInterface
      * @Assert\Length(max = 255)
      */
     protected $title;
-
-    /**
-     * @var ArrayCollection[UserBookmarkTag]
-     *
-     * fiddle.max_tags
-     *
-     * @ORM\OneToMany(targetEntity="UserBookmarkTag", mappedBy="userBookmark", cascade={"all"}, orphanRemoval=true)
-     * @Assert\Count(max = 5, maxMessage = "You can't set more than 5 tags.")
-     * @Assert\Valid()
-     */
-    protected $tags;
 
     public function __construct()
     {
@@ -155,45 +143,9 @@ class UserBookmark implements TagContainerInterface
         return $this->title;
     }
 
-    /**
-     * Set tags.
-     *
-     * @param ArrayCollection[UserBookmarkTag] $tags
-     *
-     * @return UserBookmark
-     */
-    public function setTags(ArrayCollection $tags)
-    {
-        foreach ($tags as $tag) {
-            $tag->setUserBookmark($this);
-        }
-
-        $this->tags = $tags;
-
-        return $this;
-    }
-
-    /**
-     * Get tags.
-     *
-     * @return ArrayCollection[UserBookmarkTag]
-     */
-    public function getTags()
-    {
-        return $this->tags;
-    }
-
     public function mapFiddle(Fiddle $fiddle)
     {
         $this->setTitle($fiddle->getTitle());
-
-        $tags = new ArrayCollection();
-        foreach ($fiddle->getTags() as $fiddleTag) {
-            $tag = new UserBookmarkTag();
-            $tag->setTag($fiddleTag->getTag());
-            $tags->add($tag);
-        }
-        $this->setTags($tags);
 
         return $this;
     }

@@ -66,12 +66,6 @@ class ImportCommand extends ContainerAwareCommand
                     }
                 }
                 $oldFiddle->clearTemplates();
-                foreach ($oldFiddle->getTags() as $tag) {
-                    if ($oldFiddle->getId()) {
-                        $em->remove($tag);
-                        $em->flush($tag);
-                    }
-                }
                 $em->remove($oldFiddle);
                 $em->flush($oldFiddle);
             }

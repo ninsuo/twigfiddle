@@ -279,29 +279,6 @@ $(document).ready(function() {
      });
 
     {#
-     #  Make tags having a tag layout and URLs
-     #  Used in FuzAppBundle:Fiddle:index.html.twig
-     #}
-    $('.tags-input').each(function() {
-        var that = $(this);
-        that.tagsInput({
-            'width': (that.width() + 26) + 'px',
-            'height': '34px',
-            'defaultText': 'New tag...',
-            'placeholderColor' : '#999',
-            'onAddTag': function (tag) {
-                var tags = that.val().split(',');
-                if (tags.length > 5 {# fiddle.max_tags #} ) {
-                    that.importTags(tags.slice(0, 5 {# fiddle.max_tags #} ).join(','));
-                } else {
-                    createClickableTags(tag);
-                }
-            }
-        });
-    });
-    createClickableTags();
-
-    {#
      #  Compiled code switcher
      #  Used in FuzAppBundle:Fiddle:result-compiled.html.twig
      #}
@@ -497,35 +474,6 @@ function changeCompiledCode() {
     var id = $( "#compiled-switcher option:selected" ).val();
     $('#compiled-' + id).removeClass('hide');
     $('#compiled-' + id).removeAttr('aria-label');
-}
-
-{#
- #  Transform tags to fiddle browser's links
- #  Used in FuzAppBundle:Fiddle:index.html.twig
- #}
-function createClickableTags(tag) {
-    var inputTag, escTag = null;
-
-    if (undefined !== tag) {
-        inputTag = tag.replace(/&/g, '&amp;').replace(/\s/g,' ').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-        escTag = $.symfony2.escape(tag);
-    }
-
-    var selector = $('#{{ form.tags.vars.id }}_tagsinput span.tag span');
-    $(selector).each(function() {
-
-        var that = $(this);
-        var current = that.html().replace(/&nbsp;&nbsp;/g, '');
-
-        if (undefined === tag) {
-            escTag = $.symfony2.escape(current);
-        }
-
-        if ((undefined === tag) || (current === inputTag)) {
-            that.html('<a href="{{ path('browse') }}/' + escTag + '">' + escTag + '</a>&nbsp;&nbsp;');
-        }
-
-    }); // $.each
 }
 
 {#

@@ -29,13 +29,6 @@ class BrowseFiltersType extends AbstractType
               ))
               ->addModelTransformer(new ArrayTransformer(' '))
            )
-           ->add(
-              $builder
-              ->create('tags', Type\TextType::class, array(
-                  'required' => false,
-              ))
-              ->addModelTransformer(new ArrayTransformer(','))
-           )
            ->add('bookmark', Type\CheckboxType::class, array(
                'required' => false,
            ))

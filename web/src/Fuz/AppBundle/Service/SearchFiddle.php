@@ -122,12 +122,10 @@ class SearchFiddle
         $qb
            ->from('Fuz\AppBundle\Entity\Fiddle', 'f')
            ->leftJoin('Fuz\AppBundle\Entity\User', 'u',  Expr\Join::WITH, $qb->expr()->eq('f.user', ':user'))
-           ->leftJoin('f.tags', 't')
            ->leftJoin('Fuz\AppBundle\Entity\UserBookmark', 'b', Expr\Join::WITH, $qb->expr()->andX(
               $qb->expr()->eq('b.fiddle', 'f.id'),
               $qb->expr()->eq('b.user', ':user')
            ))
-           ->leftJoin('Fuz\AppBundle\Entity\UserBookmarkTag', 'bt', Expr\Join::WITH, $qb->expr()->eq('b.id', 'bt.userBookmark'))
            ->where(
                $qb->expr()->andX(
                    $qb->expr()->orX(
@@ -143,8 +141,7 @@ class SearchFiddle
            ->having(
                $qb->expr()->andX(
                   $qb->expr()->eq(1, 1),
-                  $this->applyKeywordsFilter($criteria, $qb),
-                  $this->applyTagsFilter($criteria, $qb)
+                  $this->applyKeywordsFilter($criteria, $qb)
                )
            )
            ->orderBy('f.creationTm', 'DESC')
@@ -167,21 +164,6 @@ class SearchFiddle
                 $andF->add($qb->expr()->like("GROUP_CONCAT(f.title SEPARATOR ' ')", ":keyword_{$key}"));
                 $andB->add($qb->expr()->like("GROUP_CONCAT(b.title SEPARATOR ' ')", ":keyword_{$key}"));
                 $qb->setParameter(":keyword_{$key}", '%'.addcslashes($keyword, '_%').'%');
-            }
-        }
-
-        return $qb->expr()->orX($andF, $andB);
-    }
-
-    public function applyTagsFilter(BrowseFilters $criteria, QueryBuilder $qb)
-    {
-        $andF = $qb->expr()->andX();
-        $andB = $qb->expr()->andX();
-        foreach ($criteria->getTags() as $key => $keyword) {
-            if (strlen($keyword) > 0) {
-                $andF->add($qb->expr()->gt("FIND_IN_SET(:tag_{$key}, GROUP_CONCAT(t.tag))", '0'));
-                $andB->add($qb->expr()->gt("FIND_IN_SET(:tag_{$key}, GROUP_CONCAT(bt.tag))", '0'));
-                $qb->setParameter(":tag_{$key}", $keyword);
             }
         }
 

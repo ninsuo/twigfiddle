@@ -72,8 +72,6 @@ doctrine:
                 dql:
                     string_functions:
                         group_concat: Fuz\AppBundle\DQL\GroupConcat
-                    numeric_functions:
-                        find_in_set: Fuz\AppBundle\DQL\FindInSet
 
 # Swiftmailer Configuration
 swiftmailer:
