@@ -34,7 +34,7 @@ security:
         - { path: ^/logout, role: ROLE_USER }
 
 hwi_oauth:
-    firewall_name: main
+    firewall_names: ["main"]
     connect:
         confirmation: false
     resource_owners:

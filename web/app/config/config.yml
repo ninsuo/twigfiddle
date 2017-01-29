@@ -28,9 +28,8 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
-    form:
-        resources:
-            - 'FuzAppBundle::fields.html.twig'
+    form_themes:
+        - 'FuzAppBundle::fields.html.twig'
     globals:
         github_repository_root: %github_repository_root%
         recaptcha_site_key: %recaptcha_site_key%
