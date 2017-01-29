@@ -24,117 +24,117 @@ parameters:
 services:
 
     app.oauth_user_provider:
-        class: %app.oauth_user_provider.class%
-        arguments: [@doctrine.orm.entity_manager]
+        class: '%app.oauth_user_provider.class%'
+        arguments: ['@doctrine.orm.entity_manager']
 
     hwi_oauth.account.connector:
-        class: %hwi_oauth.account.connector%
+        class: '%hwi_oauth.account.connector%'
 
     app.form.fiddle:
-         class: %app.form.fiddle.class%
-         arguments: [@app.process_configuration, @app.twig_extensions, '%kernel.environment%']
+         class: '%app.form.fiddle.class%'
+         arguments: ['@app.process_configuration', '@app.twig_extensions', '%kernel.environment%']
          tags:
             - { name: form.type }
 
     app.twig.debug_extension:
-         class: %app.twig.debug_extension.class%
+         class: '%app.twig.debug_extension.class%'
          arguments: []
          tags:
              - { name: twig.extension }
 
     app.twig.safety_extension:
-         class: %app.twig.safety_extension.class%
-         arguments: [%kernel.root_dir%]
+         class: '%app.twig.safety_extension.class%'
+         arguments: ['%kernel.root_dir%']
          tags:
              - { name: twig.extension }
 
     app.twig.github_extension:
-         class: %app.twig.github_extension.class%
-         arguments: [%github_repository_root%]
+         class: '%app.twig.github_extension.class%'
+         arguments: ['%github_repository_root%']
          tags:
              - { name: twig.extension }
 
     app.twig.hash_extension:
-         class: %app.twig.hash_extension.class%
+         class: '%app.twig.hash_extension.class%'
          arguments: []
          tags:
              - { name: twig.extension }
 
     app.twig.pcre_extension:
-         class: %app.twig.pcre_extension.class%
+         class: '%app.twig.pcre_extension.class%'
          arguments: []
          tags:
              - { name: twig.extension }
 
     app.twig.prettify_extension:
-         class: %app.twig.prettify_extension.class%
+         class: '%app.twig.prettify_extension.class%'
          arguments: []
          tags:
              - { name: twig.extension }
 
     app.helper.doctrine_helper:
-         class: %app.helper.doctrine_helper.class%
-         arguments: [@doctrine.orm.entity_manager]
+         class: '%app.helper.doctrine_helper.class%'
+         arguments: ['@doctrine.orm.entity_manager']
 
     app.subscriber.fiddle:
-        class: %app.subscriber.fiddle.class%
+        class: '%app.subscriber.fiddle.class%'
         tags:
              - { name: doctrine.event_subscriber, connection: default }
 
     app.subscriber.user:
-        class: %app.subscriber.user.class%
+        class: '%app.subscriber.user.class%'
         tags:
              - { name: doctrine.event_subscriber, connection: default }
 
     app.subscriber.user_bookmark:
-        class: %app.subscriber.user_bookmark.class%
+        class: '%app.subscriber.user_bookmark.class%'
         tags:
              - { name: doctrine.event_subscriber, connection: default }
 
     app.utilities:
-         class: %app.utilities.class%
-         arguments: [@logger]
+         class: '%app.utilities.class%'
+         arguments: ['@logger']
          tags:
              - { name: monolog.logger, channel: service.utilities }
 
     app.paginator:
-         class: %app.paginator.class%
-         arguments: [@logger, @session, @security.token_storage]
+         class: '%app.paginator.class%'
+         arguments: ['@logger', '@session', '@security.token_storage']
          tags:
              - { name: monolog.logger, channel: service.paginator }
 
     app.captcha:
-         class: %app.captcha.class%
-         arguments: [@logger, @session, @doctrine.orm.entity_manager, %web%]
+         class: '%app.captcha.class%'
+         arguments: ['@logger', '@session', '@doctrine.orm.entity_manager', '%web%']
          tags:
              - { name: monolog.logger, channel: service.captcha }
 
     app.process_configuration:
-        class: %app.process_configuration.class%
-        arguments: [@logger, %process%, %kernel.environment%]
+        class: '%app.process_configuration.class%'
+        arguments: ['@logger', '%process%', '%kernel.environment%']
         tags:
             - { name: monolog.logger, channel: service.process_configuration }
 
     app.run_fiddle:
-         class: %app.run_fiddle.class%
-         arguments: [@logger, @filesystem, @app.utilities, @app.process_configuration, %process%]
+         class: '%app.run_fiddle.class%'
+         arguments: ['@logger', '@filesystem', '@app.utilities', '@app.process_configuration', '%process%']
          tags:
              - { name: monolog.logger, channel: service.run_fiddle }
 
     app.save_fiddle:
-         class: %app.save_fiddle.class%
-         arguments: [@logger, @app.utilities, @app.helper.doctrine_helper, @doctrine.orm.entity_manager, @session, @router, %web%]
+         class: '%app.save_fiddle.class%'
+         arguments: ['@logger', '@app.utilities', '@app.helper.doctrine_helper', '@doctrine.orm.entity_manager', '@session', '@router', '%web%']
          tags:
              - { name: monolog.logger, channel: service.save_fiddle }
 
     app.search_fiddle:
-         class: %app.search_fiddle.class%
-         arguments: [@logger, @doctrine.orm.entity_manager, @app.paginator, %web%]
+         class: '%app.search_fiddle.class%'
+         arguments: ['@logger', '@doctrine.orm.entity_manager', '@app.paginator', '%web%']
          tags:
              - { name: monolog.logger, channel: service.search_fiddle }
 
     app.twig_extensions:
-        class: %app.twig_extensions.class%
-        arguments: [@logger, @app.process_configuration, %kernel.environment%]
+        class: '%app.twig_extensions.class%'
+        arguments: ['@logger', '@app.process_configuration', '%kernel.environment%']
         tags:
             - { name: monolog.logger, channel: service.twig_extensions }
