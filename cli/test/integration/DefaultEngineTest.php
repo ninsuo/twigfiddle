@@ -67,10 +67,12 @@ class DefaultEngineTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             // 2.x
+            array('Twig 2.x', 'Twig-2.2.0'),
             array('Twig 2.x', 'Twig-2.1.0'),
             array('Twig 2.x', 'Twig-2.0.0'),
 
             // 1.x
+            array('Twig 1.x', 'Twig-1.32.0'),
             array('Twig 1.x', 'Twig-1.31.0'),
             array('Twig 1.x', 'Twig-1.30.0'),
             array('Twig 1.x', 'Twig-1.29.0'),
@@ -158,16 +160,18 @@ class DefaultEngineTest extends \PHPUnit_Framework_TestCase
             array('Twig 1.x', 'Twig-1.0.0-RC2'),
             array('Twig 1.x', 'Twig-1.0.0-RC1'),
             array('Twig 1.x', 'Twig-1.0.0'),
-            array('Twig 1.x', 'Twig-0.9.10'),
-            array('Twig 1.x', 'Twig-0.9.9'),
-            array('Twig 1.x', 'Twig-0.9.8'),
-            array('Twig 1.x', 'Twig-0.9.7'),
-            array('Twig 1.x', 'Twig-0.9.6'),
-            array('Twig 1.x', 'Twig-0.9.5'),
-            array('Twig 1.x', 'Twig-0.9.4'),
-            array('Twig 1.x', 'Twig-0.9.2'),
-            array('Twig 1.x', 'Twig-0.9.1'),
-            array('Twig 1.x', 'Twig-0.9.0'),
+
+	    // 0.x
+            array('Twig 0.x', 'Twig-0.9.10'),
+            array('Twig 0.x', 'Twig-0.9.9'),
+            array('Twig 0.x', 'Twig-0.9.8'),
+            array('Twig 0.x', 'Twig-0.9.7'),
+            array('Twig 0.x', 'Twig-0.9.6'),
+            array('Twig 0.x', 'Twig-0.9.5'),
+            array('Twig 0.x', 'Twig-0.9.4'),
+            array('Twig 0.x', 'Twig-0.9.2'),
+            array('Twig 0.x', 'Twig-0.9.1'),
+            array('Twig 0.x', 'Twig-0.9.0'),
         );
     }
 
