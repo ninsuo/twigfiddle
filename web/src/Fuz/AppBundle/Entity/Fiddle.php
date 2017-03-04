@@ -127,7 +127,7 @@ class Fiddle
      * @ORM\Column(name="with_strict_variables", type="boolean")
      * @Serializer\Type("boolean")
      */
-    protected $withStrictVariables = false;
+    protected $withStrictVariables = true;
 
     /**
      * @ORM\Column(name="twig_extension", type="string", length=32, nullable=true)
