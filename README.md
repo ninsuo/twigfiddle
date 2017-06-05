@@ -57,10 +57,6 @@ cd ../../
 cd web
 composer update
 
-# If you want to use SensioLabs Connect, you need to patch HWIOAuthBundle
-# See https://github.com/hwi/HWIOAuthBundle/pull/657
-patch -p9 vendor/hwi/oauth-bundle/OAuth/ResourceOwner/AbstractResourceOwner.php < ../install/HWIOAuthBundle_AbstractResourceOwner.patch
-
 # Install the database
 # You should create it yourself, from mysql, type:
 # CREATE DATABASE twigfiddle
@@ -87,6 +83,16 @@ alter table user add column nickname varchar(255) not null after username;
 update user set nickname = username;
 update user set username = concat('["', resource_owner, '","', resource_owner_id, '"]');
 ```
+
+# Add support for new Twig releases
+
+1) add your Twig-xxx.tar.gz found at https://github.com/twigphp/Twig/releases in `cli/twig/compressed`
+
+2) add Twig-xxx in the proper part of `cli/config/services/twig_engines.yml` (take care, position of engines and versions in this file will also change menus dynamically)
+
+3) add Twig-xxx in `cli/test/integration/DefaultEngineTest.php`
+
+You can redeploy, that's all.
 
 # Configure external services
 
