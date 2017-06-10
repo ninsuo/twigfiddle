@@ -2,8 +2,7 @@
 
 This is the project's repository, come here if you found a bug, if you want to request new features or if you want to contribute.
 
-If you need help to use twigfiddle, please read the twigfiddle's [help page](https://twigfiddle.com/about) or
-ask a question on the dedicated [mailing list](https://groups.google.com/forum/#!forum/twigfiddle).
+If you need help to use twigfiddle, please read the twigfiddle's [help page](https://twigfiddle.com/about).
 
 # Some words about the project
 
@@ -30,10 +29,8 @@ Of course, replace paths to fit with your own environment.
 
 ```sh
 # Clone the project
-sudo mkdir -p /fuz/twigfiddle.com
-sudo chown www-data:www-data /fuz/twigfiddle.com
-sudo su www-data
-git clone https://github.com/ninsuo/twigfiddle.git ./
+git clone https://github.com/ninsuo/twigfiddle.git twigfiddle
+cd twigfiddle
 
 # install Composer
 php -r "readfile('https://getcomposer.org/installer');" | php
