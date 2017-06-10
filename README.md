@@ -67,6 +67,7 @@ phpunit tests
 
 # Launch the application
 php app/console server:start
+open http://127.0.0.1:8000/hello
 ```
 
 # Automatically download, install and configure new Twig releases
