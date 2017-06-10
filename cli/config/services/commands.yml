@@ -1,6 +1,7 @@
 parameters:
     run.command.class: 'Fuz\Process\Command\RunCommand'
     run.timeout.command.class: 'Fuz\Process\Command\RunTimeoutCommand'
+    release_watcher.command.class: 'Fuz\Process\Command\ReleaseWatcherCommand'
 
 services:
 
@@ -12,6 +13,12 @@ services:
 
     run.timout.command:
         class: '%run.timeout.command.class%'
+        arguments: []
+        tags:
+            - { name: command }
+
+    release_watcher.timout.command:
+        class: '%release_watcher.command.class%'
         arguments: []
         tags:
             - { name: command }
