@@ -1,6 +1,5 @@
 vendor/
 composer.phar
-composer.lock
 logs/*
 !logs/.gitkeep
 twig/uncompressed/*

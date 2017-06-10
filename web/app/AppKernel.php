@@ -18,6 +18,7 @@ class AppKernel extends Kernel
                 new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
                 new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
                 new SmartCore\Bundle\AcceleratorCacheBundle\AcceleratorCacheBundle(),
+                new Symfony\Bundle\WebServerBundle\WebServerBundle(),
                 new Fuz\AppBundle\FuzAppBundle(),
         );
 

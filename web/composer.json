@@ -36,7 +36,8 @@
         "hwi/oauth-bundle": "dev-master",
         "ninsuo/php-shared-memory": "dev-master",
         "smart-core/accelerator-cache-bundle": "~1",
-        "jms/serializer": "^1.0"
+        "jms/serializer": "^1.0",
+        "symfony/web-server-bundle": "^3.3"
     },
     "scripts": {
         "post-root-package-install": [
