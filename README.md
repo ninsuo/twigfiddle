@@ -40,14 +40,9 @@ php -r "readfile('https://getcomposer.org/installer');" | php
 sudo mv composer.phar /usr/bin/composer
 sudo chmod 755 /usr/bin/composer
 
-# Configure apache
-# do not forget to edit apache2/005-twigfiddle-com.conf to change host and dirs first!
-sudo mkdir -p /fuz/twigfiddle.com/files /fuz/twigfiddle.com/logs /fuz/twigfiddle.com/sessions.com /fuz/twigfiddle.com/tmp
-sudo cp install/005-twigfiddle-com.conf /etc/apache2/sites-available
-
 # Install the fiddle runner and prepare all twig versions
 cd cli
-composer update
+composer install
 cd twig
 sh prepare.sh
 cd ../../
@@ -55,7 +50,7 @@ cd ../../
 # Install the web application
 # composer update will fail when trying to remove apc cache, that's normal at this step
 cd web
-composer update
+composer install
 
 # Install the database
 # You should create it yourself, from mysql, type:
@@ -65,13 +60,21 @@ php app/console doctrine:schema:drop --force
 php app/console doctrine:schema:create
 php app/console twigfiddle:import ../samples/*
 
-# Enable the application
-sudo ln -s /etc/apache2/sites-available/005-twigfiddle-com.conf /etc/apache2/sites-enabled/005-twigfiddle-com.conf
-sudo service apache2 restart
-
 # Check that everything is working properly
 composer update
 php app/check.php
+phpunit tests
+
+# Launch the application
+php app/console server:start
+```
+
+# Automatically download, install and configure new Twig releases
+
+Simply run the following command:
+
+```sh
+php cli/run-prod.php twigfiddle:release:watcher
 ```
 
 # Upgrade for installs before 01/11/2016
@@ -83,16 +86,6 @@ alter table user add column nickname varchar(255) not null after username;
 update user set nickname = username;
 update user set username = concat('["', resource_owner, '","', resource_owner_id, '"]');
 ```
-
-# Add support for new Twig releases
-
-1) add your Twig-xxx.tar.gz found at https://github.com/twigphp/Twig/releases in `cli/twig/compressed`
-
-2) add Twig-xxx in the proper part of `cli/config/services/twig_engines.yml` (take care, position of engines and versions in this file will also change menus dynamically)
-
-3) add Twig-xxx in `cli/test/integration/DefaultEngineTest.php`
-
-You can redeploy, that's all.
 
 # Configure external services
 
