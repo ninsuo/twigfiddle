@@ -35,7 +35,7 @@ abstract class AbstractTwigEngine extends BaseService implements TwigEngineInter
      *
      * @return string
      */
-    public function render(\Twig_Environment $twigEnvironment, $template, array $context = array())
+    public function render(\Twig_Environment $twigEnvironment, $template, array $context = [])
     {
         $templateObject = $twigEnvironment->loadTemplate($template);
 
@@ -58,7 +58,7 @@ abstract class AbstractTwigEngine extends BaseService implements TwigEngineInter
     public function extractTemplateName($content)
     {
         $templateName = null;
-        $tokens = token_get_all($content);
+        $tokens       = token_get_all($content);
         foreach ($tokens as $token) {
             if (!is_array($token)) {
                 continue;
@@ -67,7 +67,7 @@ abstract class AbstractTwigEngine extends BaseService implements TwigEngineInter
             if ($identifier !== T_COMMENT) {
                 continue;
             }
-            $templateName = trim(str_replace(array('/*', '*/'), '', $string));
+            $templateName = trim(str_replace(['/*', '*/'], '', $string));
             break;
         }
 

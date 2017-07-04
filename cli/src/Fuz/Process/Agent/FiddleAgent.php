@@ -60,14 +60,14 @@ class FiddleAgent
      *
      * @var Error[]
      */
-    protected $errors = array();
+    protected $errors = [];
 
     /**
      * Deprecation notices.
      *
      * @var array[]
      */
-    protected $deprecations = array();
+    protected $deprecations = [];
 
     /**
      * File that contains the shared memory.
@@ -102,7 +102,7 @@ class FiddleAgent
      *
      * @var array[mixed]
      */
-    protected $context = array();
+    protected $context = [];
 
     /**
      * List templates full paths.
@@ -123,11 +123,21 @@ class FiddleAgent
      *
      * @var array[string]
      */
-    protected $compiled = array();
+    protected $compiled = [];
 
     public function __construct(ErrorManager $errorManager)
     {
         $this->errorManager = $errorManager;
+    }
+
+    public function __sleep()
+    {
+        return array_diff(array_keys(get_object_vars($this)), ['errorManager', 'engine']);
+    }
+
+    public function __wakeup()
+    {
+        $this->errorManager = null;
     }
 
     public function setEnvironmentId($environmentId)
@@ -178,7 +188,7 @@ class FiddleAgent
         return $this->fiddle;
     }
 
-    public function addError($error, $context = array())
+    public function addError($error, $context = [])
     {
         if (!($error instanceof Error)) {
             if ($this->errorManager) {
@@ -307,15 +317,5 @@ class FiddleAgent
     public function getCompiled()
     {
         return $this->compiled;
-    }
-
-    public function __sleep()
-    {
-        return array_diff(array_keys(get_object_vars($this)), array('errorManager', 'engine'));
-    }
-
-    public function __wakeup()
-    {
-        $this->errorManager = null;
     }
 }

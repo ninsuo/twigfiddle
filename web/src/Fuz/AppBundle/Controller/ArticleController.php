@@ -24,6 +24,6 @@ class ArticleController extends BaseController
      */
     public function aboutAction()
     {
-        return array();
+        return [];
     }
 }

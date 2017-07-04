@@ -20,8 +20,8 @@ class Deprecation
     public function __construct($message, $file, $line)
     {
         $this->message = $message;
-        $this->file = $file;
-        $this->line = $line;
+        $this->file    = $file;
+        $this->line    = $line;
     }
 
     public function getMessage()
@@ -42,7 +42,6 @@ class Deprecation
     public function isIgnored()
     {
         switch ($this->message) {
-
             // Used internally by V1TwigEngine class (useful in older versions)
             case 'The Twig_Autoloader class is deprecated since version 1.21 and will be removed in 2.0. Use Composer instead.':
             case 'Using Twig_Autoloader is deprecated since version 1.21. Use Composer instead.':

@@ -20,7 +20,7 @@ use Fuz\Process\Entity\Result as FiddleResult;
  */
 class Result
 {
-    protected $result = null;
+    protected $result   = null;
     protected $duration = null;
 
     public function setResult(FiddleResult $result)

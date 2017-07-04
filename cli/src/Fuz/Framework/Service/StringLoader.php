@@ -25,7 +25,7 @@ class StringLoader
 
     public function load($content, $format)
     {
-        $service = null;
+        $service    = null;
         $serviceIds = $this->container->findTaggedServiceIds('string.loader');
         foreach ($serviceIds as $serviceId => $tags) {
             foreach ($tags as $tag) {

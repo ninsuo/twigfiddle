@@ -20,12 +20,12 @@ class SafetyExtension extends \Twig_Extension
 
     public function getFilters()
     {
-        return array(
+        return [
                 new \Twig_SimpleFilter('hide_project_path',
                    function ($string) {
                        return str_replace($this->path, 'twigfiddle:', $string);
                    }),
-        );
+        ];
     }
 
     public function getName()

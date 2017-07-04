@@ -31,7 +31,7 @@ class ImportCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $files = $input->getArgument('files');
+        $files        = $input->getArgument('files');
         $this->output = $output;
 
         $em = $this
@@ -54,8 +54,8 @@ class ImportCommand extends ContainerAwareCommand
             }
 
             $serializer = \JMS\Serializer\SerializerBuilder::create()->build();
-            $newFiddle = $serializer->deserialize($json, 'Fuz\AppBundle\Entity\Fiddle', 'json');
-            $oldFiddle = $fiddleRepo->getFiddle($newFiddle->getHash(), $newFiddle->getRevision());
+            $newFiddle  = $serializer->deserialize($json, 'Fuz\AppBundle\Entity\Fiddle', 'json');
+            $oldFiddle  = $fiddleRepo->getFiddle($newFiddle->getHash(), $newFiddle->getRevision());
 
             $id = $oldFiddle->getId();
             if ($id) {

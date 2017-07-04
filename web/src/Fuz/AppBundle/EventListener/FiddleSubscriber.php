@@ -11,7 +11,6 @@
 
 namespace Fuz\AppBundle\EventListener;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Fuz\AppBundle\Entity\Fiddle;
@@ -24,10 +23,10 @@ class FiddleSubscriber implements EventSubscriber
 
     public function getSubscribedEvents()
     {
-        return array(
+        return [
                 'prePersist',
                 'postPersist',
-        );
+        ];
     }
 
     public function prePersist(LifecycleEventArgs $args)
@@ -47,7 +46,7 @@ class FiddleSubscriber implements EventSubscriber
 
     public function postPersist(LifecycleEventArgs $args)
     {
-        $om = $args->getObjectManager();
+        $om     = $args->getObjectManager();
         $object = $args->getObject();
         if ($object instanceof Fiddle) {
             $this->context->setFiddle($object);

@@ -27,12 +27,12 @@ class Captcha
 
     public function __construct(LoggerInterface $logger, Session $session, EntityManager $em, array $webConfig)
     {
-        $this->logger = $logger;
-        $this->session = $session;
-        $this->sessionIpRepo = $em->getRepository('FuzAppBundle:CaptchaSessionIp');
+        $this->logger         = $logger;
+        $this->session        = $session;
+        $this->sessionIpRepo  = $em->getRepository('FuzAppBundle:CaptchaSessionIp');
         $this->sessionHitRepo = $em->getRepository('FuzAppBundle:CaptchaSessionHit');
-        $this->ipLimitRepo = $em->getRepository('FuzAppBundle:CaptchaIpLimit');
-        $this->config = $webConfig['recaptcha'];
+        $this->ipLimitRepo    = $em->getRepository('FuzAppBundle:CaptchaIpLimit');
+        $this->config         = $webConfig['recaptcha'];
     }
 
     public function check(Request $request, $strategy)
@@ -43,7 +43,7 @@ class Captcha
 
         $this->clearExpiredInformation($strategy);
 
-        $ip = ip2long($request->getClientIp()) ?: ip2long('127.0.0.1');
+        $ip        = ip2long($request->getClientIp()) ?: ip2long('127.0.0.1');
         $sessionId = $this->session->getId();
 
         if ($this->validateCaptcha($request)) {
@@ -70,14 +70,14 @@ class Captcha
         if ($response) {
             $ip = ip2long($request->getClientIp()) ? $request->getClientIp() : '127.0.0.1';
 
-            $parameters = array(
-                    'secret' => $this->config['secret_key'],
+            $parameters = [
+                    'secret'   => $this->config['secret_key'],
                     'response' => $response,
                     'remoteip' => $ip,
-            );
+            ];
 
             $query = $this->config['check_url'].'?'.http_build_query($parameters);
-            $json = json_decode(file_get_contents($query));
+            $json  = json_decode(file_get_contents($query));
 
             return $json->success;
         }
@@ -88,14 +88,14 @@ class Captcha
     protected function clearExpiredInformation($strategy)
     {
         $dateIntervalIp = \DateInterval::createFromDateString("{$this->config['sessions_per_ip']['delay']} seconds");
-        $expiryDateIp = new \DateTime();
+        $expiryDateIp   = new \DateTime();
         $expiryDateIp->sub($dateIntervalIp);
 
         $this->sessionIpRepo->deleteExpired($expiryDateIp);
         $this->ipLimitRepo->deleteExpired($expiryDateIp);
 
         $dateIntervalStrategy = \DateInterval::createFromDateString("{$this->config['strategies'][$strategy]['delay']} seconds");
-        $expiryDateStrategy = new \DateTime();
+        $expiryDateStrategy   = new \DateTime();
         $expiryDateStrategy->sub($dateIntervalStrategy);
 
         $this->sessionHitRepo->deleteExpired($strategy, $expiryDateStrategy);

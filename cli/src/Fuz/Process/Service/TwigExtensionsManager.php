@@ -41,10 +41,10 @@ class TwigExtensionsManager extends BaseService
            .'/lib/Twig/Extensions/Autoloader.php';
 
         if (!is_file($autoloader)) {
-            $agent->addError(Error::E_UNKNOWN_TWIG_EXTENSION, array(
-                'extension' => $extension,
+            $agent->addError(Error::E_UNKNOWN_TWIG_EXTENSION, [
+                'extension'  => $extension,
                 'autoloader' => $autoloader,
-            ));
+            ]);
             throw new StopExecutionException();
         }
 
@@ -66,7 +66,7 @@ class TwigExtensionsManager extends BaseService
 
     protected function registerAllExtensions(\Twig_Environment $environment)
     {
-        $extensions = array('Text', 'I18n', 'Intl', 'Array', 'Date');
+        $extensions = ['Text', 'I18n', 'Intl', 'Array', 'Date'];
         foreach ($extensions as $extension) {
             $class = "\Twig_Extensions_Extension_{$extension}";
             if (class_exists($class)) {

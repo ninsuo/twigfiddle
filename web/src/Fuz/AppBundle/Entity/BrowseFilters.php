@@ -26,7 +26,7 @@ class BrowseFilters
      *
      * @Assert\Count(max = 10)
      */
-    protected $keywords = array();
+    protected $keywords = [];
 
     /**
      * @var bool
@@ -99,11 +99,11 @@ class BrowseFilters
     public function validateVisibility(ExecutionContextInterface $context)
     {
         if ($this->visibility && !in_array($this->visibility,
-              array(
+              [
                    Fiddle::VISIBILITY_PUBLIC,
                    Fiddle::VISIBILITY_UNLISTED,
                    Fiddle::VISIBILITY_PRIVATE,
-           ))) {
+           ])) {
             $context->buildViolation('You should choose a valid visibility.')
                ->atPath('visibility')
                ->addViolation();

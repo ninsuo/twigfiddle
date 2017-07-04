@@ -19,7 +19,7 @@ class FiddleConfigurationNode implements ConfigurationNodeInterface
     public function getConfigurationNode()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('fiddle');
+        $rootNode    = $treeBuilder->root('fiddle');
 
         $rootNode
            ->children()

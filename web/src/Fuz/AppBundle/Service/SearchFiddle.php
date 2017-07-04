@@ -30,8 +30,8 @@ class SearchFiddle
 
     public function __construct(LoggerInterface $logger, EntityManager $em, Paginator $paginator, array $webConfig)
     {
-        $this->logger = $logger;
-        $this->em = $em;
+        $this->logger    = $logger;
+        $this->em        = $em;
         $this->paginator = $paginator;
         $this->webConfig = $webConfig;
     }
@@ -55,10 +55,10 @@ class SearchFiddle
             $this->createSimpleSearchQueryBuilder($qbResult, $criteria);
         }
 
-        $pagination = $this->paginator->paginate($request, $qbResult, $count, array('session_key' => 'browseFiddles'));
-        $fiddles = $qbResult->getQuery()->getArrayResult();
+        $pagination = $this->paginator->paginate($request, $qbResult, $count, ['session_key' => 'browseFiddles']);
+        $fiddles    = $qbResult->getQuery()->getArrayResult();
 
-        return array($pagination, $fiddles);
+        return [$pagination, $fiddles];
     }
 
     public function countResults(BrowseFilters $criteria, User $user = null)
@@ -121,7 +121,7 @@ class SearchFiddle
     {
         $qb
            ->from('Fuz\AppBundle\Entity\Fiddle', 'f')
-           ->leftJoin('Fuz\AppBundle\Entity\User', 'u',  Expr\Join::WITH, $qb->expr()->eq('f.user', ':user'))
+           ->leftJoin('Fuz\AppBundle\Entity\User', 'u', Expr\Join::WITH, $qb->expr()->eq('f.user', ':user'))
            ->leftJoin('Fuz\AppBundle\Entity\UserBookmark', 'b', Expr\Join::WITH, $qb->expr()->andX(
               $qb->expr()->eq('b.fiddle', 'f.id'),
               $qb->expr()->eq('b.user', ':user')

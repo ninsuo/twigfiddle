@@ -46,12 +46,12 @@ class ExportSamplesCommand extends ContainerAwareCommand
         $config = $this->getContainer()->getParameter('web');
         foreach ($config['samples'] as $group) {
             foreach ($group as $fiddle) {
-                $arguments = array(
+                $arguments = [
                    self::EXPORT_COMMAND,
-                   'hash' => $fiddle['hash'],
+                   'hash'     => $fiddle['hash'],
                    'revision' => $fiddle['revision'],
-            );
-                $input = new ArrayInput($arguments);
+            ];
+                $input  = new ArrayInput($arguments);
                 $output = new BufferedOutput();
                 try {
                     $ret = $command->run($input, $output);

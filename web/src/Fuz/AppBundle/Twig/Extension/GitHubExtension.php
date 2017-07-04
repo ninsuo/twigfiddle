@@ -31,10 +31,10 @@ class GitHubExtension extends \Twig_Extension
      */
     public function getFilters()
     {
-        return array(
+        return [
                 new \Twig_SimpleFilter('github_repository_link',
                    function ($relativePath) {
-                        // cli/src/Fuz/Process/Service/ExecuteManager.php:98
+                       // cli/src/Fuz/Process/Service/ExecuteManager.php:98
                        $path = substr($relativePath, strpos($relativePath, ':') + 1);
 
                         // #L98
@@ -46,7 +46,7 @@ class GitHubExtension extends \Twig_Extension
                        // https://github.com/ninsuo/twigfiddle/blob/master/cli/src/Fuz/Process/Service/ExecuteManager.php#L98
                        return $this->repositoryRoot.'/blob/master/'.$path.$line;
                    }),
-        );
+        ];
     }
 
     public function getName()

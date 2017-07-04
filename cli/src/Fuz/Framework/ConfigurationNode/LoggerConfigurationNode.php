@@ -19,9 +19,9 @@ class LoggerConfigurationNode implements ConfigurationNodeInterface
 {
     public function getConfigurationNode()
     {
-        $levels = array_keys(Logger::getLevels());
+        $levels      = array_keys(Logger::getLevels());
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('logger');
+        $rootNode    = $treeBuilder->root('logger');
         $rootNode
            ->children()
                 ->enumNode('level')

@@ -57,7 +57,7 @@ class UserController extends BaseController
     {
         $this->get('session')->set('referer', $request->headers->get('referer'));
 
-        return $this->forward('HWIOAuthBundle:Connect:redirectToService', array('service' => $service));
+        return $this->forward('HWIOAuthBundle:Connect:redirectToService', ['service' => $service]);
     }
 
     /**
@@ -95,12 +95,12 @@ class UserController extends BaseController
         $form = $this
            ->createFormBuilder()
            ->add('submit', 'submit',
-              array(
+              [
                    'label' => 'Confirm',
-                   'attr' => array(
+                   'attr'  => [
                            'class' => 'btn btn-danger',
-                   ),
-           ))
+                   ],
+           ])
            ->getForm()
         ;
 
@@ -108,7 +108,7 @@ class UserController extends BaseController
             $form->handleRequest($request);
             if ($form->isValid()) {
                 $user = $this->getUser();
-                $em = $this->get('doctrine.orm.entity_manager');
+                $em   = $this->get('doctrine.orm.entity_manager');
                 $em->remove($user);
                 $em->flush($user);
 
@@ -119,8 +119,8 @@ class UserController extends BaseController
         }
 
         return $this->render('FuzAppBundle:User:unsuscribe.html.twig',
-              array(
+              [
                    'form' => $form->createView(),
-        ));
+        ]);
     }
 }

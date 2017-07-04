@@ -18,7 +18,7 @@ class ApplicationConfiguration implements ConfigurationInterface
 {
     protected $nodes;
 
-    public function __construct(array $nodes = array())
+    public function __construct(array $nodes = [])
     {
         $this->nodes = $nodes;
     }
@@ -26,7 +26,7 @@ class ApplicationConfiguration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('app');
+        $rootNode    = $treeBuilder->root('app');
 
         foreach ($this->nodes as $object) {
             $rootNode->append($object->getConfigurationNode());

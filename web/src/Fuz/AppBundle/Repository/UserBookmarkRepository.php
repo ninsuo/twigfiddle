@@ -33,10 +33,10 @@ class UserBookmarkRepository extends EntityRepository
             AND ub.user = :user
         ");
 
-        $params = array(
+        $params = [
                 'fiddle' => $fiddle,
-                'user' => $user,
-        );
+                'user'   => $user,
+        ];
 
         $userBookmark = $query
            ->setParameters($params)

@@ -21,18 +21,18 @@ class UserBookmarkType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-           ->add('title', Type\TextType::class, array(
+           ->add('title', Type\TextType::class, [
                    'required' => false,
-           ))
+           ])
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
                 'data_object' => null,
-                'data_class' => 'Fuz\AppBundle\Entity\UserBookmark',
-        ));
+                'data_class'  => 'Fuz\AppBundle\Entity\UserBookmark',
+        ]);
     }
 
     /**

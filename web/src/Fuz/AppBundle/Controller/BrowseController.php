@@ -46,7 +46,7 @@ class BrowseController extends BaseController
 
         list($pagination, $fiddles) = $this->get('app.search_fiddle')->search($request, $data, $this->getUser());
 
-        $list_left = $list_right = array();
+        $list_left = $list_right = [];
         foreach ($fiddles as $key => $fiddle) {
             if ($key % 2) {
                 $list_right[] = $fiddle;
@@ -55,21 +55,12 @@ class BrowseController extends BaseController
             }
         }
 
-        return array(
-                'filters' => $filters->createView(),
-                'list_left' => $list_left,
+        return [
+                'filters'    => $filters->createView(),
+                'list_left'  => $list_left,
                 'list_right' => $list_right,
                 'pagination' => $pagination,
-        );
-    }
-
-    protected function createBrowseFilters(Request $request)
-    {
-        $data = new BrowseFilters();
-        $filters = $this->createForm(BrowseFiltersType::class, $data);
-        $filters->handleRequest($request);
-
-        return array($data, $filters);
+        ];
     }
 
     /**
@@ -101,12 +92,12 @@ class BrowseController extends BaseController
 
         $form = $this->createForm(UserBookmarkType::class, $bookmarkData)->createView();
 
-        return array(
-                'fiddle' => $fiddle,
-                'form' => $form,
+        return [
+                'fiddle'   => $fiddle,
+                'form'     => $form,
                 'bookmark' => $bookmark,
-                'isAjax' => $request->isXmlHttpRequest(),
-        );
+                'isAjax'   => $request->isXmlHttpRequest(),
+        ];
     }
 
     /**
@@ -120,8 +111,17 @@ class BrowseController extends BaseController
     {
         list($data) = $this->createBrowseFilters($request);
 
-        return array(
+        return [
                 'data' => $data,
-        );
+        ];
+    }
+
+    protected function createBrowseFilters(Request $request)
+    {
+        $data    = new BrowseFilters();
+        $filters = $this->createForm(BrowseFiltersType::class, $data);
+        $filters->handleRequest($request);
+
+        return [$data, $filters];
     }
 }

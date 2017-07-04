@@ -19,7 +19,7 @@ class XmlStringLoader implements StringLoaderInterface
     {
         libxml_use_internal_errors(true);
         $rootedStream = "<root>{$stream}</root>";
-        $xml = simplexml_load_string($rootedStream, 'SimpleXMLElement', LIBXML_NOCDATA | LIBXML_NOWARNING | LIBXML_NOERROR);
+        $xml          = simplexml_load_string($rootedStream, 'SimpleXMLElement', LIBXML_NOCDATA | LIBXML_NOWARNING | LIBXML_NOERROR);
         if ($xml === false) {
             $message = 'Unable to parse the given XML input:'.PHP_EOL;
             foreach (libxml_get_errors() as $key => $error) {

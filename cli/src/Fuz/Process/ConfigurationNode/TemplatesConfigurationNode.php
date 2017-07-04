@@ -19,7 +19,7 @@ class TemplatesConfigurationNode implements ConfigurationNodeInterface
     public function getConfigurationNode()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('templates');
+        $rootNode    = $treeBuilder->root('templates');
 
         $rootNode
            ->children()

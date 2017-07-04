@@ -48,11 +48,11 @@ class V2TwigEngine extends AbstractTwigEngine
             }
         });
 
-        $twigLoader = new \Twig_Loader_Filesystem($executionDirectory);
-        $twigEnvironment = new \Twig_Environment($twigLoader, array(
-            'cache' => $cacheDirectory,
+        $twigLoader      = new \Twig_Loader_Filesystem($executionDirectory);
+        $twigEnvironment = new \Twig_Environment($twigLoader, [
+            'cache'            => $cacheDirectory,
             'strict_variables' => $this->agent->getFiddle()->isWithStrictVariables(),
-        ));
+        ]);
 
         return $twigEnvironment;
     }

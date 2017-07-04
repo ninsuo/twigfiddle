@@ -27,9 +27,9 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 class FiddleContext
 {
     const FORMAT_YAML = 'YAML';
-    const FORMAT_XML = 'XML';
+    const FORMAT_XML  = 'XML';
     const FORMAT_JSON = 'JSON';
-    const FORMAT_INI = 'INI';
+    const FORMAT_INI  = 'INI';
 
     /**
      * @var Fiddle
@@ -146,11 +146,11 @@ class FiddleContext
 
     public static function getSupportedFormats()
     {
-        return array(
+        return [
                 self::FORMAT_YAML,
                 self::FORMAT_XML,
                 self::FORMAT_JSON,
                 self::FORMAT_INI,
-        );
+        ];
     }
 }

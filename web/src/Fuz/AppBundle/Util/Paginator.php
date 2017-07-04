@@ -25,7 +25,7 @@ class Paginator
 
     public function __construct(LoggerInterface $logger, Session $session, TokenStorage $token)
     {
-        $this->logger = $logger;
+        $this->logger  = $logger;
         $this->session = $session;
         if (!is_null($token->getToken())) {
             $this->user = $token->getToken();
@@ -34,38 +34,25 @@ class Paginator
 
     public function getDefaultConfiguration()
     {
-        return array(
-                'session_key' => 'pagination',
-                'preference_prefix' => 'pagination.',
-                'page_query_string' => 'page',
+        return [
+                'session_key'           => 'pagination',
+                'preference_prefix'     => 'pagination.',
+                'page_query_string'     => 'page',
                 'per_page_query_string' => 'per_page',
-                'per_page_list' => array(10, 25, 50, 75, 100),
-                'displayed_links' => 7,
-                'session' => array(
-                        'current_page' => 1,
+                'per_page_list'         => [10, 25, 50, 75, 100],
+                'displayed_links'       => 7,
+                'session'               => [
+                        'current_page'     => 1,
                         'current_per_page' => 10,
-                ),
-        );
+                ],
+        ];
     }
 
-    protected function getInternalConfiguration()
+    public function paginate(Request $request, QueryBuilder $query, $count, array $config = [])
     {
-        return array(
-                'count_results' => -1,
-                'count_pages' => -1,
-                'page_list' => array(),
-                'display_first' => null,
-                'display_last' => null,
-                'dots_first' => null,
-                'dots_last' => null,
-        );
-    }
-
-    public function paginate(Request $request, QueryBuilder $query, $count, array $config = array())
-    {
-        $options = array_merge($this->getDefaultConfiguration(), $config, $this->getInternalConfiguration());
-        $options['session'] = array_merge($options['session'], $this->session->get($options['session_key'], array()));
-        $sess = &$options['session'];
+        $options            = array_merge($this->getDefaultConfiguration(), $config, $this->getInternalConfiguration());
+        $options['session'] = array_merge($options['session'], $this->session->get($options['session_key'], []));
+        $sess               = &$options['session'];
 
         $options['count_results'] = $count;
 
@@ -94,6 +81,24 @@ class Paginator
         return $this->createContext($options);
     }
 
+    public function reset($key)
+    {
+        $this->session->remove($key);
+    }
+
+    protected function getInternalConfiguration()
+    {
+        return [
+                'count_results' => -1,
+                'count_pages'   => -1,
+                'page_list'     => [],
+                'display_first' => null,
+                'display_last'  => null,
+                'dots_first'    => null,
+                'dots_last'     => null,
+        ];
+    }
+
     protected function createContext(array $options)
     {
         if ($options['session']['current_per_page'] > 0) {
@@ -112,15 +117,10 @@ class Paginator
         }
 
         $options['display_first'] = count($options['page_list']) > 1 && !in_array(1, $options['page_list']);
-        $options['display_last'] = count($options['page_list']) > 1 && !in_array($options['count_pages'], $options['page_list']);
-        $options['dots_first'] = count($options['page_list']) > 1 && !in_array(2, $options['page_list']);
-        $options['dots_last'] = count($options['page_list']) > 1 && !in_array($options['count_pages'] - 1, $options['page_list']);
+        $options['display_last']  = count($options['page_list']) > 1 && !in_array($options['count_pages'], $options['page_list']);
+        $options['dots_first']    = count($options['page_list']) > 1 && !in_array(2, $options['page_list']);
+        $options['dots_last']     = count($options['page_list']) > 1 && !in_array($options['count_pages'] - 1, $options['page_list']);
 
         return $options;
-    }
-
-    public function reset($key)
-    {
-        $this->session->remove($key);
     }
 }

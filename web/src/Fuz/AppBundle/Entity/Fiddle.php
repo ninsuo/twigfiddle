@@ -30,9 +30,9 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class Fiddle
 {
-    const VISIBILITY_PUBLIC = 'public';
+    const VISIBILITY_PUBLIC   = 'public';
     const VISIBILITY_UNLISTED = 'unlisted';
-    const VISIBILITY_PRIVATE = 'private';
+    const VISIBILITY_PRIVATE  = 'private';
 
     /**
      * @var int
@@ -193,9 +193,29 @@ class Fiddle
 
     public function __construct()
     {
-        $this->context = new FiddleContext();
+        $this->context   = new FiddleContext();
         $this->templates = new ArrayCollection();
         $this->templates->add(new FiddleTemplate());
+    }
+
+    public function __clone()
+    {
+        $this->id   = null;
+        $this->user = null;
+
+        if ($this->context) {
+            $this->context = clone $this->context;
+        }
+
+        if ($this->templates) {
+            $templates = $this->templates;
+            $this->clearTemplates();
+            foreach ($templates as $template) {
+                $this->addTemplate(clone $template);
+            }
+        }
+
+        $this->visitsCount = 0;
     }
 
     /**
@@ -626,11 +646,11 @@ class Fiddle
      */
     public function validateVisibility(ExecutionContextInterface $context)
     {
-        if (!in_array($this->visibility, array(
+        if (!in_array($this->visibility, [
                self::VISIBILITY_PUBLIC,
                self::VISIBILITY_UNLISTED,
                self::VISIBILITY_PRIVATE,
-           ))) {
+           ])) {
             $context->buildViolation('You should choose a valid visibility.')
                ->atPath('visibility')
                ->addViolation();
@@ -642,25 +662,5 @@ class Fiddle
         $this->setTitle($bookmark->getTitle());
 
         return $this;
-    }
-
-    public function __clone()
-    {
-        $this->id = null;
-        $this->user = null;
-
-        if ($this->context) {
-            $this->context = clone $this->context;
-        }
-
-        if ($this->templates) {
-            $templates = $this->templates;
-            $this->clearTemplates();
-            foreach ($templates as $template) {
-                $this->addTemplate(clone $template);
-            }
-        }
-
-        $this->visitsCount = 0;
     }
 }

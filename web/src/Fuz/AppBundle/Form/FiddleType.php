@@ -28,9 +28,9 @@ class FiddleType extends AbstractType
     {
         $cfg = $processConfiguration->getProcessConfig();
 
-        $this->twigVersions = $cfg['supported_versions'];
+        $this->twigVersions   = $cfg['supported_versions'];
         $this->twigExtensions = $twigExtensions->getAvailableTwigExtensions();
-        $this->environment = $environment;
+        $this->environment    = $environment;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -38,79 +38,79 @@ class FiddleType extends AbstractType
         $this->buildFiddleOptions($builder, $options);
 
         $builder
-           ->add('templates', Type\CollectionType::class, array(
-               'entry_type' => FiddleTemplateType::class,
-               'allow_add' => true,
-               'allow_delete' => true,
-               'prototype' => true,
+           ->add('templates', Type\CollectionType::class, [
+               'entry_type'     => FiddleTemplateType::class,
+               'allow_add'      => true,
+               'allow_delete'   => true,
+               'prototype'      => true,
                'error_bubbling' => false,
-               'by_reference' => false,
+               'by_reference'   => false,
+               'required'       => false,
+           ])
+           ->add('context', FiddleContextType::class, [
                'required' => false,
-           ))
-           ->add('context', FiddleContextType::class, array(
+           ])
+           ->add('title', Type\TextType::class, [
                'required' => false,
-           ))
-           ->add('title', Type\TextType::class, array(
-               'required' => false,
-           ))
-           ->add('visibility', Type\ChoiceType::class, array(
-               'choices' => array(
+           ])
+           ->add('visibility', Type\ChoiceType::class, [
+               'choices' => [
                    1 => Fiddle::VISIBILITY_PUBLIC,
                    2 => Fiddle::VISIBILITY_UNLISTED,
                    3 => Fiddle::VISIBILITY_PRIVATE,
-               ),
+               ],
                'choices_as_values' => true,
-           ))
+           ])
         ;
     }
 
     public function buildFiddleOptions(FormBuilderInterface $builder, array $options)
     {
-        $engines = array_keys($this->twigVersions);
+        $engines  = array_keys($this->twigVersions);
         $versions = array_unique(call_user_func_array('array_merge', $this->twigVersions));
 
         $builder
-           ->add('twigEngine', Type\ChoiceType::class, array(
-               'choices' => array_combine($engines, $engines),
-               'required' => true,
+           ->add('twigEngine', Type\ChoiceType::class, [
+               'choices'           => array_combine($engines, $engines),
+               'required'          => true,
                'choices_as_values' => true,
-           ))
-           ->add('twigVersion', Type\ChoiceType::class, array(
-               'choices' => array_combine($versions, $versions),
-               'required' => true,
+           ])
+           ->add('twigVersion', Type\ChoiceType::class, [
+               'choices'           => array_combine($versions, $versions),
+               'required'          => true,
                'choices_as_values' => true,
-           ))
-           ->add('withCExtension', Type\CheckboxType::class, array(
+           ])
+           ->add('withCExtension', Type\CheckboxType::class, [
                'required' => false,
-           ))
-           ->add('withStrictVariables', Type\CheckboxType::class, array(
+           ])
+           ->add('withStrictVariables', Type\CheckboxType::class, [
                'required' => false,
-           ))
-           ->add('twigExtension', Type\ChoiceType::class, array(
-               'required' => false,
-               'choices' => array_combine($this->twigExtensions, $this->twigExtensions),
+           ])
+           ->add('twigExtension', Type\ChoiceType::class, [
+               'required'          => false,
+               'choices'           => array_combine($this->twigExtensions, $this->twigExtensions),
                'choices_as_values' => true,
-           ))
-           ->add('compiledExpended', Type\CheckboxType::class, array(
+           ])
+           ->add('compiledExpended', Type\CheckboxType::class, [
                'required' => false,
-           ))
+           ])
         ;
 
         if ('dev' === $this->environment) {
             $builder
-               ->add('debug', Type\CheckboxType::class, array(
+               ->add('debug', Type\CheckboxType::class, [
                    'required' => false,
-               ))
+               ])
             ;
         }
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_object' => null,
-            'data_class' => 'Fuz\AppBundle\Entity\Fiddle',
-        ));
+            'data_class'  => 'Fuz\AppBundle\Entity\Fiddle',
+        ]);
     }
 
     public function getBlockPrefix()

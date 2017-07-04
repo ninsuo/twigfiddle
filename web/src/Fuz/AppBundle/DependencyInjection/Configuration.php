@@ -27,7 +27,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('fuz_app');
+        $rootNode    = $treeBuilder->root('fuz_app');
 
         $rootNode
            ->children()
@@ -110,7 +110,7 @@ class Configuration implements ConfigurationInterface
                                     ->end()
                                 ->end()
                                 ->arrayNode('strategies')
-                                    ->defaultValue(array())
+                                    ->defaultValue([])
                                     ->useAttributeAsKey('name')
                                     ->prototype('array')
                                         ->children()
@@ -126,7 +126,7 @@ class Configuration implements ConfigurationInterface
                            ->end()
                         ->end()
                         ->arrayNode('samples')
-                            ->defaultValue(array())
+                            ->defaultValue([])
                             ->prototype('array')
                                 ->prototype('array')
                                     ->children()

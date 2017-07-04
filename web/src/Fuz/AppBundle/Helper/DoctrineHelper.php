@@ -15,10 +15,9 @@ use Doctrine\ORM\EntityManager;
 
 class DoctrineHelper
 {
-    protected $em;
-
-    const LOCK_READ = 'READ';
+    const LOCK_READ  = 'READ';
     const LOCK_WRITE = 'WRITE';
+    protected $em;
 
     public function __construct(EntityManager $em)
     {
@@ -27,10 +26,10 @@ class DoctrineHelper
 
     public function lock($entity, $lockType, $callable)
     {
-        $tableName = $this->em->getClassMetadata(get_class($entity))->getTableName();
+        $tableName        = $this->em->getClassMetadata(get_class($entity))->getTableName();
         $escapedTableName = '`'.str_replace('`', '``', $tableName).'`';
 
-        if (!in_array($lockType, array(self::LOCK_READ, self::LOCK_WRITE))) {
+        if (!in_array($lockType, [self::LOCK_READ, self::LOCK_WRITE])) {
             throw new \LogicException("Unexpected lock type given: {$lockType}");
         }
 

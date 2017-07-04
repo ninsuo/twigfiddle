@@ -40,13 +40,13 @@ class SaveFiddle
     public function __construct(LoggerInterface $logger, Utilities $utilities, DoctrineHelper $doctrineHelper,
        EntityManager $em, Session $session, Router $router, array $webConfig)
     {
-        $this->logger = $logger;
-        $this->utilities = $utilities;
+        $this->logger         = $logger;
+        $this->utilities      = $utilities;
         $this->doctrineHelper = $doctrineHelper;
-        $this->em = $em;
-        $this->session = $session;
-        $this->router = $router;
-        $this->webConfig = $webConfig;
+        $this->em             = $em;
+        $this->session        = $session;
+        $this->router         = $router;
+        $this->webConfig      = $webConfig;
     }
 
     /**
@@ -116,10 +116,48 @@ class SaveFiddle
         return true;
     }
 
+    public function save($hash, $revision, Fiddle $fiddle, User $user = null)
+    {
+        if (is_null($hash)) {
+            $fiddle = $this->doctrineHelper->lock($fiddle, DoctrineHelper::LOCK_READ,
+               function () use ($fiddle) {
+                   return $this->createRandomHash($fiddle);
+               });
+        } elseif ($revision > 0) {
+            $this->em->persist($fiddle);
+            $this->em->flush();
+        } else {
+            $fiddle = $this->doctrineHelper->lock($fiddle, DoctrineHelper::LOCK_READ,
+               function () use ($fiddle, $user) {
+                   return $this->createNewRevision($fiddle, $user);
+               });
+        }
+
+        return $fiddle;
+    }
+
+    /**
+     * Used to let unregistered users update recent fiddle's revisions they own.
+     *
+     * @param int $id
+     */
+    public function saveFiddleToSession($id, User $user = null)
+    {
+        if (!is_null($user)) {
+            return;
+        }
+        if (!$this->session->has('recent-fiddles')) {
+            $this->session->set('recent-fiddles', [$id]);
+        } else {
+            $list = array_merge($this->session->get('recent-fiddles'), [$id]);
+            $this->session->set('recent-fiddles', array_slice($list, 0, $this->webConfig['max_fiddles_in_session']));
+        }
+    }
+
     protected function isReservedRoute($hash)
     {
-        $routes = $this->router->getRouteCollection();
-        $reserved = array();
+        $routes   = $this->router->getRouteCollection();
+        $reserved = [];
         foreach ($routes->getIterator() as $route) {
             $path = substr($route->getPath(), 1);
             if (false !== strpos($path, '/')) {
@@ -134,26 +172,6 @@ class SaveFiddle
         }
 
         return false;
-    }
-
-    public function save($hash, $revision, Fiddle $fiddle, User $user = null)
-    {
-        if (is_null($hash)) {
-            $fiddle = $this->doctrineHelper->lock($fiddle, DoctrineHelper::LOCK_READ,
-               function () use ($fiddle) {
-                return $this->createRandomHash($fiddle);
-            });
-        } elseif ($revision > 0) {
-            $this->em->persist($fiddle);
-            $this->em->flush();
-        } else {
-            $fiddle = $this->doctrineHelper->lock($fiddle, DoctrineHelper::LOCK_READ,
-               function () use ($fiddle, $user) {
-                return $this->createNewRevision($fiddle, $user);
-            });
-        }
-
-        return $fiddle;
     }
 
     protected function createRandomHash(Fiddle $fiddle)
@@ -181,7 +199,7 @@ class SaveFiddle
     protected function createNewRevision(Fiddle $fiddle, User $user = null)
     {
         $repository = $this->em->getRepository('FuzAppBundle:Fiddle');
-        $revision = $repository->getNextRevisionNumber($fiddle->getHash());
+        $revision   = $repository->getNextRevisionNumber($fiddle->getHash());
 
         $clone = clone $fiddle;
         $clone->setHash(strtolower($clone->getHash()));
@@ -195,23 +213,5 @@ class SaveFiddle
         $this->em->flush($clone);
 
         return $clone;
-    }
-
-    /**
-     * Used to let unregistered users update recent fiddle's revisions they own.
-     *
-     * @param int $id
-     */
-    public function saveFiddleToSession($id, User $user = null)
-    {
-        if (!is_null($user)) {
-            return;
-        }
-        if (!$this->session->has('recent-fiddles')) {
-            $this->session->set('recent-fiddles', array($id));
-        } else {
-            $list = array_merge($this->session->get('recent-fiddles'), array($id));
-            $this->session->set('recent-fiddles', array_slice($list, 0, $this->webConfig['max_fiddles_in_session']));
-        }
     }
 }

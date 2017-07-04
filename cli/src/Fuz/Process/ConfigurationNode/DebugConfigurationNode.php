@@ -19,7 +19,7 @@ class DebugConfigurationNode implements ConfigurationNodeInterface
     public function getConfigurationNode()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('debug');
+        $rootNode    = $treeBuilder->root('debug');
 
         $rootNode
            ->children()

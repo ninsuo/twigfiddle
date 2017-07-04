@@ -49,12 +49,12 @@ class FiddleRepository extends EntityRepository
             )
         ");
 
-        $params = array(
-                'hash' => $hash,
+        $params = [
+                'hash'     => $hash,
                 'revision' => $revision <= 0 ?: $revision,
-                'private' => Fiddle::VISIBILITY_PRIVATE,
-                'user' => $user ? $user->getId() : -1,
-        );
+                'private'  => Fiddle::VISIBILITY_PRIVATE,
+                'user'     => $user ? $user->getId() : -1,
+        ];
 
         $fiddle = $query
            ->setParameters($params)
@@ -80,9 +80,9 @@ class FiddleRepository extends EntityRepository
             WHERE f.hash = :hash
         ");
 
-        $params = array(
+        $params = [
                 'hash' => $hash,
-        );
+        ];
 
         $count = $query
            ->setParameters($params)
@@ -100,9 +100,9 @@ class FiddleRepository extends EntityRepository
             WHERE f.hash = :hash
         ");
 
-        $params = array(
+        $params = [
                 'hash' => $hash,
-        );
+        ];
 
         $max = $query
            ->setParameters($params)
@@ -120,10 +120,10 @@ class FiddleRepository extends EntityRepository
             WHERE f.id IN (:fiddle_ids)
         ");
 
-        $params = array(
-                'user' => $user->getId(),
+        $params = [
+                'user'       => $user->getId(),
                 'fiddle_ids' => $fiddleIds,
-        );
+        ];
 
         $query
            ->setParameters($params)
@@ -134,7 +134,7 @@ class FiddleRepository extends EntityRepository
     public function getRevisionList(Fiddle $fiddle, User $user = null)
     {
         if (is_null($fiddle->getId())) {
-            return array();
+            return [];
         }
 
         $query = $this->_em->createQuery("
@@ -148,11 +148,11 @@ class FiddleRepository extends EntityRepository
             ORDER BY f.revision ASC
         ");
 
-        $params = array(
-                'hash' => $fiddle->getHash(),
+        $params = [
+                'hash'    => $fiddle->getHash(),
                 'private' => Fiddle::VISIBILITY_PRIVATE,
-                'user' => $user ? $user->getId() : -1,
-        );
+                'user'    => $user ? $user->getId() : -1,
+        ];
 
         $revisions = $query
            ->setParameters($params)

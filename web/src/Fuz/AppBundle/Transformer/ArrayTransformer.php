@@ -30,7 +30,7 @@ class ArrayTransformer implements DataTransformerInterface
     public function reverseTransform($tags)
     {
         return array_unique(array_map(function ($tag) {
-               return strtolower(trim($tag, " \n\r\t"));
-           }, explode($this->separator, $tags)));
+            return strtolower(trim($tag, " \n\r\t"));
+        }, explode($this->separator, $tags)));
     }
 }

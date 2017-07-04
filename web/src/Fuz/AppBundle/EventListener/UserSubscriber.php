@@ -20,14 +20,14 @@ class UserSubscriber implements EventSubscriber
 {
     public function getSubscribedEvents()
     {
-        return array(
+        return [
                 'preRemove',
-        );
+        ];
     }
 
     public function preRemove(LifecycleEventArgs $args)
     {
-        $om = $args->getObjectManager();
+        $om     = $args->getObjectManager();
         $object = $args->getObject();
         if ($object instanceof User) {
             $query = $om->createQuery("
@@ -36,10 +36,10 @@ class UserSubscriber implements EventSubscriber
                 AND f.visibility = :private
             ");
 
-            $params = array(
-                    'user' => $object->getId(),
+            $params = [
+                    'user'    => $object->getId(),
                     'private' => Fiddle::VISIBILITY_PRIVATE,
-            );
+            ];
 
             $query
                ->setParameters($params)

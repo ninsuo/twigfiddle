@@ -22,23 +22,23 @@ class FiddleContextType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-           ->add('format', Type\ChoiceType::class, array(
-                   'choices' => array_combine(FiddleContext::getSupportedFormats(), FiddleContext::getSupportedFormats()),
-                   'required' => true,
+           ->add('format', Type\ChoiceType::class, [
+                   'choices'           => array_combine(FiddleContext::getSupportedFormats(), FiddleContext::getSupportedFormats()),
+                   'required'          => true,
                    'choices_as_values' => true,
-           ))
-           ->add('content', Type\TextareaType::class, array(
+           ])
+           ->add('content', Type\TextareaType::class, [
                    'required' => false,
-           ))
+           ])
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
                 'data_object' => null,
-                'data_class' => 'Fuz\AppBundle\Entity\FiddleContext',
-        ));
+                'data_class'  => 'Fuz\AppBundle\Entity\FiddleContext',
+        ]);
     }
 
     public function getBlockPrefix()

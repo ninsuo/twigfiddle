@@ -28,8 +28,8 @@ class EngineManager extends BaseService
     public function __construct(ContainerInterface $container, array $fiddleConfiguration,
        array $twigSourceConfiguration)
     {
-        $this->container = $container;
-        $this->fiddleConfiguration = $fiddleConfiguration;
+        $this->container               = $container;
+        $this->fiddleConfiguration     = $fiddleConfiguration;
         $this->twigSourceConfiguration = $twigSourceConfiguration;
     }
 
@@ -40,13 +40,13 @@ class EngineManager extends BaseService
             throw new \LogicException('You should load a fiddle before trying to prepare its twig engine.');
         }
 
-        $engine = $fiddle->getTwigEngine();
+        $engine  = $fiddle->getTwigEngine();
         $version = $fiddle->getTwigVersion();
 
         $this->logger->debug("Loading Twig Engine: {$engine}\n");
         $engineService = $this->findRightEngine($engine, $version);
         if (is_null($engineService)) {
-            $agent->addError(Error::E_ENGINE_NOT_FOUND, array('engine' => $engine));
+            $agent->addError(Error::E_ENGINE_NOT_FOUND, ['engine' => $engine]);
             throw new StopExecutionException();
         }
 
@@ -66,7 +66,7 @@ class EngineManager extends BaseService
 
     public function findRightEngine($engine, $version)
     {
-        $service = null;
+        $service          = null;
         $engineServiceIds = $this->container->findTaggedServiceIds('twig.engine');
         foreach ($engineServiceIds as $serviceId => $tags) {
             foreach ($tags as $tag) {
@@ -120,14 +120,14 @@ class EngineManager extends BaseService
     {
         $extension = "{$sourceDirectory}/ext/twig/.libs/twig.so";
         if (!file_exists($extension) || !is_readable($extension)) {
-            $agent->addError(Error::E_C_NOT_SUPPORTED, array('version' => $version));
+            $agent->addError(Error::E_C_NOT_SUPPORTED, ['version' => $version]);
             throw new StopExecutionException();
         }
         if (!extension_loaded('twig')) {
-            $agent->addError(Error::E_C_UNABLE_TO_DL, array(
-                'version' => $version,
+            $agent->addError(Error::E_C_UNABLE_TO_DL, [
+                'version'   => $version,
                 'extension' => $extension,
-            ));
+            ]);
             throw new StopExecutionException();
         }
         $this->logger->debug("Successfully loaded C extension: {$extension}");

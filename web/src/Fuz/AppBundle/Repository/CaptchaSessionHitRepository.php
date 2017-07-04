@@ -24,20 +24,20 @@ class CaptchaSessionHitRepository extends EntityRepository
             AND csh.creationTm < :expiry
         ");
 
-        $params = array(
+        $params = [
                 'strategy' => $strategy,
-                'expiry' => $expiry,
-        );
+                'expiry'   => $expiry,
+        ];
 
         $query->execute($params);
     }
 
     public function record($sessionId, $strategy)
     {
-        $entity = $this->findOneBy(array(
+        $entity = $this->findOneBy([
                 'sessionId' => $sessionId,
-                'strategy' => $strategy,
-        ));
+                'strategy'  => $strategy,
+        ]);
 
         if (!$entity) {
             $new = new CaptchaSessionHit();
@@ -55,20 +55,20 @@ class CaptchaSessionHitRepository extends EntityRepository
 
     public function getHits($sessionId, $strategy)
     {
-        $entity = $this->findOneBy(array(
-                'strategy' => $strategy,
+        $entity = $this->findOneBy([
+                'strategy'  => $strategy,
                 'sessionId' => $sessionId,
-        ));
+        ]);
 
         return $entity ? $entity->getHits() : 0;
     }
 
     public function resetHits($sessionId, $strategy)
     {
-        $entity = $this->findOneBy(array(
+        $entity = $this->findOneBy([
                 'sessionId' => $sessionId,
-                'strategy' => $strategy,
-        ));
+                'strategy'  => $strategy,
+        ]);
 
         if ($entity) {
             $entity->setHits(0);

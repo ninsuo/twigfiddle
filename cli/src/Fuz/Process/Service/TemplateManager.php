@@ -26,8 +26,8 @@ class TemplateManager extends BaseService
 
     public function __construct(FileSystem $fileSystem, array $fiddleConfiguration, array $templatesConfiguration)
     {
-        $this->fileSystem = $fileSystem;
-        $this->fiddleConfiguration = $fiddleConfiguration;
+        $this->fileSystem             = $fileSystem;
+        $this->fiddleConfiguration    = $fiddleConfiguration;
         $this->templatesConfiguration = $templatesConfiguration;
     }
 
@@ -41,6 +41,42 @@ class TemplateManager extends BaseService
         $this->writeTemplates($agent, $templates);
 
         return $this;
+    }
+
+    public function writeTemplates(FiddleAgent $agent, array $templates)
+    {
+        $dir = $agent->getDirectory().DIRECTORY_SEPARATOR.$this->fiddleConfiguration['templates_dir'];
+        $this->logger->debug("Creating template directory: {$dir}");
+        $this->fileSystem->mkdir($dir);
+        $files = [];
+        foreach ($templates as $template) {
+            $filename = $template->getFilename();
+            if (!preg_match("/{$this->templatesConfiguration['validation']}/", $filename)) {
+                $agent->addError(Error::E_INVALID_TEMPLATE_NAME, ['name' => $filename]);
+                throw new StopExecutionException();
+            }
+
+            $file = $dir.DIRECTORY_SEPARATOR.$filename;
+            $this->logger->debug("Writing template: {$file}.");
+            if (file_put_contents($file, $template->getContent()) === false) {
+                $agent->addError(Error::E_CANNOT_WRITE_TEMPLATE, ['file' => $file]);
+                throw new StopExecutionException();
+            }
+            $files[] = $file;
+        }
+        $agent->setTemplates($files);
+
+        return $this;
+    }
+
+    public function getMainTemplateFromAgent(FiddleAgent $agent)
+    {
+        $templates = $agent->getTemplates();
+        if (is_null($templates)) {
+            throw new \LogicException('Templates have not been generated in this fiddle.');
+        }
+
+        return reset($templates);
     }
 
     protected function validateAndSortTemplates(FiddleAgent $agent)
@@ -69,41 +105,5 @@ class TemplateManager extends BaseService
         });
 
         return $templates;
-    }
-
-    public function writeTemplates(FiddleAgent $agent, array $templates)
-    {
-        $dir = $agent->getDirectory().DIRECTORY_SEPARATOR.$this->fiddleConfiguration['templates_dir'];
-        $this->logger->debug("Creating template directory: {$dir}");
-        $this->fileSystem->mkdir($dir);
-        $files = array();
-        foreach ($templates as $template) {
-            $filename = $template->getFilename();
-            if (!preg_match("/{$this->templatesConfiguration['validation']}/", $filename)) {
-                $agent->addError(Error::E_INVALID_TEMPLATE_NAME, array('name' => $filename));
-                throw new StopExecutionException();
-            }
-
-            $file = $dir.DIRECTORY_SEPARATOR.$filename;
-            $this->logger->debug("Writing template: {$file}.");
-            if (file_put_contents($file, $template->getContent()) === false) {
-                $agent->addError(Error::E_CANNOT_WRITE_TEMPLATE, array('file' => $file));
-                throw new StopExecutionException();
-            }
-            $files[] = $file;
-        }
-        $agent->setTemplates($files);
-
-        return $this;
-    }
-
-    public function getMainTemplateFromAgent(FiddleAgent $agent)
-    {
-        $templates = $agent->getTemplates();
-        if (is_null($templates)) {
-            throw new \LogicException('Templates have not been generated in this fiddle.');
-        }
-
-        return reset($templates);
     }
 }

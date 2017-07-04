@@ -15,10 +15,10 @@ class HashExtension extends \Twig_Extension
 {
     public function getFilters()
     {
-        return array(
+        return [
               new \Twig_SimpleFilter('sha1', 'sha1'),
               new \Twig_SimpleFilter('md5', 'md5'),
-        );
+        ];
     }
 
     public function getName()

@@ -24,5 +24,8 @@
             "Fuz\\Process\\": "src/Fuz/Process",
             "Fuz\\AppBundle\\": "../web/src/Fuz/AppBundle"
         }
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^2.2"
     }
 }

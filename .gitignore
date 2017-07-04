@@ -1,6 +1,7 @@
-/nbproject
+nbproject
 /environment/*
 !/environment/.gitkeep
 /debug/*
 !/debug/.gitkeep
 /notes
+.php_cs.cache

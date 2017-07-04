@@ -251,7 +251,7 @@ class User implements UserInterface, EquatableInterface
      */
     public function getRoles()
     {
-        return array('ROLE_USER');
+        return ['ROLE_USER'];
     }
 
     /**
@@ -259,7 +259,6 @@ class User implements UserInterface, EquatableInterface
      */
     public function getPassword()
     {
-        return;
     }
 
     /**
@@ -267,7 +266,6 @@ class User implements UserInterface, EquatableInterface
      */
     public function getSalt()
     {
-        return;
     }
 
     /**

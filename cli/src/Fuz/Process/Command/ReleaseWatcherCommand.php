@@ -12,11 +12,11 @@
 namespace Fuz\Process\Command;
 
 use Fuz\Framework\Base\BaseCommand;
+use GuzzleHttp\Client;
+use Ramsey\Uuid\Uuid;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Yaml\Yaml;
-use GuzzleHttp\Client;
-use Ramsey\Uuid\Uuid;
 
 class ReleaseWatcherCommand extends BaseCommand
 {
@@ -26,7 +26,7 @@ class ReleaseWatcherCommand extends BaseCommand
     {
         parent::__construct($name);
 
-        $this->cliDir = __DIR__ . '/../../../../../cli/';
+        $this->cliDir = __DIR__.'/../../../../../cli/';
     }
 
     protected function configure()
@@ -52,16 +52,16 @@ class ReleaseWatcherCommand extends BaseCommand
         $response = (new Client())->get('https://api.github.com/repos/twigphp/twig-extensions/tags', [
             'headers' => [
                 'Accept' => 'application/vnd.github.mercy-preview+json',
-            ]
+            ],
         ]);
 
         $result = json_decode($response->getBody()->getContents(), true);
         foreach ($result as $tag) {
-            $version = 'Twig-extensions-' . substr($tag['name'], 1);
+            $version = 'Twig-extensions-'.substr($tag['name'], 1);
 
             $gzPath = $this->cliDir."/twig/extension/compressed/{$version}.tar.gz";
             if (is_file($gzPath)) {
-                continue ;
+                continue;
             }
 
             $this->downloadAndPrepare($tag['tarball_url'], $version, true);
@@ -77,21 +77,21 @@ class ReleaseWatcherCommand extends BaseCommand
         $response = (new Client())->get('https://api.github.com/repos/twigphp/twig/tags', [
             'headers' => [
                 'Accept' => 'application/vnd.github.mercy-preview+json',
-            ]
+            ],
         ]);
 
         $result = json_decode($response->getBody()->getContents(), true);
         foreach ($result as $tag) {
-            $version = 'Twig-' . substr($tag['name'], 1);
+            $version = 'Twig-'.substr($tag['name'], 1);
 
             $gzPath = $this->cliDir."/twig/compressed/{$version}.tar.gz";
             if (is_file($gzPath)) {
-                continue ;
+                continue;
             }
 
             $this->downloadAndPrepare($tag['tarball_url'], $version, false);
 
-            $newReleasesCounter++;
+            ++$newReleasesCounter;
         }
 
         if ($newReleasesCounter) {
@@ -166,7 +166,7 @@ class ReleaseWatcherCommand extends BaseCommand
         // --------------------------------------
 
         $config = $this->cliDir.'/config/services/twig_engines.yml';
-        $yml = Yaml::parse($config);
+        $yml    = Yaml::parse($config);
 
         $yml['services']['v2.twig_engine']['tags'][0]['versions'] = implode(' / ', $dividedInMajorVersions['2']);
         $yml['services']['v1.twig_engine']['tags'][0]['versions'] = implode(' / ', $dividedInMajorVersions['1']);
@@ -178,7 +178,7 @@ class ReleaseWatcherCommand extends BaseCommand
         // regenerating tests
         // --------------------------------------
 
-        $test = $this->cliDir.'//test/integration/DefaultEngineTest.php';
+        $test    = $this->cliDir.'//test/integration/DefaultEngineTest.php';
         $content = file_get_contents($test);
 
         $headerDelimiter = '// --- header for auto-generation ---';
@@ -195,7 +195,7 @@ class ReleaseWatcherCommand extends BaseCommand
             }
             $generated .= "\n";
         }
-        $generated .= "            ";
+        $generated .= '            ';
 
         file_put_contents($test, $header.$generated.$footer);
     }

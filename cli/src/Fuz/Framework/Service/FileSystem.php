@@ -26,10 +26,10 @@ class FileSystem extends SymfonyFileSystem
             throw new IOException("Directory {$directory} not readable.");
         }
 
-        $list = scandir($directory);
-        $return = array();
+        $list   = scandir($directory);
+        $return = [];
         foreach ($list as $elem) {
-            if (in_array($elem, array('.', '..'))) {
+            if (in_array($elem, ['.', '..'])) {
                 continue;
             }
 
@@ -63,7 +63,7 @@ class FileSystem extends SymfonyFileSystem
         }
 
         $directoryIterator = new \RecursiveDirectoryIterator($source, \RecursiveDirectoryIterator::SKIP_DOTS);
-        $iterator = new \RecursiveIteratorIterator($directoryIterator, \RecursiveIteratorIterator::SELF_FIRST);
+        $iterator          = new \RecursiveIteratorIterator($directoryIterator, \RecursiveIteratorIterator::SELF_FIRST);
         foreach ($iterator as $item) {
             if ($item->isDir()) {
                 $this->mkdir($target.DIRECTORY_SEPARATOR.$iterator->getSubPathName());

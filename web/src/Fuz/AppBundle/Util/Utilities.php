@@ -25,7 +25,7 @@ class Utilities
     public function randomString($length, $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890')
     {
         mt_srand(base_convert(uniqid(), 16, 10));
-        $base = strlen($chars);
+        $base   = strlen($chars);
         $string = '';
         for ($i = 0; ($i < $length); ++$i) {
             $string .= $chars[mt_rand(0, $base - 1)];

@@ -25,8 +25,8 @@ class CompiledManager extends BaseService
     public function __construct(FileSystem $fileSystem, EnvironmentManager $environmentManager,
        array $fiddleConfiguration)
     {
-        $this->fileSystem = $fileSystem;
-        $this->environmentManager = $environmentManager;
+        $this->fileSystem          = $fileSystem;
+        $this->environmentManager  = $environmentManager;
         $this->fiddleConfiguration = $fiddleConfiguration;
     }
 
@@ -34,31 +34,31 @@ class CompiledManager extends BaseService
     {
         $this->environmentManager->checkFiddleEnvironmentAvailability($agent);
 
-        $dir = $agent->getDirectory();
+        $dir            = $agent->getDirectory();
         $cacheDirectory = $dir.DIRECTORY_SEPARATOR.$this->fiddleConfiguration['compiled_dir'];
         $this->logger->debug("Extracting compiled files in: $cacheDirectory");
 
-        $compiled = array();
+        $compiled          = [];
         $directoryIterator = new \RecursiveDirectoryIterator($cacheDirectory, \RecursiveDirectoryIterator::SKIP_DOTS);
         $recursiveIterator = new \RecursiveIteratorIterator($directoryIterator);
         foreach ($recursiveIterator as $fileinfo) {
             $compiledFile = $fileinfo->getRealPath();
-            $content = file_get_contents($compiledFile);
-            $template = $agent->getEngine()->extractTemplateName($content);
+            $content      = file_get_contents($compiledFile);
+            $template     = $agent->getEngine()->extractTemplateName($content);
 
             if (is_null($template)) {
-                $agent->addError(Error::E_UNKNOWN_COMPILED_FILE, array('file' => $compiledFile));
+                $agent->addError(Error::E_UNKNOWN_COMPILED_FILE, ['file' => $compiledFile]);
             }
 
             if (!in_array($template, array_map('basename', $agent->getTemplates()))) {
-                $agent->addError(Error::E_UNEXPECTED_COMPILED_FILE, array('file' => $compiledFile));
+                $agent->addError(Error::E_UNEXPECTED_COMPILED_FILE, ['file' => $compiledFile]);
             }
 
             $compiled[$template] = $content;
             $this->logger->debug("Extracted {$template} from {$compiledFile}");
         }
 
-        $orderedCompiled = array();
+        $orderedCompiled = [];
         foreach ($agent->getTemplates() as $templatePath) {
             $template = basename($templatePath);
             if (array_key_exists($template, $compiled)) {

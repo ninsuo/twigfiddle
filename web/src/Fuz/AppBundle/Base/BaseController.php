@@ -40,7 +40,7 @@ class BaseController extends Controller
      */
     protected function getErrorMessages(Form $form)
     {
-        $errors = array();
+        $errors = [];
 
         foreach ($form->getErrors() as $error) {
             if ($form->isRoot()) {
@@ -112,21 +112,6 @@ class BaseController extends Controller
         return $normalizedErrors;
     }
 
-    private function normalizeErrorMessagesAjaxFormat(array $errors, $prefix)
-    {
-        $normalizedErrors = array();
-        foreach ($errors as $key => $error) {
-            if (is_array($error)) {
-                $normalizedErrors = array_merge($normalizedErrors,
-                   $this->normalizeErrorMessagesAjaxFormat($error, "{$prefix}_{$key}"));
-            } else {
-                $normalizedErrors[$prefix][$key] = $error;
-            }
-        }
-
-        return $normalizedErrors;
-    }
-
     /**
      * This method sends user back to the last url he comes from.
      *
@@ -160,5 +145,20 @@ class BaseController extends Controller
               ->getRepository('FuzAppBundle:UserBookmark')
               ->getBookmark($fiddle, $this->getUser())
         ;
+    }
+
+    private function normalizeErrorMessagesAjaxFormat(array $errors, $prefix)
+    {
+        $normalizedErrors = [];
+        foreach ($errors as $key => $error) {
+            if (is_array($error)) {
+                $normalizedErrors = array_merge($normalizedErrors,
+                   $this->normalizeErrorMessagesAjaxFormat($error, "{$prefix}_{$key}"));
+            } else {
+                $normalizedErrors[$prefix][$key] = $error;
+            }
+        }
+
+        return $normalizedErrors;
     }
 }

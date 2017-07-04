@@ -34,9 +34,9 @@ class ContextManager extends BaseService
         }
 
         $content = $fiddle->getContext()->getContent();
-        $format = $fiddle->getContext()->getFormat();
+        $format  = $fiddle->getContext()->getFormat();
 
-        if (strlen(str_replace(array(' ', "\n", "\r", "\t"), '', $content)) == 0) {
+        if (strlen(str_replace([' ', "\n", "\r", "\t"], '', $content)) == 0) {
             $this->logger->debug('No context to extract.');
 
             return $this;
@@ -46,7 +46,7 @@ class ContextManager extends BaseService
         try {
             $array = $this->stringLoader->load($content, $format);
         } catch (\InvalidArgumentException $ex) {
-            $agent->addError(Error::E_UNKNOWN_CONTEXT_FORMAT, array('format' => $format));
+            $agent->addError(Error::E_UNKNOWN_CONTEXT_FORMAT, ['format' => $format]);
             throw new StopExecutionException();
         } catch (\LogicException $ex) {
             $agent->addError(Error::E_UNEXPECTED, $ex);
@@ -57,11 +57,11 @@ class ContextManager extends BaseService
         }
 
         if (!is_array($array)) {
-            $agent->addError(Error::E_INVALID_CONTEXT_TYPE, array('context' => $array));
+            $agent->addError(Error::E_INVALID_CONTEXT_TYPE, ['context' => $array]);
             throw new StopExecutionException();
         }
 
-        $this->logger->debug('Successfully extracted the context.', array('context' => $array));
+        $this->logger->debug('Successfully extracted the context.', ['context' => $array]);
         $agent->setContext($array);
 
         return $this;

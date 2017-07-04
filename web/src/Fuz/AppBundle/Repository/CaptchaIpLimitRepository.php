@@ -23,9 +23,9 @@ class CaptchaIpLimitRepository extends EntityRepository
             WHERE cil.updateTm < :expiry
         ");
 
-        $params = array(
+        $params = [
                 'expiry' => $expiry,
-        );
+        ];
 
         $query->execute($params);
     }

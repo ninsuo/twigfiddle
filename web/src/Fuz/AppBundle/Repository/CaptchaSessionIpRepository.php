@@ -23,19 +23,19 @@ class CaptchaSessionIpRepository extends EntityRepository
             WHERE csi.creationTm < :expiry_date
         ");
 
-        $params = array(
+        $params = [
                 'expiry_date' => $expiry,
-        );
+        ];
 
         $query->execute($params);
     }
 
     public function record($ip, $sessionId)
     {
-        $entity = $this->findOneBy(array(
-                'ip' => $ip,
+        $entity = $this->findOneBy([
+                'ip'        => $ip,
                 'sessionId' => $sessionId,
-        ));
+        ]);
 
         if (!$entity) {
             $new = new CaptchaSessionIp();
@@ -54,9 +54,9 @@ class CaptchaSessionIpRepository extends EntityRepository
             WHERE csi.ip = :ip
         ");
 
-        $params = array(
+        $params = [
                 'ip' => $ip,
-        );
+        ];
 
         $count = $query
            ->setParameters($params)

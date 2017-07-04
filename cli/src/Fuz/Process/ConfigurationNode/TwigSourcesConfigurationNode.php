@@ -19,7 +19,7 @@ class TwigSourcesConfigurationNode implements ConfigurationNodeInterface
     public function getConfigurationNode()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('twig_sources');
+        $rootNode    = $treeBuilder->root('twig_sources');
 
         $rootNode
            ->children()

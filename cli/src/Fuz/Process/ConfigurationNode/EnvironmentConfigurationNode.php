@@ -19,7 +19,7 @@ class EnvironmentConfigurationNode implements ConfigurationNodeInterface
     public function getConfigurationNode()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('environment');
+        $rootNode    = $treeBuilder->root('environment');
 
         $rootNode
            ->children()

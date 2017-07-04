@@ -39,10 +39,10 @@ class RunFiddle
     public function __construct(LoggerInterface $logger, Filesystem $filesystem,
        Utilities $utilities, ProcessConfiguration $processConfiguration, array $localConfig)
     {
-        $this->logger = $logger;
-        $this->filesystem = $filesystem;
-        $this->utilities = $utilities;
-        $this->localConfig = $localConfig;
+        $this->logger       = $logger;
+        $this->filesystem   = $filesystem;
+        $this->utilities    = $utilities;
+        $this->localConfig  = $localConfig;
         $this->remoteConfig = $processConfiguration->getProcessConfig();
     }
 
@@ -73,7 +73,7 @@ class RunFiddle
             $env = $this->utilities->randomString(self::ENV_NAME_LENGTH);
         } while (is_dir("{$envRoot}/{$env}"));
 
-        $this->envId = $env;
+        $this->envId   = $env;
         $this->envPath = "{$envRoot}/{$env}";
         $this->filesystem->mkdir($this->envPath);
 
@@ -86,7 +86,7 @@ class RunFiddle
 
         $storage = new StorageFile($sharedFile);
 
-        $this->sharedObject = new SharedMemory($storage);
+        $this->sharedObject         = new SharedMemory($storage);
         $this->sharedObject->fiddle = $fiddle;
 
         return $this;
@@ -96,13 +96,13 @@ class RunFiddle
     {
         $command = str_replace('<env_id>', $this->envId, $this->localConfig['command']);
         if ($fiddle->isWithCExtension()) {
-            $extensionDir = implode(DIRECTORY_SEPARATOR, array(
+            $extensionDir = implode(DIRECTORY_SEPARATOR, [
                 $this->remoteConfig['twig_sources']['directory'],
                 str_replace(DIRECTORY_SEPARATOR, '', $fiddle->getTwigVersion()),
                 $this->remoteConfig['twig_sources']['extension'],
-            ));
+            ]);
 
-            $arguments = explode(' ', $command);
+            $arguments   = explode(' ', $command);
             $arguments[] = "--c-extension={$extensionDir}";
         } else {
             $arguments = explode(' ', $command);
@@ -111,7 +111,7 @@ class RunFiddle
         $builder = new ProcessBuilder($arguments);
 
         $this->process = $builder->getProcess();
-        $commandLine = $this->process->getCommandLine();
+        $commandLine   = $this->process->getCommandLine();
         $this->logger->info("Execute fiddle {$this->envId}: {$commandLine}");
 
         $this->process
@@ -124,10 +124,10 @@ class RunFiddle
 
     protected function fetchResult(Result $result)
     {
-        list($start, $end) = array($this->sharedObject->begin_tm, $this->sharedObject->finish_tm);
+        list($start, $end) = [$this->sharedObject->begin_tm, $this->sharedObject->finish_tm];
         if (!is_null($start) && !is_null($end)) {
-            $diff = $end - $start;
-            $sec = intval($diff);
+            $diff  = $end - $start;
+            $sec   = intval($diff);
             $micro = $diff - $sec;
             $result->setDuration(strftime('%T', mktime(0, 0, $sec)).str_replace('0.', '.', sprintf('%.3f', $micro)));
         }

@@ -25,9 +25,9 @@ class PrettifyExtension extends \Twig_Extension
 
     public function getFilters()
     {
-        return array(
-                new \Twig_SimpleFilter('prettify', array($this, 'prettify')),
-        );
+        return [
+                new \Twig_SimpleFilter('prettify', [$this, 'prettify']),
+        ];
     }
 
     public function prettify($uglyResult)
@@ -43,13 +43,18 @@ class PrettifyExtension extends \Twig_Extension
         return $prettyResult;
     }
 
+    public function getName()
+    {
+        return 'FuzAppBundle:Prettify';
+    }
+
     protected function prettifyVerticalSpace()
     {
         $blank = 0;
-        $top = true;
+        $top   = true;
 
         foreach ($this->result as $index => $line) {
-            if (strlen(str_replace(array(' ', "\t", "\n", "\r"), '', $line)) == 0) {
+            if (strlen(str_replace([' ', "\t", "\n", "\r"], '', $line)) == 0) {
                 $this->result[$index] = '';
                 ++$blank;
                 if (($top) || ($blank > 1)) {
@@ -57,12 +62,12 @@ class PrettifyExtension extends \Twig_Extension
                 }
             } else {
                 $blank = 0;
-                $top = false;
+                $top   = false;
             }
         }
 
         foreach (array_reverse($this->result, true) as $index => $line) {
-            if (strlen(str_replace(array(' ', "\t", "\n", "\r"), '', $line)) == 0) {
+            if (strlen(str_replace([' ', "\t", "\n", "\r"], '', $line)) == 0) {
                 unset($this->result[$index]);
             } else {
                 break;
@@ -74,10 +79,10 @@ class PrettifyExtension extends \Twig_Extension
 
     protected function prettifyHorizontalSpace()
     {
-        $spaces = array();
+        $spaces = [];
         foreach ($this->result as $index => $line) {
             if (strlen($line)) {
-                $matches = array();
+                $matches = [];
                 preg_match("/^\s*/", $line, $matches);
                 $spaces[$index] = strlen(reset($matches));
             }
@@ -98,16 +103,11 @@ class PrettifyExtension extends \Twig_Extension
 
         foreach ($this->result as $index => $line) {
             if (strlen($line)) {
-                $deep = array_search($spaces[$index], $deeps);
+                $deep                 = array_search($spaces[$index], $deeps);
                 $this->result[$index] = preg_replace("/^\s*/", str_repeat(self::INDENT, $deep), $line);
             }
         }
 
         return $this;
-    }
-
-    public function getName()
-    {
-        return 'FuzAppBundle:Prettify';
     }
 }

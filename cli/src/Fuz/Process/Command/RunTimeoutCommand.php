@@ -26,6 +26,22 @@ class RunTimeoutCommand extends BaseCommand
     protected $cExtension;
     protected $process;
 
+    public function saveError($errno, $e)
+    {
+        $agent = $this
+           ->get('fiddle_agent')
+           ->setEnvironmentId($this->environmentId)
+           ->addError($errno, $e)
+        ;
+
+        $this->get('environment_manager')->prepareEnvironment($agent);
+
+        $this
+           ->get('shared_memory_manager')
+           ->recoverSharedMemory($agent, false)
+           ->saveResults($agent);
+    }
+
     protected function configure()
     {
         parent::configure();
@@ -55,8 +71,8 @@ class RunTimeoutCommand extends BaseCommand
     protected function initArgumentsOptions(InputInterface $input)
     {
         $this->environmentId = $input->getArgument('environment-id');
-        $this->timeout = $input->getArgument('timeout');
-        $this->cExtension = $input->getOption('c-extension');
+        $this->timeout       = $input->getArgument('timeout');
+        $this->cExtension    = $input->getOption('c-extension');
 
         return $this;
     }
@@ -64,7 +80,7 @@ class RunTimeoutCommand extends BaseCommand
     protected function initErrorHandler()
     {
         register_shutdown_function(function () {
-            if ((!is_null($err = error_get_last())) && (!in_array($err['type'], array(E_NOTICE, E_WARNING)))) {
+            if ((!is_null($err = error_get_last())) && (!in_array($err['type'], [E_NOTICE, E_WARNING]))) {
                 $this->saveError(Error::E_UNEXPECTED, $err);
             }
         });
@@ -74,22 +90,22 @@ class RunTimeoutCommand extends BaseCommand
 
     protected function initProcess()
     {
-        $command = array(
+        $command = [
             $this->getParameter('php_path'),
-        );
+        ];
 
         if ($this->cExtension) {
-            $command = array_merge($command, array(
+            $command = array_merge($command, [
                 '-d',
                 "extension={$this->cExtension}",
-            ));
+            ]);
         }
 
-        $command = array_merge($command, array(
+        $command = array_merge($command, [
             $this->getParameter('root_dir').'/run-'.$this->getParameter('env').'.php',
             'twigfiddle:run',
             $this->environmentId,
-        ));
+        ]);
 
         $builder = new ProcessBuilder($command);
         $builder->setTimeout($this->timeout);
@@ -115,21 +131,5 @@ class RunTimeoutCommand extends BaseCommand
         }
 
         return $this;
-    }
-
-    public function saveError($errno, $e)
-    {
-        $agent = $this
-           ->get('fiddle_agent')
-           ->setEnvironmentId($this->environmentId)
-           ->addError($errno, $e)
-        ;
-
-        $this->get('environment_manager')->prepareEnvironment($agent);
-
-        $this
-           ->get('shared_memory_manager')
-           ->recoverSharedMemory($agent, false)
-           ->saveResults($agent);
     }
 }

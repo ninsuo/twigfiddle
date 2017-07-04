@@ -39,35 +39,35 @@ class FiddleController extends BaseController
     {
         return $this->validateAjaxFiddle($request, new Fiddle(),
               function (Fiddle $fiddle) use ($request) {
-               $response = array();
+                  $response = [];
 
-               if (!$this->get('app.captcha')->check($request, 'run')) {
-                   $response['captcha'] = true;
+                  if (!$this->get('app.captcha')->check($request, 'run')) {
+                      $response['captcha'] = true;
 
-                   return $response;
-               }
+                      return $response;
+                  }
 
-               $result = $this->get('app.run_fiddle')->run($fiddle);
+                  $result = $this->get('app.run_fiddle')->run($fiddle);
 
-               $response['result'] = $this
+                  $response['result'] = $this
                   ->get('templating')
-                  ->render('FuzAppBundle:Fiddle:result.html.twig', array(
+                  ->render('FuzAppBundle:Fiddle:result.html.twig', [
                       'fiddle' => $fiddle,
-                      'data' => $result,
-                  ))
+                      'data'   => $result,
+                  ])
                ;
 
-               if ($result->getResult() && $result->getResult()->getContext()) {
-                   $response['context'] = $this
+                  if ($result->getResult() && $result->getResult()->getContext()) {
+                      $response['context'] = $this
                       ->get('templating')
-                      ->render('FuzAppBundle:Fiddle:result-context.html.twig', array(
+                      ->render('FuzAppBundle:Fiddle:result-context.html.twig', [
                           'data' => $result,
-                      ))
+                      ])
                    ;
-               }
+                  }
 
-               return $response;
-           });
+                  return $response;
+              });
     }
 
     /**
@@ -102,41 +102,41 @@ class FiddleController extends BaseController
 
         return $this->validateAjaxFiddle($request, $fiddle,
               function (Fiddle $fiddle) use ($request, $hash, $revision) {
-               $response = array();
+                  $response = [];
 
-               $user = $this->getUser();
-               $saveService = $this->get('app.save_fiddle');
+                  $user = $this->getUser();
+                  $saveService = $this->get('app.save_fiddle');
 
-               if (is_null($fiddle->getId()) || !$saveService->ownsFiddle($fiddle, $user)) {
-                   $revision = 0;
-               }
+                  if (is_null($fiddle->getId()) || !$saveService->ownsFiddle($fiddle, $user)) {
+                      $revision = 0;
+                  }
 
-               if (!$revision && !$this->get('app.captcha')->check($request, 'save')) {
-                   $response['captcha'] = true;
+                  if (!$revision && !$this->get('app.captcha')->check($request, 'save')) {
+                      $response['captcha'] = true;
 
-                   return $response;
-               }
+                      return $response;
+                  }
 
-               if ($fiddle->getId()) {
-                   $hash = $fiddle->getHash();
-               }
+                  if ($fiddle->getId()) {
+                      $hash = $fiddle->getHash();
+                  }
 
-               if (!$saveService->validateHash($hash)) {
-                   $hash = null;
-               }
+                  if (!$saveService->validateHash($hash)) {
+                      $hash = null;
+                  }
 
-               $originalId = $fiddle->getId();
+                  $originalId = $fiddle->getId();
 
-               $saved = $saveService->save($hash, $revision, $fiddle, $user);
-               $saveService->saveFiddleToSession($saved->getId(), $user);
+                  $saved = $saveService->save($hash, $revision, $fiddle, $user);
+                  $saveService->saveFiddleToSession($saved->getId(), $user);
 
-               if ($originalId !== $saved->getId()) {
-                   $response['relocate'] = $this->generateUrl('fiddle',
-                      array('hash' => $saved->getHash(), 'revision' => $saved->getRevision()));
+                  if ($originalId !== $saved->getId()) {
+                      $response['relocate'] = $this->generateUrl('fiddle',
+                      ['hash' => $saved->getHash(), 'revision' => $saved->getRevision()]);
 
-                   return $response;
-               }
-           });
+                      return $response;
+                  }
+              });
     }
 
     /**
@@ -156,9 +156,9 @@ class FiddleController extends BaseController
      */
     public function bookmarkAction(Request $request, $hash, $revision)
     {
-        $response = array(
+        $response = [
                 'isBookmarked' => false,
-        );
+        ];
 
         $user = $this->getUser();
 
@@ -194,34 +194,6 @@ class FiddleController extends BaseController
         return $this->saveUserBookmark($request, $new);
     }
 
-    protected function saveUserBookmark(Request $request, UserBookmark $bookmark)
-    {
-        $response = array(
-                'isBookmarked' => false,
-        );
-
-        $form = $this->createForm(UserBookmarkType::class, $bookmark,
-           array(
-                'data_object' => $bookmark,
-        ));
-
-        $form->handleRequest($request);
-
-        if (!$form->isValid()) {
-            $response['errors'] = $this->getErrorMessagesAjaxFormat($form);
-
-            return new JsonResponse($response);
-        }
-
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($bookmark);
-        $em->flush($bookmark);
-
-        $response['isBookmarked'] = true;
-
-        return new JsonResponse($response);
-    }
-
     /**
      * Fiddle's samples.
      *
@@ -231,9 +203,9 @@ class FiddleController extends BaseController
     {
         $webConfig = $this->container->getParameter('web');
 
-        return array(
+        return [
                 'categories' => $webConfig['samples'],
-        );
+        ];
     }
 
     /**
@@ -263,7 +235,7 @@ class FiddleController extends BaseController
            ->getRepository('FuzAppBundle:Fiddle')
         ;
 
-        $user = $this->getUser();
+        $user   = $this->getUser();
         $fiddle = $this->getFiddle($hash, $revision);
         $fiddleRepo->incrementVisitCount($fiddle);
 
@@ -276,16 +248,44 @@ class FiddleController extends BaseController
 
         $processConfig = $this->get('app.process_configuration')->getProcessConfig();
 
-        return array(
-                'form' => $form->createView(),
-                'data' => $fiddle,
-                'hash' => $hash,
-                'revision' => $revision,
-                'canSave' => $this->get('app.save_fiddle')->canSaveFiddle($fiddle, $user),
+        return [
+                'form'            => $form->createView(),
+                'data'            => $fiddle,
+                'hash'            => $hash,
+                'revision'        => $revision,
+                'canSave'         => $this->get('app.save_fiddle')->canSaveFiddle($fiddle, $user),
                 'revisionBrowser' => $fiddleRepo->getRevisionList($fiddle, $user),
-                'bookmark' => $bookmark,
-                'twigEngines' => json_encode($processConfig['supported_versions']),
-        );
+                'bookmark'        => $bookmark,
+                'twigEngines'     => json_encode($processConfig['supported_versions']),
+        ];
+    }
+
+    protected function saveUserBookmark(Request $request, UserBookmark $bookmark)
+    {
+        $response = [
+                'isBookmarked' => false,
+        ];
+
+        $form = $this->createForm(UserBookmarkType::class, $bookmark,
+           [
+                'data_object' => $bookmark,
+        ]);
+
+        $form->handleRequest($request);
+
+        if (!$form->isValid()) {
+            $response['errors'] = $this->getErrorMessagesAjaxFormat($form);
+
+            return new JsonResponse($response);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($bookmark);
+        $em->flush($bookmark);
+
+        $response['isBookmarked'] = true;
+
+        return new JsonResponse($response);
     }
 
     /**
@@ -299,15 +299,15 @@ class FiddleController extends BaseController
      */
     protected function validateAjaxFiddle(Request $request, $fiddle, $onValid)
     {
-        $response = array();
+        $response = [];
 
         if (!$request->isXmlHttpRequest()) {
             return new RedirectResponse($this->generateUrl('fiddle', $response, Response::HTTP_PRECONDITION_REQUIRED));
         }
 
-        $form = $this->createForm(FiddleType::class, $fiddle, array(
+        $form = $this->createForm(FiddleType::class, $fiddle, [
                 'data_object' => $fiddle,
-        ));
+        ]);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -318,10 +318,10 @@ class FiddleController extends BaseController
         } else {
             $errors = $this->getErrorMessagesAjaxFormat($form);
             if (!array_key_exists('#', $errors)) {
-                $plurial = count($errors) > 1 ? 's' : '';
-                $errors['#'] = array(
+                $plurial     = count($errors) > 1 ? 's' : '';
+                $errors['#'] = [
                         "Form contains error{$plurial}, please check messages below involved field{$plurial}.",
-                );
+                ];
             }
             $response['errors'] = $errors;
         }

@@ -24,18 +24,18 @@ class FileLoader
     public function load($dir, $file)
     {
         if (is_scalar($dir)) {
-            return $this->load(array($dir), $file);
+            return $this->load([$dir], $file);
         }
 
         $locator = new FileLocator($dir);
-        $path = $locator->locate($file);
+        $path    = $locator->locate($file);
 
-        $loaderResolver = new LoaderResolver(array(
+        $loaderResolver = new LoaderResolver([
                 new YamlFileLoader($locator),
                 new XmlFileLoader($locator),
                 new JsonFileLoader($locator),
                 new PhpFileLoader($locator),
-        ));
+        ]);
 
         $delegatingLoader = new DelegatingLoader($loaderResolver);
 

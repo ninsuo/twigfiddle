@@ -21,23 +21,23 @@ class FiddleTemplateType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-           ->add('filename', Type\TextType::class, array(
+           ->add('filename', Type\TextType::class, [
                    'required' => true,
-           ))
-           ->add('content', Type\TextareaType::class, array(
+           ])
+           ->add('content', Type\TextareaType::class, [
                    'required' => true,
-           ))
-           ->add('main', Type\CheckboxType::class, array(
+           ])
+           ->add('main', Type\CheckboxType::class, [
                    'required' => false,
-           ))
+           ])
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
                 'data_class' => 'Fuz\AppBundle\Entity\FiddleTemplate',
-        ));
+        ]);
     }
 
     public function getBlockPrefix()

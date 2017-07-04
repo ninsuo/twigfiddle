@@ -30,12 +30,12 @@ class ExecuteManager extends BaseService
        EngineManager $engineManager, ContextManager $contextManager, TemplateManager $templateManager,
        TwigExtensionsManager $twigExtensions, array $fiddleConfiguration)
     {
-        $this->fileSystem = $fileSystem;
-        $this->environmentManager = $environmentManager;
-        $this->engineManager = $engineManager;
-        $this->contextManager = $contextManager;
-        $this->templateManager = $templateManager;
-        $this->twigExtensions = $twigExtensions;
+        $this->fileSystem          = $fileSystem;
+        $this->environmentManager  = $environmentManager;
+        $this->engineManager       = $engineManager;
+        $this->contextManager      = $contextManager;
+        $this->templateManager     = $templateManager;
+        $this->twigExtensions      = $twigExtensions;
         $this->fiddleConfiguration = $fiddleConfiguration;
     }
 
@@ -44,13 +44,13 @@ class ExecuteManager extends BaseService
         $this->checkNoTwigEnvironmentLoaded();
         $this->environmentManager->checkFiddleEnvironmentAvailability($agent);
 
-        $engine = $this->engineManager->getEngineFromAgent($agent);
-        $sourceDirectory = $agent->getSourceDirectory();
-        $cacheDirectory = $this->createCacheDirectory($agent);
-        $mainTemplate = $this->templateManager->getMainTemplateFromAgent($agent);
+        $engine             = $this->engineManager->getEngineFromAgent($agent);
+        $sourceDirectory    = $agent->getSourceDirectory();
+        $cacheDirectory     = $this->createCacheDirectory($agent);
+        $mainTemplate       = $this->templateManager->getMainTemplateFromAgent($agent);
         $executionDirectory = dirname($mainTemplate);
-        $template = basename($mainTemplate);
-        $context = $this->contextManager->getContextFromAgent($agent);
+        $template           = basename($mainTemplate);
+        $context            = $this->contextManager->getContextFromAgent($agent);
 
         $rendered = null;
         try {
@@ -87,7 +87,7 @@ class ExecuteManager extends BaseService
 
     protected function createCacheDirectory(FiddleAgent $agent)
     {
-        $dir = $agent->getDirectory();
+        $dir            = $agent->getDirectory();
         $cacheDirectory = $dir.DIRECTORY_SEPARATOR.$this->fiddleConfiguration['compiled_dir'];
         $this->logger->debug("Creating cache directory: {$cacheDirectory}");
         $this->fileSystem->mkdir($cacheDirectory);

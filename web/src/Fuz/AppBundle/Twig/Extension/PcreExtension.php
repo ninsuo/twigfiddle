@@ -15,7 +15,7 @@ class PcreExtension extends \Twig_Extension
 {
     public function getFilters()
     {
-        return array(
+        return [
                 new \Twig_SimpleFilter('preg_filter',
                    function ($subject, $pattern, $replacement, $limit = -1, &$count = null) {
                        return preg_filter($pattern, $replacement, $subject, $limit, $count);
@@ -45,14 +45,14 @@ class PcreExtension extends \Twig_Extension
                    function ($subject, $pattern, $limit = -1, $flags = 0) {
                        return preg_split($pattern, $subject, $limit, $flags);
                    }),
-        );
+        ];
     }
 
     public function getFunctions()
     {
-        return array(
+        return [
                 new \Twig_SimpleFunction('preg_last_error', 'preg_last_error'),
-        );
+        ];
     }
 
     public function getName()

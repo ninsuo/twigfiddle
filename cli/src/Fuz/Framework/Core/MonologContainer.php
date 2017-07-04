@@ -20,9 +20,9 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class MonologContainer extends ContainerBuilder
 {
-    protected $loggers = array();
-    protected $handlers = array();
-    protected $processors = array();
+    protected $loggers    = [];
+    protected $handlers   = [];
+    protected $processors = [];
 
     public function __construct(ParameterBagInterface $parameterBag = null)
     {

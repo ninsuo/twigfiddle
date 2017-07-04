@@ -24,34 +24,34 @@ class BrowseFiltersType extends AbstractType
         $builder
            ->add(
               $builder
-              ->create('keywords', Type\TextType::class, array(
+              ->create('keywords', Type\TextType::class, [
                   'required' => false,
-              ))
+              ])
               ->addModelTransformer(new ArrayTransformer(' '))
            )
-           ->add('bookmark', Type\CheckboxType::class, array(
+           ->add('bookmark', Type\CheckboxType::class, [
                'required' => false,
-           ))
-           ->add('mine', Type\CheckboxType::class, array(
+           ])
+           ->add('mine', Type\CheckboxType::class, [
                'required' => false,
-           ))
-           ->add('visibility', Type\ChoiceType::class, array(
-               'choices' => array(
-                   ucfirst(Fiddle::VISIBILITY_PUBLIC) => Fiddle::VISIBILITY_PUBLIC,
+           ])
+           ->add('visibility', Type\ChoiceType::class, [
+               'choices' => [
+                   ucfirst(Fiddle::VISIBILITY_PUBLIC)   => Fiddle::VISIBILITY_PUBLIC,
                    ucfirst(Fiddle::VISIBILITY_UNLISTED) => Fiddle::VISIBILITY_UNLISTED,
-                   ucfirst(Fiddle::VISIBILITY_PRIVATE) => Fiddle::VISIBILITY_PRIVATE,
-               ),
+                   ucfirst(Fiddle::VISIBILITY_PRIVATE)  => Fiddle::VISIBILITY_PRIVATE,
+               ],
                'choices_as_values' => true,
-               'required' => false,
-           ))
+               'required'          => false,
+           ])
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'Fuz\AppBundle\Entity\BrowseFilters',
-        ));
+        ]);
     }
 
     public function getBlockPrefix()

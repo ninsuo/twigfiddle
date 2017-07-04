@@ -27,9 +27,9 @@ class ProcessConfiguration
 
     public function __construct(LoggerInterface $logger, array $localConfig, $environment)
     {
-        $this->logger = $logger;
-        $this->localConfig = $localConfig;
-        $this->environment = $environment;
+        $this->logger       = $logger;
+        $this->localConfig  = $localConfig;
+        $this->environment  = $environment;
         $this->remoteConfig = null;
     }
 
@@ -41,7 +41,7 @@ class ProcessConfiguration
 
         if ($this->environment === 'prod') {
             $apc = new ApcCache();
-            $id = $this->localConfig['apc_cache_key'];
+            $id  = $this->localConfig['apc_cache_key'];
             if ($apc->contains($id)) {
                 $this->remoteConfig = $apc->fetch($id);
             } else {
@@ -57,8 +57,8 @@ class ProcessConfiguration
 
     protected function loadRemoteConfig()
     {
-        $rootDir = $this->localConfig['root_dir'];
-        $configFile = $this->localConfig['config_path'];
+        $rootDir        = $this->localConfig['root_dir'];
+        $configFile     = $this->localConfig['config_path'];
         $containerFiles = $this->localConfig['container_file_paths'];
 
         $this->logger->info("Reloading process configuration from {$configFile}");
@@ -69,7 +69,7 @@ class ProcessConfiguration
 
         foreach ($containerFiles as $containerFile) {
             $locator = new FileLocator(dirname($containerFile));
-            $loader = new Loader\YamlFileLoader($processContainer, $locator);
+            $loader  = new Loader\YamlFileLoader($processContainer, $locator);
             $loader->load(basename($containerFile));
         }
 
@@ -86,7 +86,7 @@ class ProcessConfiguration
 
     protected function getSupportedTwigVersions(ContainerBuilder $processContainer)
     {
-        $versions = array();
+        $versions = [];
 
         $engineServiceIds = $processContainer->findTaggedServiceIds('twig.engine');
 
