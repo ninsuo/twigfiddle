@@ -9,7 +9,7 @@ services:
         tags:
             -
                 name: twig.engine
-                versions: 'Twig-2.4.3 / Twig-2.4.2 / Twig-2.4.1 / Twig-2.4.0 / Twig-2.3.2 / Twig-2.3.1 / Twig-2.3.0 / Twig-2.2.0 / Twig-2.1.0 / Twig-2.0.0'
+                versions: 'Twig-2.4.4 / Twig-2.4.3 / Twig-2.4.2 / Twig-2.4.1 / Twig-2.4.0 / Twig-2.3.2 / Twig-2.3.1 / Twig-2.3.0 / Twig-2.2.0 / Twig-2.1.0 / Twig-2.0.0'
                 label: 'Twig 2.x'
     v1.twig_engine:
         class: '%v2.twig_engine.class%'
