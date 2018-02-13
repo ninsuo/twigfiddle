@@ -55,7 +55,7 @@ class FiddleTemplate
      * @var string
      *
      * @ORM\Column(name="content", type="text")
-     * @Assert\Length(max = 8192)
+     * @Assert\Length(max = 131072)
      * @Assert\NotBlank
      * @Serializer\Type("string")
      */
