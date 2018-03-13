@@ -71,9 +71,9 @@ class Captcha
             $ip = ip2long($request->getClientIp()) ? $request->getClientIp() : '127.0.0.1';
 
             $parameters = [
-                    'secret'   => $this->config['secret_key'],
-                    'response' => $response,
-                    'remoteip' => $ip,
+                'secret'   => $this->config['secret_key'],
+                'response' => $response,
+                'remoteip' => $ip,
             ];
 
             $query = $this->config['check_url'].'?'.http_build_query($parameters);
@@ -104,7 +104,7 @@ class Captcha
     protected function hasReachedLimits($ip, $sessionId, $strategy)
     {
         $sessionsPerIp = $this->ipLimitRepo->findOneByIp($ip);
-        $sessionsCount = $this->sessionIpRepo->count($ip);
+        $sessionsCount = $this->sessionIpRepo->countOccurences($ip);
         if ($sessionsPerIp && $sessionsCount >= $sessionsPerIp->getLimit()) {
             return true;
         }

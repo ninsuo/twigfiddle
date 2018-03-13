@@ -24,7 +24,7 @@ class CaptchaSessionIpRepository extends EntityRepository
         ");
 
         $params = [
-                'expiry_date' => $expiry,
+            'expiry_date' => $expiry,
         ];
 
         $query->execute($params);
@@ -33,8 +33,8 @@ class CaptchaSessionIpRepository extends EntityRepository
     public function record($ip, $sessionId)
     {
         $entity = $this->findOneBy([
-                'ip'        => $ip,
-                'sessionId' => $sessionId,
+            'ip'        => $ip,
+            'sessionId' => $sessionId,
         ]);
 
         if (!$entity) {
@@ -46,7 +46,7 @@ class CaptchaSessionIpRepository extends EntityRepository
         }
     }
 
-    public function count($ip)
+    public function countOccurences($ip)
     {
         $query = $this->_em->createQuery("
             SELECT COUNT(csi.ip)
@@ -55,13 +55,12 @@ class CaptchaSessionIpRepository extends EntityRepository
         ");
 
         $params = [
-                'ip' => $ip,
+            'ip' => $ip,
         ];
 
         $count = $query
-           ->setParameters($params)
-           ->getSingleScalarResult()
-        ;
+            ->setParameters($params)
+            ->getSingleScalarResult();
 
         return $count;
     }
