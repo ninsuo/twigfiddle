@@ -9,3 +9,4 @@ build/
 vendor/
 bin/
 composer.phar
+.web-server-pid
