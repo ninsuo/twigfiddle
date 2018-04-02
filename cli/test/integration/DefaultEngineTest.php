@@ -69,6 +69,7 @@ class DefaultEngineTest extends \PHPUnit_Framework_TestCase
             // --- header for auto-generation ---
 
             // 2.x
+            array('Twig 2.x', 'Twig-2.4.8'),
             array('Twig 2.x', 'Twig-2.4.7'),
             array('Twig 2.x', 'Twig-2.4.6'),
             array('Twig 2.x', 'Twig-2.4.5'),
