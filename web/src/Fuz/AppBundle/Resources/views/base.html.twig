@@ -106,7 +106,14 @@
 
                 {# Start Footer #}
                 <div class="row" id="footer">
+
                     <div class="col-md-12 text-center">
+                        <div class="pull-right">
+                            Developed using
+                            <a href="https://www.jetbrains.com/phpstorm/">
+                                <img src="phpstorm.png" style="max-height: 100px;" alt="PHPStorm"/>
+                            </a>
+                        </div>
 
                        {% block logged_as %}
                            <div class="white">
@@ -145,7 +152,6 @@
                             <p>&nbsp;</p>
                             <p style="text-align:center;color:red;">{{ maintenance }}</p>
                         {% endif %}
-
                     </div>
                 </div>
 
