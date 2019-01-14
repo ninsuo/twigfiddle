@@ -69,6 +69,7 @@ class DefaultEngineTest extends \PHPUnit_Framework_TestCase
             // --- header for auto-generation ---
 
             // 2.x
+            array('Twig 2.x', 'Twig-2.6.1'),
             array('Twig 2.x', 'Twig-2.6.0'),
             array('Twig 2.x', 'Twig-2.5.0'),
             array('Twig 2.x', 'Twig-2.4.8'),
@@ -88,6 +89,7 @@ class DefaultEngineTest extends \PHPUnit_Framework_TestCase
             array('Twig 2.x', 'Twig-2.0.0'),
 
             // 1.x
+            array('Twig 1.x', 'Twig-1.37.0'),
             array('Twig 1.x', 'Twig-1.36.0'),
             array('Twig 1.x', 'Twig-1.35.4'),
             array('Twig 1.x', 'Twig-1.35.3'),
