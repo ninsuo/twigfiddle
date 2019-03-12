@@ -10,533 +10,531 @@
  # file that was distributed with this source code.
  #}
 
-{# Used to work on template's prototype before displaying it #}
+{# Used to work on template prototype before displaying it #}
 <div id="template-container" class="hide"></div>
 
 <script type="text/javascript">
 
-$(document).ready(function() {
+    $(document).ready(function () {
 
-    {#
-     #  Add a template button
-     #  Used in FuzAppBundle:Fiddle:templates.html.twig
-     #}
-    $('body').on('click', '.add-template', function () {
-        var templates = $('#templates');
-        var prototype = templates.data('prototype');
-        var max_templates = 10; {# fiddle.max_templates #}
-        for (var index = 0; (index < max_templates); index++) {
-            var template = $(prototype.replace(/__name__/g, index));
-            var container = $('#template-container');
-            var id = container.html(template).find('.template').data('id');
-            container.empty();
-            if ($('#row-' + id).length === 0) {
-                template.find(".text-danger").remove().end().appendTo(templates);
-                initCodeMirrorForTemplate($('#row-' + id).find('textarea').attr('id'));
-                if ($('.template').length === max_templates) {
-                    $('#add-template').addClass('hide');
-                    $('#add-template').attr('aria-hidden', 'true');
+        {#
+         #  Add a template button
+         #  Used in FuzAppBundle:Fiddle:templates.html.twig
+         #}
+        $('body').on('click', '.add-template', function () {
+            var templates = $('#templates');
+            var prototype = templates.data('prototype');
+            var max_templates = 10; {# fiddle.max_templates #}
+            for (var index = 0; (index < max_templates); index++) {
+                var template = $(prototype.replace(/__name__/g, index));
+                var container = $('#template-container');
+                var id = container.html(template).find('.template').data('id');
+                container.empty();
+                if ($('#row-' + id).length === 0) {
+                    template.find(".text-danger").remove().end().appendTo(templates);
+                    initCodeMirrorForTemplate($('#row-' + id).find('textarea').attr('id'));
+                    if ($('.template').length === max_templates) {
+                        $('#add-template').addClass('hide');
+                        $('#add-template').attr('aria-hidden', 'true');
+                    }
+                    break;
                 }
-                break ;
             }
+            $('.filename-template-div')
+                .removeClass('col-md-12 col-sm-12')
+                .addClass('col-md-7 col-sm-7')
+            ;
+            $('.main-template-div').removeClass('hide');
+            $('.main-template-div').removeAttr('aria-hidden');
+            $('.delete-template-div').removeClass('hide');
+            $('.delete-template-div').removeAttr('aria-hidden');
+            $('#page-form').trigger('rescan.areYouSure').addClass('dirty');
+        });
+
+        {#
+         #  Remove a template button
+         #  Used in FuzAppBundle:Fiddle:templates-theme.html.twig
+         #}
+        $('body').on('click', '.delete-template', function () {
+            if ($('.template').length === 1) {
+                return;
+            }
+
+            var id = '#row-' + $(this).data('id');
+            if ($(id).find(':checkbox').prop('checked')) {
+                var first = $('.template').not(id).first();
+                first.find(':checkbox').prop('checked', true);
+                first
+                    .find('.main-template')
+                    .removeClass('btn-default')
+                    .addClass('btn-tf-green')
+                    .find('span.glyphicon')
+                    .removeClass('glyphicon-unchecked')
+                    .addClass('glyphicon-check')
+                ;
+            }
+
+            $(id).remove();
+            $('#add-template').removeClass('hide');
+            $('#add-template').removeAttr('aria-hidden');
+
+            $('#page-form').trigger('rescan.areYouSure');
+            if ($('.template').length !== {{ data.templates|length }}) {
+                $('#page-form').addClass('dirty');
+            }
+
+            if ($('.template').length === 1) {
+                $('.filename-template-div')
+                    .removeClass('col-md-7 col-sm-7')
+                    .addClass('col-md-12 col-sm-12')
+                ;
+                $('.main-template-div').addClass('hide');
+                $('.main-template-div').attr('aria-hidden', 'true');
+                $('.delete-template-div').addClass('hide');
+                $('.delete-template-div').attr('aria-hidden', 'true');
+            }
+
+        }); // $.on
+
+        if ($('.template').length > 1) {
+            $('.filename-template-div')
+                .removeClass('col-md-12 col-sm-12')
+                .addClass('col-md-7 col-sm-7')
+            ;
+            $('.main-template-div').removeClass('hide');
+            $('.main-template-div').removeAttr('aria-label');
+            $('.delete-template-div').removeClass('hide');
+            $('.delete-template-div').removeAttr('aria-label');
         }
-        $('.filename-template-div')
-                .removeClass('col-md-12 col-sm-12')
-                .addClass('col-md-7 col-sm-7')
-        ;
-        $('.main-template-div').removeClass('hide');
-        $('.main-template-div').removeAttr('aria-hidden');
-        $('.delete-template-div').removeClass('hide');
-        $('.delete-template-div').removeAttr('aria-hidden');
-        $('#page-form').trigger('rescan.areYouSure').addClass('dirty');
-    });
 
-    {#
-     #  Remove a template button
-     #  Used in FuzAppBundle:Fiddle:templates-theme.html.twig
-     #}
-    $('body').on('click', '.delete-template', function () {
-       if ($('.template').length === 1) {
-           return ;
-       }
-
-       var id = '#row-' + $(this).data('id');
-       if ($(id).find(':checkbox').prop('checked')) {
-           var first = $('.template').not(id).first();
-           first.find(':checkbox').prop('checked', true);
-           first
-                   .find('.main-template')
-                   .removeClass('btn-default')
-                   .addClass('btn-tf-green')
-                   .find('span.glyphicon')
-                   .removeClass('glyphicon-unchecked')
-                   .addClass('glyphicon-check')
-           ;
-       }
-
-       $(id).remove();
-       $('#add-template').removeClass('hide');
-       $('#add-template').removeAttr('aria-hidden');
-
-       $('#page-form').trigger('rescan.areYouSure');
-       if ($('.template').length !== {{ data.templates|length }}) {
-           $('#page-form').addClass('dirty');
-       }
-
-       if ($('.template').length === 1) {
-           $('.filename-template-div')
-                   .removeClass('col-md-7 col-sm-7')
-                   .addClass('col-md-12 col-sm-12')
-           ;
-           $('.main-template-div').addClass('hide');
-           $('.main-template-div').attr('aria-hidden', 'true');
-           $('.delete-template-div').addClass('hide');
-           $('.delete-template-div').attr('aria-hidden', 'true');
-       }
-
-    }); // $.on
-
-    if ($('.template').length > 1) {
-        $('.filename-template-div')
-                .removeClass('col-md-12 col-sm-12')
-                .addClass('col-md-7 col-sm-7')
-        ;
-        $('.main-template-div').removeClass('hide');
-        $('.main-template-div').removeAttr('aria-label');
-        $('.delete-template-div').removeClass('hide');
-        $('.delete-template-div').removeAttr('aria-label');
-    }
-
-    {#
-     #  Set as main template button
-     #  Used in FuzAppBundle:Fiddle:templates-theme.html.twig
-     #}
-    $('body').on('click', '.main-template', function () {
-        var ticked = $(this).data('id');
-        $('.template').each(function() {
-            var that = $(this);
-            if (that.data('id') === ticked) {
-                that.find(':checkbox').prop('checked', true);
-                that
+        {#
+         #  Set as main template button
+         #  Used in FuzAppBundle:Fiddle:templates-theme.html.twig
+         #}
+        $('body').on('click', '.main-template', function () {
+            var ticked = $(this).data('id');
+            $('.template').each(function () {
+                var that = $(this);
+                if (that.data('id') === ticked) {
+                    that.find(':checkbox').prop('checked', true);
+                    that
                         .find('.main-template')
                         .removeClass('btn-default')
                         .addClass('btn-tf-green')
                         .find('span.glyphicon')
                         .removeClass('glyphicon-unchecked')
                         .addClass('glyphicon-check')
-                ;
-            } else {
-                that.find(':checkbox').prop('checked', false);
-                that
+                    ;
+                } else {
+                    that.find(':checkbox').prop('checked', false);
+                    that
                         .find('.main-template')
                         .removeClass('btn-tf-green')
                         .addClass('btn-default')
                         .find('span.glyphicon')
                         .removeClass('glyphicon-check')
                         .addClass('glyphicon-unchecked')
-                ;
-            }
-            $('#page-form').trigger('checkform.areYouSure');
-        }); // $.each
-    }); // $.on
-
-    {#
-     #  Show raw result instead of "prettified" result
-     #  Used in FuzAppBundle:Fiddle:result-rendered.html.twig
-     #}
-    $('body').on('click', '#show-raw-result', function (e) {
-        $('#show-raw-result').addClass('hide');
-        $('#show-raw-result').attr('aria-hidden', 'true');
-        $('#hide-raw-result').removeClass('hide');
-        $('#hide-raw-result').removeAttr('aria-label');
-
-        $('#select-result-rendered').data('selector', '#result-rendered-raw');
-
-        $('#result-rendered-simple').addClass('hide');
-        $('#result-rendered-simple').attr('aria-hidden', 'true');
-        $('#result-rendered-raw').removeClass('hide');
-        $('#result-rendered-raw').removeAttr('aria-label');
-
-        e.preventDefault();
-    });
-
-    {#
-     #  Show "prettified" result instead of raw result
-     #  Used in FuzAppBundle:Fiddle:result-rendered.html.twig
-     #}
-    $('body').on('click', '#hide-raw-result', function (e) {
-        $('#hide-raw-result').addClass('hide');
-        $('#hide-raw-result').attr('aria-hidden', 'true');
-        $('#show-raw-result').removeClass('hide');
-        $('#show-raw-result').removeAttr('aria-label');
-
-        $('#select-result-rendered').data('selector', '#result-rendered-simple');
-
-        $('#result-rendered-raw').addClass('hide');
-        $('#result-rendered-raw').attr('aria-hidden', 'true');
-        $('#result-rendered-simple').removeClass('hide');
-        $('#result-rendered-simple').removeAttr('aria-label');
-
-        e.preventDefault();
-    });
-
-
-    {#
-     #  Template Syntax Highlighting Loader
-     #  Used in FuzAppBundle:Fiddle:templates-theme.html.twig
-     #}
-    var initCodeMirrorForTemplate = function (id) {
-        return CodeMirror.fromTextArea(document.getElementById(id), {
-            lineNumbers: true,
-            mode: {
-                name: "jinja2"
-            },
-            indentUnit: 4,
-            indentWithTabs: false,
-            smartIndent: true,
-            fixedGutter: true,
-            extraKeys: {
-                Tab: function (cm) {
-                    var spaces = Array(cm.getOption("indentUnit") + 1).join(" ");
-                    cm.replaceSelection(spaces, 'end');
+                    ;
                 }
-            }
-        }).on('change', function(cm) {
-            $('#' + id).html($.symfony2.escape(cm.getValue()));
+                $('#page-form').trigger('checkform.areYouSure');
+            }); // $.each
+        }); // $.on
+
+        {#
+         #  Show raw result instead of "prettified" result
+         #  Used in FuzAppBundle:Fiddle:result-rendered.html.twig
+         #}
+        $('body').on('click', '#show-raw-result', function (e) {
+            $('#show-raw-result').addClass('hide');
+            $('#show-raw-result').attr('aria-hidden', 'true');
+            $('#hide-raw-result').removeClass('hide');
+            $('#hide-raw-result').removeAttr('aria-label');
+
+            $('#select-result-rendered').data('selector', '#result-rendered-raw');
+
+            $('#result-rendered-simple').addClass('hide');
+            $('#result-rendered-simple').attr('aria-hidden', 'true');
+            $('#result-rendered-raw').removeClass('hide');
+            $('#result-rendered-raw').removeAttr('aria-label');
+
+            e.preventDefault();
         });
-    };
 
-     $('.codemirror-template').each(function() {
-         var that = $(this);
-         initCodeMirrorForTemplate(that.attr('id'));
-     });
+        {#
+         #  Show "prettified" result instead of raw result
+         #  Used in FuzAppBundle:Fiddle:result-rendered.html.twig
+         #}
+        $('body').on('click', '#hide-raw-result', function (e) {
+            $('#hide-raw-result').addClass('hide');
+            $('#hide-raw-result').attr('aria-hidden', 'true');
+            $('#show-raw-result').removeClass('hide');
+            $('#show-raw-result').removeAttr('aria-label');
 
-    {#
-     #  Context Syntax Highlighting Loader
-     #  Used in FuzAppBundle:Fiddle:context.html.twig
-     #}
-     var convertContextModeToCodeMirrorMode = function(id) {
-        var selectedMode = $('#' + $('#' + id).data('format-id')).val();
-        var codeMirrorMode = null;
-        switch (selectedMode) {
-            case 'YAML':
-                codeMirrorMode = 'yaml';
-                break;
-            case 'XML':
-                codeMirrorMode = 'xml';
-                break;
-            case 'JSON':
-                codeMirrorMode = 'javascript';
-                break;
-            case 'INI':
-                codeMirrorMode = 'properties';
-                break;
-            default:
-                codeMirrorMode = 'text';
-                break;
-        }
-        return codeMirrorMode;
-     };
+            $('#select-result-rendered').data('selector', '#result-rendered-simple');
 
-    var initCodeMirrorForContext = function (id) {
-        return CodeMirror.fromTextArea(document.getElementById(id), {
-            lineNumbers: true,
-            mode: {
-                name: convertContextModeToCodeMirrorMode(id)
-            },
-            indentUnit: 4,
-            indentWithTabs: false,
-            smartIndent: true,
-            fixedGutter: true,
-            extraKeys: {
-                Tab: function (cm) {
-                    var spaces = Array(cm.getOption("indentUnit") + 1).join(" ");
-                    cm.replaceSelection(spaces, 'end');
+            $('#result-rendered-raw').addClass('hide');
+            $('#result-rendered-raw').attr('aria-hidden', 'true');
+            $('#result-rendered-simple').removeClass('hide');
+            $('#result-rendered-simple').removeAttr('aria-label');
+
+            e.preventDefault();
+        });
+
+
+        {#
+         #  Template Syntax Highlighting Loader
+         #  Used in FuzAppBundle:Fiddle:templates-theme.html.twig
+         #}
+        var initCodeMirrorForTemplate = function (id) {
+            return CodeMirror.fromTextArea(document.getElementById(id), {
+                lineNumbers: true,
+                mode: {
+                    name: "jinja2"
+                },
+                indentUnit: 4,
+                indentWithTabs: false,
+                smartIndent: true,
+                fixedGutter: true,
+                extraKeys: {
+                    Tab: function (cm) {
+                        var spaces = Array(cm.getOption("indentUnit") + 1).join(" ");
+                        cm.replaceSelection(spaces, 'end');
+                    }
                 }
+            }).on('change', function (cm) {
+                $('#' + id).html($.symfony2.escape(cm.getValue()));
+            });
+        };
+
+        $('.codemirror-template').each(function () {
+            var that = $(this);
+            initCodeMirrorForTemplate(that.attr('id'));
+        });
+
+        {#
+         #  Context Syntax Highlighting Loader
+         #  Used in FuzAppBundle:Fiddle:context.html.twig
+         #}
+        var convertContextModeToCodeMirrorMode = function (id) {
+            var selectedMode = $('#' + $('#' + id).data('format-id')).val();
+            var codeMirrorMode = null;
+            switch (selectedMode) {
+                case 'YAML':
+                    codeMirrorMode = 'yaml';
+                    break;
+                case 'XML':
+                    codeMirrorMode = 'xml';
+                    break;
+                case 'JSON':
+                    codeMirrorMode = 'javascript';
+                    break;
+                case 'INI':
+                    codeMirrorMode = 'properties';
+                    break;
+                default:
+                    codeMirrorMode = 'text';
+                    break;
+            }
+            return codeMirrorMode;
+        };
+
+        var initCodeMirrorForContext = function (id) {
+            return CodeMirror.fromTextArea(document.getElementById(id), {
+                lineNumbers: true,
+                mode: {
+                    name: convertContextModeToCodeMirrorMode(id)
+                },
+                indentUnit: 4,
+                indentWithTabs: false,
+                smartIndent: true,
+                fixedGutter: true,
+                extraKeys: {
+                    Tab: function (cm) {
+                        var spaces = Array(cm.getOption("indentUnit") + 1).join(" ");
+                        cm.replaceSelection(spaces, 'end');
+                    }
+                }
+            });
+        };
+
+        var contextEditor = initCodeMirrorForContext($('.codemirror-context').attr('id'));
+        contextEditor.on('change', function (cm) {
+            $('.codemirror-context').html($.symfony2.escape(cm.getValue()));
+        });
+
+        {#
+         #  Context Syntax Highlighting Switcher
+         #  Used in FuzAppBundle:Fiddle:context.html.twig
+         #}
+        $('body').on('change', '.switcher-context-format', function () {
+            contextEditor.setOption("mode", convertContextModeToCodeMirrorMode($(this).data('content-id')));
+        });
+
+        {#
+         #  Share link automatic selection
+         #  Used in FuzAppBundle:Fiddle:actions.html.twig
+         #}
+        $('#share-modal').on('shown.bs.modal', function () {
+            $('#select-share-link').click();
+        });
+
+        {#
+         #  Compiled code switcher
+         #  Used in FuzAppBundle:Fiddle:result-compiled.html.twig
+         #}
+        $('body').on('change', '#compiled-switcher', function () {
+            changeCompiledCode();
+        });
+
+        {#
+         #  Toggle used to display / hide the resulting context in PHP
+         #  Used in FuzAppBundle:Fiddle:result-context.html.twig
+         #}
+        $('body').on('click', '#result-context-toggle', function (e) {
+            e.preventDefault();
+            var link = $(this);
+            var context = $('#result-context-php');
+            if (context.is(':visible')) {
+                link.html('Dump context');
+                context.addClass('hide');
+                context.attr('aria-hidden', 'true');
+            } else {
+                link.html('Hide context');
+                context.removeClass('hide');
+                context.removeAttr('aria-label');
             }
         });
-    };
 
-    var contextEditor = initCodeMirrorForContext($('.codemirror-context').attr('id'));
-    contextEditor.on('change', function(cm) {
-        $('.codemirror-context').html($.symfony2.escape(cm.getValue()));
+        {#
+         #  Fiddle's revisions switcher
+         #  Used in FuzAppBundle:Fiddle:revision.html.twig
+         #}
+        $('body').on('change', '#revision-browser', function (e) {
+            window.location = $(this).val();
+        });
+
+        {#
+         #  Changes button's layout when choosing another Fiddle's visibility
+         #  Used in FuzAppBundle:Fiddle:visibility.html.twig
+         #}
+        $('.visibility-selection').click(function () {
+            $("#{{ form.visibility.vars.id }}").val($(this).data('value'));
+            displayRightVisibilityButton();
+        });
+
+        {#
+         #  Toggle used to display / hide the resulting compiled templates
+         #  Used in FuzAppBundle:Fiddle:result-compiled.html.twig
+         #}
+        $('body').on('click', '#result-compiled-toggle', function (e) {
+            e.preventDefault();
+            var link = $(this);
+            var compiled = $('#result-compiled-container');
+            var expended = $('#{{ form.compiledExpended.vars.id }}');
+            if (compiled.is(':visible')) {
+                link.html('Show compiled template' + link.data('plur'));
+                compiled.addClass('hide');
+                compiled.attr('aria-hidden', 'true');
+                expended.prop('checked', false);
+            } else {
+                link.html('Hide compiled template' + link.data('plur'));
+                compiled.removeClass('hide');
+                compiled.removeAttr('aria-label');
+                expended.prop('checked', true);
+            }
+        });
+
+        {#
+         #  Dirty form alert
+         #}
+        $('#page-form').areYouSure({
+            'message': 'This page is asking you to confirm that you want to leave - data you have entered may not be saved.',
+        });
+
+        {#
+         # Twig Engine switcher
+         # Used in FuzAppBundle:Fiddle:version.html.twig
+         #}
+        $('body').on('change', '#{{ form.twigEngine.vars.id }}', function (e) {
+            var that = $(this);
+            var engines = that.data('twig-engines');
+            var selected = that.find(':selected').val();
+            selectTwigEngine(engines, selected);
+        });
+        selectTwigVersion();
+
+        {#
+         #  Automatic run at startup if a saved fiddle was loaded
+         #}
+        {% if data.id %}
+        $('#run').domAjax();
+        {% endif %}
+
     });
 
     {#
-     #  Context Syntax Highlighting Switcher
-     #  Used in FuzAppBundle:Fiddle:context.html.twig
-     #}
-    $('body').on('change', '.switcher-context-format', function() {
-        contextEditor.setOption("mode", convertContextModeToCodeMirrorMode($(this).data('content-id')));
-    });
-
-    {#
-     #  Share link automatic selection
+     #  Function called before fiddle's form is being to be proceeded
      #  Used in FuzAppBundle:Fiddle:actions.html.twig
      #}
-     $('#share-modal').on('shown.bs.modal', function() {
-        $('#select-share-link').click();
-     });
+    function clearFiddleErrors(elem) {
+        $('#general-errors').html('');
+        $('.error-container').html('');
+    }
+
+    {#
+     #  Function called before fiddle is being run
+     #  Used in FuzAppBundle:Fiddle:actions.html.twig
+     #}
+    function clearFiddleResult() {
+        $('#result-pane').html('');
+        $('.result-container').html('');
+    }
+
+    {#
+     #  Ajax response handler used by the "Run" button
+     #  Used in FuzAppBundle:Fiddle:index.html.twig
+     #}
+    function processRunFiddleResponse(elem, response) {
+        if (undefined !== response.errors) {
+            $.symfony2.dispatchErrors(response.errors);
+        } else if (undefined !== response.captcha) {
+            displayCaptchaModal();
+        }
+
+        if (undefined !== response.result) {
+            $('#result-pane').html(response.result);
+            prettyPrint();
+            changeCompiledCode();
+        }
+
+        if (undefined !== response.context) {
+            $('#result-context').html(response.context);
+        }
+
+        return true;
+    };
+
+    {#
+     #  Ajax response handler used by the "Save" and the
+     #  "Save as new revision" buttons.
+     #  Used in FuzAppBundle:Fiddle:actions.html.twig
+     #  Used in FuzAppBundle:Fiddle:index.html.twig
+     #}
+    function processSaveFiddleResponse(elem, response) {
+        if (undefined !== response.errors) {
+            $.symfony2.dispatchErrors(response.errors);
+        } else if (undefined !== response.captcha) {
+            displayCaptchaModal();
+        } else {
+            $('#page-form').trigger('reinitialize.areYouSure');
+        }
+
+        if (undefined !== response.relocate) {
+            window.location = response.relocate;
+        }
+
+        return true;
+    };
+
+    {#
+     #  Change button's layout when bookmarking / unbookmarking a fiddle
+     #  Used in FuzAppBundle:Fiddle:bookmark.html.twig
+     #}
+    function processBookmarkFiddleResponse(elem, response) {
+        if (undefined !== response.errors) {
+            $.symfony2.dispatchErrors(response.errors);
+        } else {
+            $('#page-form').trigger('reinitialize.areYouSure');
+        }
+        if (response.isBookmarked) {
+            elem.find('span.glyphicon').removeClass('glyphicon-star-empty').addClass('glyphicon-star');
+            $('#save').removeAttr('disabled').data('input', '.bookmark-input');
+        } else {
+            elem.find('span.glyphicon').removeClass('glyphicon-star').addClass('glyphicon-star-empty');
+            $('#save').attr('disabled', 'disabled').data('input', '#page-form');
+        }
+    };
+
+    {#
+     #  Ajax error handler
+     #  Used in FuzAppBundle:Fiddle:index.html.twig
+     #}
+    function handleAjaxErrors(elem, errorThrown) {
+        $('#general-errors').html('<p class="error-message error">We\'re sorry, but an error occurred...</p>');
+    };
 
     {#
      #  Compiled code switcher
      #  Used in FuzAppBundle:Fiddle:result-compiled.html.twig
      #}
-    $('body').on('change', '#compiled-switcher', function() {
-        changeCompiledCode();
-    });
+    function changeCompiledCode() {
+        $('.compiled-code').addClass('hide');
+        $('.compiled-code').attr('aria-hidden', 'true');
+        var id = $("#compiled-switcher option:selected").val();
+        $('#compiled-' + id).removeClass('hide');
+        $('#compiled-' + id).removeAttr('aria-label');
+    }
 
     {#
-     #  Toggle used to display / hide the resulting context in PHP
-     #  Used in FuzAppBundle:Fiddle:result-context.html.twig
-     #}
-    $('body').on('click', '#result-context-toggle', function(e) {
-        e.preventDefault();
-        var link = $(this);
-        var context = $('#result-context-php');
-        if (context.is(':visible')) {
-            link.html('Dump context');
-            context.addClass('hide');
-            context.attr('aria-hidden', 'true');
-        } else {
-            link.html('Hide context');
-            context.removeClass('hide');
-            context.removeAttr('aria-label');
-        }
-    });
-
-    {#
-     #  Fiddle's revisions switcher
-     #  Used in FuzAppBundle:Fiddle:revision.html.twig
-     #}
-    $('body').on('change', '#revision-browser', function(e) {
-        window.location = $(this).val();
-    });
-
-    {#
-     #  Changes button's layout when choosing another Fiddle's visibility
+     #  Displaying the right Fiddle's visibility
      #  Used in FuzAppBundle:Fiddle:visibility.html.twig
      #}
-    $('.visibility-selection').click(function() {
-        $("#{{ form.visibility.vars.id }}").val($(this).data('value'));
-        displayRightVisibilityButton();
-    });
+    function displayRightVisibilityButton() {
+        var current = $("#{{ form.visibility.vars.id }}").val();
+        $('.visibility-open-modal').each(function () {
+            var that = $(this);
+            if (that.data('value') == current) {
+                that.removeClass('hide');
+                that.removeAttr('aria-label');
+            } else {
+                that.addClass('hide');
+                that.attr('aria-hidden', 'true');
+            }
+        });
+    }
 
     {#
-     #  Toggle used to display / hide the resulting compiled templates
-     #  Used in FuzAppBundle:Fiddle:result-compiled.html.twig
+     #  Replaces the current list of twig versions by the ones supported by the selected engine.
+     #  Used in FuzAppBundle:Fiddle:visibility.html.twig
      #}
-    $('body').on('click', '#result-compiled-toggle', function(e) {
-        e.preventDefault();
-        var link = $(this);
-        var compiled = $('#result-compiled-container');
-        var expended = $('#{{ form.compiledExpended.vars.id }}');
-        if (compiled.is(':visible')) {
-            link.html('Show compiled template' + link.data('plur'));
-            compiled.addClass('hide');
-            compiled.attr('aria-hidden', 'true');
-            expended.prop('checked', false);
-        } else {
-            link.html('Hide compiled template' + link.data('plur'));
-            compiled.removeClass('hide');
-            compiled.removeAttr('aria-label');
-            expended.prop('checked', true);
-        }
-    });
+    function selectTwigEngine(engines, selected) {
+        var list = engines[selected];
+        var select = $('#{{ form.twigVersion.vars.id }}');
+        select.empty();
+        $.each(list, function (key, value) {
+            select
+                .append(
+                    $("<option></option>")
+                        .attr("value", $.symfony2.escape(value))
+                        .text($.symfony2.escape(value))
+                );
+        });
+    }
 
     {#
-     #  Dirty form's alert
+     #  Dynamically selects the right engine using the selected Twig version.
+     #  Used in FuzAppBundle:Fiddle:visibility.html.twig
      #}
-    $('#page-form').areYouSure({
-        'message': 'This page is asking you to confirm that you want to leave - data you have entered may not be saved.',
-    });
-
-    {#
-     # Twig Engine switcher
-     # Used in FuzAppBundle:Fiddle:version.html.twig
-     #}
-     $('body').on('change', '#{{ form.twigEngine.vars.id }}', function(e) {
-        var that = $(this);
-        var engines = that.data('twig-engines');
-        var selected = that.find(':selected').val();
-        selectTwigEngine(engines, selected);
-     });
-     selectTwigVersion();
-
-    {#
-     #  Automatic run at startup if a saved fiddle was loaded
-     #}
-    {% if data.id %}
-        $('#run').domAjax();
-    {% endif %}
-
-});
-
-{#
- #  Function called before fiddle's form is being to be proceeded
- #  Used in FuzAppBundle:Fiddle:actions.html.twig
- #}
-function clearFiddleErrors(elem) {
-    $('#general-errors').html('');
-    $('.error-container').html('');
-}
-
-{#
- #  Function called before fiddle is being run
- #  Used in FuzAppBundle:Fiddle:actions.html.twig
- #}
-function clearFiddleResult() {
-    $('#result-pane').html('');
-    $('.result-container').html('');
-}
-
-{#
- #  Ajax response handler used by the "Run" button
- #  Used in FuzAppBundle:Fiddle:index.html.twig
- #}
-function processRunFiddleResponse(elem, response) {
-    if (undefined !== response.errors) {
-        $.symfony2.dispatchErrors(response.errors);
-    } else if (undefined !== response.captcha) {
-        displayCaptchaModal();
+    function selectTwigVersion() {
+        var engines = $('#{{ form.twigEngine.vars.id }}').data('twig-engines');
+        var curVersion = $('#{{ form.twigVersion.vars.id }}').val();
+        $.each(engines, function (name, list) {
+            var flag = true;
+            $.each(list, function (i, testVersion) {
+                if (testVersion === curVersion) {
+                    $('#{{ form.twigEngine.vars.id }}')
+                        .find('option[value="' + name + '"]')
+                        .prop('selected', true);
+                    selectTwigEngine(engines, name);
+                    $('#{{ form.twigVersion.vars.id }}')
+                        .find('option[value="' + curVersion + '"]')
+                        .prop('selected', true);
+                    flag = false;
+                    return true;
+                }
+            });
+            return flag;
+        });
     }
-
-    if (undefined !== response.result) {
-        $('#result-pane').html(response.result);
-        prettyPrint();
-        changeCompiledCode();
-    }
-
-    if (undefined !== response.context) {
-        $('#result-context').html(response.context);
-    }
-
-    return true;
-};
-
-{#
- #  Ajax response handler used by the "Save" and the
- #  "Save as new revision" buttons.
- #  Used in FuzAppBundle:Fiddle:actions.html.twig
- #  Used in FuzAppBundle:Fiddle:index.html.twig
- #}
-function processSaveFiddleResponse(elem, response) {
-    if (undefined !== response.errors) {
-        $.symfony2.dispatchErrors(response.errors);
-    } else if (undefined !== response.captcha) {
-        displayCaptchaModal();
-    } else {
-        $('#page-form').trigger('reinitialize.areYouSure');
-    }
-
-    if (undefined !== response.relocate) {
-        window.location = response.relocate;
-    }
-
-    return true;
-};
-
-{#
- #  Change button's layout when bookmarking / unbookmarking a fiddle
- #  Used in FuzAppBundle:Fiddle:bookmark.html.twig
- #}
-function processBookmarkFiddleResponse(elem, response)
-{
-    if (undefined !== response.errors) {
-        $.symfony2.dispatchErrors(response.errors);
-    } else {
-        $('#page-form').trigger('reinitialize.areYouSure');
-    }
-    if (response.isBookmarked) {
-        elem.find('span.glyphicon').removeClass('glyphicon-star-empty').addClass('glyphicon-star');
-        $('#save').removeAttr('disabled').data('input', '.bookmark-input');
-    } else {
-        elem.find('span.glyphicon').removeClass('glyphicon-star').addClass('glyphicon-star-empty');
-        $('#save').attr('disabled', 'disabled').data('input', '#page-form');
-    }
-};
-
-{#
- #  Ajax error handler
- #  Used in FuzAppBundle:Fiddle:index.html.twig
- #}
-function handleAjaxErrors(elem, errorThrown) {
-    $('#general-errors').html('<p class="error-message error">We\'re sorry, but an error occured...</p>');
-};
-
-{#
- #  Compiled code switcher
- #  Used in FuzAppBundle:Fiddle:result-compiled.html.twig
- #}
-function changeCompiledCode() {
-    $('.compiled-code').addClass('hide');
-    $('.compiled-code').attr('aria-hidden', 'true');
-    var id = $( "#compiled-switcher option:selected" ).val();
-    $('#compiled-' + id).removeClass('hide');
-    $('#compiled-' + id).removeAttr('aria-label');
-}
-
-{#
- #  Displaying the right Fiddle's visibility
- #  Used in FuzAppBundle:Fiddle:visibility.html.twig
- #}
-function displayRightVisibilityButton()
-{
-    var current = $("#{{ form.visibility.vars.id }}").val();
-    $('.visibility-open-modal').each(function() {
-        var that = $(this);
-        if (that.data('value') == current) {
-            that.removeClass('hide');
-            that.removeAttr('aria-label');
-        } else {
-            that.addClass('hide');
-            that.attr('aria-hidden', 'true');
-        }
-    });
-}
-
-{#
- #  Replaces the current list of twig versions by the ones supported by the selected engine.
- #  Used in FuzAppBundle:Fiddle:visibility.html.twig
- #}
-function selectTwigEngine(engines, selected) {
-    var list = engines[selected];
-    var select = $('#{{ form.twigVersion.vars.id }}');
-    select.empty();
-    $.each(list, function(key, value) {
-        select
-            .append(
-                $("<option></option>")
-                    .attr("value", $.symfony2.escape(value))
-                .text($.symfony2.escape(value))
-            );
-    });
-}
-
-{#
- #  Dynamically selects the right engine using the selected Twig version.
- #  Used in FuzAppBundle:Fiddle:visibility.html.twig
- #}
-function selectTwigVersion() {
-    var engines = $('#{{ form.twigEngine.vars.id }}').data('twig-engines');
-    var curVersion = $('#{{ form.twigVersion.vars.id }}').val();
-    $.each(engines, function(name, list) {
-       var flag = true;
-       $.each(list, function(i, testVersion) {
-           if (testVersion === curVersion) {
-               $('#{{ form.twigEngine.vars.id }}')
-                       .find('option[value="' + name + '"]')
-                       .prop('selected', true);
-               selectTwigEngine(engines, name);
-               $('#{{ form.twigVersion.vars.id }}')
-                       .find('option[value="' + curVersion + '"]')
-                       .prop('selected', true);
-               flag = false;
-               return true;
-           }
-       });
-       return flag;
-    });
-}
 
 </script>

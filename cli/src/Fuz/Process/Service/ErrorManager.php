@@ -22,6 +22,12 @@ class ErrorManager extends BaseService
             'logger'  => 'error',
             'debug'   => true,
         ],
+        Error::E_DEBUG                     => [
+            'group'   => Error::G_GENERAL,
+            'message' => 'Debug Mode.',
+            'logger'  => 'debug',
+            'debug'   => false,
+        ],
         Error::E_UNEXPECTED                => [
             'group'   => Error::G_GENERAL,
             'message' => 'An unexpected error occured.',

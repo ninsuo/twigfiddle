@@ -17,10 +17,10 @@
         <div class="row">
             <div class="col-md-12 text-center small">
                 <a
-                    id="result-context-toggle"
-                    class="dark"
-                    title="Show the context you given as a dumped PHP array"
-                    href="#">Dump context</a>
+                        id="result-context-toggle"
+                        class="dark"
+                        title="Show the context you given as a dumped PHP array"
+                        href="#">Dump context</a>
             </div>
         </div>
     </div>
@@ -35,7 +35,7 @@
                     </div>
                 </div>
                 <div id="used-context">
-                    {{ dump(data.result.context) }}
+                    {{ dump(data.result.context|hide_project_path|raw) }}
                 </div>
             </div>
         </div>
