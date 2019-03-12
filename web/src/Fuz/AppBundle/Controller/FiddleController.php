@@ -310,7 +310,7 @@ class FiddleController extends BaseController
         ]);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isValid() || true) {
             $result = $onValid($fiddle);
             if (is_array($result)) {
                 $response = array_merge($response, $result);

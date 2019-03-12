@@ -25,6 +25,7 @@ class Error
     const E_UNEXPECTED         = 'UNEXPECTED';
     const E_UNEXPECTED_NODEBUG = 'UNEXPECTED_NODEBUG';
     const E_TIMEOUT            = 'TIMEOUT';
+    const E_DEBUG              = 'DEBUG';
 
     /* G_ENVIRONMENT */
     const E_INVALID_ENVIRONMENT_ID    = 'INVALID_ENVIRONMENT_ID';
