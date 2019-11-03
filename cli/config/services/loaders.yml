@@ -11,7 +11,7 @@ services:
     tags:
       -
         name: twig.loader
-        support: '2.0.0 -> 2.100.0'
+        support: '2.7.0 -> 2.100.0'
 
   psr0.loader:
     class: '%psr0.loader.class%'
@@ -20,7 +20,7 @@ services:
     tags:
       -
         name: twig.loader
-        support: '1.38.0 -> 1.100.0'
+        support: '1.38.0 -> 2.6.2'
 
   twig.loader:
     class: '%twig.loader.class%'
