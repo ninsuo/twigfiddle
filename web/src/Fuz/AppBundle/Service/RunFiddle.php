@@ -35,15 +35,17 @@ class RunFiddle
     protected $envPath;
     protected $sharedObject;
     protected $process;
+    protected $env;
 
     public function __construct(LoggerInterface $logger, Filesystem $filesystem,
-       Utilities $utilities, ProcessConfiguration $processConfiguration, array $localConfig)
+       Utilities $utilities, ProcessConfiguration $processConfiguration, array $localConfig, string $env)
     {
         $this->logger       = $logger;
         $this->filesystem   = $filesystem;
         $this->utilities    = $utilities;
         $this->localConfig  = $localConfig;
         $this->remoteConfig = $processConfiguration->getProcessConfig();
+        $this->env = $env;
     }
 
     public function run(Fiddle $fiddle)
@@ -94,19 +96,8 @@ class RunFiddle
 
     protected function execute(Fiddle $fiddle)
     {
-        $command = str_replace('<env_id>', $this->envId, $this->localConfig['command']);
-        if ($fiddle->isWithCExtension()) {
-            $extensionDir = implode(DIRECTORY_SEPARATOR, [
-                $this->remoteConfig['twig_sources']['directory'],
-                str_replace(DIRECTORY_SEPARATOR, '', $fiddle->getTwigVersion()),
-                $this->remoteConfig['twig_sources']['extension'],
-            ]);
-
-            $arguments   = explode(' ', $command);
-            $arguments[] = "--c-extension={$extensionDir}";
-        } else {
-            $arguments = explode(' ', $command);
-        }
+        $command = str_replace('<env_id>', $this->envId, $this->localConfig["command_{$this->env}"]);
+        $arguments = explode(' ', $command);
 
         $builder = new ProcessBuilder($arguments);
 
@@ -133,8 +124,9 @@ class RunFiddle
         }
 
         $fiddleResult = $this->sharedObject->result;
+
         if (is_null($fiddleResult)) {
-            $this->logger->error("Fiddle {$this->envId} did not returned any result.");
+            $this->logger->error("Fiddle {$this->envId} did not return any result.");
         } else {
             $result->setResult($fiddleResult);
         }

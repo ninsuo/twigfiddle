@@ -23,7 +23,6 @@ class RunTimeoutCommand extends BaseCommand
 {
     protected $environmentId;
     protected $timeout;
-    protected $cExtension;
     protected $process;
 
     public function saveError($errno, $e)
@@ -51,8 +50,6 @@ class RunTimeoutCommand extends BaseCommand
            ->addArgument('environment-id', InputArgument::REQUIRED,
               'Environment where the twigfiddle is stored and will be executed')
            ->addArgument('timeout', InputArgument::REQUIRED, "The fiddle's maximum execution time (seconds)")
-           ->addOption('c-extension', 'c', \Symfony\Component\Console\Input\InputOption::VALUE_REQUIRED,
-              'C extension directory (to dl() twig.so if ticked)')
         ;
     }
 
@@ -72,7 +69,6 @@ class RunTimeoutCommand extends BaseCommand
     {
         $this->environmentId = $input->getArgument('environment-id');
         $this->timeout       = $input->getArgument('timeout');
-        $this->cExtension    = $input->getOption('c-extension');
 
         return $this;
     }
@@ -93,13 +89,6 @@ class RunTimeoutCommand extends BaseCommand
         $command = [
             $this->getParameter('php_path'),
         ];
-
-        if ($this->cExtension) {
-            $command = array_merge($command, [
-                '-d',
-                "extension={$this->cExtension}",
-            ]);
-        }
 
         $command = array_merge($command, [
             $this->getParameter('root_dir').'/run-'.$this->getParameter('env').'.php',

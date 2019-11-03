@@ -55,20 +55,6 @@
 
         <br/>
 
-        {# C extension #}
-        <div class="form-group full-width">
-            <div class="input-group full-width">
-                <div class="input-group-addon" style="width: 37px;">{{ form_widget(form.withCExtension) }}</div>
-                <div class="form-control">
-                    <label for="{{ form.withCExtension.vars.id }}">
-                        Enable the C extension
-                        (<a class="dark" href="http://twig.sensiolabs.org/doc/installation.html#installing-the-c-extension" target="_blank">read more</a>)
-                    </label>
-                </div>
-            </div>
-            <div class="error-container" id="errors-{{ form.withCExtension.vars.id }}">{{ form_errors(form.withCExtension) }}</div>
-        </div>
-
         {# Strict Variables mode #}
         <div class="form-group full-width">
             <div class="input-group full-width">

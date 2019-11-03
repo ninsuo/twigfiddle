@@ -116,14 +116,6 @@ class Fiddle
     /**
      * @var bool
      *
-     * @ORM\Column(name="with_c_extension", type="boolean")
-     * @Serializer\Type("boolean")
-     */
-    protected $withCExtension = false;
-
-    /**
-     * @var bool
-     *
      * @ORM\Column(name="with_strict_variables", type="boolean")
      * @Serializer\Type("boolean")
      */
@@ -399,26 +391,6 @@ class Fiddle
     public function getTwigVersion()
     {
         return $this->twigVersion;
-    }
-
-    /**
-     * @param bool $withCExtension
-     *
-     * @return Fiddle
-     */
-    public function setWithCExtension($withCExtension)
-    {
-        $this->withCExtension = $withCExtension;
-
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isWithCExtension()
-    {
-        return $this->withCExtension;
     }
 
     /**
