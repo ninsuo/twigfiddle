@@ -3,3 +3,4 @@ imports:
     - { resource: services/configuration_nodes.yml }
     - { resource: services/twig_engines.yml }
     - { resource: services/managers.yml }
+    - { resource: services/loaders.yml }
