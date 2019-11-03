@@ -29,8 +29,7 @@
             <pre id="result-rendered-simple">{{ simpleResult }}</pre>
 
             {% if simpleResult != rawResult %}
-                <pre id="result-rendered-raw" class="hide" aria-hidden="true">{{ rawResult }}
-</pre>
+                <pre id="result-rendered-raw" class="hide" aria-hidden="true">{{ rawResult|nl2br }}</pre>
             {% endif %}
 
             <button
