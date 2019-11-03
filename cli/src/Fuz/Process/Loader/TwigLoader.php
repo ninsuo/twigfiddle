@@ -8,16 +8,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Fuz\Process\TwigEngine;
+namespace Fuz\Process\Loader;
 
-class V1TwigEngine extends AbstractTwigEngine
+use Fuz\Process\TwigEngine\AbstractTwigEngine;
+
+class TwigLoader extends AbstractTwigEngine
 {
     /**
-     * Environment is loaded about the same way in all 0.x and 1.x Twig versions.
-     *
-     * The only change is the way the cache directory was declared: at the very beginning, cache
-     * directory (in fact, compilation directory) were given in the twig loader. But now (as of 0.9.3),
-     * cache directory is given on Environment's options.
+     * Between versions 0.9.0 and 1.37.1, Twig embedded his own autoloader.
      *
      * @param string $sourceDirectory    Twig's source directory
      * @param string $cacheDirectory     Cache directory where compiled templates should go
@@ -37,10 +35,5 @@ class V1TwigEngine extends AbstractTwigEngine
         ]);
 
         return $twigEnvironment;
-    }
-
-    public function getName()
-    {
-        return 'Twig v1.x';
     }
 }

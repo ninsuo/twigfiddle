@@ -73,6 +73,4 @@ abstract class AbstractTwigEngine extends BaseService implements TwigEngineInter
 
         return $templateName;
     }
-
-    abstract public function getName();
 }

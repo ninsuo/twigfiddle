@@ -63,17 +63,24 @@ class EngineManager extends BaseService
     public function findRightEngine($engine, $version)
     {
         $service          = null;
-        $engineServiceIds = $this->container->findTaggedServiceIds('twig.engine');
+        $engineServiceIds = $this->container->findTaggedServiceIds('twig.loader');
+
+        // Remove "Twig-" on "Twig-1.16.3"
+        $version = substr($version, 5);
+
         foreach ($engineServiceIds as $serviceId => $tags) {
             foreach ($tags as $tag) {
-                if ((!array_key_exists('label', $tag)) || ($engine !== $tag['label'])) {
+                if (!array_key_exists('support', $tag)) {
                     continue;
                 }
-                if (!array_key_exists('versions', $tag)) {
-                    continue;
+                foreach (explode(',', $tag['support']) as $support) {
+                    list($min, $max) = array_map('trim', explode('->', trim($support)));
+                    if (version_compare($version, $min) >= 0 && version_compare($version, $max) <= 0) {
+                        $service = $this->container->get($serviceId);
+                        break;
+                    }
                 }
-                if (in_array(strtolower($version), array_map('trim', array_map('strtolower', explode('/', $tag['versions']))))) {
-                    $service = $this->container->get($serviceId);
+                if (!is_null($service)) {
                     break;
                 }
             }

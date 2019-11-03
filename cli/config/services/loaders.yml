@@ -1,0 +1,33 @@
+parameters:
+  psr4.loader.class: Fuz\Process\Loader\Psr4Loader
+  psr0.loader.class: Fuz\Process\Loader\Psr0Loader
+  twig.loader.class: Fuz\Process\Loader\TwigLoader
+
+services:
+  psr4.loader:
+    class: '%psr4.loader.class%'
+    arguments:
+      - '@fiddle_agent'
+    tags:
+      -
+        name: twig.loader
+        support: '2.0.0 -> 2.100.0'
+
+  psr0.loader:
+    class: '%psr0.loader.class%'
+    arguments:
+      - '@fiddle_agent'
+    tags:
+      -
+        name: twig.loader
+        support: '1.38.0 -> 1.100.0'
+
+  twig.loader:
+    class: '%twig.loader.class%'
+    arguments:
+      - '@fiddle_agent'
+    tags:
+      -
+        name: twig.loader
+        support: '0.0.0 -> 1.37.1'
+
