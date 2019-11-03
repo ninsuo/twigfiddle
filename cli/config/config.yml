@@ -24,7 +24,6 @@ templates:
 
 twig_sources:
     directory: '%root_dir%/twig/uncompressed'
-    extension: ext/twig/modules/twig.so
 
 twig_extensions:
     directory: '%root_dir%/twig/extension/uncompressed'

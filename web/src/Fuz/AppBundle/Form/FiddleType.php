@@ -80,9 +80,6 @@ class FiddleType extends AbstractType
                'required'          => true,
                'choices_as_values' => true,
            ])
-           ->add('withCExtension', Type\CheckboxType::class, [
-               'required' => false,
-           ])
            ->add('withStrictVariables', Type\CheckboxType::class, [
                'required' => false,
            ])

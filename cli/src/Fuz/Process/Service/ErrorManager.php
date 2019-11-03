@@ -172,18 +172,6 @@ class ErrorManager extends BaseService
             'logger'  => 'error',
             'debug'   => true,
         ],
-        Error::E_C_NOT_SUPPORTED           => [
-            'group'   => Error::G_OPTION,
-            'message' => 'The Twig version you requested does not have a C extension.',
-            'logger'  => 'info',
-            'debug'   => false,
-        ],
-        Error::E_C_UNABLE_TO_DL            => [
-            'group'   => Error::G_OPTION,
-            'message' => 'The C extension exists but has not been loaded successfully.',
-            'logger'  => 'error',
-            'debug'   => true,
-        ],
         Error::E_UNKNOWN_TWIG_EXTENSION    => [
             'group'   => Error::G_OPTION,
             'message' => 'The requested Twig extension version is not supported.',

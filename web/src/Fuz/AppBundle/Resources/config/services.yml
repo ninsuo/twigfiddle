@@ -111,7 +111,7 @@ services:
 
     app.run_fiddle:
          class: '%app.run_fiddle.class%'
-         arguments: ['@logger', '@filesystem', '@app.utilities', '@app.process_configuration', '%process%']
+         arguments: ['@logger', '@filesystem', '@app.utilities', '@app.process_configuration', '%process%', '%kernel.environment%']
          tags:
              - { name: monolog.logger, channel: service.run_fiddle }
 

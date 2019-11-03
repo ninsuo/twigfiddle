@@ -95,7 +95,9 @@ fuz_app:
         container_file_paths:
             - %twigfiddle_process_root_dir%/config/parameters.%kernel.environment%.yml
             - %twigfiddle_process_root_dir%/config/services.yml
-        command: %php_path% %twigfiddle_process_root_dir%/run-%kernel.environment%.php twigfiddle:run:timeout <env_id> %twigfiddle_process_timeout%
+        command_prod: %php_path% %twigfiddle_process_root_dir%/run-%kernel.environment%.php twigfiddle:run:timeout <env_id> %twigfiddle_process_timeout%
+        command_test: %php_path% %twigfiddle_process_root_dir%/run-%kernel.environment%.php twigfiddle:run <env_id>
+        command_dev: %php_path% %twigfiddle_process_root_dir%/run-%kernel.environment%.php twigfiddle:run <env_id>
         apc_cache_key: twigfiddle.process
     web:
         github_repository_root: %github_repository_root%

@@ -57,8 +57,6 @@ class Error
     const E_UNEXPECTED_COMPILED_FILE = 'UNEXPECTED_COMPILED_FILE';
 
     /* OPTION */
-    const E_C_NOT_SUPPORTED        = 'E_C_NOT_SUPPORTED';
-    const E_C_UNABLE_TO_DL         = 'E_C_UNABLE_TO_DL';
     const E_UNKNOWN_TWIG_EXTENSION = 'UNKNOWN_TWIG_EXTENSION';
 
     protected $no;
