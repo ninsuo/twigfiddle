@@ -25,7 +25,7 @@
     {% endif %}
 
     {# Result #}
-    {% if data.result.rendered %}
+    {% if data.result.rendered|length %}
         {{ include("FuzAppBundle:Fiddle:result-rendered.html.twig") }}
     {% endif %}
 
