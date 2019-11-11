@@ -40,7 +40,6 @@ hwi_oauth:
     resource_owners:
         google:
             type: google
-            csrf: true
             client_id: %google_client_id%
             client_secret: %google_secret%
             scope: "profile"
@@ -51,7 +50,6 @@ hwi_oauth:
                 login_hint: email address
         facebook:
             type: facebook
-            csrf: true
             client_id: %facebook_client_id%
             client_secret: %facebook_secret%
             scope: "public_profile"
@@ -59,19 +57,16 @@ hwi_oauth:
                 display: page
         twitter:
             type: twitter
-            csrf: true
             client_id: %twitter_client_id%
             client_secret: %twitter_secret%
             scope: ""
         sensio_connect:
             type: sensio_connect
-            csrf: true
             client_id: %sensio_client_id%
             client_secret: %sensio_secret%
             scope: "SCOPE_PUBLIC"
         github:
             type: github
-            csrf: true
             client_id: %github_client_id%
             client_secret: %github_secret%
             scope: ""

@@ -17,7 +17,6 @@ class AppKernel extends Kernel
                 new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
                 new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
                 new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
-                new Http\HttplugBundle\HttplugBundle(),
                 new SmartCore\Bundle\AcceleratorCacheBundle\AcceleratorCacheBundle(),
                 new Symfony\Bundle\WebServerBundle\WebServerBundle(),
                 new Fuz\AppBundle\FuzAppBundle(),
