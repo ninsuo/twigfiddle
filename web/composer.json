@@ -37,7 +37,9 @@
         "ninsuo/php-shared-memory": "dev-master",
         "smart-core/accelerator-cache-bundle": "~1",
         "jms/serializer": "^1.0",
-        "symfony/web-server-bundle": "^3.3"
+        "symfony/web-server-bundle": "^3.3",
+        "php-http/httplug-bundle": "^1",
+        "php-http/guzzle6-adapter": "^1"
     },
     "scripts": {
         "post-root-package-install": [
