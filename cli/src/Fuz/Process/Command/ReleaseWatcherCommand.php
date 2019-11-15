@@ -41,10 +41,6 @@ class ReleaseWatcherCommand extends BaseCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->regenerateConfigurationAndTests();
-
-        return 0;
-
         $this
            ->fetchNewTwigReleases()
            ->fetchNewTwigExtensionsReleses()
