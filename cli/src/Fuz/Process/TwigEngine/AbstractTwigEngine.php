@@ -27,7 +27,8 @@ abstract class AbstractTwigEngine extends BaseService implements TwigEngineInter
     }
 
     /**
-     * From all released versions of Twig, there are backward compatibility to render a template.
+     * From the 2 first major versions of Twig (plus all 0s), there is
+     * backward compatibility to render a template.
      *
      * @param \Twig_Environment|\Twig\Environment $twigEnvironment
      * @param string            $template
@@ -37,7 +38,15 @@ abstract class AbstractTwigEngine extends BaseService implements TwigEngineInter
      */
     public function render($twigEnvironment, $template, array $context = [])
     {
-        $templateObject = $twigEnvironment->loadTemplate($template);
+        $class = get_class($twigEnvironment);
+        $version = constant(sprintf('%s::MAJOR_VERSION', $class));
+
+        if (null !== $version && $version > 2) {
+            $templateClass = $twigEnvironment->getTemplateClass($template);
+            $templateObject = $twigEnvironment->loadTemplate($templateClass, $template);
+        } else {
+            $templateObject = $twigEnvironment->loadTemplate($template);
+        }
 
         ob_start();
         $templateObject->display($context);
