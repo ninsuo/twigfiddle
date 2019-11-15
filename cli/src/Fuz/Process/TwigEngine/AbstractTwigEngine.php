@@ -29,13 +29,13 @@ abstract class AbstractTwigEngine extends BaseService implements TwigEngineInter
     /**
      * From all released versions of Twig, there are backward compatibility to render a template.
      *
-     * @param \Twig_Environment $twigEnvironment
+     * @param \Twig_Environment|\Twig\Environment $twigEnvironment
      * @param string            $template
      * @param array             $context
      *
      * @return string
      */
-    public function render(\Twig_Environment $twigEnvironment, $template, array $context = [])
+    public function render($twigEnvironment, $template, array $context = [])
     {
         $templateObject = $twigEnvironment->loadTemplate($template);
 
