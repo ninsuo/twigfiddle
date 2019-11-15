@@ -151,14 +151,16 @@ class ReleaseWatcherCommand extends BaseCommand
         usort($versions, 'version_compare');
         $versionsReversed = array_reverse($versions);
 
-        $dividedInMajorVersions = [
-            '0' => [],
-            '1' => [],
-            '2' => [],
-        ];
+        $dividedInMajorVersions = [];
 
         foreach ($versionsReversed as $version) {
-            $dividedInMajorVersions[substr($version, 5, 1)][] = $version;
+            $majorVersion = intval(substr($version, 5, 1));
+
+            if (!array_key_exists($majorVersion, $dividedInMajorVersions)) {
+                $dividedInMajorVersions[$majorVersion] = [];
+            }
+
+            $dividedInMajorVersions[$majorVersion][] = $version;
         }
 
         // --------------------------------------
@@ -168,9 +170,25 @@ class ReleaseWatcherCommand extends BaseCommand
         $config = $this->cliDir.'/config/services/twig_engines.yml';
         $yml    = Yaml::parse($config);
 
-        $yml['services']['v2.twig_engine']['tags'][0]['versions'] = implode(' / ', $dividedInMajorVersions['2']);
-        $yml['services']['v1.twig_engine']['tags'][0]['versions'] = implode(' / ', $dividedInMajorVersions['1']);
-        $yml['services']['v0.twig_engine']['tags'][0]['versions'] = implode(' / ', $dividedInMajorVersions['0']);
+        foreach ($dividedInMajorVersions as $majorVersion => $versions) {
+            $key = sprintf('v%s.twig_engine', $majorVersion);
+
+            if (!isset($yml['services'][$key])) {
+                $yml['services'][$key] = [
+                    'class' => '%twig_engine.class%',
+                    'tags' => [
+                        [
+                            'name' => 'twig.engine',
+                            'versions' => [],
+                            'label' => sprintf('Twig %s.x', $majorVersion),
+                        ],
+                    ],
+                ];
+            }
+
+            $yml['services'][$key]['tags'][0]['versions'] = implode(' / ', $dividedInMajorVersions[$majorVersion]);
+        }
+        krsort($yml['services']);
 
         file_put_contents($config, Yaml::dump($yml, 5));
 
