@@ -15,7 +15,7 @@ interface TwigEngineInterface
 {
     public function load($sourceDirectory, $cacheDirectory, $executionDirectory);
 
-    public function render(\Twig_Environment $environment, $template, array $context = []);
+    public function render($environment, $template, array $context = []);
 
     public function extractTemplateName($cacheDirectory);
 }
