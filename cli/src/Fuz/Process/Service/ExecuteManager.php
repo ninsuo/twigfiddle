@@ -110,12 +110,15 @@ class ExecuteManager extends BaseService
         $no = null;
 
         switch (get_class($ex)) {
+            case 'Twig\Error\LoaderError':
             case 'Twig_Error_Loader':
                 $no = Error::E_TWIG_LOADER_ERROR;
                 break;
+            case 'Twig\Error\SyntaxError':
             case 'Twig_Error_Syntax':
                 $no = Error::E_TWIG_SYNTAX_ERROR;
                 break;
+            case 'Twig\Error\RuntimeError':
             case 'Twig_Error_Runtime':
                 $no = Error::E_TWIG_RUNTIME_ERROR;
                 break;
