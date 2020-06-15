@@ -34,6 +34,12 @@ class TwigLoader extends AbstractTwigEngine
             'strict_variables' => $this->agent->getFiddle()->isWithStrictVariables(),
         ]);
 
+        $twigEnvironment->addFilter(
+            new \Twig_SimpleFilter('filter', function($mixed) {
+                throw new RuntimeError('Sorry, filter "filter" is disabled on twigfiddle.');
+            })
+        );
+
         return $twigEnvironment;
     }
 }

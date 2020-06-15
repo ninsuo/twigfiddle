@@ -3,6 +3,7 @@
 namespace Fuz\Process\Loader;
 
 use Fuz\Process\TwigEngine\AbstractTwigEngine;
+use Twig\Error\RuntimeError;
 
 class Psr0Loader extends AbstractTwigEngine
 {
@@ -53,6 +54,12 @@ class Psr0Loader extends AbstractTwigEngine
             'cache'            => $cacheDirectory,
             'strict_variables' => $this->agent->getFiddle()->isWithStrictVariables(),
         ]);
+
+        $twigEnvironment->addFilter(
+            new \Twig_SimpleFilter('filter', function($mixed) {
+                throw new RuntimeError('Sorry, filter "filter" is disabled on twigfiddle.');
+            })
+        );
 
         return $twigEnvironment;
     }

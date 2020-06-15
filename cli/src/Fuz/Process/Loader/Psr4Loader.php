@@ -12,6 +12,8 @@
 namespace Fuz\Process\Loader;
 
 use Fuz\Process\TwigEngine\AbstractTwigEngine;
+use Twig\Error\RuntimeError;
+use Twig\TwigFilter;
 
 class Psr4Loader extends AbstractTwigEngine
 {
@@ -48,6 +50,12 @@ class Psr4Loader extends AbstractTwigEngine
             'cache'            => $cacheDirectory,
             'strict_variables' => $this->agent->getFiddle()->isWithStrictVariables(),
         ]);
+
+        $twigEnvironment->addFilter(
+            new TwigFilter('filter', function($mixed) {
+                throw new RuntimeError('Sorry, filter "filter" is disabled for security reasons.');
+            })
+        );
 
         return $twigEnvironment;
     }
