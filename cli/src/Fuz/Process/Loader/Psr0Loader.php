@@ -57,7 +57,7 @@ class Psr0Loader extends AbstractTwigEngine
 
         $twigEnvironment->addFilter(
             new \Twig_SimpleFilter('filter', function($mixed) {
-                throw new RuntimeError('Sorry, filter "filter" is disabled on twigfiddle.');
+                throw new RuntimeError('Sorry, filter "filter" is disabled for security reasons.');
             })
         );
 

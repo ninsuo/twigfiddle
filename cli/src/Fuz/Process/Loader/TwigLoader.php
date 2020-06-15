@@ -11,6 +11,7 @@
 namespace Fuz\Process\Loader;
 
 use Fuz\Process\TwigEngine\AbstractTwigEngine;
+use Twig\Error\RuntimeError;
 
 class TwigLoader extends AbstractTwigEngine
 {
@@ -36,7 +37,7 @@ class TwigLoader extends AbstractTwigEngine
 
         $twigEnvironment->addFilter(
             new \Twig_SimpleFilter('filter', function($mixed) {
-                throw new RuntimeError('Sorry, filter "filter" is disabled on twigfiddle.');
+                throw new RuntimeError('Sorry, filter "filter" is disabled for security reasons.');
             })
         );
 
