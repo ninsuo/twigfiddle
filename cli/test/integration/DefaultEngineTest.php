@@ -240,6 +240,7 @@ class DefaultEngineTest extends \PHPUnit_Framework_TestCase
             array('Twig 2.x', 'Twig-2.0.0'),
 
             // 3.x
+            array('Twig 3.x', 'Twig-3.0.5'),
             array('Twig 3.x', 'Twig-3.0.4'),
             array('Twig 3.x', 'Twig-3.0.3'),
             array('Twig 3.x', 'Twig-3.0.2'),
