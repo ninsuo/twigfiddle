@@ -5,7 +5,7 @@ services:
         tags:
             -
                 name: twig.engine
-                versions: 'Twig-3.0.5 / Twig-3.0.4 / Twig-3.0.3 / Twig-3.0.2 / Twig-3.0.1 / Twig-3.0.0 / Twig-3.0.0-BETA1'
+                versions: 'Twig-3.1.0 / Twig-3.0.5 / Twig-3.0.4 / Twig-3.0.3 / Twig-3.0.2 / Twig-3.0.1 / Twig-3.0.0 / Twig-3.0.0-BETA1'
                 label: 'Twig 3.x'
     v2.twig_engine:
         class: '%twig_engine.class%'
