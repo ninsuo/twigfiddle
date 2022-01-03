@@ -198,6 +198,7 @@ class DefaultEngineTest extends \PHPUnit_Framework_TestCase
             array('Twig 1.x', 'Twig-1.0.0-RC1'),
 
             // 2.x
+            array('Twig 2.x', 'Twig-2.14.10'),
             array('Twig 2.x', 'Twig-2.14.9'),
             array('Twig 2.x', 'Twig-2.14.8'),
             array('Twig 2.x', 'Twig-2.14.7'),
@@ -250,6 +251,7 @@ class DefaultEngineTest extends \PHPUnit_Framework_TestCase
             array('Twig 2.x', 'Twig-2.0.0'),
 
             // 3.x
+            array('Twig 3.x', 'Twig-3.3.7'),
             array('Twig 3.x', 'Twig-3.3.6'),
             array('Twig 3.x', 'Twig-3.3.5'),
             array('Twig 3.x', 'Twig-3.3.4'),
