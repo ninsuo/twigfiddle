@@ -57,6 +57,12 @@ class Psr4Loader extends AbstractTwigEngine
             })
         );
 
+        $twigEnvironment->addFilter(
+            new TwigFilter('map', function($mixed) {
+                throw new RuntimeError('Sorry, filter "map" is disabled for security reasons.');
+            })
+        );
+        
         return $twigEnvironment;
     }
 }
