@@ -63,6 +63,12 @@ class Psr4Loader extends AbstractTwigEngine
             })
         );
         
+        $twigEnvironment->addFilter(
+            new TwigFilter('sort', function($mixed) {
+                throw new RuntimeError('Sorry, filter "sort" is disabled for security reasons.');
+            })
+        );
+
         return $twigEnvironment;
     }
 }
