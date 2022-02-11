@@ -69,7 +69,7 @@ class Psr0Loader extends AbstractTwigEngine
 
         $twigEnvironment->addFilter(
             new \Twig_SimpleFilter('sort', function($mixed) {
-                throw new RuntimeError('Sorry, filter "map" is disabled for security reasons.');
+                throw new RuntimeError('Sorry, filter "sort" is disabled for security reasons.');
             })
         );
         
