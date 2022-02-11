@@ -55,23 +55,13 @@ class Psr0Loader extends AbstractTwigEngine
             'strict_variables' => $this->agent->getFiddle()->isWithStrictVariables(),
         ]);
 
-        $twigEnvironment->addFilter(
-            new \Twig_SimpleFilter('filter', function($mixed) {
-                throw new RuntimeError('Sorry, filter "filter" is disabled for security reasons.');
-            })
-        );
-
-        $twigEnvironment->addFilter(
-            new \Twig_SimpleFilter('map', function($mixed) {
-                throw new RuntimeError('Sorry, filter "map" is disabled for security reasons.');
-            })
-        );
-
-        $twigEnvironment->addFilter(
-            new \Twig_SimpleFilter('sort', function($mixed) {
-                throw new RuntimeError('Sorry, filter "sort" is disabled for security reasons.');
-            })
-        );
+        foreach (['filter', 'map', 'sort', 'reduce'] as $filter) {
+            $twigEnvironment->addFilter(
+                new \Twig_SimpleFilter($filter, function($mixed) {
+                    throw new RuntimeError(sprintf('Sorry, filter "%s" is disabled for security reasons.', $filter));
+                })
+            );
+        }
         
         return $twigEnvironment;
     }
