@@ -53,7 +53,7 @@ class Psr4Loader extends AbstractTwigEngine
 
         foreach (['filter', 'map', 'sort', 'reduce'] as $filter) {
             $twigEnvironment->addFilter(
-                new TwigFilter($filter, function($mixed) {
+                new TwigFilter($filter, function($mixed) use ($filter) {
                     throw new RuntimeError(sprintf('Sorry, filter "%s" is disabled for security reasons.', $filter));
                 })
             );
