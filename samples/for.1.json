@@ -7,7 +7,7 @@
     },
     "templates": [{
             "filename": "main.twig",
-            "content": "{#\n # Twig for\n # http:\/\/twig.sensiolabs.org\/doc\/tags\/for.html\n #\n # for tag let you iterate throught an array, an object or whatever\n #}\n \n \nSimple loop:\n\n{% for key, value in array %}\n  {{ key }} = {{ value }}\n{% endfor %}\n \n \nLoop between 10 and 20:\n\n{% for number in 10..20 %}\n  num = {{ number }}\n{% endfor %}\n\n\nLoop with a condition\n\n{% for number in 10..20 if number is even %}\n  num = {{ number }}\n{% endfor %}",
+            "content": "{#\n # Twig for\n # https:\/\/twig.symfony.com\/doc\/tags\/for.html\n #\n # for tag let you iterate throught an array, an object or whatever\n #}\n \n \nSimple loop:\n\n{% for key, value in array %}\n  {{ key }} = {{ value }}\n{% endfor %}\n \n \nLoop between 10 and 20:\n\n{% for number in 10..20 %}\n  num = {{ number }}\n{% endfor %}\n\n\nLoop with a condition\n\n{% for number in 10..20 if number is even %}\n  num = {{ number }}\n{% endfor %}",
             "main": true
         }],
     "twig_engine": "Twig 1.x",
