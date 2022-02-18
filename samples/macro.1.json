@@ -6,7 +6,7 @@
     },
     "templates": [{
             "filename": "main.twig",
-            "content": "{#\n # Twig macros\n # http:\/\/twig.sensiolabs.org\/doc\/tags\/macro.html\n #\n # Macros can be compared to functions in other languages\n #}\n\nMacros defined in the current file:\n\n{% macro blue(string) %}\n\n  <p style=\"color: blue;\">{{ string }}<\/p>\n\n{% endmacro %}\n\n{{ _self.blue('I am blue') }}\n\nImport a macro file:\n\n{% import 'macros.twig' as macros %}\n{{ macros.red('I am red') }}\n\nImport only one macro from a file:\n\n{% from 'lots-of-macros.twig' import green %}\n{{ green('I am green') }}",
+            "content": "{#\n # Twig macros\n # https:\/\/twig.symfony.com\/doc\/tags\/macro.html\n #\n # Macros can be compared to functions in other languages\n #}\n\nMacros defined in the current file:\n\n{% macro blue(string) %}\n\n  <p style=\"color: blue;\">{{ string }}<\/p>\n\n{% endmacro %}\n\n{{ _self.blue('I am blue') }}\n\nImport a macro file:\n\n{% import 'macros.twig' as macros %}\n{{ macros.red('I am red') }}\n\nImport only one macro from a file:\n\n{% from 'lots-of-macros.twig' import green %}\n{{ green('I am green') }}",
             "main": true
         }, {
             "filename": "macros.twig",
