@@ -1,9 +1,4 @@
 {
-    "config": {
-        "platform": {
-            "php": "5.5.9"
-        }
-    },
     "require": {
         "monolog/monolog": "~1.11.0",
         "symfony/dependency-injection": "~2.5",
@@ -16,7 +11,8 @@
         "ninsuo/php-shared-memory": "dev-master",
         "doctrine/orm": "~2.2,>=2.2.3",
         "guzzlehttp/guzzle": "^6.2",
-        "ramsey/uuid": "^3.6"
+        "ramsey/uuid": "^3.6",
+        "symfony/polyfill-php80": "^1.28"
     },
     "autoload": {
         "psr-4": {
@@ -24,8 +20,5 @@
             "Fuz\\Process\\": "src/Fuz/Process",
             "Fuz\\AppBundle\\": "../web/src/Fuz/AppBundle"
         }
-    },
-    "require-dev": {
-        "friendsofphp/php-cs-fixer": "^2.2"
     }
 }
