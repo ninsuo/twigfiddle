@@ -5,7 +5,7 @@ services:
         tags:
             -
                 name: twig.engine
-                versions: 'Twig-3.9.1 / Twig-3.9.0 / Twig-3.8.0 / Twig-3.7.1 / Twig-3.7.0 / Twig-3.6.1 / Twig-3.6.0 / Twig-3.5.1 / Twig-3.5.0 / Twig-3.4.3 / Twig-3.4.2 / Twig-3.4.1 / Twig-3.4.0 / Twig-3.3.10 / Twig-3.3.9 / Twig-3.3.8 / Twig-3.3.7 / Twig-3.3.6 / Twig-3.3.5 / Twig-3.3.4 / Twig-3.3.3 / Twig-3.3.2 / Twig-3.3.1 / Twig-3.3.0 / Twig-3.2.1 / Twig-3.2.0 / Twig-3.1.1 / Twig-3.1.0 / Twig-3.0.5 / Twig-3.0.4 / Twig-3.0.3 / Twig-3.0.2 / Twig-3.0.1 / Twig-3.0.0 / Twig-3.0.0-BETA1'
+                versions: 'Twig-3.9.2 / Twig-3.9.1 / Twig-3.9.0 / Twig-3.8.0 / Twig-3.7.1 / Twig-3.7.0 / Twig-3.6.1 / Twig-3.6.0 / Twig-3.5.1 / Twig-3.5.0 / Twig-3.4.3 / Twig-3.4.2 / Twig-3.4.1 / Twig-3.4.0 / Twig-3.3.10 / Twig-3.3.9 / Twig-3.3.8 / Twig-3.3.7 / Twig-3.3.6 / Twig-3.3.5 / Twig-3.3.4 / Twig-3.3.3 / Twig-3.3.2 / Twig-3.3.1 / Twig-3.3.0 / Twig-3.2.1 / Twig-3.2.0 / Twig-3.1.1 / Twig-3.1.0 / Twig-3.0.5 / Twig-3.0.4 / Twig-3.0.3 / Twig-3.0.2 / Twig-3.0.1 / Twig-3.0.0 / Twig-3.0.0-BETA1'
                 label: 'Twig 3.x'
     v2.twig_engine:
         class: '%twig_engine.class%'
