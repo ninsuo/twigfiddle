@@ -1,7 +1,3 @@
-# Scheduled maintenance
-
-A migration of twigfiddle is scheduled on 08/05/2024, there may be downtime and that day's fiddles lost
-
 # Welcome
 
 This is the project's repository, come here if you found a bug, if you want to request new features or if you want to contribute.
