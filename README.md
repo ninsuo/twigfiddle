@@ -1,3 +1,13 @@
+# Down right nwo
+
+I need to change twigfiddle's hosting but have no time to correctly reinstall it yet.
+
+It will be back within a couple of weeks (probably mid-june to be sure).
+
+Your data have been backed up.
+
+Cheers
+
 # Welcome
 
 This is the project's repository, come here if you found a bug, if you want to request new features or if you want to contribute.
