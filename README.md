@@ -1,12 +1,10 @@
-# Down right nwo
+# End of life
 
-I need to change twigfiddle's hosting but have no time to correctly reinstall it yet.
+Twigfiddle is now decommissionned and replaced by the official "twig playground" tool available at: https://twig.symfony.com/play
 
-It will be back within a couple of weeks (probably mid-june to be sure).
+It has been a pleasure to maintain this app for 12 years.
 
-Your data have been backed up.
-
-Cheers
+See you at SensioLabs events!
 
 # Welcome
 
